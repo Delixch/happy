@@ -5,6 +5,7 @@ import Unternehmen from './pages/Unternehmen';
 import Jobs from './pages/Jobs';
 import Aktuelles from './pages/Aktuelles';
 import Medien from './pages/Medien';
+import Kontakt from './pages/Kontakt';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/aktuelles" element={<Aktuelles />} />
           <Route path="/medien" element={<Medien />} />
+          <Route path="/kontakt" element={<Kontakt />} />
         </Routes>
       </Layout>
     </Router>

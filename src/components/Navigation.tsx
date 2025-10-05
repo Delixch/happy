@@ -32,7 +32,7 @@ export default function Navigation() {
     { id: 'jobs', label: 'Jobs', href: '/jobs' },
     { id: 'medien', label: 'Medien', href: '/medien' },
     { id: 'aktuelles', label: 'Aktuelles', href: '/aktuelles' },
-    { id: 'kontakt', label: 'Kontakt', href: '#kontakt' },
+    { id: 'kontakt', label: 'Kontakt', href: '/kontakt' },
   ];
 
   const handleNavClick = () => {

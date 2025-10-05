@@ -91,11 +91,11 @@ export default function Medien() {
     <div className="pt-24 pb-8 bg-white dark:bg-gray-900 transition-colors duration-300">
       <div className="relative">
         <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/1070945/pexels-photo-1070945.jpeg?auto=compress&cs=tinysrgb&w=1920')] bg-cover bg-center opacity-15"></div>
-        <div className="relative container mx-auto px-4">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8">
+        <div className="relative container mx-auto px-4 py-16">
+          <h1 className="text-4xl md:text-5xl font-bold text-amber-900 dark:text-amber-500 mb-12 text-center">
           Medien
         </h1>
-        <p className="max-w-3xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
+          <p className="max-w-3xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed mx-auto text-center">
           In diesem Bereich teilen wir ausgewählte Medienbeiträge über <span className="font-semibold">happybeck</span>
           – von TV-Berichten über Presseartikel bis hin zu Online-News. Seit unserer Eröffnung ist viel passiert,
           und auch wenn wir nicht alle Beiträge vollständig zusammentragen können, möchten wir Ihnen hier

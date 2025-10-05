@@ -30,7 +30,7 @@ export default function Navigation() {
     { id: 'home', label: 'Home', href: '/' },
     { id: 'unternehmen', label: 'Unternehmen', href: '/unternehmen' },
     { id: 'jobs', label: 'Jobs', href: '/jobs' },
-    { id: 'medien', label: 'Medien', href: '#medien' },
+    { id: 'medien', label: 'Medien', href: '/medien' },
     { id: 'aktuelles', label: 'Aktuelles', href: '/aktuelles' },
     { id: 'kontakt', label: 'Kontakt', href: '#kontakt' },
   ];

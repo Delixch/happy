@@ -31,7 +31,7 @@ export default function Navigation() {
     { id: 'unternehmen', label: 'Unternehmen', href: '/unternehmen' },
     { id: 'jobs', label: 'Jobs', href: '/jobs' },
     { id: 'medien', label: 'Medien', href: '#medien' },
-    { id: 'aktuelles', label: 'Aktuelles', href: '#aktuelles' },
+    { id: 'aktuelles', label: 'Aktuelles', href: '/aktuelles' },
     { id: 'kontakt', label: 'Kontakt', href: '#kontakt' },
   ];
 

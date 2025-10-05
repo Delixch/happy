@@ -17,7 +17,7 @@ export default function Footer() {
             <div className="space-y-3 text-sm">
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4" />
-                <span className="text-amber-100 dark:text-gray-400">+41 XX XXX XX XX</span>
+                <span className="text-amber-100 dark:text-gray-400">043 243 97 80</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="w-4 h-4" />
@@ -25,7 +25,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin className="w-4 h-4" />
-                <span className="text-amber-100 dark:text-gray-400">Schweiz</span>
+                <span className="text-amber-100 dark:text-gray-400">happybeck, Langstrasse 120, 8004 Zürich</span>
               </div>
             </div>
           </div>
@@ -33,9 +33,7 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Öffnungszeiten</h4>
             <div className="space-y-2 text-sm text-amber-100 dark:text-gray-400">
-              <p>Mo - Fr: 06:00 - 18:30</p>
-              <p>Sa: 06:00 - 16:00</p>
-              <p>So: Geschlossen</p>
+              <p>24 Stunden geöffnet</p>
             </div>
           </div>
         </div>

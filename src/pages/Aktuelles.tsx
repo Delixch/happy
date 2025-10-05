@@ -253,31 +253,12 @@ export default function Jubilaeums() {
                 <p className="text-amber-200 text-sm">
                   Dein Happy-Genuss
                 </p>
-                <div className="flex items-center justify-center space-x-4 text-sm">
-                  <span className="text-white">📱 happybeck.ch</span>
-                  <span className="text-white">📷 @happybeck.ch</span>
-                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-lg p-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-              Standort
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-2">
-              📍 happybeck, Langstrasse 120, 8004 Zürich
-            </p>
-            <p className="text-gray-600 dark:text-gray-400 mb-2">
-              ☎ 043 243 97 80
-            </p>
-            <p className="text-gray-600 dark:text-gray-400">
-              🌐 www.happybeck.ch | 📧 info@happybeck.ch
-            </p>
-          </div>
-        </div>
+        {/* Standort ve iletişim bölümü kaldırıldı */}
       </div>
 
       <style>{`

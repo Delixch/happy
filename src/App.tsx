@@ -3,6 +3,7 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import Unternehmen from './pages/Unternehmen';
 import Jobs from './pages/Jobs';
+import Aktuelles from './pages/Aktuelles';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/unternehmen" element={<Unternehmen />} />
           <Route path="/jobs" element={<Jobs />} />
+          <Route path="/aktuelles" element={<Aktuelles />} />
         </Routes>
       </Layout>
     </Router>

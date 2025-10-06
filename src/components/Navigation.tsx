@@ -81,15 +81,15 @@ export default function Navigation() {
     }`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
-          <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-amber-600 to-amber-800 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl">H</span>
+          <Link to="/" className="group flex items-center space-x-4">
+            <div className="relative w-40 h-12 md:w-48 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-amber-500/40 transition-transform duration-300 group-hover:-rotate-2 group-hover:scale-105">
+              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-amber-400/30 to-amber-700/20 blur-md"></div>
+              <img src="/logo.png" alt="Happy Beck" className="relative z-10 w-full h-full object-contain rounded-2xl p-1 bg-transparent" />
             </div>
-            <div>
-              <h1 className="text-2xl font-bold text-amber-800 dark:text-amber-500">Happy Beck</h1>
-              <p className="text-xs text-gray-600 dark:text-gray-400">Ein Häppchen Glück</p>
+            <div className="leading-tight">
+              <p className="text-lg md:text-xl font-semibold text-gray-700 dark:text-gray-300">Ein Häppchen Glück</p>
             </div>
-          </div>
+          </Link>
 
           <div className="hidden md:flex items-center space-x-8">
             {menuItems.map((item) => (

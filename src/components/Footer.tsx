@@ -5,14 +5,14 @@ export default function Footer() {
     <footer className="bg-amber-900 dark:bg-gray-950 text-white py-12 transition-colors duration-300">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
+          <div className="rounded-xl p-6 md:p-8 bg-amber-800/60 dark:bg-gray-900/60 ring-1 ring-black/10">
             <h3 className="text-xl font-bold mb-4">Happy Beck</h3>
             <p className="text-amber-100 dark:text-gray-400 text-sm">
               Ein Häppchen Glück - Traditionelle Bäckerei mit Leidenschaft für Qualität und Innovation.
             </p>
           </div>
 
-          <div>
+          <div className="rounded-xl p-6 md:p-8 bg-amber-900/60 dark:bg-gray-900/70 ring-1 ring-black/10">
             <h4 className="font-semibold mb-4">Kontakt</h4>
             <div className="space-y-3 text-sm">
               <div className="flex items-center space-x-2">
@@ -30,7 +30,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div>
+          <div className="rounded-xl p-6 md:p-8 bg-amber-950/50 dark:bg-black/50 ring-1 ring-black/10">
             <h4 className="font-semibold mb-4">Öffnungszeiten</h4>
             <div className="space-y-2 text-sm text-amber-100 dark:text-gray-400">
               <p>24 Stunden geöffnet</p>

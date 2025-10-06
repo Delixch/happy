@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ChefHat, Heart, Award } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
 export default function Home() {
   // Background gradient cycling removed; we now emphasize image with a localized overlay behind text.
@@ -12,7 +12,7 @@ export default function Home() {
           "/Home.jpg",
         title: "Ein Häppchen Glück!",
         text:
-          "Traditionelle Backkunst mit über Jahren Erfahrung und Leidenschaft",
+          "Traditionelles Handwerk trifft moderne Innovation. Entdecken Sie unsere Leidenschaft für frisches Brot und feine Backwaren.",
       },
       {
         image:
@@ -97,7 +97,7 @@ export default function Home() {
 
       <div className="container mx-auto px-4 py-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="text-center p-8 rounded-xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <TiltCard>
             <div className="inline-flex items-center justify-center w-16 h-16 bg-amber-100 dark:bg-amber-900/30 rounded-full mb-4">
               <ChefHat className="w-8 h-8 text-amber-700 dark:text-amber-500" />
             </div>
@@ -105,9 +105,9 @@ export default function Home() {
             <p className="text-gray-600 dark:text-gray-400">
             Traditionelle Backkunst, entwickelt über Jahrzehnte voller Erfahrung und Leidenschaft. Unsere Rezepte und handwerklichen Techniken wurden von Generation zu Generation weitergegeben und bis heute bewahrt. Mit viel Liebe zum Detail und besten Zutaten schaffen wir exklusive Backwaren, die das traditionelle Bäckerhandwerk lebendig halten und jeden Tag aufs Neue begeistern.
             </p>
-          </div>
+          </TiltCard>
 
-          <div className="text-center p-8 rounded-xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <TiltCard>
             <div className="inline-flex items-center justify-center w-16 h-16 bg-amber-100 dark:bg-amber-900/30 rounded-full mb-4">
               <Heart className="w-8 h-8 text-amber-700 dark:text-amber-500" />
             </div>
@@ -115,9 +115,9 @@ export default function Home() {
             <p className="text-gray-600 dark:text-gray-400">
             Wir verwenden nur die besten, sorgfältig ausgewählten Zutaten, um täglich frische Backwaren von höchster Qualität herzustellen. Dabei legen wir großen Wert auf traditionelle Handwerkskunst und eine schonende Verarbeitung, damit jedes Produkt seinen unverwechselbaren Geschmack und Frische behält. Qualität und Leidenschaft sind die Basis für den Genuss, den Sie mit jedem Bissen erleben.
             </p>
-          </div>
+          </TiltCard>
 
-          <div className="text-center p-8 rounded-xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <TiltCard>
             <div className="inline-flex items-center justify-center w-16 h-16 bg-amber-100 dark:bg-amber-900/30 rounded-full mb-4">
               <Award className="w-8 h-8 text-amber-700 dark:text-amber-500" />
             </div>
@@ -125,9 +125,49 @@ export default function Home() {
             <p className="text-gray-600 dark:text-gray-400">
             Wir verbinden kreative Innovation mit unserer traditionellen Backkunst. So entstehen einzigartige Produkte, die modern und zugleich authentisch sind. Mit Leidenschaft entwickeln wir ständig neue Ideen, die den Geschmack unserer Kunden überraschen und begeistern. Tradition und Innovation gehen bei uns Hand in Hand.
             </p>
-          </div>
+          </TiltCard>
         </div>
       </div>
     </section>
+  );
+}
+
+function TiltCard({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [transform, setTransform] = useState('');
+  const [bgPos, setBgPos] = useState('50% 50%');
+
+  const handleMove = (e: React.MouseEvent) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    const rotateX = (0.5 - y) * 10;
+    const rotateY = (x - 0.5) * 10;
+    setTransform(`rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`);
+    setBgPos(`${x * 100}% ${y * 100}%`);
+  };
+
+  const reset = () => {
+    setTransform('');
+    setBgPos('50% 50%');
+  };
+
+  return (
+    <div ref={ref} onMouseMove={handleMove} onMouseLeave={reset} className="relative perspective-[1000px]">
+      <div
+        style={{ transform }}
+        className="relative text-center p-8 rounded-xl bg-white dark:bg-gray-800 shadow-lg transition-[transform,box-shadow] duration-300 will-change-transform hover:shadow-2xl"
+      >
+        <div
+          className="pointer-events-none absolute inset-0 rounded-xl"
+          style={{
+            background: `radial-gradient(600px circle at ${bgPos}, rgba(255,255,255,0.18), transparent 40%)`,
+          }}
+        />
+        <div className="relative z-10">{children}</div>
+      </div>
+    </div>
   );
 }

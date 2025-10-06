@@ -6,6 +6,8 @@ import Jobs from './pages/Jobs';
 import Aktuelles from './pages/Aktuelles';
 import Medien from './pages/Medien';
 import Kontakt from './pages/Kontakt';
+import Team from './pages/Team';
+import MenuPage from './pages/Menu';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/unternehmen" element={<Unternehmen />} />
+          <Route path="/team" element={<Team />} />
+          <Route path="/menu" element={<MenuPage />} />
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/aktuelles" element={<Aktuelles />} />
           <Route path="/medien" element={<Medien />} />

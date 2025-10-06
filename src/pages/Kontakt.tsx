@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Mail, Phone, MapPin, Clock, Instagram } from 'lucide-react';
+import { Mail, MapPin, Clock, Instagram } from 'lucide-react';
 
 type Operator = '+' | '-' | 'x';
 
@@ -23,11 +23,14 @@ export default function Kontakt() {
   const [userAnswer, setUserAnswer] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [contactMethod, setContactMethod] = useState<'email' | 'phone' | 'inperson'>('email');
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (Number(userAnswer) !== question.answer) {
       setError('Bitte beantworten Sie die Sicherheitsfrage richtig.');
+      setQuestion(generateQuestion());
+      setUserAnswer('');
       return;
     }
     setError(null);
@@ -46,13 +49,6 @@ export default function Kontakt() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <aside className="bg-white dark:bg-gray-800 rounded-xl shadow p-6 border border-gray-200 dark:border-gray-700">
             <div className="space-y-4 text-gray-700 dark:text-gray-300">
-              <div className="flex items-start gap-3">
-                <Phone className="w-5 h-5 text-amber-600 mt-0.5" />
-                <div>
-                  <div className="font-semibold">Telefon</div>
-                  <div>043 243 97 80</div>
-                </div>
-              </div>
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-amber-600 mt-0.5" />
                 <div>
@@ -77,20 +73,20 @@ export default function Kontakt() {
               <div className="pt-2 space-y-2">
                 <div className="font-semibold">Instagram</div>
                 <a
-                  className="inline-flex items-center gap-2 text-amber-700 dark:text-amber-400 underline"
+                  className="block items-center gap-2 text-amber-700 dark:text-amber-400 underline"
                   href="https://www.instagram.com/happybeck.ch?igsh=eGdtbW1ud3p6ZDFx"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Instagram className="w-4 h-4" /> @happybeck.ch
+                  <span className="inline-flex items-center gap-2"><Instagram className="w-4 h-4" /> @happybeck.ch</span>
                 </a>
                 <a
-                  className="inline-flex items-center gap-2 text-amber-700 dark:text-amber-400 underline"
+                  className="block items-center gap-2 text-amber-700 dark:text-amber-400 underline"
                   href="https://www.instagram.com/happybeck_?igsh=MXM0eGN1enZydzl0cQ=="
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Instagram className="w-4 h-4" /> @happybeck_
+                  <span className="inline-flex items-center gap-2"><Instagram className="w-4 h-4" /> @happybeck_</span>
                 </a>
               </div>
             </div>
@@ -112,14 +108,14 @@ export default function Kontakt() {
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Ansprechpartner</label>
                     <input className="w-full rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100" type="text" placeholder="Ihr Name" />
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">E-Mail</label>
-                    <input className="w-full rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100" type="email" placeholder="name@example.com" required />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Telefon</label>
-                    <input className="w-full rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100" type="tel" placeholder="Ihr Telefon Nummer" />
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">E-Mail</label>
+                  <input className="w-full rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100" type="email" placeholder="name@example.com" required={contactMethod === 'email'} />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Telefon</label>
+                  <input className="w-full rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100" type="tel" placeholder="Ihre Telefonnummer" required={contactMethod === 'phone'} />
+                </div>
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Adresse</label>
                     <input className="w-full rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100" type="text" placeholder="Strasse, PLZ Ort" />
@@ -131,6 +127,19 @@ export default function Kontakt() {
                   <textarea className="w-full rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100" rows={5} placeholder="Ihre Nachricht..." />
                 </div>
 
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Wie möchten Sie kontaktiert werden?</label>
+                  <select
+                    className="w-full rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
+                    value={contactMethod}
+                    onChange={(e) => setContactMethod(e.target.value as any)}
+                  >
+                    <option value="email">E-Mail</option>
+                    <option value="phone">Telefon</option>
+                    <option value="inperson">Persönlich</option>
+                  </select>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                   <div className="md:col-span-1">
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Sicherheitsfrage</label>
@@ -140,8 +149,9 @@ export default function Kontakt() {
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Ihre Antwort</label>
                     <input className="w-full rounded-md border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100" type="number" value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)} placeholder="Ergebnis" required />
                   </div>
-                  <div className="md:col-span-1">
-                    <button type="submit" className="w-full h-[42px] bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-md transition-colors">Senden</button>
+                  <div className="md:col-span-1 flex items-center gap-3">
+                    <button type="button" onClick={() => { setQuestion(generateQuestion()); setUserAnswer(''); }} className="h-[42px] px-4 rounded-md border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-900">Neu laden</button>
+                    <button type="submit" className="flex-1 h-[42px] bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-md transition-colors">Senden</button>
                   </div>
                 </div>
                 {error && <p className="text-sm text-red-600">{error}</p>}

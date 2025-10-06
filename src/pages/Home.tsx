@@ -12,7 +12,7 @@ export default function Home() {
           "/Home.jpg",
         title: "Ein Häppchen Glück!",
         text:
-          "Traditionelles Handwerk trifft moderne Innovation. Entdecken Sie unsere Leidenschaft für frisches Brot und feine Backwaren.",
+          "Traditionelle Backkunst mit über Jahren Erfahrung und Leidenschaft",
       },
       {
         image:
@@ -103,7 +103,7 @@ export default function Home() {
             </div>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Handwerk</h3>
             <p className="text-gray-600 dark:text-gray-400">
-              Traditionelle Backkunst mit über Jahren Erfahrung und Leidenschaft
+            Traditionelle Backkunst, entwickelt über Jahrzehnte voller Erfahrung und Leidenschaft. Unsere Rezepte und handwerklichen Techniken wurden von Generation zu Generation weitergegeben und bis heute bewahrt. Mit viel Liebe zum Detail und besten Zutaten schaffen wir exklusive Backwaren, die das traditionelle Bäckerhandwerk lebendig halten und jeden Tag aufs Neue begeistern.
             </p>
           </div>
 
@@ -113,7 +113,7 @@ export default function Home() {
             </div>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Qualität</h3>
             <p className="text-gray-600 dark:text-gray-400">
-              Nur beste Zutaten für unsere frischen Backwaren jeden Tag
+            Wir verwenden nur die besten, sorgfältig ausgewählten Zutaten, um täglich frische Backwaren von höchster Qualität herzustellen. Dabei legen wir großen Wert auf traditionelle Handwerkskunst und eine schonende Verarbeitung, damit jedes Produkt seinen unverwechselbaren Geschmack und Frische behält. Qualität und Leidenschaft sind die Basis für den Genuss, den Sie mit jedem Bissen erleben.
             </p>
           </div>
 
@@ -123,7 +123,7 @@ export default function Home() {
             </div>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Innovation</h3>
             <p className="text-gray-600 dark:text-gray-400">
-              Kreative neue Produkte bei gleichzeitiger Tradition
+            Wir verbinden kreative Innovation mit unserer traditionellen Backkunst. So entstehen einzigartige Produkte, die modern und zugleich authentisch sind. Mit Leidenschaft entwickeln wir ständig neue Ideen, die den Geschmack unserer Kunden überraschen und begeistern. Tradition und Innovation gehen bei uns Hand in Hand.
             </p>
           </div>
         </div>

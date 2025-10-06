@@ -43,7 +43,7 @@ export default function Kontakt() {
 
       <div className="relative container mx-auto px-4 py-16 max-w-6xl">
         <h1 className="text-4xl md:text-5xl font-bold text-amber-900 dark:text-amber-500 mb-12 text-center">
-          Kontakt
+        Fragen und Anliegen
         </h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

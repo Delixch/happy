@@ -1,17 +1,16 @@
-import { ReactNode } from 'react';
 import Navigation from './Navigation';
 import Footer from './Footer';
+import ScrollToTop from './ScrollToTop';
+import ScrollPeelButton from './ScrollPeelButton';
 
-interface LayoutProps {
-  children: ReactNode;
-}
-
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+    <div className="min-h-screen bg-dark-700 text-white font-sans">
+      <ScrollToTop />
       <Navigation />
       <main>{children}</main>
       <Footer />
+      <ScrollPeelButton />
     </div>
   );
 }

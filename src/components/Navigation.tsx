@@ -1,31 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Sun, Moon, Home as HomeIcon, Building2, Users2, Sandwich as SandwichIcon, Newspaper, Images, Briefcase, Phone } from 'lucide-react';
+import { Menu, X, ChevronRight, Instagram, Phone, MapPin } from 'lucide-react';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-
-  useEffect(() => {
-    const isDarkMode = localStorage.getItem('darkMode') === 'true';
-    setIsDark(isDarkMode);
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    }
-  }, []);
-
-  const toggleDarkMode = () => {
-    const newDarkMode = !isDark;
-    setIsDark(newDarkMode);
-    localStorage.setItem('darkMode', String(newDarkMode));
-    if (newDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  };
 
   const menuItems = [
     { id: 'home', label: 'Home', href: '/' },
@@ -38,139 +18,174 @@ export default function Navigation() {
     { id: 'kontakt', label: 'Kontakt', href: '/kontakt' },
   ];
 
-  const iconFor = (id: string) => {
-    const cls = 'w-4 h-4';
-    switch (id) {
-      case 'home':
-        return <HomeIcon className={cls} />;
-      case 'unternehmen':
-        return <Building2 className={cls} />;
-      case 'team':
-        return <Users2 className={cls} />;
-      case 'menu':
-        return <SandwichIcon className={cls} />;
-      case 'aktuelles':
-        return <Newspaper className={cls} />;
-      case 'medien':
-        return <Images className={cls} />;
-      case 'jobs':
-        return <Briefcase className={cls} />;
-      case 'kontakt':
-        return <Phone className={cls} />;
-      default:
-        return null;
-    }
-  };
-
-  const handleNavClick = () => {
-    setIsOpen(false);
-  };
-
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
+
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled
-        ? 'bg-white/80 dark:bg-gray-900/70 backdrop-blur-md shadow-lg border-b border-black/5'
-        : 'bg-white/60 dark:bg-gray-900/50 backdrop-blur-md'
-    }`}>
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-          <Link to="/" className="group flex items-center space-x-4">
-            <div className="relative w-40 h-12 md:w-48 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-amber-500/40 transition-transform duration-300 group-hover:-rotate-2 group-hover:scale-105">
-              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-amber-400/30 to-amber-700/20 blur-md"></div>
-              <img src="/logo.png" alt="Happy Beck" className="relative z-10 w-full h-full object-contain rounded-2xl p-1 bg-transparent" />
-            </div>
-            <div className="leading-tight">
-              <p className="text-lg md:text-xl font-semibold text-gray-700 dark:text-gray-300">Ein Häppchen Glück</p>
-            </div>
-          </Link>
+    <>
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? 'bg-dark-700/90 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.5)] border-b border-gold-400/10'
+            : 'bg-transparent'
+        }`}
+      >
+        {/* Top accent line */}
+        <div className="h-[1px] bg-gradient-to-r from-transparent via-gold-400/40 to-transparent" />
 
-          <div className="hidden md:flex items-center space-x-8">
-            {menuItems.map((item) => (
-              <Link
-                key={item.id}
-                to={item.href}
-                onClick={handleNavClick}
-                className={`relative text-sm font-medium transition-colors duration-200 after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:bg-amber-600 dark:after:bg-amber-500 after:transition-all hover:after:w-full ${
-                  location.pathname === item.href
-                    ? 'text-amber-700 dark:text-amber-500 after:w-full'
-                    : 'text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400'
-                }`}
-              >
-                <span className="inline-flex items-center gap-2">
-                  {iconFor(item.id)}
-                  <span>{item.label}</span>
-                </span>
-              </Link>
-            ))}
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-              aria-label="Toggle dark mode"
-            >
-              {isDark ? (
-                <Sun className="w-5 h-5 text-amber-500" />
-              ) : (
-                <Moon className="w-5 h-5 text-gray-700" />
-              )}
-            </button>
-          </div>
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className={`flex items-center justify-between transition-all duration-500 ${scrolled ? 'h-16' : 'h-20'}`}>
+            {/* Logo */}
+            <Link to="/" className="group flex items-center gap-4 z-10">
+              <div className="relative w-12 h-12 rounded-full overflow-hidden ring-1 ring-gold-400/30 transition-all duration-300 group-hover:ring-gold-400/60 group-hover:shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+                <img
+                  src="/logo.png"
+                  alt="Happy Beck"
+                  className="w-full h-full object-contain p-0.5"
+                />
+              </div>
+              <div className="hidden sm:block">
+                <p className="font-serif text-lg font-semibold text-white tracking-wide">
+                  Happy <span className="text-gold-400">Beck</span>
+                </p>
+                <p className="text-[10px] tracking-[0.25em] uppercase text-gold-400/60 font-sans">
+                  Ein Häppchen Glück
+                </p>
+              </div>
+            </Link>
 
-          <div className="md:hidden flex items-center space-x-2">
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800"
-              aria-label="Toggle dark mode"
-            >
-              {isDark ? (
-                <Sun className="w-5 h-5 text-amber-500" />
-              ) : (
-                <Moon className="w-5 h-5 text-gray-700" />
-              )}
-            </button>
+            {/* Desktop Nav */}
+            <div className="hidden lg:flex items-center gap-1">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.id}
+                  to={item.href}
+                  className={`relative px-4 py-2 text-[13px] font-sans font-medium tracking-wide uppercase transition-all duration-300 link-underline ${
+                    location.pathname === item.href
+                      ? 'text-gold-400'
+                      : 'text-white/70 hover:text-white'
+                  }`}
+                >
+                  {item.label}
+                  {location.pathname === item.href && (
+                    <span className="absolute bottom-0 left-4 right-4 h-[1px] bg-gradient-to-r from-gold-400 to-gold-300" />
+                  )}
+                </Link>
+              ))}
+            </div>
+
+            {/* Mobile Toggle */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800"
+              className="lg:hidden relative z-10 p-2 text-white/80 hover:text-gold-400 transition-colors"
               aria-label="Toggle menu"
             >
               {isOpen ? (
-                <X className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                <X className="w-6 h-6" />
               ) : (
-                <Menu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                <Menu className="w-6 h-6" />
               )}
             </button>
           </div>
         </div>
+      </nav>
 
-        <div
-          className={`md:hidden origin-top transition-all duration-300 ease-out ${
-            isOpen
-              ? 'opacity-100 scale-y-100 py-4 border-t border-gray-200 dark:border-gray-700'
-              : 'opacity-0 scale-y-0 h-0 overflow-hidden'
-          }`}
-        >
-          {menuItems.map((item) => (
-            <Link
-              key={item.id}
-              to={item.href}
-              onClick={handleNavClick}
-              className={`block py-3 px-4 text-sm font-medium transition-colors ${
-                location.pathname === item.href
-                  ? 'text-amber-700 dark:text-amber-500 bg-amber-50 dark:bg-amber-900/20'
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
-              }`}
-            >
-              {item.label}
+      {/* Mobile Drawer Backdrop */}
+      <div 
+        className={`fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden transition-all duration-300 ${
+          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setIsOpen(false)}
+      />
+
+      {/* Mobile Drawer Menu (Right Side Slide-In) */}
+      <div
+        className={`fixed top-0 right-0 bottom-0 z-50 w-[270px] bg-dark-900 border-l border-white/5 shadow-2xl lg:hidden transition-transform duration-300 ease-out transform ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className="h-full flex flex-col justify-between p-6">
+          
+          {/* Header */}
+          <div className="flex items-center justify-between pb-4 border-b border-white/5">
+            <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center gap-2.5">
+              <img
+                src="/logo.png"
+                alt="Happy Beck"
+                className="w-8 h-8 object-contain"
+              />
+              <p className="font-serif text-sm font-semibold text-white tracking-wide">
+                Happy <span className="text-gold-400">Beck</span>
+              </p>
             </Link>
-          ))}
+            <button
+              onClick={() => setIsOpen(false)}
+              className="text-white/60 hover:text-gold-400 p-1 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Links */}
+          <div className="flex flex-col gap-1 my-auto py-6 overflow-y-auto">
+            {menuItems.map((item) => {
+              const active = location.pathname === item.href;
+              return (
+                <Link
+                  key={item.id}
+                  to={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className={`group flex items-center justify-between py-2.5 border-b border-white/5 transition-all duration-200 ${
+                    active ? 'text-gold-400 translate-x-1' : 'text-white/70 hover:text-white'
+                  }`}
+                >
+                  <span className="text-sm font-sans font-medium tracking-wider uppercase">
+                    {item.label}
+                  </span>
+                  <ChevronRight className={`w-3.5 h-3.5 transition-all duration-200 ${
+                    active ? 'text-gold-400 opacity-100' : 'opacity-0 group-hover:opacity-100 group-hover:text-gold-400'
+                  }`} />
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Footer */}
+          <div className="border-t border-white/5 pt-4">
+            <div className="flex items-center justify-center gap-4 mb-3">
+              <a href="https://instagram.com/happybeck.ch" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-gold-400 transition-colors">
+                <Instagram className="w-4 h-4" />
+              </a>
+              <a href="tel:+41440000000" className="text-white/40 hover:text-gold-400 transition-colors">
+                <Phone className="w-4 h-4" />
+              </a>
+              <a href="/kontakt" className="text-white/40 hover:text-gold-400 transition-colors">
+                <MapPin className="w-4 h-4" />
+              </a>
+            </div>
+            <p className="text-[10px] text-white/30 font-sans tracking-wide text-center leading-relaxed">
+              Langstrasse 120, 8004 Zürich <br />
+              <span className="text-[9px] text-gold-400/50 mt-0.5 block">© Happy Beck 2026</span>
+            </p>
+          </div>
+
         </div>
       </div>
-    </nav>
+    </>
   );
 }

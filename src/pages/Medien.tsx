@@ -1,130 +1,158 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { ChevronDown, Play, Loader2 } from 'lucide-react';
+import { supabase, type MediaItem } from '../lib/supabase';
 
-type AccordionItem = {
-  id: string;
-  title: string;
-  content: JSX.Element;
-};
+type MediaType = 'tv' | 'presse' | 'online';
 
 export default function Medien() {
-  const [openId, setOpenId] = useState<string | null>('tv');
+  const [items, setItems] = useState<MediaItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [openType, setOpenType] = useState<MediaType>('tv');
   const [playingIds, setPlayingIds] = useState<Record<string, boolean>>({});
 
-  const toggle = (id: string) => {
-    setOpenId((prev) => (prev === id ? null : id));
-  };
+  useEffect(() => {
+    supabase
+      .from('media_items')
+      .select('*')
+      .order('sort_order')
+      .then(({ data }) => {
+        if (data) setItems(data);
+        setLoading(false);
+      });
+  }, []);
 
-  const items: AccordionItem[] = [
-    {
-      id: 'tv',
-      title: 'TV Berichte',
-      content: (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {['SEpS4LEEjzE', 'Yi7TYNtoWow', 'VyNS5cGQ8-g', 'bduOrx3_Bck'].map((id) => {
-            const isPlaying = !!playingIds[id];
-            return (
-              <div
-                key={id}
-                className="group rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-black transition-transform duration-300 transform-gpu hover:-translate-y-1 hover:shadow-2xl"
-              >
-                <div className="relative" style={{ paddingTop: '56.25%' }}>
-                  {isPlaying ? (
-                    <iframe
-                      className="absolute inset-0 w-full h-full"
-                      src={`https://www.youtube.com/embed/${id}?autoplay=1`}
-                      title={`YouTube video ${id}`}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                    />
-                  ) : (
-                    <button
-                      type="button"
-                      aria-label="Play video"
-                      className="absolute inset-0 w-full h-full"
-                      onClick={() => setPlayingIds((p) => ({ ...p, [id]: true }))}
-                    >
-                      <img
-                        src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
-                        alt="YouTube thumbnail"
-                        className="absolute inset-0 w-full h-full object-cover opacity-95 group-hover:opacity-100 transition-opacity"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent opacity-70 group-hover:opacity-60 transition-opacity"></div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/90 group-hover:bg-white shadow-xl ring-1 ring-black/5 transition transform-gpu group-hover:scale-105">
-                          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" className="text-amber-700">
-                            <path d="M8 5v14l11-7z"></path>
-                          </svg>
-                        </span>
-                      </div>
-                    </button>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      ),
-    },
-    {
-      id: 'presse',
-      title: 'Presse Berichte',
-      content: (
-        <div className="text-sm text-gray-700 dark:text-gray-300">
-          PDF bağlantıları buraya eklenecek.
-        </div>
-      ),
-    },
-    {
-      id: 'online',
-      title: 'Online News',
-      content: (
-        <div className="text-sm text-gray-700 dark:text-gray-300">
-          İş yerleri için linkler ve haberler buraya eklenecek.
-        </div>
-      ),
-    },
-  ];
+  const toggle = (type: MediaType) => setOpenType((prev) => (prev === type ? type : type));
+
+  const typeLabels: Record<MediaType, string> = { tv: 'TV Berichte', presse: 'Presse Berichte', online: 'Online News' };
+  const types: MediaType[] = ['tv', 'presse', 'online'];
 
   return (
-    <div className="pt-24 pb-8 bg-white dark:bg-gray-900 transition-colors duration-300">
-      <div className="relative">
-        <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/1070945/pexels-photo-1070945.jpeg?auto=compress&cs=tinysrgb&w=1920')] bg-cover bg-center opacity-15"></div>
-        <div className="relative container mx-auto px-4 py-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-amber-900 dark:text-amber-500 mb-12 text-center">
-          Presse & Berichte
-        </h1>
-          <p className="max-w-3xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed mx-auto text-center">
-          In diesem Bereich teilen wir ausgewählte Medienbeiträge über <span className="font-semibold">happybeck</span>
-          – von TV-Berichten über Presseartikel bis hin zu Online-News. Seit unserer Eröffnung ist viel passiert,
-          und auch wenn wir nicht alle Beiträge vollständig zusammentragen können, möchten wir Ihnen hier
-          einige Highlights präsentieren.
+    <div className="pt-20 min-h-screen">
+      {/* Hero */}
+      <div className="relative h-[30vh] min-h-[220px] overflow-hidden">
+        <div className="absolute inset-0 bg-dark-600" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(212,175,55,0.06),transparent_60%)]" />
+        <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-end pb-10">
+          <div>
+            <p className="text-gold-400 font-sans text-sm tracking-[0.3em] uppercase mb-3">
+              Presse & Berichte
+            </p>
+            <h1 className="text-5xl md:text-6xl font-serif font-bold text-white">
+              Medien
+            </h1>
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 lg:px-8 py-16 max-w-4xl">
+        <p className="text-white/50 font-sans text-center mb-12 max-w-2xl mx-auto leading-relaxed">
+          In diesem Bereich teilen wir ausgewählte Medienbeiträge über{' '}
+          <span className="text-gold-400 font-semibold">happybeck</span>{' '}
+          – von TV-Berichten über Presseartikel bis hin zu Online-News.
         </p>
 
-        <div className="max-w-3xl mx-auto divide-y divide-gray-200 dark:divide-gray-700 rounded-xl overflow-hidden shadow-sm border border-gray-200 dark:border-gray-800">
-          {items.map((it) => (
-            <div key={it.id} className="bg-white dark:bg-gray-800">
-              <button
-                onClick={() => toggle(it.id)}
-                className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 dark:hover:bg-gray-700"
-                aria-expanded={openId === it.id}
-              >
-                <span className="font-semibold text-gray-900 dark:text-white">{it.title}</span>
-                <span className="text-gray-500 dark:text-gray-400">{openId === it.id ? '-' : '+'}</span>
-              </button>
-              {openId === it.id && (
-                <div className="px-5 pb-5 text-gray-800 dark:text-gray-200">
-                  {it.content}
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="w-6 h-6 text-gold-400 animate-spin" />
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {types.map((type) => {
+              const typeItems = items.filter((i) => i.type === type);
+              return (
+                <div key={type} className="glass-card overflow-hidden">
+                  <button
+                    onClick={() => toggle(type)}
+                    className="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-white/[0.02] transition-colors"
+                    aria-expanded={openType === type}
+                  >
+                    <span className="font-serif text-lg font-semibold text-white">
+                      {typeLabels[type]} ({typeItems.length})
+                    </span>
+                    <ChevronDown className={`w-5 h-5 text-gold-400 transition-transform duration-300 ${
+                      openType === type ? 'rotate-180' : ''
+                    }`} />
+                  </button>
+                  <div className={`transition-all duration-500 overflow-hidden ${
+                    openType === type ? 'max-h-[3000px] opacity-100' : 'max-h-0 opacity-0'
+                  }`}>
+                    <div className="px-6 pb-6">
+                      {typeItems.length === 0 ? (
+                        <div className="text-sm text-white/40 font-sans p-6 glass-card-light text-center">
+                          Beiträge werden in Kürze hier veröffentlicht.
+                        </div>
+                      ) : type === 'tv' ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          {typeItems.map((item) => {
+                            const isPlaying = !!playingIds[item.id];
+                            return (
+                              <div
+                                key={item.id}
+                                className="group rounded-xl overflow-hidden border border-white/5 bg-dark-500 transition-all duration-300 hover:-translate-y-1 hover:glow-gold"
+                              >
+                                <div className="relative" style={{ paddingTop: '56.25%' }}>
+                                  {isPlaying ? (
+                                    <iframe
+                                      className="absolute inset-0 w-full h-full border-0"
+                                      src={`https://www.youtube.com/embed/${item.url}?autoplay=1`}
+                                      title={item.title}
+                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                      allowFullScreen
+                                    />
+                                  ) : (
+                                    <button
+                                      type="button"
+                                      aria-label="Video abspielen"
+                                      className="absolute inset-0 w-full h-full"
+                                      onClick={() => setPlayingIds((p) => ({ ...p, [item.id]: true }))}
+                                    >
+                                      <img
+                                        src={`https://i.ytimg.com/vi/${item.url}/hqdefault.jpg`}
+                                        alt={item.title}
+                                        className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105"
+                                        loading="lazy"
+                                      />
+                                      <div className="absolute inset-0 bg-gradient-to-t from-dark-700/70 via-transparent to-transparent" />
+                                      <div className="absolute inset-0 flex items-center justify-center">
+                                        <span className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-dark-700/80 border border-gold-400/30 group-hover:border-gold-400/60 group-hover:bg-gold-400/10 shadow-xl transition-all duration-300 group-hover:scale-110">
+                                          <Play className="w-6 h-6 text-gold-400 ml-0.5" fill="currentColor" />
+                                        </span>
+                                      </div>
+                                      <div className="absolute bottom-3 left-3 right-3">
+                                        <p className="text-white/80 font-sans text-sm font-medium truncate">{item.title}</p>
+                                      </div>
+                                    </button>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <div className="space-y-3">
+                          {typeItems.map((item) => (
+                            <div key={item.id} className="glass-card-light p-4 flex items-center gap-4">
+                              <div className="flex-1">
+                                <p className="text-white font-sans text-sm font-medium">{item.title}</p>
+                                {item.description && <p className="text-white/30 font-sans text-xs mt-1">{item.description}</p>}
+                              </div>
+                              {item.url && (
+                                <a href={item.url} target="_blank" rel="noreferrer" className="btn-gold-outline text-xs px-3 py-1.5">
+                                  Öffnen
+                                </a>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              )}
-            </div>
-          ))}
-        </div>
-        </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );
 }
-
-

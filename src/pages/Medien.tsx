@@ -21,6 +21,19 @@ export default function Medien() {
       });
   }, []);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      },
+      { threshold: 0.05 }
+    );
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [items]);
+
   const toggle = (type: MediaType) => {
     setOpenType((prev) => {
       const next = prev === type ? prev : type;

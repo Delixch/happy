@@ -133,7 +133,7 @@ export default function MenuPage() {
               >
                 {/* Thumbnail */}
                 {item.image_url && (
-                  <div className="hidden sm:block w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 ring-1 ring-white/10">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden flex-shrink-0 ring-1 ring-white/10">
                     <img src={item.image_url} alt={item.name} className="w-full h-full object-cover" />
                   </div>
                 )}

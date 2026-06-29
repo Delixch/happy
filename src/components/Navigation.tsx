@@ -97,16 +97,17 @@ export default function Navigation() {
               className="lg:hidden relative z-50 w-11 h-11 flex items-center justify-center rounded-full hover:scale-105 active:scale-95 transition-all duration-300 select-none group"
               aria-label="Toggle menu"
             >
-              {/* Outer Golden Orbit Dashed Ring */}
-              <div className={`absolute inset-0 rounded-full border border-dashed border-gold-400/40 transition-transform duration-[12000ms] linear infinite ${
-                isOpen ? 'animate-spin' : 'group-hover:rotate-45'
-              }`} />
+              {/* Outer Spinning Golden Line Loop (Conic gradient border simulation) */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-gold-400 via-transparent to-amber-500 animate-spin" style={{ animationDuration: '4s' }} />
+
+              {/* Inner dark backdrop leaving a thin 1.5px outer gold ring visible */}
+              <div className="absolute inset-[1.5px] rounded-full bg-dark-900" />
 
               {/* Inner Golden Orbit Solid Ring */}
-              <div className="absolute inset-1 rounded-full border border-gold-400/10 shadow-[0_0_10px_rgba(212,175,55,0.05)]" />
+              <div className="absolute inset-1.5 rounded-full border border-gold-400/10 shadow-[0_0_10px_rgba(212,175,55,0.05)]" />
               
-              {/* Rotating glowing core */}
-              <div className={`absolute inset-1.5 rounded-full bg-dark-900/90 flex items-center justify-center transition-all duration-300 ${
+              {/* Core container holding the SVGs */}
+              <div className={`absolute inset-2.5 rounded-full bg-dark-900/90 flex items-center justify-center transition-all duration-300 ${
                 isOpen ? 'shadow-[0_0_15px_rgba(212,175,55,0.25)] border border-gold-400/25' : 'border border-white/5'
               }`}>
                 {isOpen ? (

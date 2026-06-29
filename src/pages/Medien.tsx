@@ -21,13 +21,41 @@ export default function Medien() {
       });
   }, []);
 
-  const toggle = (type: MediaType) => setOpenType((prev) => (prev === type ? type : type));
+  const toggle = (type: MediaType) => {
+    setOpenType((prev) => {
+      const next = prev === type ? prev : type;
+      // Scroll smoothly to start of the content of the selected category on mobile/desktop
+      setTimeout(() => {
+        const element = document.getElementById(`category-${type}`);
+        if (element) {
+          // Adjust scroll position to account for top navigation header height (80px)
+          const offsetTop = element.getBoundingClientRect().top + window.scrollY - 90;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      }, 350);
+      return next;
+    });
+  };
 
   const typeLabels: Record<MediaType, string> = { tv: 'TV Berichte', presse: 'Presse Berichte', online: 'Online News' };
   const types: MediaType[] = ['tv', 'presse', 'online'];
 
   return (
     <div className="pt-20 min-h-screen">
+      {/* CSS Shimmer animation that runs once */}
+      <style>{`
+        @keyframes shimmerOnce {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        .animate-shimmer-once {
+          animation: shimmerOnce 1.8s cubic-bezier(0.25, 1, 0.5, 1) 1 forwards;
+        }
+      `}</style>
+
       {/* Hero */}
       <div className="relative h-[30vh] min-h-[220px] overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/default-hero.jpg')" }} />
@@ -36,10 +64,10 @@ export default function Medien() {
         <div className="absolute inset-0 bg-black/20" />
         <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-end pb-10">
           <div>
-            <p className="text-gold-400 font-sans text-sm tracking-[0.3em] uppercase mb-3">
+            <p className="text-gold-400 font-sans text-sm tracking-[0.3em] uppercase mb-3 animate-fade-in">
               Presse & Berichte
             </p>
-            <h1 className="text-5xl md:text-6xl font-serif font-bold text-white">
+            <h1 className="text-5xl md:text-6xl font-serif font-bold text-white animate-fade-in" style={{ animationDelay: '100ms' }}>
               Medien
             </h1>
           </div>
@@ -47,7 +75,7 @@ export default function Medien() {
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 py-16 max-w-4xl">
-        <p className="text-white/50 font-sans text-center mb-12 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-white/50 font-sans text-center mb-12 max-w-2xl mx-auto leading-relaxed reveal">
           In diesem Bereich teilen wir ausgewählte Medienbeiträge über{' '}
           <span className="text-gold-400 font-semibold">happybeck</span>{' '}
           – von TV-Berichten über Presseartikel bis hin zu Online-News.
@@ -58,27 +86,44 @@ export default function Medien() {
             <Loader2 className="w-6 h-6 text-gold-400 animate-spin" />
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-6">
             {types.map((type) => {
               const typeItems = items.filter((i) => i.type === type);
+              const isOpen = openType === type;
               return (
-                <div key={type} className="glass-card overflow-hidden">
+                <div
+                  key={type}
+                  id={`category-${type}`}
+                  className="glass-card overflow-hidden glow-gold relative transition-all duration-300 reveal"
+                >
+                  {/* Glowing gold shimmer line that runs once when opened */}
+                  {isOpen && (
+                    <div
+                      key={`${type}-shimmer`}
+                      className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-gold-400 via-amber-300 to-gold-400 animate-shimmer-once z-30"
+                    />
+                  )}
+                  
+                  {/* Static gold top indicator when shimmer finishes */}
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gold-400/20" />
+
                   <button
                     onClick={() => toggle(type)}
-                    className="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-white/[0.02] transition-colors"
-                    aria-expanded={openType === type}
+                    className="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-white/[0.02] transition-colors relative z-10 cursor-pointer"
+                    aria-expanded={isOpen}
                   >
                     <span className="font-serif text-lg font-semibold text-white">
                       {typeLabels[type]} ({typeItems.length})
                     </span>
                     <ChevronDown className={`w-5 h-5 text-gold-400 transition-transform duration-300 ${
-                      openType === type ? 'rotate-180' : ''
+                      isOpen ? 'rotate-180' : ''
                     }`} />
                   </button>
+
                   <div className={`transition-all duration-500 overflow-hidden ${
-                    openType === type ? 'max-h-[3000px] opacity-100' : 'max-h-0 opacity-0'
+                    isOpen ? 'max-h-[3000px] opacity-100' : 'max-h-0 opacity-0'
                   }`}>
-                    <div className="px-6 pb-6">
+                    <div className="px-6 pb-6 relative z-10">
                       {typeItems.length === 0 ? (
                         <div className="text-sm text-white/40 font-sans p-6 glass-card-light text-center">
                           Beiträge werden in Kürze hier veröffentlicht.
@@ -105,7 +150,7 @@ export default function Medien() {
                                     <button
                                       type="button"
                                       aria-label="Video abspielen"
-                                      className="absolute inset-0 w-full h-full"
+                                      className="absolute inset-0 w-full h-full cursor-pointer"
                                       onClick={() => setPlayingIds((p) => ({ ...p, [item.id]: true }))}
                                     >
                                       <img
@@ -133,13 +178,13 @@ export default function Medien() {
                       ) : (
                         <div className="space-y-3">
                           {typeItems.map((item) => (
-                            <div key={item.id} className="glass-card-light p-4 flex items-center gap-4">
+                            <div key={item.id} className="glass-card-light p-4 flex items-center gap-4 hover:border-gold-400/30 transition-all duration-300">
                               <div className="flex-1">
                                 <p className="text-white font-sans text-sm font-medium">{item.title}</p>
                                 {item.description && <p className="text-white/30 font-sans text-xs mt-1">{item.description}</p>}
                               </div>
                               {item.url && (
-                                <a href={item.url} target="_blank" rel="noreferrer" className="btn-gold-outline text-xs px-3 py-1.5">
+                                <a href={item.url} target="_blank" rel="noreferrer" className="btn-gold-outline text-xs px-3 py-1.5 whitespace-nowrap">
                                   Öffnen
                                 </a>
                               )}

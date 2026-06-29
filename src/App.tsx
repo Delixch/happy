@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Unternehmen from './pages/Unternehmen';
@@ -20,12 +20,21 @@ import AdminAktuelles from './pages/admin/AdminAktuelles';
 import AdminDeals from './pages/admin/AdminDeals';
 import AdminInstagram from './pages/admin/AdminInstagram';
 
+// Public Layout Wrapper to render Navigation Header and Footer
+function PublicLayout() {
+  return (
+    <Layout>
+      <Outlet />
+    </Layout>
+  );
+}
+
 function App() {
   return (
     <Router>
-      <Layout>
-        <Routes>
-          {/* Public */}
+      <Routes>
+        {/* Public Website Layout */}
+        <Route element={<PublicLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/unternehmen" element={<Unternehmen />} />
           <Route path="/team" element={<Team />} />
@@ -34,20 +43,19 @@ function App() {
           <Route path="/aktuelles" element={<Aktuelles />} />
           <Route path="/medien" element={<Medien />} />
           <Route path="/kontakt" element={<Kontakt />} />
-
-          {/* Admin */}
-          <Route path="/admin" element={<AdminLogin />} />
-          <Route path="/admin/menu" element={<AdminLayout><AdminMenu /></AdminLayout>} />
-          <Route path="/admin/team" element={<AdminLayout><AdminTeam /></AdminLayout>} />
-          <Route path="/admin/medien" element={<AdminLayout><AdminMedien /></AdminLayout>} />
-          <Route path="/admin/jobs" element={<AdminLayout><AdminJobs /></AdminLayout>} />
-          <Route path="/admin/aktuelles" element={<AdminLayout><AdminAktuelles /></AdminLayout>} />
-          <Route path="/admin/deals" element={<AdminLayout><AdminDeals /></AdminLayout>} />
-          <Route path="/admin/instagram" element={<AdminLayout><AdminInstagram /></AdminLayout>} />
-
           <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Layout>
+        </Route>
+
+        {/* Standalone Admin Dashboard Layouts (Isolated from public header/footer) */}
+        <Route path="/admin" element={<AdminLogin />} />
+        <Route path="/admin/menu" element={<AdminLayout><AdminMenu /></AdminLayout>} />
+        <Route path="/admin/team" element={<AdminLayout><AdminTeam /></AdminLayout>} />
+        <Route path="/admin/medien" element={<AdminLayout><AdminMedien /></AdminLayout>} />
+        <Route path="/admin/jobs" element={<AdminLayout><AdminJobs /></AdminLayout>} />
+        <Route path="/admin/aktuelles" element={<AdminLayout><AdminAktuelles /></AdminLayout>} />
+        <Route path="/admin/deals" element={<AdminLayout><AdminDeals /></AdminLayout>} />
+        <Route path="/admin/instagram" element={<AdminLayout><AdminInstagram /></AdminLayout>} />
+      </Routes>
     </Router>
   );
 }

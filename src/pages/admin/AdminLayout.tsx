@@ -47,7 +47,7 @@ export function AdminLogin() {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center pt-20 px-4">
+    <section className="min-h-screen flex items-center justify-center py-10 px-4">
       <div className="glass-card p-10 w-full max-w-md">
         <div className="text-center mb-8">
           <div className="w-16 h-16 rounded-full border border-gold-400/30 flex items-center justify-center mx-auto mb-4">
@@ -105,9 +105,9 @@ export function AdminLayout({ children }: { children: ReactNode }) {
   if (!authed) return null;
 
   return (
-    <div className="min-h-screen pt-20 flex">
+    <div className="min-h-screen flex">
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex flex-col w-64 fixed top-20 left-0 bottom-0 bg-dark-800 border-r border-white/5">
+      <aside className="hidden lg:flex flex-col w-64 fixed top-0 left-0 bottom-0 bg-dark-800 border-r border-white/5">
         <div className="p-6 border-b border-white/5">
           <h2 className="text-lg font-serif font-bold text-gold-gradient">Admin Panel</h2>
           <p className="text-white/30 font-sans text-xs mt-1">Happy Beck Verwaltung</p>
@@ -141,7 +141,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
       </aside>
 
       {/* Mobile Header */}
-      <div className="lg:hidden fixed top-20 left-0 right-0 z-30 bg-dark-800/95 backdrop-blur-xl border-b border-white/5 px-4 py-3 flex items-center justify-between">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-30 bg-dark-800/95 backdrop-blur-xl border-b border-white/5 px-4 py-3 flex items-center justify-between">
         <h2 className="text-sm font-serif font-bold text-gold-gradient">Admin Panel</h2>
         <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-white/60 hover:text-gold-400 transition-colors">
           {sidebarOpen ? <X className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}
@@ -150,7 +150,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
 
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
-        <div className="lg:hidden fixed inset-0 z-20 pt-32">
+        <div className="lg:hidden fixed inset-0 z-20 pt-12">
           <div className="absolute inset-0 bg-dark-700/90 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
           <div className="relative bg-dark-800 border-r border-white/5 w-64 h-full p-4 space-y-1">
             {navItems.map((item) => (

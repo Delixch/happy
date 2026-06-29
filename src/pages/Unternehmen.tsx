@@ -108,6 +108,9 @@ export default function Unternehmen() {
                 className="relative group cursor-pointer"
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
+                onTouchStart={() => setHover(true)}
+                onTouchEnd={() => setHover(false)}
+                onTouchCancel={() => setHover(false)}
                 onClick={() => setHover((v) => !v)}
                 role="button"
                 aria-label="Bild wechseln"
@@ -117,6 +120,9 @@ export default function Unternehmen() {
                 <div className="absolute -bottom-4 -left-4 w-full h-full border border-gold-400/5 rounded-2xl" />
 
                 <div className="relative aspect-[3/4] rounded-2xl overflow-hidden">
+                  {/* Glowing gold shimmer line at the top of the image */}
+                  <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-gold-400 via-amber-300 to-gold-400 animate-shimmer z-30" />
+                  
                   {/* Single image — grayscale by default, color on hover */}
                   <img
                     src="/uberuns.jpg"

@@ -43,36 +43,26 @@ export default function Navigation() {
           scrolled ? 'pt-2 sm:pt-3' : 'pt-4 sm:pt-5'
         }`}
       >
-        <div
-          className={`mx-auto transition-all duration-500 w-full ${
-            scrolled ? 'max-w-4xl' : 'max-w-5xl'
-          }`}
-        >
+        <div className="mx-auto w-full max-w-5xl transition-all duration-500">
           {/* Inner glass capsule panel */}
           <div
             className={`flex items-center justify-between transition-all duration-500 rounded-full border ${
               scrolled
-                ? 'bg-dark-900/80 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.6)] border-gold-400/20 px-4 py-2.5 sm:px-6'
+                ? 'bg-dark-900/80 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.6)] border-gold-400/20 px-6 py-3 sm:px-8'
                 : 'bg-dark-900/50 backdrop-blur-md shadow-lg border-white/5 px-6 py-4 sm:px-8'
             }`}
           >
             {/* Logo & Brand text */}
             <Link to="/" className="group flex items-center gap-3 sm:gap-4 z-10">
               <div className="flex flex-col justify-center text-left">
-                <p className={`font-serif font-semibold text-white tracking-wide leading-tight group-hover:text-gold-400 transition-all duration-500 ${
-                  scrolled ? 'text-xs sm:text-base' : 'text-sm sm:text-lg'
-                }`}>
+                <p className="font-serif font-semibold text-white tracking-wide leading-tight group-hover:text-gold-400 transition-colors whitespace-nowrap text-sm sm:text-lg">
                   Happy <span className="text-gold-400 group-hover:text-white transition-colors">Beck</span>
                 </p>
-                <p className={`tracking-[0.18em] sm:tracking-[0.25em] uppercase text-gold-400/60 font-sans leading-none transition-all duration-500 ${
-                  scrolled ? 'text-[6px] sm:text-[8px] mt-0.5' : 'text-[7.5px] sm:text-[10px] mt-1'
-                }`}>
+                <p className="tracking-[0.18em] sm:tracking-[0.25em] uppercase text-gold-400/60 font-sans leading-none mt-1 whitespace-nowrap text-[7.5px] sm:text-[10px]">
                   Ein Häppchen Glück
                 </p>
               </div>
-              <div className={`relative rounded-full overflow-hidden ring-1 ring-gold-400/30 transition-all duration-500 group-hover:ring-gold-400/60 group-hover:shadow-[0_0_20px_rgba(212,175,55,0.25)] ${
-                scrolled ? 'w-8 h-8 sm:w-10 sm:h-10' : 'w-10 h-10 sm:w-12 sm:h-12'
-              }`}>
+              <div className="relative rounded-full overflow-hidden ring-1 ring-gold-400/30 transition-all duration-500 group-hover:ring-gold-400/60 group-hover:shadow-[0_0_20px_rgba(212,175,55,0.25)] w-10 h-10 sm:w-12 sm:h-12">
                 <img
                   src="/logo.png"
                   alt="Happy Beck"

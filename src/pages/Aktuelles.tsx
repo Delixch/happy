@@ -276,7 +276,7 @@ export default function Aktuelles() {
 
   // Interactive Lunch-Pass Simulator State
   const [stamps, setStamps] = useState(0);
-  const [celebrationType, setCelebrationType] = useState<'kaffee' | 'sandwich' | null>(null);
+  const [celebrationType, setCelebrationType] = useState<'kaffee' | 'sandwich' | 'kasse' | null>(null);
   const [passConfetti, setPassConfetti] = useState(false);
 
   const handleStampClick = (num: number) => {
@@ -300,16 +300,28 @@ export default function Aktuelles() {
       setCelebrationType('sandwich');
       setPassConfetti(true);
       
-      // Auto-reset stamps and restart loop after 3.2 seconds
+      // Transition to final "kasse" overlay after 3.2 seconds
       timer = setTimeout(() => {
-        setCelebrationType(null);
+        setCelebrationType('kasse');
         setPassConfetti(false);
-        setStamps(0);
+        setStamps(0); // Clear stamps so background is empty for the next loop
       }, 3200);
     }
     
     return () => clearTimeout(timer);
   }, [stamps]);
+
+  // 1b. Handle the final "kasse" screen timeout to restart loop
+  useEffect(() => {
+    let timer: any;
+    if (celebrationType === 'kasse') {
+      timer = setTimeout(() => {
+        setCelebrationType(null);
+        // Stamps is already 0, so loop resumes automatically!
+      }, 4000); // Show "FRAGEN SIE AN DER KASSE..." for 4 seconds
+    }
+    return () => clearTimeout(timer);
+  }, [celebrationType]);
 
   // 2. Auto-play stamp progression loop (runs when no celebration is active)
   useEffect(() => {
@@ -488,6 +500,21 @@ export default function Aktuelles() {
                           Reset
                         </button>
                       </div>
+                    </div>
+                  )}
+
+                  {celebrationType === 'kasse' && (
+                    <div className="absolute inset-0 bg-dark-900/98 backdrop-blur-md z-30 flex flex-col items-center justify-center p-6 text-center animate-scale-in">
+                      <div className="text-gold-gradient font-serif font-black text-base md:text-lg leading-snug tracking-wider animate-pulse uppercase px-2">
+                        FRAGEN SIE <br />
+                        AN DER KASSE <br />
+                        NACH IHREM <br />
+                        LUNCH-PASS!
+                      </div>
+                      <div className="w-12 h-[1px] bg-gold-400/30 my-4" />
+                      <p className="text-white/40 font-sans text-[8px] uppercase tracking-widest">
+                        Happy Beck Zürich
+                      </p>
                     </div>
                   )}
 

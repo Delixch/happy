@@ -20,6 +20,7 @@ import AdminAktuelles from './pages/admin/AdminAktuelles';
 import AdminDeals from './pages/admin/AdminDeals';
 import AdminInstagram from './pages/admin/AdminInstagram';
 import LoadingScreen from './components/LoadingScreen';
+import CookieConsent from './components/CookieConsent';
 
 // Public Layout Wrapper to render Navigation Header and Footer
 function PublicLayout() {
@@ -34,6 +35,7 @@ function App() {
   return (
     <Router>
       <LoadingScreen />
+      <CookieConsent />
       <Routes>
         {/* Public Website Layout */}
         <Route element={<PublicLayout />}>

@@ -219,55 +219,52 @@ export default function Kontakt() {
       {/* ── GOOGLE MAPS SECTION ── */}
       <div className="container mx-auto px-4 lg:px-8 pb-16 max-w-6xl animate-fade-in relative">
         
-        {/* Animated Driving Sports Car on the Gold Line */}
+        {/* Animated Driving Delivery Van on the Gold Line */}
         <div className="absolute top-[-22px] left-[16px] right-[16px] lg:left-[32px] lg:right-[32px] h-[24px] pointer-events-none overflow-hidden z-20">
           <div className="animate-car-drive absolute bottom-0">
             <svg className="animate-car-bounce" width="46" height="24" viewBox="0 0 48 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              {/* Spoiler */}
-              <path d="M3 10H8V12H3V10Z" fill="#B3922E"/>
-              <path d="M4 12L5 15H4L3 12H4Z" fill="#947822"/>
-              {/* Sports Car Shape */}
-              <path d="M4 14C4 14 6 12 11 12C14 10 18 6 24 6H34C37 6 42 9 44 12C45 13.5 45.5 15.5 44 17C42 19 38 19 38 19H8C8 19 4 19 4 14Z" fill="#D4AF37"/>
-              {/* Windshield / Windows */}
-              <path d="M19.5 11.5H24.5C28.5 11.5 31.5 8.5 31.5 8.5L25.5 8.5C21.5 8.5 19.5 11.5 19.5 11.5Z" fill="#E0F7FA" opacity="0.8"/>
-              <path d="M13 11.5H18C18 11.5 17 8.5 14 8.5L11 8.5C11 8.5 12 11.5 13 11.5Z" fill="#E0F7FA" opacity="0.8"/>
-              {/* Eyes on Windshield (like cartoon character) */}
-              <circle cx="28" cy="10" r="1" fill="#000000"/>
-              <circle cx="24" cy="10" r="1" fill="#000000"/>
-              {/* Smile on front bumper */}
-              <path d="M41 15.5C41 15.5 40 17 38 17" stroke="#3E3003" strokeWidth="0.8" strokeLinecap="round"/>
+              {/* Main Cargo Box */}
+              <path d="M4 6C4 5.4 4.4 5 5 5H28C28.6 5 29 5.4 29 6V18H4V6Z" fill="#D4AF37"/>
+              {/* Cabin */}
+              <path d="M29 9H34.5L41 14.2V18H29V9Z" fill="#D4AF37"/>
+              {/* Windshield Window */}
+              <path d="M30.5 10.5H33.8L37.8 13.8H30.5V10.5Z" fill="#E0F7FA" opacity="0.8"/>
+              {/* Back Door Line */}
+              <line x1="8" y1="5" x2="8" y2="18" stroke="#A6831B" strokeWidth="0.8"/>
+              {/* Small Logo on Cargo (Bread outline) */}
+              <path d="M13 11C14 9.5 16 9.5 17 11M17 11C18 9.5 20 9.5 21 11M17 11V14" stroke="#4D3B03" strokeWidth="1" strokeLinecap="round"/>
+              {/* Tail Light */}
+              <rect x="4" y="8" width="1" height="3.5" fill="#EF5350"/>
               {/* Headlight */}
-              <path d="M43 13.5L44.5 14.2L43 15V13.5Z" fill="#FFF9E6"/>
-              {/* Tail light */}
-              <circle cx="6" cy="14" r="1.2" fill="#EF5350"/>
+              <path d="M41 14.5L42.5 15.2L41 16V14.5Z" fill="#FFF9E6"/>
               {/* Wheels */}
               <g>
                 <animateTransform 
                   attributeName="transform" 
                   type="rotate" 
-                  from="0 13 18" 
-                  to="360 13 18" 
+                  from="0 12 18" 
+                  to="360 12 18" 
                   dur="0.4s" 
                   repeatCount="indefinite" 
                 />
-                <circle cx="13" cy="18" r="4.5" fill="#1A1A1A"/>
-                <circle cx="13" cy="18" r="2" fill="#E0C368"/>
-                <line x1="13" y1="14.5" x2="13" y2="21.5" stroke="#1A1A1A" strokeWidth="1"/>
-                <line x1="9.5" y1="18" x2="16.5" y2="18" stroke="#1A1A1A" strokeWidth="1"/>
+                <circle cx="12" cy="18" r="4.5" fill="#1A1A1A"/>
+                <circle cx="12" cy="18" r="1.8" fill="#E0C368"/>
+                <line x1="12" y1="14.5" x2="12" y2="21.5" stroke="#1A1A1A" strokeWidth="0.8"/>
+                <line x1="8.5" y1="18" x2="15.5" y2="18" stroke="#1A1A1A" strokeWidth="0.8"/>
               </g>
               <g>
                 <animateTransform 
                   attributeName="transform" 
                   type="rotate" 
-                  from="0 34 18" 
-                  to="360 34 18" 
+                  from="0 32 18" 
+                  to="360 32 18" 
                   dur="0.4s" 
                   repeatCount="indefinite" 
                 />
-                <circle cx="34" cy="18" r="4.5" fill="#1A1A1A"/>
-                <circle cx="34" cy="18" r="2" fill="#E0C368"/>
-                <line x1="34" y1="14.5" x2="34" y2="21.5" stroke="#1A1A1A" strokeWidth="1"/>
-                <line x1="30.5" y1="18" x2="37.5" y2="18" stroke="#1A1A1A" strokeWidth="1"/>
+                <circle cx="32" cy="18" r="4.5" fill="#1A1A1A"/>
+                <circle cx="32" cy="18" r="1.8" fill="#E0C368"/>
+                <line x1="32" y1="14.5" x2="32" y2="21.5" stroke="#1A1A1A" strokeWidth="0.8"/>
+                <line x1="28.5" y1="18" x2="35.5" y2="18" stroke="#1A1A1A" strokeWidth="0.8"/>
               </g>
             </svg>
           </div>

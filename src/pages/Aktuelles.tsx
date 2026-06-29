@@ -280,20 +280,39 @@ export default function Aktuelles() {
   const [passConfetti, setPassConfetti] = useState(false);
 
   const handleStampClick = (num: number) => {
-    // Tapping the active stamp number resets it back one step. Tapping any other number sets to that count.
-    const newCount = stamps === num ? num - 1 : num;
-    setStamps(newCount);
+    setStamps(stamps === num ? num - 1 : num);
+  };
 
-    if (newCount === 5) {
+  // 1. Reactive stamp achievements (Confetti & Celebration Overlay)
+  useEffect(() => {
+    if (stamps === 5) {
       setCelebrationType('kaffee');
       setPassConfetti(true);
       setTimeout(() => setPassConfetti(false), 4000);
-    } else if (newCount === 10) {
+    } else if (stamps === 10) {
       setCelebrationType('sandwich');
       setPassConfetti(true);
       setTimeout(() => setPassConfetti(false), 4000);
     }
-  };
+  }, [stamps]);
+
+  // 2. Auto-play stamp progression loop (runs when no celebration is active)
+  useEffect(() => {
+    if (loadingSpecial || celebrationType) return;
+
+    let timer: any;
+    if (stamps < 5) {
+      timer = setTimeout(() => {
+        setStamps((s) => s + 1);
+      }, 650); // 650ms step delay for a gorgeous sequential build
+    } else if (stamps > 5 && stamps < 10) {
+      timer = setTimeout(() => {
+        setStamps((s) => s + 1);
+      }, 650);
+    }
+
+    return () => clearTimeout(timer);
+  }, [stamps, loadingSpecial, celebrationType]);
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
@@ -474,19 +493,22 @@ export default function Aktuelles() {
                         {group.row.map((num) => {
                           const isReward = num === group.reward.num;
                           const isStamped = num <= stamps;
+                          const isActive = num === stamps;
                           return (
                             <div key={num}>
                               <button
                                 onClick={() => handleStampClick(num)}
                                 className={`w-full aspect-square rounded-full flex flex-col items-center justify-center border-2 transition-all duration-300 cursor-pointer select-none relative overflow-hidden ${
                                   isStamped 
-                                    ? 'bg-gradient-to-br from-gold-400 to-amber-500 border-gold-300 text-dark-900 font-bold shadow-[0_0_12px_rgba(212,175,55,0.45)] scale-105' 
+                                    ? (isReward && isActive)
+                                      ? 'bg-gradient-to-br from-orange-400 to-red-500 border-orange-300 text-white shadow-[0_0_20px_rgba(251,146,60,0.6)] font-bold scale-110'
+                                      : 'bg-gradient-to-br from-gold-400 to-amber-500 border-gold-300 text-dark-900 font-bold shadow-[0_0_12px_rgba(212,175,55,0.45)] scale-105' 
                                     : isReward 
                                       ? 'bg-gold-400/5 border-dashed border-gold-400/40 text-gold-400/60 hover:border-gold-400/80 hover:bg-gold-400/10' 
                                       : 'bg-dark-400 border-white/10 text-white/30 hover:border-gold-400/30 hover:bg-dark-300'
                                 }`}
                               >
-                                <span className={`text-xs font-serif font-bold ${isStamped ? 'text-dark-900' : isReward ? 'text-gold-400' : 'text-white/20'}`}>{num}</span>
+                                <span className={`text-xs font-serif font-bold ${isStamped ? (isReward && isActive ? 'text-white' : 'text-dark-900') : isReward ? 'text-gold-400' : 'text-white/20'}`}>{num}</span>
                                 {isReward && !isStamped && (
                                   <span className="text-[7px] font-sans font-bold text-gold-400/80 text-center leading-none mt-0.5 px-0.5">
                                     {group.reward.text}

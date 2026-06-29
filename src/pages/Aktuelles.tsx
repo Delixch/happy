@@ -274,6 +274,27 @@ export default function Aktuelles() {
   const [deals, setDeals] = useState<Deal[]>([]);
   const [loadingDeals, setLoadingDeals] = useState(true);
 
+  // Interactive Lunch-Pass Simulator State
+  const [stamps, setStamps] = useState(0);
+  const [celebrationType, setCelebrationType] = useState<'kaffee' | 'sandwich' | null>(null);
+  const [passConfetti, setPassConfetti] = useState(false);
+
+  const handleStampClick = (num: number) => {
+    // Tapping the active stamp number resets it back one step. Tapping any other number sets to that count.
+    const newCount = stamps === num ? num - 1 : num;
+    setStamps(newCount);
+
+    if (newCount === 5) {
+      setCelebrationType('kaffee');
+      setPassConfetti(true);
+      setTimeout(() => setPassConfetti(false), 4000);
+    } else if (newCount === 10) {
+      setCelebrationType('sandwich');
+      setPassConfetti(true);
+      setTimeout(() => setPassConfetti(false), 4000);
+    }
+  };
+
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
     supabase
@@ -372,6 +393,7 @@ export default function Aktuelles() {
 
           {/* Right Column: Lunch-Pass */}
           <div className="flex flex-col h-full animate-fade-in" style={{ animationDelay: '100ms' }}>
+            <Confetti active={passConfetti} />
             <div className="text-center mb-4">
               <p className="text-gold-400 font-sans text-[10px] tracking-[0.3em] uppercase mb-1">
                 Treuepass
@@ -381,9 +403,60 @@ export default function Aktuelles() {
               </h2>
             </div>
             <div className="flex-1 flex flex-col">
-              <div className="glass-card overflow-hidden glow-gold h-full flex flex-col justify-between">
+              <div className="glass-card overflow-hidden glow-gold h-full flex flex-col justify-between relative">
+                {/* Top decorative gold line */}
                 <div className="h-[2px] bg-gradient-to-r from-gold-400 via-gold-300 to-gold-400" />
+                
                 <div className="relative p-6 flex-1 flex flex-col justify-between">
+                  {/* Interactive Celebrations Overlays */}
+                  {celebrationType === 'kaffee' && (
+                    <div className="absolute inset-0 bg-dark-900/95 backdrop-blur-sm z-30 flex flex-col items-center justify-center p-6 text-center animate-scale-in">
+                      <div className="w-12 h-12 rounded-full bg-gold-400/10 flex items-center justify-center mb-3 border border-gold-400/30">
+                        <span className="text-2xl">☕</span>
+                      </div>
+                      <h3 className="text-lg font-serif font-bold text-gold-gradient mb-1">
+                        5. Kaffee GRATIS!
+                      </h3>
+                      <p className="text-white/60 font-sans text-[10px] max-w-[200px] mb-4">
+                        Glückwunsch! Ihr gratis Kaffee wurde freigeschaltet.
+                      </p>
+                      <button 
+                        onClick={() => setCelebrationType(null)}
+                        className="btn-gold text-[9px] px-3.5 py-1.5 rounded-full cursor-pointer hover:scale-105 transition-all"
+                      >
+                        Weiter stempeln
+                      </button>
+                    </div>
+                  )}
+
+                  {celebrationType === 'sandwich' && (
+                    <div className="absolute inset-0 bg-dark-900/95 backdrop-blur-sm z-30 flex flex-col items-center justify-center p-6 text-center animate-scale-in">
+                      <div className="w-12 h-12 rounded-full bg-gold-400/10 flex items-center justify-center mb-3 border border-gold-400/30">
+                        <span className="text-2xl">🥪</span>
+                      </div>
+                      <h3 className="text-lg font-serif font-bold text-gold-gradient mb-1">
+                        Gratis SANDWICH!
+                      </h3>
+                      <p className="text-white/60 font-sans text-[10px] max-w-[200px] mb-4">
+                        Hauptgewinn! Geniessen Sie ein gratis Sandwich Ihrer Wahl.
+                      </p>
+                      <div className="flex gap-2">
+                        <button 
+                          onClick={() => setCelebrationType(null)}
+                          className="btn-gold text-[9px] px-3.5 py-1.5 rounded-full cursor-pointer hover:scale-105 transition-all"
+                        >
+                          Gutschein zeigen
+                        </button>
+                        <button 
+                          onClick={() => { setCelebrationType(null); setStamps(0); }}
+                          className="btn-gold-outline text-[9px] px-3.5 py-1.5 rounded-full cursor-pointer hover:scale-105 transition-all"
+                        >
+                          Reset
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="text-center mb-4">
                     <p className="text-white/60 font-sans text-[11px] leading-relaxed">
                       Sammeln Sie Kaffee-Stempel: <br />
@@ -391,6 +464,7 @@ export default function Aktuelles() {
                     </p>
                   </div>
 
+                  {/* Stamp circles grid */}
                   <div className="relative z-10 max-w-[240px] mx-auto w-full">
                     {[
                       { row: [1, 2, 3, 4, 5], reward: { num: 5, text: 'Kaffee' } },
@@ -399,23 +473,26 @@ export default function Aktuelles() {
                       <div key={gi} className="grid grid-cols-5 gap-1.5 mb-3">
                         {group.row.map((num) => {
                           const isReward = num === group.reward.num;
+                          const isStamped = num <= stamps;
                           return (
                             <div key={num}>
-                              <div
-                                className={`aspect-square rounded-full flex flex-col items-center justify-center border-2 transition-all ${
-                                  isReward
-                                    ? 'bg-gold-400/10 border-gold-400 animate-reward-stamp'
-                                    : 'bg-dark-400 border-white/10 hover:border-gold-400/30 animate-stamp'
+                              <button
+                                onClick={() => handleStampClick(num)}
+                                className={`w-full aspect-square rounded-full flex flex-col items-center justify-center border-2 transition-all duration-300 cursor-pointer select-none relative overflow-hidden ${
+                                  isStamped 
+                                    ? 'bg-gradient-to-br from-gold-400 to-amber-500 border-gold-300 text-dark-900 font-bold shadow-[0_0_12px_rgba(212,175,55,0.45)] scale-105' 
+                                    : isReward 
+                                      ? 'bg-gold-400/5 border-dashed border-gold-400/40 text-gold-400/60 hover:border-gold-400/80 hover:bg-gold-400/10' 
+                                      : 'bg-dark-400 border-white/10 text-white/30 hover:border-gold-400/30 hover:bg-dark-300'
                                 }`}
-                                style={{ animationDelay: `${num * 100}ms` }}
                               >
-                                <span className={`text-xs font-serif font-bold ${isReward ? 'text-gold-400' : 'text-white/20'}`}>{num}</span>
-                                {isReward && (
-                                  <span className="text-[7px] font-sans font-bold text-gold-400 text-center leading-none mt-0.5 px-0.5">
+                                <span className={`text-xs font-serif font-bold ${isStamped ? 'text-dark-900' : isReward ? 'text-gold-400' : 'text-white/20'}`}>{num}</span>
+                                {isReward && !isStamped && (
+                                  <span className="text-[7px] font-sans font-bold text-gold-400/80 text-center leading-none mt-0.5 px-0.5">
                                     {group.reward.text}
                                   </span>
                                 )}
-                              </div>
+                              </button>
                             </div>
                           );
                         })}
@@ -423,14 +500,38 @@ export default function Aktuelles() {
                     ))}
                   </div>
 
-                  <div className="text-center mt-3">
-                    <p className="text-white/20 font-sans text-[9px]">Dein Happy-Genuss</p>
+                  {/* Dynamic interactive guide message */}
+                  <div className="text-center mt-3 min-h-[22px]">
+                    {stamps === 0 && (
+                      <p className="text-white/30 font-sans text-[9px] animate-pulse">
+                        💡 Kreise anklicken zum Stempeln!
+                      </p>
+                    )}
+                    {stamps > 0 && stamps < 5 && (
+                      <p className="text-gold-400/80 font-sans text-[9px] font-medium">
+                        Noch {5 - stamps} Stempel bis zum Gratis-Kaffee! ☕
+                      </p>
+                    )}
+                    {stamps === 5 && (
+                      <p className="text-gold-400 font-sans text-[9px] font-bold animate-bounce">
+                        🎉 Kaffee freigeschaltet!
+                      </p>
+                    )}
+                    {stamps > 5 && stamps < 10 && (
+                      <p className="text-gold-400/80 font-sans text-[9px] font-medium">
+                        Noch {10 - stamps} Stempel bis zum Gratis-Sandwich! 🥪
+                      </p>
+                    )}
+                    {stamps === 10 && (
+                      <p className="text-gold-400 font-sans text-[9px] font-bold animate-bounce">
+                        🎉 Sandwich freigeschaltet!
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
 

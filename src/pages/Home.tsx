@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { ChefHat, Heart, Award, ChevronLeft, ChevronRight, Instagram, RefreshCw, Loader2 } from 'lucide-react';
+import { ChefHat, Heart, Award, ChevronLeft, ChevronRight, Instagram, RefreshCw, Loader2, X, Gift, ChevronDown } from 'lucide-react';
 import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
-import { supabase, type InstagramPost } from '../lib/supabase';
+import { supabase, type InstagramPost, type Deal } from '../lib/supabase';
 
 export default function Home() {
   const slides = useMemo(
@@ -32,6 +32,22 @@ export default function Home() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [instaPost, setInstaPost] = useState<InstagramPost | null>(null);
   const [loadingInsta, setLoadingInsta] = useState(true);
+
+  const [deals, setDeals] = useState<Deal[]>([]);
+  const [loadingDeals, setLoadingDeals] = useState(true);
+  const [isDealsModalOpen, setIsDealsModalOpen] = useState(false);
+  const [confettiActive, setConfettiActive] = useState(false);
+
+  useEffect(() => {
+    supabase
+      .from('deals')
+      .select('*')
+      .order('sort_order', { ascending: true })
+      .then(({ data }) => {
+        if (data) setDeals(data);
+        setLoadingDeals(false);
+      });
+  }, []);
 
   const fetchRandomInsta = useCallback(async () => {
     setLoadingInsta(true);
@@ -269,6 +285,43 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Confetti Rain */}
+      <Confetti active={confettiActive} />
+
+      {/* ─── SPIEL & SPASS SECTION (INTERACTIVE QUIZ) ─── */}
+      <div className="relative py-24 bg-dark-800 border-t border-white/5 overflow-hidden">
+        {/* Decorative background glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gold-400/[0.02] rounded-full blur-3xl pointer-events-none" />
+
+        <div className="container mx-auto px-4 lg:px-8 max-w-4xl relative z-10">
+          <div className="text-center mb-10 reveal">
+            <p className="text-gold-400 font-sans text-xs tracking-[0.3em] uppercase mb-3">
+              Spiel & Spass
+            </p>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-2">
+              Hast du <span className="text-gold-gradient">Hunger?</span>
+            </h2>
+            <div className="divider-gold w-16 mx-auto mt-4" />
+          </div>
+
+          <div className="max-w-md mx-auto reveal" style={{ animationDelay: '150ms' }}>
+            <HungerGame onComplete={() => {
+              setConfettiActive(true);
+              setIsDealsModalOpen(true);
+              setTimeout(() => setConfettiActive(false), 4500);
+            }} />
+          </div>
+        </div>
+      </div>
+
+      {/* Exklusiv Jubiläums-Deals Modal popup */}
+      <DealsModal
+        isOpen={isDealsModalOpen}
+        onClose={() => setIsDealsModalOpen(false)}
+        deals={deals}
+        loading={loadingDeals}
+      />
     </section>
   );
 }
@@ -334,6 +387,220 @@ function FeatureCard({
           </div>
           <p className="text-white/50 font-sans text-xs leading-relaxed">{text}</p>
         </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Confetti Component ──
+function Confetti({ active }: { active: boolean }) {
+  if (!active) return null;
+  return (
+    <div className="fixed inset-0 pointer-events-none z-[100] overflow-hidden">
+      {[...Array(60)].map((_, i) => {
+        const colors = ['#D4AF37', '#F5E6B8', '#FFD700', '#FFA500', '#FF6347', '#00CED1', '#FF69B4'];
+        const color = colors[i % colors.length];
+        const left = Math.random() * 100;
+        const delay = Math.random() * 0.8;
+        const duration = 2 + Math.random() * 2;
+        const size = 6 + Math.random() * 8;
+        const rotation = Math.random() * 360;
+        return (
+          <div
+            key={i}
+            className="absolute animate-fall"
+            style={{
+              left: `${left}%`,
+              top: '-20px',
+              width: `${size}px`,
+              height: `${size * 0.6}px`,
+              backgroundColor: color,
+              borderRadius: '2px',
+              transform: `rotate(${rotation}deg)`,
+              animation: `confettiFall ${duration}s ease-out ${delay}s forwards`,
+              opacity: 0,
+            }}
+          />
+        );
+      })}
+      <style>{`
+        @keyframes confettiFall {
+          0% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+          100% { opacity: 0; transform: translateY(100vh) rotate(720deg) scale(0.5); }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+// ── Hunger Game Component ──
+function HungerGame({ onComplete }: { onComplete: () => void }) {
+  const [stage, setStage] = useState(0);
+  const [shake, setShake] = useState(false);
+
+  const messages = [
+    { q: '🍕 Hast du Hunger?', btn: 'Ja, schon ein bisschen...', color: 'from-amber-500 to-orange-500' },
+    { q: '🤤 Wirklich? Wie hungrig bist du?', btn: 'SEHR hungrig!', color: 'from-orange-500 to-red-500' },
+    { q: '🔥 Dann haben wir genau das Richtige!', btn: 'Zeig mir was!', color: 'from-red-500 to-pink-500' },
+  ];
+
+  const handleClick = () => {
+    setShake(true);
+    setTimeout(() => setShake(false), 500);
+    if (stage < messages.length - 1) {
+      setStage(stage + 1);
+    } else {
+      onComplete();
+      setStage(0);
+    }
+  };
+
+  return (
+    <div className={`glass-card p-8 text-center overflow-hidden relative min-h-[220px] flex flex-col justify-center items-center ${shake ? 'animate-bounce' : ''}`}>
+      <div className="absolute inset-0 bg-gradient-to-br from-gold-400/5 to-transparent animate-pulse pointer-events-none" />
+
+      <div className="relative z-10 w-full flex flex-col items-center">
+        <p className="text-xl md:text-2xl font-serif font-bold text-white mb-6 min-h-[50px] flex items-center justify-center">
+          {messages[stage].q}
+        </p>
+        <button
+          onClick={handleClick}
+          className={`w-full max-w-xs py-3 rounded-xl text-white font-sans font-bold text-sm bg-gradient-to-r ${messages[stage].color} hover:scale-102 active:scale-98 transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer`}
+        >
+          {messages[stage].btn}
+        </button>
+        
+        {/* Dots */}
+        <div className="flex justify-center gap-2 mt-5">
+          {messages.map((_, i) => (
+            <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${i === stage ? 'bg-gold-400 scale-125' : 'bg-white/20'}`} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Deal Card Component ──
+function DealCard({ deal, index }: { deal: Deal; index: number }) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <div
+      className="glass-card overflow-hidden group hover:glow-gold transition-all duration-500 hover:-translate-y-1 cursor-pointer"
+      onClick={() => setExpanded(!expanded)}
+      style={{ animationDelay: `${index * 100}ms` }}
+    >
+      <div className={`h-[2px] bg-gradient-to-r ${deal.gradient.replace('/20', '')}`} />
+      <div className="p-6">
+        <div className="flex items-start justify-between mb-4">
+          <div>
+            <h3 className="text-lg font-serif font-bold text-white mb-1 group-hover:text-gold-400 transition-colors">
+              {deal.title}
+            </h3>
+            {deal.subtitle && <p className="text-[10px] text-white/40 font-sans">{deal.subtitle}</p>}
+          </div>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            {deal.is_new && (
+              <span className="px-2.5 py-0.5 bg-emerald-500/20 text-emerald-400 text-[9px] font-sans font-bold uppercase tracking-wider rounded-full border border-emerald-500/20">NEU</span>
+            )}
+            {deal.is_special && (
+              <span className="px-2.5 py-0.5 bg-gold-400/10 text-gold-400 text-[9px] font-sans font-bold uppercase tracking-wider rounded-full border border-gold-400/20">SPECIAL</span>
+            )}
+            <ChevronDown className={`w-4 h-4 text-white/30 transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`} />
+          </div>
+        </div>
+
+        {deal.description && (
+          <div className="glass-card-light p-2.5 mb-3">
+            <p className="text-xs text-white/60 font-sans flex items-start gap-2 whitespace-pre-line leading-relaxed">
+              <Gift className="w-3.5 h-3.5 text-gold-400 flex-shrink-0 mt-0.5" />
+              <span>{deal.description}</span>
+            </p>
+          </div>
+        )}
+
+        <div className={`transition-all duration-500 overflow-hidden ${expanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+          <div className="space-y-2.5 pt-2">
+            {deal.items && deal.items.map((item, idx) => (
+              <div key={idx} className={`${idx !== deal.items.length - 1 ? 'pb-2.5 border-b border-white/5' : ''}`}>
+                <div className="flex justify-between items-start gap-2">
+                  <p className="text-white/70 font-sans text-xs flex-1">{item.name}</p>
+                  <div className="text-right whitespace-nowrap">
+                    {item.oldPrice && <p className="text-[10px] text-white/25 line-through font-sans">{item.oldPrice}</p>}
+                    <p className={`text-xs font-serif font-bold ${deal.accent_color}`}>{item.price}</p>
+                  </div>
+                </div>
+                {item.note && <p className="text-[10px] text-white/30 font-sans mt-0.5">{item.note}</p>}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {!expanded && (
+          <p className="text-[10px] text-gold-400/50 font-sans mt-2 text-center group-hover:text-gold-400/80 transition-colors">
+            ▼ Tippe für Details
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── Deals Modal Component ──
+function DealsModal({
+  isOpen,
+  onClose,
+  deals,
+  loading,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  deals: Deal[];
+  loading: boolean;
+}) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/85 backdrop-blur-md" onClick={onClose} />
+
+      {/* Modal Container */}
+      <div className="relative glass-card w-full max-w-4xl max-h-[85vh] overflow-y-auto glow-gold animate-scale-in p-6 md:p-8 z-10 scrollbar-none">
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors cursor-pointer w-8 h-8 rounded-full border border-white/10 flex items-center justify-center bg-dark-900/50"
+        >
+          <X className="w-4 h-4" />
+        </button>
+
+        <div className="text-center mb-8">
+          <p className="text-gold-400 font-sans text-xs tracking-[0.3em] uppercase mb-1">
+            Exklusiv
+          </p>
+          <h2 className="text-2xl md:text-3xl font-serif font-bold text-white mb-1">
+            Jubiläums-Deals
+          </h2>
+          <p className="text-white/40 font-sans text-xs">Tippe auf einen Deal für Details</p>
+        </div>
+
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="w-8 h-8 text-gold-400 animate-spin" />
+          </div>
+        ) : deals.length === 0 ? (
+          <div className="text-center py-10 text-white/30 font-sans">
+            Zurzeit keine Jubiläums-Deals verfügbar.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pb-2">
+            {deals.map((deal, i) => (
+              <DealCard key={deal.id} deal={deal} index={i} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

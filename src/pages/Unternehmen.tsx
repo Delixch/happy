@@ -121,11 +121,13 @@ export default function Unternehmen() {
                   <img
                     src="/uberuns.jpg"
                     alt="Happy Beck Bäckerei"
-                    className={`absolute inset-0 w-full h-full object-cover z-0 transform-gpu transition-all duration-1000 ${
-                      hover
-                        ? 'scale-105 grayscale-0 brightness-100'
-                        : 'scale-100 grayscale brightness-75'
+                    className={`absolute inset-0 w-full h-full object-cover z-0 transform-gpu transition-all duration-750 ${
+                      hover ? 'scale-105' : 'scale-100'
                     }`}
+                    style={{
+                      filter: hover ? 'grayscale(0%) brightness(100%)' : 'grayscale(100%) brightness(75%)',
+                      WebkitFilter: hover ? 'grayscale(0%) brightness(100%)' : 'grayscale(100%) brightness(75%)'
+                    }}
                   />
 
                   {/* Overlay gradient */}

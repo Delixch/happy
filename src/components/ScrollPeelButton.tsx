@@ -6,13 +6,10 @@ export default function ScrollPeelButton() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const docHeight = document.documentElement.scrollHeight;
-      const windowHeight = window.innerHeight;
       const scrollPos = window.scrollY;
 
-      // Show when scrolled near the bottom (within 300px of page end)
-      const isNearBottom = windowHeight + scrollPos >= docHeight - 300;
-      setVisible(isNearBottom);
+      // Show as soon as the user scrolls past 300px (scrolls down with the page)
+      setVisible(scrollPos > 300);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -26,11 +23,27 @@ export default function ScrollPeelButton() {
     if (isPushing) return;
     setIsPushing(true);
 
-    // Scroll to top
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    const duration = 1800; // 1.8 seconds for a slow, premium car-like scroll
+    const start = window.scrollY;
+    const startTime = performance.now();
+
+    const animateScroll = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing: easeInOutCubic (starts slow, accelerates, then decelerates slowly at the top like a car)
+      const ease = progress < 0.5 
+        ? 4 * progress * progress * progress 
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+      window.scrollTo(0, start * (1 - ease));
+
+      if (elapsed < duration) {
+        requestAnimationFrame(animateScroll);
+      }
+    };
+
+    requestAnimationFrame(animateScroll);
 
     // Reset animation state after it completes (850ms)
     setTimeout(() => {
@@ -84,10 +97,10 @@ export default function ScrollPeelButton() {
         style={{ transition: 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)' }}
       >
         <div className={`relative ${isPushing ? 'peel-active-push' : 'group-hover:-translate-y-3 transition-transform duration-300'}`}>
-          {/* Custom SVG Bakery Peel with a long, elegant visible handle */}
+          {/* Custom SVG Bakery Peel with a long, elegant visible handle (Compact Size) */}
           <svg
             viewBox="0 0 100 200"
-            className="w-14 h-28 text-gold-400 drop-shadow-[0_4px_15px_rgba(0,0,0,0.6)] group-hover:text-gold-300 transition-colors"
+            className="w-10 h-20 text-gold-400 drop-shadow-[0_4px_10px_rgba(0,0,0,0.6)] group-hover:text-gold-300 transition-colors"
           >
             {/* The Wooden Peel Paddle Head */}
             <path
@@ -109,7 +122,7 @@ export default function ScrollPeelButton() {
         </div>
         
         {/* Helper text */}
-        <span className="text-[8px] font-sans font-bold text-gold-400/60 uppercase tracking-[0.25em] mt-2 group-hover:text-gold-400 transition-colors">
+        <span className="text-[7px] font-sans font-bold text-gold-400/50 uppercase tracking-[0.25em] mt-1 group-hover:text-gold-400 transition-colors">
           HOCH
         </span>
       </button>

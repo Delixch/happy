@@ -79,7 +79,7 @@ export default function Footer() {
           {/* Social */}
           <div>
             <h4 className="font-serif text-white text-sm font-semibold uppercase tracking-widest mb-6">Social Media</h4>
-            <div className="space-y-3">
+            <div className="space-y-3 flex flex-col items-start">
               <a
                 href="https://www.instagram.com/happybeck.ch?igsh=eGdtbW1ud3p6ZDFx"
                 target="_blank"
@@ -102,7 +102,31 @@ export default function Footer() {
                 </div>
                 <span>@happybeck_</span>
               </a>
+
+              {/* Rotating Border Beam Supervisor Login Button */}
+              <Link
+                to="/admin"
+                className="relative inline-flex items-center justify-center p-[1px] rounded-lg overflow-hidden group/btn w-44 mt-4"
+              >
+                <span className="absolute inset-[-1000%] animate-border-beam bg-[conic-gradient(from_90deg_at_50%_50%,#FFE066_0%,#D4AF37_50%,#FFE066_100%)]" />
+                <span 
+                  className="inline-flex h-full w-full items-center justify-center rounded-[7px] bg-gold-400 px-4 py-2.5 text-xs font-sans font-bold tracking-widest uppercase transition-colors duration-300 group-hover/btn:bg-gold-300"
+                  style={{ color: '#0f0d0c' }}
+                >
+                  Supervisor Login
+                </span>
+              </Link>
             </div>
+
+            <style>{`
+              @keyframes borderBeam {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+              }
+              .animate-border-beam {
+                animation: borderBeam 4s linear infinite;
+              }
+            `}</style>
           </div>
         </div>
 

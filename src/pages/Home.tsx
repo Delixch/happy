@@ -249,19 +249,19 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <FeatureCard
-              icon={<ChefHat className="w-7 h-7" />}
+              icon={<ChefHat className="w-5.5 h-5.5" />}
               title="Handwerk"
               text="Traditionelle Backkunst, entwickelt über Jahrzehnte voller Erfahrung und Leidenschaft. Unsere Rezepte und handwerklichen Techniken wurden von Generation zu Generation weitergegeben und bis heute bewahrt."
               delay={0}
             />
             <FeatureCard
-              icon={<Heart className="w-7 h-7" />}
+              icon={<Heart className="w-5.5 h-5.5" />}
               title="Qualität"
               text="Wir verwenden nur die besten, sorgfältig ausgewählten Zutaten, um täglich frische Backwaren von höchster Qualität herzustellen. Qualität und Leidenschaft sind die Basis für den Genuss."
               delay={150}
             />
             <FeatureCard
-              icon={<Award className="w-7 h-7" />}
+              icon={<Award className="w-5.5 h-5.5" />}
               title="Innovation"
               text="Wir verbinden kreative Innovation mit unserer traditionellen Backkunst. So entstehen einzigartige Produkte, die modern und zugleich authentisch sind."
               delay={300}
@@ -315,7 +315,7 @@ function FeatureCard({
     >
       <div
         style={{ transform }}
-        className="relative text-center p-10 rounded-2xl glass-card transition-all duration-300 will-change-transform hover:glow-gold group"
+        className="relative text-left p-6 rounded-2xl glass-card transition-all duration-300 will-change-transform hover:glow-gold group"
       >
         {/* Spotlight */}
         <div
@@ -326,11 +326,13 @@ function FeatureCard({
         />
 
         <div className="relative z-10">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full border border-gold-400/20 mb-6 text-gold-400 group-hover:border-gold-400/40 group-hover:bg-gold-400/5 transition-all duration-300">
-            {icon}
+          <div className="flex items-center gap-4 mb-4">
+            <div className="flex-shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-full border border-gold-400/20 text-gold-400 group-hover:border-gold-400/40 group-hover:bg-gold-400/5 transition-all duration-300">
+              {icon}
+            </div>
+            <h3 className="text-lg font-serif font-bold text-white group-hover:text-gold-400 transition-colors">{title}</h3>
           </div>
-          <h3 className="text-xl font-serif font-bold text-white mb-4">{title}</h3>
-          <p className="text-white/50 font-sans text-sm leading-relaxed">{text}</p>
+          <p className="text-white/50 font-sans text-xs leading-relaxed">{text}</p>
         </div>
       </div>
     </div>

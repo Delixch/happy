@@ -7,7 +7,7 @@ type MediaType = 'tv' | 'presse' | 'online';
 export default function Medien() {
   const [items, setItems] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [openType, setOpenType] = useState<MediaType>('tv');
+  const [openType, setOpenType] = useState<MediaType | null>(null);
   const [playingIds, setPlayingIds] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
@@ -35,11 +35,11 @@ export default function Medien() {
   }, [items]);
 
   const toggle = (type: MediaType) => {
-    setOpenType(type);
+    setOpenType((prev) => (prev === type ? null : type));
   };
 
   useEffect(() => {
-    if (loading) return;
+    if (loading || !openType) return;
 
     // Scroll smoothly to start of the selected category container
     const timer = setTimeout(() => {

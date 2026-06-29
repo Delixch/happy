@@ -35,23 +35,27 @@ export default function Medien() {
   }, [items]);
 
   const toggle = (type: MediaType) => {
-    setOpenType((prev) => {
-      const next = prev === type ? prev : type;
-      // Scroll smoothly to start of the content of the selected category on mobile/desktop
-      setTimeout(() => {
-        const element = document.getElementById(`category-${type}`);
-        if (element) {
-          // Adjust scroll position to account for top navigation header height (80px)
-          const offsetTop = element.getBoundingClientRect().top + window.scrollY - 90;
-          window.scrollTo({
-            top: offsetTop,
-            behavior: 'smooth'
-          });
-        }
-      }, 350);
-      return next;
-    });
+    setOpenType(type);
   };
+
+  useEffect(() => {
+    if (loading) return;
+
+    // Scroll smoothly to start of the selected category container
+    const timer = setTimeout(() => {
+      const element = document.getElementById(`category-${openType}`);
+      if (element) {
+        // Measure accurate position now that layout transition has finished
+        const offsetTop = element.getBoundingClientRect().top + window.scrollY - 90;
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth'
+        });
+      }
+    }, 320); // 320ms matches the 300ms layout transition perfectly
+
+    return () => clearTimeout(timer);
+  }, [openType, loading]);
 
   const typeLabels: Record<MediaType, string> = { tv: 'TV Berichte', presse: 'Presse Berichte', online: 'Online News' };
   const types: MediaType[] = ['tv', 'presse', 'online'];
@@ -133,7 +137,7 @@ export default function Medien() {
                     }`} />
                   </button>
 
-                  <div className={`transition-all duration-500 overflow-hidden ${
+                  <div className={`transition-all duration-300 overflow-hidden ${
                     isOpen ? 'max-h-[3000px] opacity-100' : 'max-h-0 opacity-0'
                   }`}>
                     <div className="px-6 pb-6 relative z-10">

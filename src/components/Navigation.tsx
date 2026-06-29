@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronRight, Instagram, Phone, MapPin } from 'lucide-react';
+import { X, ChevronRight, Instagram, Phone, MapPin } from 'lucide-react';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -92,14 +92,44 @@ export default function Navigation() {
             {/* Mobile Toggle */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden relative z-10 p-2 text-white/80 hover:text-gold-400 transition-colors"
+              className="lg:hidden relative z-50 w-11 h-11 flex items-center justify-center rounded-full hover:scale-105 active:scale-95 transition-all duration-300 select-none group"
               aria-label="Toggle menu"
             >
-              {isOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+              {/* Outer Golden Orbit Dashed Ring */}
+              <div className={`absolute inset-0 rounded-full border border-dashed border-gold-400/40 transition-transform duration-[12000ms] linear infinite ${
+                isOpen ? 'animate-spin' : 'group-hover:rotate-45'
+              }`} />
+
+              {/* Inner Golden Orbit Solid Ring */}
+              <div className="absolute inset-1 rounded-full border border-gold-400/10 shadow-[0_0_10px_rgba(212,175,55,0.05)]" />
+              
+              {/* Rotating glowing core */}
+              <div className={`absolute inset-1.5 rounded-full bg-dark-900/90 flex items-center justify-center transition-all duration-300 ${
+                isOpen ? 'shadow-[0_0_15px_rgba(212,175,55,0.25)] border border-gold-400/25' : 'border border-white/5'
+              }`}>
+                {isOpen ? (
+                  // Custom Close (X) SVG
+                  <svg 
+                    className="w-4 h-4 text-gold-400" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor" 
+                    strokeWidth="2.5"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                ) : (
+                  // Custom wheat stem (buğday başağı) SVG
+                  <svg 
+                    className="w-5 h-5 text-gold-400 group-hover:scale-110 transition-transform duration-300"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 22,12M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4Z" opacity="0.08" />
+                    <path d="M12 20V10M12 13C13 12 14.5 10 14.5 9C14.5 8 13.5 8 12.5 9C12.3 9.2 12.1 9.5 12 10M12 13C11 12 9.5 10 9.5 9C9.5 8 10.5 8 11.5 9C11.7 9.2 11.9 9.5 12 10M12 10C13 9 14.5 7 14.5 6C14.5 5 13.5 5 12.5 6C12.3 6.2 12.1 6.5 12 7M12 10C11 9 9.5 7 9.5 6C9.5 5 10.5 5 11.5 6C11.7 6.2 11.9 6.5 12 7M12 7C13 6 14.5 4 14.5 3C14.5 2 13.5 2 12.5 3C12.3 3.2 12.1 3.5 12 4M12 7C11 6 9.5 4 9.5 3C9.5 2 10.5 2 11.5 3C11.7 3.2 11.9 3.5 12 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                  </svg>
+                )}
+              </div>
             </button>
           </div>
         </div>

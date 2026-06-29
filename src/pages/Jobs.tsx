@@ -18,8 +18,32 @@ export default function Jobs() {
       });
   }, []);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      },
+      { threshold: 0.05 }
+    );
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [jobs]);
+
   return (
     <section id="jobs" className="pt-20 min-h-screen">
+      {/* CSS Shimmer animation that runs once */}
+      <style>{`
+        @keyframes shimmerOnce {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        .animate-shimmer-once {
+          animation: shimmerOnce 1.8s cubic-bezier(0.25, 1, 0.5, 1) 1 forwards;
+        }
+      `}</style>
+
       {/* Hero */}
       <div className="relative h-[30vh] min-h-[220px] overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/default-hero.jpg')" }} />
@@ -52,11 +76,21 @@ export default function Jobs() {
             </p>
           </div>
         ) : (
-          <div className="space-y-6">
-            {jobs.map((job) => (
-              <div key={job.id} className="glass-card overflow-hidden">
-                {/* Gold accent top */}
-                <div className="h-[2px] bg-gradient-to-r from-gold-400 via-gold-300 to-gold-400" />
+          <div className="space-y-8">
+            {jobs.map((job, idx) => (
+              <div
+                key={job.id}
+                className="reveal glass-card overflow-hidden glow-gold relative transition-all duration-300 hover:glow-gold-strong hover:-translate-y-0.5"
+                style={{ animationDelay: `${idx * 100}ms` }}
+              >
+                {/* Glowing gold shimmer line that runs once when loaded */}
+                <div
+                  key={`${job.id}-shimmer`}
+                  className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-gold-400 via-amber-300 to-gold-400 animate-shimmer-once z-30"
+                />
+
+                {/* Static top line behind the shimmer */}
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gold-400/20" />
 
                 <div className="p-8 md:p-12">
                   <div className="flex flex-wrap items-start justify-between gap-4 mb-8">

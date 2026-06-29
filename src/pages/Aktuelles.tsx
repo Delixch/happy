@@ -43,67 +43,6 @@ function Confetti({ active }: { active: boolean }) {
   );
 }
 
-// ── Hunger Game ──
-function HungerGame() {
-  const [stage, setStage] = useState(0);
-  const [shake, setShake] = useState(false);
-
-  const messages = [
-    { q: '🍕 Hast du Hunger?', btn: 'Ja, schon ein bisschen...', color: 'from-amber-500 to-orange-500' },
-    { q: '🤤 Wirklich? Wie hungrig bist du?', btn: 'SEHR hungrig!', color: 'from-orange-500 to-red-500' },
-    { q: '🔥 Dann haben wir genau das Richtige!', btn: 'Zeig mir was!', color: 'from-red-500 to-pink-500' },
-  ];
-
-  const result = {
-    text: 'Komm vorbei und geniesse unsere Jubiläums-Deals! 🎉',
-    sub: '20 Jahre Happy Beck — Danke Zürich!',
-  };
-
-  const handleClick = () => {
-    setShake(true);
-    setTimeout(() => setShake(false), 500);
-    if (stage < messages.length) setStage(stage + 1);
-  };
-
-  return (
-    <div className={`glass-card p-6 text-center overflow-hidden relative h-full flex flex-col justify-center ${shake ? 'animate-bounce' : ''}`}>
-      {/* Animated bg pulse */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gold-400/5 to-transparent animate-pulse" />
-
-      <div className="relative z-10">
-        {stage < messages.length ? (
-          <>
-            <p className="text-xl md:text-2xl font-serif font-bold text-white mb-4 animate-fade-in">
-              {messages[stage].q}
-            </p>
-            <button
-              onClick={handleClick}
-              className={`inline-block px-5 py-2.5 rounded-lg text-white font-sans font-bold text-sm bg-gradient-to-r ${messages[stage].color} hover:scale-105 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg`}
-            >
-              {messages[stage].btn}
-            </button>
-            <div className="flex justify-center gap-2 mt-4">
-              {messages.map((_, i) => (
-                <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all ${i <= stage ? 'bg-gold-400 scale-125' : 'bg-white/20'}`} />
-              ))}
-            </div>
-          </>
-        ) : (
-          <div className="animate-scale-in">
-            <PartyPopper className="w-8 h-8 text-gold-400 mx-auto mb-3" />
-            <p className="text-lg md:text-xl font-serif font-bold text-gold-gradient mb-2">
-              {result.text}
-            </p>
-            <p className="text-white/50 font-sans text-xs">{result.sub}</p>
-            <button onClick={() => setStage(0)} className="mt-4 text-[10px] text-white/20 hover:text-white/40 font-sans transition-colors">
-              Nochmal spielen
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
 
 // ── Daily Special Mystery Card ──
 function DailySpecialCard({ special }: { special: DailySpecial }) {
@@ -398,9 +337,9 @@ export default function Aktuelles() {
         </div>
       </div>
 
-      {/* ── INTERACTIVE AREA (3-COLUMN LAYOUT: SPECIAL, QUIZ, LUNCH PASS) ── */}
-      <div className="container mx-auto px-4 lg:px-8 py-10 max-w-5xl">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch">
+      {/* ── INTERACTIVE AREA (2-COLUMN LAYOUT: SPECIAL, LUNCH PASS) ── */}
+      <div className="container mx-auto px-4 lg:px-8 py-10 max-w-4xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
           
           {/* Left Column: Daily Special */}
           <div className="flex flex-col h-full animate-fade-in">
@@ -431,23 +370,8 @@ export default function Aktuelles() {
             </div>
           </div>
 
-          {/* Middle Column: Hunger Game */}
-          <div className="flex flex-col h-full animate-fade-in" style={{ animationDelay: '100ms' }}>
-            <div className="text-center mb-4">
-              <p className="text-gold-400 font-sans text-[10px] tracking-[0.3em] uppercase mb-1">
-                Spiel & Spass
-              </p>
-              <h2 className="text-lg font-serif font-bold text-white">
-                Hast du <span className="text-gold-gradient">Hunger?</span>
-              </h2>
-            </div>
-            <div className="flex-1">
-              <HungerGame />
-            </div>
-          </div>
-
           {/* Right Column: Lunch-Pass */}
-          <div className="flex flex-col h-full animate-fade-in" style={{ animationDelay: '200ms' }}>
+          <div className="flex flex-col h-full animate-fade-in" style={{ animationDelay: '100ms' }}>
             <div className="text-center mb-4">
               <p className="text-gold-400 font-sans text-[10px] tracking-[0.3em] uppercase mb-1">
                 Treuepass

@@ -52,13 +52,22 @@ export default function Navigation() {
           <div className={`flex items-center justify-between transition-all duration-500 ${scrolled ? 'h-16' : 'h-20'}`}>
             {/* Logo */}
             <Link to="/" className="group flex items-center gap-3 sm:gap-4 z-10">
-              <div className="flex flex-col justify-center">
+              <div className="flex flex-col justify-center text-left">
                 <p className="font-serif text-sm sm:text-lg font-semibold text-white tracking-wide leading-tight group-hover:text-gold-400 transition-colors">
                   Happy <span className="text-gold-400 group-hover:text-white transition-colors">Beck</span>
                 </p>
                 <p className="text-[7.5px] sm:text-[10px] tracking-[0.18em] sm:tracking-[0.25em] uppercase text-gold-400/60 font-sans mt-0.5 leading-none">
                   Ein Häppchen Glück
                 </p>
+              </div>
+              <div className={`relative rounded-full overflow-hidden ring-1 ring-gold-400/30 transition-all duration-500 group-hover:ring-gold-400/60 group-hover:shadow-[0_0_20px_rgba(212,175,55,0.25)] ${
+                scrolled ? 'w-10 h-10 sm:w-12 sm:h-12' : 'w-12 h-12 sm:w-14 sm:h-14'
+              }`}>
+                <img
+                  src="/logo.png"
+                  alt="Happy Beck"
+                  className="w-full h-full object-contain p-0.5"
+                />
               </div>
             </Link>
 

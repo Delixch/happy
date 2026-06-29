@@ -144,28 +144,35 @@ export default function Team() {
             {members.map((member, i) => (
               <div
                 key={member.id}
-                className="reveal glass-card p-8 text-center group hover:glow-gold transition-all duration-500 hover:-translate-y-1 flex-shrink-0 w-[290px] sm:w-[320px] snap-center"
+                className="reveal glass-card overflow-hidden glow-gold group hover:glow-gold-strong transition-all duration-500 hover:-translate-y-1.5 flex-shrink-0 w-[290px] sm:w-[320px] snap-center flex flex-col justify-between"
                 style={{ animationDelay: `${i * 100}ms` }}
               >
-                {member.image_url ? (
-                  <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-6 ring-2 ring-gold-400/20 group-hover:ring-gold-400/40 transition-all pointer-events-none">
-                    <img src={member.image_url} alt={member.name} className="w-full h-full object-cover" />
+                {/* Gold Top Border Line */}
+                <div className="h-[2px] bg-gradient-to-r from-gold-400 via-gold-300 to-gold-400" />
+                
+                <div className="p-8 text-center flex-1 flex flex-col justify-between">
+                  <div>
+                    {member.image_url ? (
+                      <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-6 ring-2 ring-gold-400/20 group-hover:ring-gold-400/40 transition-all pointer-events-none">
+                        <img src={member.image_url} alt={member.name} className="w-full h-full object-cover" />
+                      </div>
+                    ) : (
+                      <div className="w-20 h-20 rounded-full border border-gold-400/20 flex items-center justify-center mx-auto mb-6 text-gold-400 group-hover:border-gold-400/40 group-hover:bg-gold-400/5 transition-all duration-300 pointer-events-none">
+                        <Users className="w-7 h-7" />
+                      </div>
+                    )}
+                    <h3 className="text-xl font-serif font-bold text-white mb-1">
+                      {member.name}
+                    </h3>
+                    <p className="text-gold-400/70 font-sans text-xs uppercase tracking-wider mb-4">
+                      {member.role}
+                    </p>
+                    <div className="divider-gold w-12 mx-auto mb-4" />
                   </div>
-                ) : (
-                  <div className="w-20 h-20 rounded-full border border-gold-400/20 flex items-center justify-center mx-auto mb-6 text-gold-400 group-hover:border-gold-400/40 group-hover:bg-gold-400/5 transition-all duration-300 pointer-events-none">
-                    <Users className="w-7 h-7" />
-                  </div>
-                )}
-                <h3 className="text-xl font-serif font-bold text-white mb-1">
-                  {member.name}
-                </h3>
-                <p className="text-gold-400/70 font-sans text-xs uppercase tracking-wider mb-4">
-                  {member.role}
-                </p>
-                <div className="divider-gold w-12 mx-auto mb-4" />
-                <p className="text-white/40 font-sans text-sm leading-relaxed line-clamp-4">
-                  {member.description}
-                </p>
+                  <p className="text-white/40 font-sans text-sm leading-relaxed line-clamp-4">
+                    {member.description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>

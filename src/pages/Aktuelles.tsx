@@ -283,17 +283,32 @@ export default function Aktuelles() {
     setStamps(stamps === num ? num - 1 : num);
   };
 
-  // 1. Reactive stamp achievements (Confetti & Celebration Overlay)
+  // 1. Reactive stamp achievements (Confetti & Celebration Overlay & Auto-resume loop)
   useEffect(() => {
+    let timer: any;
     if (stamps === 5) {
       setCelebrationType('kaffee');
       setPassConfetti(true);
-      setTimeout(() => setPassConfetti(false), 4000);
+      
+      // Auto-resume stamp progression after 2.8 seconds
+      timer = setTimeout(() => {
+        setCelebrationType(null);
+        setPassConfetti(false);
+        setStamps(6);
+      }, 2800);
     } else if (stamps === 10) {
       setCelebrationType('sandwich');
       setPassConfetti(true);
-      setTimeout(() => setPassConfetti(false), 4000);
+      
+      // Auto-reset stamps and restart loop after 3.2 seconds
+      timer = setTimeout(() => {
+        setCelebrationType(null);
+        setPassConfetti(false);
+        setStamps(0);
+      }, 3200);
     }
+    
+    return () => clearTimeout(timer);
   }, [stamps]);
 
   // 2. Auto-play stamp progression loop (runs when no celebration is active)

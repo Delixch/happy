@@ -361,9 +361,15 @@ export default function Aktuelles() {
   return (
     <div className="min-h-screen pt-20">
       {/* ── HERO ── */}
-      <div className="relative h-[30vh] min-h-[220px] overflow-hidden bg-dark-900">
+      <div className="relative h-[30vh] min-h-[220px] overflow-hidden">
+        {/* Fallback Header Image */}
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/default-hero.jpg')" }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-dark-700/60 via-dark-700/40 to-dark-700" />
+        <div className="absolute inset-0 bg-gradient-to-r from-dark-700/70 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-black/25" />
+
         {/* Animated particles */}
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden z-10">
           {[...Array(25)].map((_, i) => (
             <div
               key={i}
@@ -375,14 +381,12 @@ export default function Aktuelles() {
                 animationDuration: `${3 + Math.random() * 4}s`,
               }}
             >
-              <div className="text-gold-400/30" style={{ fontSize: `${8 + Math.random() * 16}px` }}>✦</div>
+              <div className="text-gold-400/40" style={{ fontSize: `${8 + Math.random() * 16}px` }}>✦</div>
             </div>
           ))}
         </div>
 
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(212,175,55,0.08),transparent_70%)]" />
-
-        <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-end pb-10">
+        <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-end pb-10 z-20">
           <div>
             <p className="text-gold-400 font-sans text-sm tracking-[0.3em] uppercase mb-3">
               Seit 20 Jahren Ihr Bäcker

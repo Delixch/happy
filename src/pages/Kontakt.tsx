@@ -43,8 +43,10 @@ export default function Kontakt() {
     <section id="kontakt" className="pt-20 min-h-screen">
       {/* Hero */}
       <div className="relative h-[30vh] min-h-[220px] overflow-hidden">
-        <div className="absolute inset-0 bg-dark-600" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(212,175,55,0.08),transparent_70%)]" />
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/default-hero.jpg')" }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-dark-700/60 via-dark-700/40 to-dark-700" />
+        <div className="absolute inset-0 bg-gradient-to-r from-dark-700/70 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-black/20" />
         <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-end pb-10">
           <div>
             <p className="text-gold-400 font-sans text-sm tracking-[0.3em] uppercase mb-3">

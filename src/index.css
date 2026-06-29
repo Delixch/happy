@@ -13,6 +13,7 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    touch-action: manipulation;
   }
 
   body {
@@ -20,6 +21,7 @@
     background-color: #0F0D0C;
     color: #E5E5E5;
     overflow-x: hidden;
+    touch-action: manipulation;
   }
 
   ::selection {

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
@@ -32,6 +33,31 @@ function PublicLayout() {
 }
 
 function App() {
+  useEffect(() => {
+    // 1. Force prevent pinch-to-zoom on touch devices
+    const preventPinchZoom = (e: TouchEvent) => {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+      }
+    };
+    document.addEventListener('touchmove', preventPinchZoom, { passive: false });
+
+    // 2. Prevent iOS Safari-specific gesture scale zoom
+    const preventGesture = (e: Event) => {
+      e.preventDefault();
+    };
+    document.addEventListener('gesturestart', preventGesture);
+    document.addEventListener('gesturechange', preventGesture);
+    document.addEventListener('gestureend', preventGesture);
+
+    return () => {
+      document.removeEventListener('touchmove', preventPinchZoom);
+      document.removeEventListener('gesturestart', preventGesture);
+      document.removeEventListener('gesturechange', preventGesture);
+      document.removeEventListener('gestureend', preventGesture);
+    };
+  }, []);
+
   return (
     <Router>
       <LoadingScreen />

@@ -110,7 +110,7 @@ export default function Footer() {
               >
                 <span className="absolute inset-[-1000%] animate-border-beam bg-[conic-gradient(from_90deg_at_50%_50%,#FFE066_0%,#D4AF37_50%,#FFE066_100%)]" />
                 <span 
-                  className="inline-flex h-full w-full items-center justify-center rounded-[7px] bg-gold-400 px-4 py-2.5 text-xs font-sans font-bold tracking-widest uppercase transition-colors duration-300 group-hover/btn:bg-gold-300"
+                  className="relative z-10 inline-flex h-full w-full items-center justify-center rounded-[7px] bg-gold-400 px-4 py-2.5 text-xs font-sans font-bold tracking-widest uppercase transition-colors duration-300 group-hover/btn:bg-gold-300"
                   style={{ color: '#0f0d0c' }}
                 >
                   Supervisor Login

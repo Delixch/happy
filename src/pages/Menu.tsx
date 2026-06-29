@@ -33,6 +33,25 @@ export default function MenuPage() {
 
   return (
     <section id="menu" className="pt-20 min-h-screen">
+      {/* CSS animations for Menu page */}
+      <style>{`
+        @keyframes shimmerTwice {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        .animate-shimmer-twice {
+          animation: shimmerTwice 1.6s cubic-bezier(0.25, 1, 0.5, 1) 2 forwards;
+        }
+
+        @keyframes borderBeamRotate {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        .animate-border-beam-once {
+          animation: borderBeamRotate 1.3s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
+        }
+      `}</style>
+
       {/* Hero */}
       <div className="relative h-[30vh] min-h-[220px] overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/menu-hero.jpg')" }} />
@@ -53,23 +72,37 @@ export default function MenuPage() {
 
       <div className="container mx-auto px-4 lg:px-8 py-16 max-w-6xl">
         {/* Category Tabs */}
-        <div className="flex flex-wrap gap-3 mb-12 justify-center">
+        <div className="flex flex-wrap gap-4 mb-12 justify-center">
           {CATEGORIES.map((catId) => {
             const m = CATEGORY_META[catId];
             const count = items.filter((i) => i.category === catId).length;
+            const isActive = active === catId;
             return (
               <button
                 key={catId}
                 onClick={() => setActive(catId)}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-sans font-medium transition-all duration-300 ${
-                  active === catId
-                    ? 'bg-gold-400 text-dark-700 shadow-[0_0_20px_rgba(212,175,55,0.3)]'
-                    : 'bg-dark-400 text-white/50 border border-white/10 hover:border-gold-400/30 hover:text-white/80'
+                className={`relative p-[1.5px] rounded-full overflow-hidden transition-all duration-300 cursor-pointer ${
+                  isActive ? 'shadow-[0_0_20px_rgba(212,175,55,0.25)]' : 'hover:scale-102'
                 }`}
               >
-                {m.icon}
-                <span>{m.label}</span>
-                {count > 0 && <span className="text-xs opacity-60">({count})</span>}
+                {/* Rotating Border Light Beam (Active & runs once) */}
+                {isActive && (
+                  <div
+                    key={catId} // Triggers animation reset on select
+                    className="absolute inset-[-150%] bg-[conic-gradient(from_0deg,transparent_50%,#D4AF37_80%,#FFF9E6_95%,transparent_100%)] animate-border-beam-once pointer-events-none"
+                  />
+                )}
+                
+                {/* Button Content Inner Wrapper */}
+                <div className={`relative z-10 px-5 py-2.5 rounded-full flex items-center gap-2 text-sm font-sans font-medium transition-all ${
+                  isActive
+                    ? 'bg-dark-900/90 text-gold-400 font-semibold'
+                    : 'bg-dark-400/50 border border-white/5 text-white/50 hover:text-white/80'
+                }`}>
+                  {m.icon}
+                  <span>{m.label}</span>
+                  {count > 0 && <span className="text-xs opacity-60">({count})</span>}
+                </div>
               </button>
             );
           })}
@@ -85,7 +118,12 @@ export default function MenuPage() {
             <p className="text-white/30 font-sans">Noch keine Artikel in dieser Kategorie.</p>
           </div>
         ) : (
-          <div className="glass-card overflow-hidden">
+          <div className="glass-card overflow-hidden glow-gold relative">
+            {/* Shimmer line that runs exactly twice when category changes */}
+            <div
+              key={active}
+              className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-gold-400 via-amber-300 to-gold-400 animate-shimmer-twice z-30"
+            />
             {filtered.map((item, idx) => (
               <div
                 key={item.id}

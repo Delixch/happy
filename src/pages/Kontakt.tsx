@@ -195,8 +195,84 @@ export default function Kontakt() {
         </div>
       </div>
 
+      {/* CSS animations for Kontakt page */}
+      <style>{`
+        @keyframes carDrive {
+          0% { left: -60px; }
+          100% { left: calc(100% + 60px); }
+        }
+        .animate-car-drive {
+          position: absolute;
+          animation: carDrive 16s linear infinite;
+          width: 46px;
+        }
+
+        @keyframes carBounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-1.5px); }
+        }
+        .animate-car-bounce {
+          animation: carBounce 0.35s ease-in-out infinite;
+        }
+      `}</style>
+
       {/* ── GOOGLE MAPS SECTION ── */}
-      <div className="container mx-auto px-4 lg:px-8 pb-16 max-w-6xl animate-fade-in">
+      <div className="container mx-auto px-4 lg:px-8 pb-16 max-w-6xl animate-fade-in relative">
+        
+        {/* Animated Driving Sports Car on the Gold Line */}
+        <div className="absolute top-[-22px] left-[16px] right-[16px] lg:left-[32px] lg:right-[32px] h-[24px] pointer-events-none overflow-hidden z-20">
+          <div className="animate-car-drive absolute bottom-0">
+            <svg className="animate-car-bounce" width="46" height="24" viewBox="0 0 48 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {/* Spoiler */}
+              <path d="M3 10H8V12H3V10Z" fill="#B3922E"/>
+              <path d="M4 12L5 15H4L3 12H4Z" fill="#947822"/>
+              {/* Sports Car Shape */}
+              <path d="M4 14C4 14 6 12 11 12C14 10 18 6 24 6H34C37 6 42 9 44 12C45 13.5 45.5 15.5 44 17C42 19 38 19 38 19H8C8 19 4 19 4 14Z" fill="#D4AF37"/>
+              {/* Windshield / Windows */}
+              <path d="M19.5 11.5H24.5C28.5 11.5 31.5 8.5 31.5 8.5L25.5 8.5C21.5 8.5 19.5 11.5 19.5 11.5Z" fill="#E0F7FA" opacity="0.8"/>
+              <path d="M13 11.5H18C18 11.5 17 8.5 14 8.5L11 8.5C11 8.5 12 11.5 13 11.5Z" fill="#E0F7FA" opacity="0.8"/>
+              {/* Eyes on Windshield (like cartoon character) */}
+              <circle cx="28" cy="10" r="1" fill="#000000"/>
+              <circle cx="24" cy="10" r="1" fill="#000000"/>
+              {/* Smile on front bumper */}
+              <path d="M41 15.5C41 15.5 40 17 38 17" stroke="#3E3003" strokeWidth="0.8" strokeLinecap="round"/>
+              {/* Headlight */}
+              <path d="M43 13.5L44.5 14.2L43 15V13.5Z" fill="#FFF9E6"/>
+              {/* Tail light */}
+              <circle cx="6" cy="14" r="1.2" fill="#EF5350"/>
+              {/* Wheels */}
+              <g>
+                <animateTransform 
+                  attributeName="transform" 
+                  type="rotate" 
+                  from="0 13 18" 
+                  to="360 13 18" 
+                  dur="0.4s" 
+                  repeatCount="indefinite" 
+                />
+                <circle cx="13" cy="18" r="4.5" fill="#1A1A1A"/>
+                <circle cx="13" cy="18" r="2" fill="#E0C368"/>
+                <line x1="13" y1="14.5" x2="13" y2="21.5" stroke="#1A1A1A" strokeWidth="1"/>
+                <line x1="9.5" y1="18" x2="16.5" y2="18" stroke="#1A1A1A" strokeWidth="1"/>
+              </g>
+              <g>
+                <animateTransform 
+                  attributeName="transform" 
+                  type="rotate" 
+                  from="0 34 18" 
+                  to="360 34 18" 
+                  dur="0.4s" 
+                  repeatCount="indefinite" 
+                />
+                <circle cx="34" cy="18" r="4.5" fill="#1A1A1A"/>
+                <circle cx="34" cy="18" r="2" fill="#E0C368"/>
+                <line x1="34" y1="14.5" x2="34" y2="21.5" stroke="#1A1A1A" strokeWidth="1"/>
+                <line x1="30.5" y1="18" x2="37.5" y2="18" stroke="#1A1A1A" strokeWidth="1"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+
         <div className="glass-card overflow-hidden glow-gold">
           <div className="h-[2px] bg-gradient-to-r from-gold-400 via-gold-300 to-gold-400" />
           <div className="p-6 md:p-8">

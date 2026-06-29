@@ -208,10 +208,27 @@ export default function Navigation() {
                 </Link>
               );
             })}
+
+            {/* Smaller Supervisor Login Button inside Mobile Menu (Above Footer Divider Line) */}
+            <div className="flex justify-center mt-6">
+              <Link
+                to="/admin"
+                onClick={() => setIsOpen(false)}
+                className="relative inline-flex items-center justify-center p-[1px] rounded-lg overflow-hidden group/btn w-36"
+              >
+                <span className="absolute inset-[-1000%] animate-border-beam bg-[conic-gradient(from_90deg_at_50%_50%,#FFE066_0%,#D4AF37_50%,#FFE066_100%)]" />
+                <span 
+                  className="relative z-10 inline-flex h-full w-full items-center justify-center rounded-[7px] bg-gold-400 px-3 py-1.5 text-[9px] font-sans font-bold tracking-widest uppercase transition-colors duration-300 group-hover/btn:bg-gold-300"
+                  style={{ color: '#0f0d0c' }}
+                >
+                  Supervisor Login
+                </span>
+              </Link>
+            </div>
           </div>
 
           {/* Footer */}
-          <div className="border-t border-white/5 pt-4">
+          <div className="border-t border-white/5 pt-4 flex flex-col items-center">
             <div className="flex items-center justify-center gap-4 mb-3">
               <a href="https://instagram.com/happybeck.ch" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-gold-400 transition-colors">
                 <Instagram className="w-4 h-4" />
@@ -223,6 +240,7 @@ export default function Navigation() {
                 <MapPin className="w-4 h-4" />
               </a>
             </div>
+
             <p className="text-[10px] text-white/30 font-sans tracking-wide text-center leading-relaxed">
               Langstrasse 120, 8004 Zürich <br />
               <span className="text-[9px] text-gold-400/50 mt-0.5 block">© Happy Beck 2026</span>

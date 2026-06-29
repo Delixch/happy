@@ -117,16 +117,6 @@ export default function Footer() {
                 </span>
               </Link>
             </div>
-
-            <style>{`
-              @keyframes borderBeam {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-              }
-              .animate-border-beam {
-                animation: borderBeam 4s linear infinite;
-              }
-            `}</style>
           </div>
         </div>
 

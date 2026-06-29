@@ -39,29 +39,39 @@ export default function Navigation() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? 'bg-dark-700/90 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.5)] border-b border-gold-400/10'
-            : 'bg-transparent'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-4 sm:px-6 ${
+          scrolled ? 'pt-2 sm:pt-3' : 'pt-4 sm:pt-5'
         }`}
       >
-        {/* Top accent line */}
-        <div className="h-[1px] bg-gradient-to-r from-transparent via-gold-400/40 to-transparent" />
-
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className={`flex items-center justify-between transition-all duration-500 ${scrolled ? 'h-16' : 'h-20'}`}>
-            {/* Logo */}
+        <div
+          className={`mx-auto transition-all duration-500 w-full ${
+            scrolled ? 'max-w-4xl' : 'max-w-5xl'
+          }`}
+        >
+          {/* Inner glass capsule panel */}
+          <div
+            className={`flex items-center justify-between transition-all duration-500 rounded-full border ${
+              scrolled
+                ? 'bg-dark-900/80 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.6)] border-gold-400/20 px-4 py-2.5 sm:px-6'
+                : 'bg-dark-900/50 backdrop-blur-md shadow-lg border-white/5 px-6 py-4 sm:px-8'
+            }`}
+          >
+            {/* Logo & Brand text */}
             <Link to="/" className="group flex items-center gap-3 sm:gap-4 z-10">
               <div className="flex flex-col justify-center text-left">
-                <p className="font-serif text-sm sm:text-lg font-semibold text-white tracking-wide leading-tight group-hover:text-gold-400 transition-colors">
+                <p className={`font-serif font-semibold text-white tracking-wide leading-tight group-hover:text-gold-400 transition-all duration-500 ${
+                  scrolled ? 'text-xs sm:text-base' : 'text-sm sm:text-lg'
+                }`}>
                   Happy <span className="text-gold-400 group-hover:text-white transition-colors">Beck</span>
                 </p>
-                <p className="text-[7.5px] sm:text-[10px] tracking-[0.18em] sm:tracking-[0.25em] uppercase text-gold-400/60 font-sans mt-0.5 leading-none">
+                <p className={`tracking-[0.18em] sm:tracking-[0.25em] uppercase text-gold-400/60 font-sans leading-none transition-all duration-500 ${
+                  scrolled ? 'text-[6px] sm:text-[8px] mt-0.5' : 'text-[7.5px] sm:text-[10px] mt-1'
+                }`}>
                   Ein Häppchen Glück
                 </p>
               </div>
               <div className={`relative rounded-full overflow-hidden ring-1 ring-gold-400/30 transition-all duration-500 group-hover:ring-gold-400/60 group-hover:shadow-[0_0_20px_rgba(212,175,55,0.25)] ${
-                scrolled ? 'w-10 h-10 sm:w-12 sm:h-12' : 'w-12 h-12 sm:w-14 sm:h-14'
+                scrolled ? 'w-8 h-8 sm:w-10 sm:h-10' : 'w-10 h-10 sm:w-12 sm:h-12'
               }`}>
                 <img
                   src="/logo.png"
@@ -71,39 +81,41 @@ export default function Navigation() {
               </div>
             </Link>
 
-            {/* Desktop Nav */}
-            <div className="hidden lg:flex items-center gap-1">
-              {menuItems.map((item) => (
-                <Link
-                  key={item.id}
-                  to={item.href}
-                  className={`relative px-4 py-2 text-[13px] font-sans font-medium tracking-wide uppercase transition-all duration-300 link-underline ${
-                    location.pathname === item.href
-                      ? 'text-gold-400'
-                      : 'text-white/70 hover:text-white'
-                  }`}
-                >
-                  {item.label}
-                  {location.pathname === item.href && (
-                    <span className="absolute bottom-0 left-4 right-4 h-[1px] bg-gradient-to-r from-gold-400 to-gold-300" />
-                  )}
-                </Link>
-              ))}
+            {/* Desktop Nav in Glass Pill Container */}
+            <div className="hidden lg:flex items-center gap-0.5 bg-white/5 rounded-full p-1 border border-white/5">
+              {menuItems.map((item) => {
+                const active = location.pathname === item.href;
+                return (
+                  <Link
+                    key={item.id}
+                    to={item.href}
+                    className={`px-4 py-1.5 rounded-full text-[11px] font-sans font-medium tracking-widest uppercase transition-all duration-300 ${
+                      active
+                        ? 'bg-gradient-to-r from-gold-400/20 to-amber-500/20 border border-gold-400/30 text-gold-400 font-semibold shadow-[0_2px_10px_rgba(212,175,55,0.1)]'
+                        : 'text-white/60 hover:text-white hover:bg-white/5 border border-transparent'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
             </div>
 
-            {/* Mobile Toggle */}
+            {/* Mobile Toggle Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden relative z-50 w-11 h-11 flex items-center justify-center rounded-full hover:scale-105 active:scale-95 transition-all duration-300 select-none group"
+              className={`lg:hidden relative z-50 flex items-center justify-center rounded-full hover:scale-105 active:scale-95 transition-all duration-300 select-none group ${
+                scrolled ? 'w-9 h-9' : 'w-11 h-11'
+              }`}
               aria-label="Toggle menu"
             >
-              {/* Outer Spinning Golden Line Loop (Conic gradient border simulation) */}
+              {/* Outer Spinning Golden Line Loop */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-gold-400 via-transparent to-amber-500 animate-spin" style={{ animationDuration: '4s' }} />
 
-              {/* Inner dark backdrop leaving a thin 1.5px outer gold ring visible */}
+              {/* Inner dark backdrop leaving a thin outer gold ring */}
               <div className="absolute inset-[1.5px] rounded-full bg-dark-900" />
 
-              {/* Inner Golden Orbit Solid Ring */}
+              {/* Inner Golden Orbit Ring */}
               <div className="absolute inset-1.5 rounded-full border border-gold-400/10 shadow-[0_0_10px_rgba(212,175,55,0.05)]" />
               
               {/* Core container holding the SVGs */}
@@ -111,9 +123,8 @@ export default function Navigation() {
                 isOpen ? 'shadow-[0_0_15px_rgba(212,175,55,0.25)] border border-gold-400/25' : 'border border-white/5'
               }`}>
                 {isOpen ? (
-                  // Custom Close (X) SVG
                   <svg 
-                    className="w-4 h-4 text-gold-400" 
+                    className="w-3 h-3 text-gold-400" 
                     fill="none" 
                     viewBox="0 0 24 24" 
                     stroke="currentColor" 
@@ -122,9 +133,8 @@ export default function Navigation() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 ) : (
-                  // Custom wheat stem (buğday başağı) SVG
                   <svg 
-                    className="w-5 h-5 text-gold-400 group-hover:scale-110 transition-transform duration-300"
+                    className="w-4 h-4 text-gold-400 group-hover:scale-110 transition-transform duration-300"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -146,10 +156,10 @@ export default function Navigation() {
         onClick={() => setIsOpen(false)}
       />
 
-      {/* Mobile Drawer Menu (Right Side Slide-In) */}
+      {/* Mobile Drawer Menu (Sleek Floating Vertical Glass Card) */}
       <div
-        className={`fixed top-0 right-0 bottom-0 z-50 w-[270px] bg-dark-900 border-l border-white/5 shadow-2xl lg:hidden transition-transform duration-300 ease-out transform ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed top-4 right-4 bottom-4 z-50 w-[280px] rounded-3xl bg-dark-900/95 backdrop-blur-2xl border border-gold-400/20 shadow-2xl lg:hidden transition-all duration-500 ease-out transform ${
+          isOpen ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0 pointer-events-none'
         }`}
       >
         <div className="h-full flex flex-col justify-between p-6">
@@ -168,14 +178,14 @@ export default function Navigation() {
             </Link>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-white/60 hover:text-gold-400 p-1 transition-colors"
+              className="text-white/60 hover:text-gold-400 p-1.5 rounded-full hover:bg-white/5 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Links */}
-          <div className="flex flex-col gap-1 my-auto py-6 overflow-y-auto">
+          <div className="flex flex-col gap-1 my-auto py-4 overflow-y-auto">
             {menuItems.map((item) => {
               const active = location.pathname === item.href;
               return (
@@ -183,15 +193,17 @@ export default function Navigation() {
                   key={item.id}
                   to={item.href}
                   onClick={() => setIsOpen(false)}
-                  className={`group flex items-center justify-between py-2.5 border-b border-white/5 transition-all duration-200 ${
-                    active ? 'text-gold-400 translate-x-1' : 'text-white/70 hover:text-white'
+                  className={`group flex items-center justify-between py-2.5 px-3 rounded-xl transition-all duration-250 ${
+                    active 
+                      ? 'bg-gold-400/10 text-gold-400 font-semibold border border-gold-400/20' 
+                      : 'text-white/70 hover:text-white hover:bg-white/5'
                   }`}
                 >
-                  <span className="text-sm font-sans font-medium tracking-wider uppercase">
+                  <span className="text-xs font-sans font-medium tracking-widest uppercase">
                     {item.label}
                   </span>
                   <ChevronRight className={`w-3.5 h-3.5 transition-all duration-200 ${
-                    active ? 'text-gold-400 opacity-100' : 'opacity-0 group-hover:opacity-100 group-hover:text-gold-400'
+                    active ? 'text-gold-400 opacity-100 translate-x-0.5' : 'opacity-0 group-hover:opacity-100 group-hover:text-gold-400'
                   }`} />
                 </Link>
               );

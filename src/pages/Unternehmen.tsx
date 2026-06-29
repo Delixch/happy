@@ -125,14 +125,14 @@ export default function Unternehmen() {
                   
                   {/* Single image — grayscale by default, color on hover */}
                   <img
-                    src="/uberuns.jpg"
-                    alt="Happy Beck Bäckerei"
-                    className={`absolute inset-0 w-full h-full object-cover z-0 transform-gpu transition-all duration-750 ${
+                    src="/logo.png"
+                    alt="Happy Beck Bäckerei Logo"
+                    className={`absolute inset-0 w-full h-full object-contain p-12 z-0 transform-gpu transition-all duration-750 bg-dark-800 ${
                       hover ? 'scale-105' : 'scale-100'
                     }`}
                     style={{
-                      filter: hover ? 'grayscale(0%) brightness(100%)' : 'grayscale(100%) brightness(75%)',
-                      WebkitFilter: hover ? 'grayscale(0%) brightness(100%)' : 'grayscale(100%) brightness(75%)'
+                      filter: hover ? 'grayscale(0%) brightness(110%) drop-shadow(0 0 10px rgba(212,175,55,0.3))' : 'grayscale(100%) brightness(75%)',
+                      WebkitFilter: hover ? 'grayscale(0%) brightness(110%) drop-shadow(0 0 10px rgba(212,175,55,0.3))' : 'grayscale(100%) brightness(75%)'
                     }}
                   />
 
@@ -149,7 +149,7 @@ export default function Unternehmen() {
                     <p className={`font-serif text-sm italic transition-all duration-500 ${
                       hover ? 'text-gold-400' : 'text-white/60'
                     }`}>
-                      {hover ? '❝ In voller Farbe ❞' : '❝ Familie Aydin ❞'}
+                      {hover ? '❝ Happy Beck Emblem ❞' : '❝ Unser Logo ❞'}
                     </p>
                   </div>
                 </div>

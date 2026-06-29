@@ -404,8 +404,8 @@ export default function Aktuelles() {
             </div>
             <div className="flex-1 flex flex-col">
               <div className="glass-card overflow-hidden glow-gold h-full flex flex-col justify-between relative">
-                {/* Top decorative gold line */}
-                <div className="h-[2px] bg-gradient-to-r from-gold-400 via-gold-300 to-gold-400" />
+                {/* Glowing gold shimmer line that runs continuously */}
+                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-gold-400 via-amber-300 to-gold-400 animate-shimmer z-30" />
                 
                 <div className="relative p-6 flex-1 flex flex-col justify-between">
                   {/* Interactive Celebrations Overlays */}

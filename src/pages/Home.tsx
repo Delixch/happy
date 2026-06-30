@@ -34,6 +34,25 @@ const DEFAULT_POSTS: InstagramPost[] = [
   }
 ];
 
+const optimizeUnsplashUrl = (url: string) => {
+  if (!url) return '';
+  if (url.includes('images.unsplash.com')) {
+    let opt = url;
+    if (opt.includes('w=')) {
+      opt = opt.replace(/w=\d+/, 'w=300');
+    } else {
+      opt += '&w=300';
+    }
+    if (opt.includes('q=')) {
+      opt = opt.replace(/q=\d+/, 'q=50');
+    } else {
+      opt += '&q=50';
+    }
+    return opt;
+  }
+  return url;
+};
+
 export default function Home() {
   const slides = useMemo(
     () => [
@@ -208,9 +227,9 @@ export default function Home() {
                   ) : instaPost ? (
                     <a href={instaPost.post_url} target="_blank" rel="noopener noreferrer" className="block w-full h-full relative group">
                       {instaPost.image_url.match(/\.(mp4|webm|ogg|mov)$/i) || instaPost.image_url.includes('/video/upload') || instaPost.image_url.includes('video') ? (
-                        <video src={instaPost.image_url} className="w-full h-full object-cover" autoPlay loop muted playsInline />
+                        <video src={optimizeUnsplashUrl(instaPost.image_url)} className="w-full h-full object-cover" autoPlay loop muted playsInline />
                       ) : (
-                        <img src={instaPost.image_url} alt="Instagram Post" className="w-full h-full object-cover" fetchPriority="high" />
+                        <img src={optimizeUnsplashUrl(instaPost.image_url)} alt="Instagram Post" className="w-full h-full object-cover" fetchPriority="high" />
                       )}
                       <div className="absolute inset-0 bg-dark-900/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
                         <span className="text-xs font-sans font-bold text-white border border-white/20 px-3 py-1.5 rounded-full bg-dark-900/40 backdrop-blur-sm">

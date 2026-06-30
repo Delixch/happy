@@ -160,11 +160,13 @@ export default function Home() {
       {/* Hero - Full Screen */}
       <div className="relative min-h-screen lg:h-screen overflow-hidden flex flex-col justify-center py-20 lg:py-0">
         {/* Background Image */}
-        <div
-          className={`absolute inset-0 bg-cover bg-center transition-all duration-700 scale-105 ${
+        <img
+          src={slides[slide].image}
+          alt={slides[slide].title}
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 scale-105 ${
             isTransitioning ? 'opacity-0 scale-110' : 'opacity-100'
           }`}
-          style={{ backgroundImage: `url('${slides[slide].image}')` }}
+          fetchPriority="high"
         />
 
         {/* Overlay */}

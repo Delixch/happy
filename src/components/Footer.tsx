@@ -30,7 +30,7 @@ export default function Footer() {
 
           {/* Navigation */}
           <div>
-            <h4 className="font-serif text-white text-sm font-semibold uppercase tracking-widest mb-6">Navigation</h4>
+            <h3 className="font-serif text-white text-sm font-semibold uppercase tracking-widest mb-6">Navigation</h3>
             <nav className="grid grid-cols-2 gap-2">
               {[
                 { label: 'Home', href: '/' },
@@ -55,7 +55,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-serif text-white text-sm font-semibold uppercase tracking-widest mb-6">Kontakt</h4>
+            <h3 className="font-serif text-white text-sm font-semibold uppercase tracking-widest mb-6">Kontakt</h3>
             <div className="space-y-4 text-sm font-sans">
               <a href="tel:+41432439780" className="flex items-center gap-3 text-white/65 hover:text-gold-400 transition-colors group">
                 <Phone className="w-4 h-4 text-gold-400/60 group-hover:text-gold-400 transition-colors" />
@@ -78,7 +78,7 @@ export default function Footer() {
 
           {/* Social */}
           <div>
-            <h4 className="font-serif text-white text-sm font-semibold uppercase tracking-widest mb-6">Social Media</h4>
+            <h3 className="font-serif text-white text-sm font-semibold uppercase tracking-widest mb-6">Social Media</h3>
             <div className="space-y-3 flex flex-col items-start">
               <a
                 href="https://www.instagram.com/happybeck.ch?igsh=eGdtbW1ud3p6ZDFx"

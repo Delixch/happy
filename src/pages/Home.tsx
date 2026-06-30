@@ -44,13 +44,13 @@ export default function Home() {
         text: 'Traditionelles Handwerk trifft moderne Innovation. Entdecken Sie unsere Leidenschaft für frisches Brot und feine Backwaren.',
       },
       {
-        image: '/Home1.png',
+        image: '/Home1.jpg',
         title: 'Frisch. Fein. Happy.',
         subtitle: 'Täglich ofenfrisch',
         text: 'Jeden Tag ofenfrisch – mit ausgewählten Zutaten und viel Liebe zum Detail.',
       },
       {
-        image: '/home2.jpeg',
+        image: '/home2.jpg',
         title: 'Süsses und Herzhaftes',
         subtitle: 'Für jeden Geschmack',
         text: 'Von Gipfeli bis Sandwich: Für jeden Geschmack das Richtige.',

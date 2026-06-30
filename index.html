@@ -34,7 +34,25 @@
     </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Inline Preloader to achieve near-instant initial paint -->
+      <div style="position: fixed; inset: 0; z-index: 9999; background-color: #0F0D0C; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; user-select: none;">
+        <!-- Glowing circular logo frame -->
+        <div style="position: relative; margin-bottom: 24px;">
+          <div style="width: 96px; height: 96px; border-radius: 50%; border: 1px solid rgba(212, 175, 55, 0.3); background-color: #131110; display: flex; align-items: center; justify-content: center; padding: 10px; box-shadow: 0 0 30px rgba(212, 175, 55, 0.25);">
+            <img src="/logo.png" alt="" style="width: 100%; height: 100%; object-fit: contain;" />
+          </div>
+        </div>
+        <!-- Brand Text -->
+        <div style="text-align: center; color: #FFE066; font-size: 24px; font-weight: bold; letter-spacing: 0.05em;">
+          Happy <span style="color: #D4AF37;">Beck</span>
+        </div>
+        <div style="width: 64px; height: 1px; background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.5), transparent); margin: 12px auto;"></div>
+        <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.3em; color: rgba(212, 175, 55, 0.7); font-family: 'Inter', sans-serif;">
+          Ein Häppchen Glück
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

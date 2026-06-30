@@ -221,13 +221,27 @@ export default function Navigation() {
           {/* Footer */}
           <div className="border-t border-white/5 pt-4 flex flex-col items-center">
             <div className="flex items-center justify-center gap-4 mb-3">
-              <a href="https://instagram.com/happybeck.ch" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-gold-400 transition-colors">
+              <a 
+                href="https://instagram.com/happybeck.ch" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-white/40 hover:text-gold-400 transition-colors"
+                aria-label="Instagram Profil"
+              >
                 <Instagram className="w-4 h-4" />
               </a>
-              <a href="tel:+41440000000" className="text-white/40 hover:text-gold-400 transition-colors">
+              <a 
+                href="tel:+41440000000" 
+                className="text-white/40 hover:text-gold-400 transition-colors"
+                aria-label="Telefonischer Kontakt"
+              >
                 <Phone className="w-4 h-4" />
               </a>
-              <a href="/kontakt" className="text-white/40 hover:text-gold-400 transition-colors">
+              <a 
+                href="/kontakt" 
+                className="text-white/40 hover:text-gold-400 transition-colors"
+                aria-label="Standort und Kontaktseite"
+              >
                 <MapPin className="w-4 h-4" />
               </a>
             </div>

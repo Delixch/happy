@@ -113,14 +113,14 @@ export default function LoadingScreen() {
 
       <style>{`
         @keyframes logoIntro {
-          0% { transform: scale(0.8); opacity: 0; filter: blur(5px); }
-          60% { transform: scale(1.03); opacity: 0.9; filter: blur(0px); }
+          0% { transform: scale(0.8); opacity: 0; }
+          60% { transform: scale(1.03); opacity: 0.9; }
           100% { transform: scale(1); opacity: 1; }
         }
         @keyframes textIntro {
-          0% { transform: translateY(12px); opacity: 0; filter: blur(2px); }
+          0% { transform: translateY(12px); opacity: 0; }
           50% { opacity: 0.3; }
-          100% { transform: translateY(0); opacity: 1; filter: blur(0px); }
+          100% { transform: translateY(0); opacity: 1; }
         }
         @keyframes sparkle {
           0%, 100% { transform: translate(0, 0) scale(0); opacity: 0; }

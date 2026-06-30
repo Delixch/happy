@@ -65,7 +65,7 @@ export default function Navigation() {
               <div className="relative rounded-full overflow-hidden ring-1 ring-gold-400/30 transition-all duration-500 group-hover:ring-gold-400/60 group-hover:shadow-[0_0_20px_rgba(212,175,55,0.25)] w-10 h-10 sm:w-12 sm:h-12">
                 <img
                   src="/logo.png"
-                  alt="Happy Beck"
+                  alt=""
                   className="w-full h-full object-contain p-0.5"
                 />
               </div>
@@ -159,7 +159,7 @@ export default function Navigation() {
             <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center gap-2.5">
               <img
                 src="/logo.png"
-                alt="Happy Beck"
+                alt=""
                 className="w-8 h-8 object-contain"
               />
               <p className="font-serif text-sm font-semibold text-white tracking-wide">

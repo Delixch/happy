@@ -3,6 +3,37 @@ import { ChefHat, Heart, Award, ChevronLeft, ChevronRight, Instagram, RefreshCw,
 import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 import { supabase, type InstagramPost, type Deal } from '../lib/supabase';
 
+const DEFAULT_POSTS: InstagramPost[] = [
+  {
+    id: 'def-1',
+    image_url: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=400&q=60',
+    post_url: 'https://www.instagram.com/happybeck.ch',
+    caption: 'Frisches Brot jeden Morgen! 🥖 Frisch gebacken with viel Liebe und Tradition. Besuchen Sie uns in Zürich! #happybeck #zürich #bäckerei',
+    created_at: ''
+  },
+  {
+    id: 'def-2',
+    image_url: 'https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=400&q=60',
+    post_url: 'https://www.instagram.com/happybeck.ch',
+    caption: 'Unsere legendären, goldgelben Gipfeli warten ofenfrisch auf dich. Der perfekte Start in den Züri-Morgen! 🥐 #croissant #gipfeli #zürich',
+    created_at: ''
+  },
+  {
+    id: 'def-3',
+    image_url: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=400&q=60',
+    post_url: 'https://www.instagram.com/happybeck.ch',
+    caption: 'Hausgemachte Spezialitäten und feinste Pâtisserie exklusiv zu unserem 20. Jubiläum. 🎂 #20jahre #happybeck #pâtisserie',
+    created_at: ''
+  },
+  {
+    id: 'def-4',
+    image_url: 'https://images.unsplash.com/photo-1517433456452-f9633a875f6f?auto=format&fit=crop&w=400&q=60',
+    post_url: 'https://www.instagram.com/happybeck.ch',
+    caption: 'Ein Blick hinter die Kulissen: Handgefertigte Teigwaren von unseren Meistern. 🥖🍞 #bäcker #handwerk #zürich',
+    created_at: ''
+  }
+];
+
 export default function Home() {
   const slides = useMemo(
     () => [
@@ -30,8 +61,8 @@ export default function Home() {
 
   const [slide, setSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [instaPost, setInstaPost] = useState<InstagramPost | null>(null);
-  const [loadingInsta, setLoadingInsta] = useState(true);
+  const [instaPost, setInstaPost] = useState<InstagramPost>(() => DEFAULT_POSTS[Math.floor(Math.random() * DEFAULT_POSTS.length)]);
+  const [loadingInsta, setLoadingInsta] = useState(false);
 
   const [deals, setDeals] = useState<Deal[]>([]);
   const [loadingDeals, setLoadingDeals] = useState(true);
@@ -615,34 +646,5 @@ function DealsModal({
   );
 }
 
-const DEFAULT_POSTS: InstagramPost[] = [
-  {
-    id: 'def-1',
-    image_url: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=400&q=60',
-    post_url: 'https://www.instagram.com/happybeck.ch',
-    caption: 'Frisches Brot jeden Morgen! 🥖 Frisch gebacken mit viel Liebe und Tradition. Besuchen Sie uns in Zürich! #happybeck #zürich #bäckerei',
-    created_at: ''
-  },
-  {
-    id: 'def-2',
-    image_url: 'https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=400&q=60',
-    post_url: 'https://www.instagram.com/happybeck.ch',
-    caption: 'Unsere legendären, goldgelben Gipfeli warten ofenfrisch auf dich. Der perfekte Start in den Züri-Morgen! 🥐 #croissant #gipfeli #zürich',
-    created_at: ''
-  },
-  {
-    id: 'def-3',
-    image_url: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=400&q=60',
-    post_url: 'https://www.instagram.com/happybeck.ch',
-    caption: 'Hausgemachte Spezialitäten und feinste Pâtisserie exklusiv zu unserem 20. Jubiläum. 🎂 #20jahre #happybeck #pâtisserie',
-    created_at: ''
-  },
-  {
-    id: 'def-4',
-    image_url: 'https://images.unsplash.com/photo-1517433456452-f9633a875f6f?auto=format&fit=crop&w=400&q=60',
-    post_url: 'https://www.instagram.com/happybeck.ch',
-    caption: 'Ein Blick hinter die Kulissen: Handgefertigte Teigwaren von unseren Meistern. 🥖🍞 #bäcker #handwerk #zürich',
-    created_at: ''
-  }
-];
+
 

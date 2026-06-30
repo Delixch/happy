@@ -338,13 +338,20 @@ function FeatureCard({
   delay: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const rectRef = useRef<DOMRect | null>(null);
   const [transform, setTransform] = useState('');
   const [bgPos, setBgPos] = useState('50% 50%');
 
-  const handleMove = (e: React.MouseEvent) => {
+  const handleMouseEnter = () => {
     const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
+    if (el) {
+      rectRef.current = el.getBoundingClientRect();
+    }
+  };
+
+  const handleMove = (e: React.MouseEvent) => {
+    const rect = rectRef.current;
+    if (!rect) return;
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
     const rotateX = (0.5 - y) * 8;
@@ -354,6 +361,7 @@ function FeatureCard({
   };
 
   const reset = () => {
+    rectRef.current = null;
     setTransform('');
     setBgPos('50% 50%');
   };
@@ -361,6 +369,7 @@ function FeatureCard({
   return (
     <div
       ref={ref}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMove}
       onMouseLeave={reset}
       className="reveal"

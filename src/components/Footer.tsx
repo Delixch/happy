@@ -23,7 +23,7 @@ export default function Footer() {
                 </p>
               </div>
             </Link>
-            <p className="text-white/40 text-sm leading-relaxed font-sans">
+            <p className="text-white/65 text-sm leading-relaxed font-sans">
               Ein Häppchen Glück — Traditionelle Bäckerei mit Leidenschaft für Qualität und Innovation. Seit 2006 in Zürich.
             </p>
           </div>
@@ -45,7 +45,7 @@ export default function Footer() {
                 <Link
                   key={link.href}
                   to={link.href}
-                  className="text-sm text-white/40 hover:text-gold-400 transition-colors duration-300 font-sans py-1"
+                  className="text-sm text-white/65 hover:text-gold-400 transition-colors duration-300 font-sans py-1"
                 >
                   {link.label}
                 </Link>
@@ -57,19 +57,19 @@ export default function Footer() {
           <div>
             <h4 className="font-serif text-white text-sm font-semibold uppercase tracking-widest mb-6">Kontakt</h4>
             <div className="space-y-4 text-sm font-sans">
-              <a href="tel:+41432439780" className="flex items-center gap-3 text-white/40 hover:text-gold-400 transition-colors group">
+              <a href="tel:+41432439780" className="flex items-center gap-3 text-white/65 hover:text-gold-400 transition-colors group">
                 <Phone className="w-4 h-4 text-gold-400/60 group-hover:text-gold-400 transition-colors" />
                 <span>043 243 97 80</span>
               </a>
-              <a href="mailto:info@happybeck.ch" className="flex items-center gap-3 text-white/40 hover:text-gold-400 transition-colors group">
+              <a href="mailto:info@happybeck.ch" className="flex items-center gap-3 text-white/65 hover:text-gold-400 transition-colors group">
                 <Mail className="w-4 h-4 text-gold-400/60 group-hover:text-gold-400 transition-colors" />
                 <span>info@happybeck.ch</span>
               </a>
-              <div className="flex items-start gap-3 text-white/40">
+              <div className="flex items-start gap-3 text-white/65">
                 <MapPin className="w-4 h-4 text-gold-400/60 mt-0.5 flex-shrink-0" />
                 <span>Langstrasse 120, 8004 Zürich</span>
               </div>
-              <div className="flex items-center gap-3 text-white/40">
+              <div className="flex items-center gap-3 text-white/65">
                 <Clock className="w-4 h-4 text-gold-400/60" />
                 <span>24 Stunden geöffnet</span>
               </div>
@@ -123,10 +123,10 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="divider-gold mt-12 mb-8" />
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-white/25 text-xs font-sans">
+          <p className="text-white/50 text-xs font-sans">
             &copy; {currentYear} Happy Beck. Alle Rechte vorbehalten.
           </p>
-          <p className="text-white/15 text-[10px] font-sans tracking-wider uppercase">
+          <p className="text-white/35 text-[10px] font-sans tracking-wider uppercase">
             Traditionelle Bäckerei · Zürich, Schweiz
           </p>
         </div>

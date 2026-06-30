@@ -1,24 +1,38 @@
 import { useState, useEffect } from 'react';
 
 export default function LoadingScreen() {
+  const [mounted, setMounted] = useState(() => {
+    try {
+      return !sessionStorage.getItem('happybeck_loaded');
+    } catch {
+      return true;
+    }
+  });
   const [visible, setVisible] = useState(true);
-  const [mounted, setMounted] = useState(true);
 
   useEffect(() => {
-    // 2.2 seconds display time + 700ms fade transition
+    if (!mounted) return;
+
+    try {
+      sessionStorage.setItem('happybeck_loaded', 'true');
+    } catch (e) {
+      console.error(e);
+    }
+
+    // Snappier intro: 1.0s display + 600ms fade transition
     const fadeTimer = setTimeout(() => {
       setVisible(false);
-    }, 2200);
+    }, 1000);
 
     const removeTimer = setTimeout(() => {
       setMounted(false);
-    }, 2900);
+    }, 1600);
 
     return () => {
       clearTimeout(fadeTimer);
       clearTimeout(removeTimer);
     };
-  }, []);
+  }, [mounted]);
 
   if (!mounted) return null;
 

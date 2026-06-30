@@ -169,6 +169,7 @@ export default function Navigation() {
             <button
               onClick={() => setIsOpen(false)}
               className="text-white/60 hover:text-gold-400 p-1.5 rounded-full hover:bg-white/5 transition-colors"
+              aria-label="Menü schliessen"
             >
               <X className="w-5 h-5" />
             </button>

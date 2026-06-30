@@ -179,7 +179,7 @@ export default function Home() {
                       {instaPost.image_url.match(/\.(mp4|webm|ogg|mov)$/i) || instaPost.image_url.includes('/video/upload') || instaPost.image_url.includes('video') ? (
                         <video src={instaPost.image_url} className="w-full h-full object-cover" autoPlay loop muted playsInline />
                       ) : (
-                        <img src={instaPost.image_url} alt="Instagram Post" className="w-full h-full object-cover" />
+                        <img src={instaPost.image_url} alt="Instagram Post" className="w-full h-full object-cover" fetchPriority="high" />
                       )}
                       <div className="absolute inset-0 bg-dark-900/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
                         <span className="text-xs font-sans font-bold text-white border border-white/20 px-3 py-1.5 rounded-full bg-dark-900/40 backdrop-blur-sm">

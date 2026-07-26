@@ -5,7 +5,7 @@ import {
   LogOut, ChevronRight, Menu as MenuIcon, X 
 } from 'lucide-react';
 
-const ADMIN_PASSWORD = 'happy2026';
+const ADMIN_PASSWORD = (import.meta as any).env.VITE_ADMIN_PASSWORD || 'happy2026';
 const AUTH_KEY = 'happybeck_admin_auth';
 
 export function useAdminAuth() {

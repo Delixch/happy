@@ -239,16 +239,21 @@ export default function Home() {
               >
                 {slides[slide].subtitle}
               </span>
-              <h1 
-                className="text-4xl md:text-6xl lg:text-7xl font-serif font-black mb-6 leading-[1.15] transition-colors duration-700"
-                style={{ color: slides[slide].textColor }}
-              >
-                {slides[slide].title}
-              </h1>
-              <div 
-                className="w-20 h-1.5 rounded-full mb-6 transition-colors duration-700"
-                style={{ backgroundColor: slides[slide].accentColor }}
-              />
+              <div className="relative mb-6">
+                <h1 
+                  className="text-4xl md:text-6xl lg:text-7xl font-serif font-black leading-[1.15] transition-colors duration-700 inline-block pb-4"
+                  style={{ color: slides[slide].textColor }}
+                >
+                  {slides[slide].title}
+                  <span 
+                    className="absolute bottom-0 left-0 h-1.5 rounded-full transition-all duration-700"
+                    style={{ 
+                      backgroundColor: slides[slide].accentColor,
+                      width: '100%'
+                    }}
+                  />
+                </h1>
+              </div>
               <p 
                 className="text-base md:text-xl font-sans font-normal mb-8 max-w-xl leading-relaxed transition-colors duration-700 opacity-90"
                 style={{ color: slides[slide].textColor }}
@@ -282,23 +287,28 @@ export default function Home() {
         {/* Features Section - Pulled Right Under Sliding Image */}
         <div className="container mx-auto px-4 lg:px-8 pt-12 md:pt-16 pb-8">
           {/* Section header */}
-          <div className="text-center mb-8 reveal">
+          <div className="text-center mb-10 reveal">
             <p 
               className="font-sans text-xs tracking-[0.3em] uppercase mb-2 font-bold transition-colors duration-700"
               style={{ color: slides[slide].cardBg }}
             >
               Unsere Philosophie
             </p>
-            <h2 
-              className="text-3xl md:text-5xl font-serif font-bold mb-4 transition-colors duration-700"
-              style={{ color: slides[slide].textColor }}
-            >
-              Was uns <span style={{ color: slides[slide].cardBg }}>auszeichnet</span>
-            </h2>
-            <div 
-              className="w-16 h-1 rounded-full mx-auto transition-colors duration-700"
-              style={{ backgroundColor: slides[slide].accentColor }}
-            />
+            <div className="relative inline-block">
+              <h2 
+                className="text-3xl md:text-5xl font-serif font-bold transition-colors duration-700 pb-3"
+                style={{ color: slides[slide].textColor }}
+              >
+                Was uns <span style={{ color: slides[slide].cardBg }}>auszeichnet</span>
+              </h2>
+              <span 
+                className="absolute bottom-0 left-0 h-1.5 rounded-full transition-all duration-700"
+                style={{ 
+                  backgroundColor: slides[slide].accentColor,
+                  width: '100%'
+                }}
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">

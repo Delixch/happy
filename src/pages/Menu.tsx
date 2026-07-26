@@ -100,53 +100,81 @@ export default function MenuPage() {
           })}
         </div>
 
-        {/* Menu Items */}
+        {/* Menu Items Grid (3 Columns matching photo reference) */}
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-6 h-6 text-gold-400 animate-spin" />
+            <Loader2 className="w-8 h-8 text-gold-400 animate-spin" />
           </div>
         ) : filtered.length === 0 ? (
           <div className="glass-card p-12 text-center">
-            <p className="text-white/30 font-sans">Noch keine Artikel in dieser Kategorie.</p>
+            <p className="text-white/40 font-sans">Noch keine Artikel in dieser Kategorie.</p>
           </div>
         ) : (
-          <div className="glass-card overflow-hidden glow-gold relative">
-            {/* Shimmer line that runs exactly twice when category changes */}
-            <div
-              key={active}
-              className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-gold-400 via-amber-300 to-gold-400 animate-shimmer-twice z-30"
-            />
-            {filtered.map((item, idx) => (
-              <div
-                key={item.id}
-                className={`flex items-center gap-4 p-6 md:p-8 transition-colors hover:bg-white/[0.02] ${
-                  idx !== filtered.length - 1 ? 'border-b border-white/5' : ''
-                }`}
-              >
-                {/* Thumbnail */}
-                {item.image_url && (
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden flex-shrink-0 ring-1 ring-white/10">
-                    <img src={item.image_url} alt={item.name} className="w-full h-full object-cover" />
-                  </div>
-                )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filtered.map((item, idx) => {
+              // Rich warm gradient card background themes
+              const cardThemes = [
+                { bg: 'bg-gradient-to-br from-[#FFE4D6] via-[#FFD8C0] to-[#FCA5A5]/30 border-[#FFAA80]', badgeBg: 'bg-[#D82A6C]', titleColor: 'text-[#9E1B4C]', priceBg: 'bg-[#251A14]' },
+                { bg: 'bg-gradient-to-br from-[#FFF0D6] via-[#FFE2B3] to-[#FCD34D]/30 border-[#FBBF24]', badgeBg: 'bg-[#E5931A]', titleColor: 'text-[#9C5A08]', priceBg: 'bg-[#251A14]' },
+                { bg: 'bg-gradient-to-br from-[#E0F2FE] via-[#BAE6FD] to-[#38BDF8]/20 border-[#7DD3FC]', badgeBg: 'bg-[#2563EB]', titleColor: 'text-[#1D4ED8]', priceBg: 'bg-[#251A14]' },
+                { bg: 'bg-gradient-to-br from-[#FFE4E6] via-[#FECDD3] to-[#FB7185]/30 border-[#FDA4AF]', badgeBg: 'bg-[#E11D48]', titleColor: 'text-[#BE123C]', priceBg: 'bg-[#251A14]' },
+                { bg: 'bg-gradient-to-br from-[#F3E8FF] via-[#E9D5FF] to-[#C084FC]/30 border-[#DDD6FE]', badgeBg: 'bg-[#7C3AED]', titleColor: 'text-[#6D28D9]', priceBg: 'bg-[#251A14]' },
+                { bg: 'bg-gradient-to-br from-[#FFEDD5] via-[#FED7AA] to-[#FB923C]/30 border-[#FDBA74]', badgeBg: 'bg-[#EA580C]', titleColor: 'text-[#C2410C]', priceBg: 'bg-[#251A14]' },
+              ];
 
-                {/* Info */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-3">
-                    <h3 className="text-base md:text-lg font-serif font-semibold text-white">
-                      {item.name}
-                    </h3>
-                    <div className="flex-1 border-t border-dotted border-white/10" />
-                    <span className="text-gold-400 font-serif font-bold text-base whitespace-nowrap">
-                      {item.price}
-                    </span>
+              const theme = cardThemes[idx % cardThemes.length];
+
+              return (
+                <div
+                  key={item.id}
+                  className={`relative ${theme.bg} rounded-3xl p-6 border transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl flex justify-between gap-3 overflow-hidden min-h-[220px] shadow-lg`}
+                >
+                  {/* Left Column: Number Badge, Title, Description, Price */}
+                  <div className="flex-1 flex flex-col justify-between z-10">
+                    <div>
+                      {/* Top Row: Circular Number & Title */}
+                      <div className="flex items-center gap-2.5 mb-3">
+                        <span className={`w-8 h-8 rounded-full ${theme.badgeBg} text-white font-sans font-extrabold text-sm flex items-center justify-center flex-shrink-0 shadow-sm`}>
+                          {idx + 1}
+                        </span>
+                        <h3 className={`text-lg md:text-xl font-bold font-sans ${theme.titleColor} leading-tight line-clamp-2`}>
+                          {item.name}
+                        </h3>
+                      </div>
+
+                      {/* Description */}
+                      {item.description && (
+                        <p className="text-xs md:text-sm text-[#52443C] font-sans leading-relaxed line-clamp-3 pr-1">
+                          {item.description}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Black Pill Price Tag */}
+                    <div className="mt-4">
+                      <span className={`inline-block ${theme.priceBg} text-white font-sans font-bold text-xs md:text-sm px-4 py-2 rounded-full shadow-md`}>
+                        {item.price}
+                      </span>
+                    </div>
                   </div>
-                  {item.description && (
-                    <p className="text-sm text-white/40 font-sans mt-1">{item.description}</p>
+
+                  {/* Right Column: Tall Cropped Product Image (If present) */}
+                  {item.image_url ? (
+                    <div className="w-[110px] md:w-[125px] h-full flex-shrink-0 relative overflow-hidden rounded-2xl">
+                      <img
+                        src={item.image_url}
+                        alt={item.name}
+                        className="w-full h-full object-cover object-center rounded-2xl transition-transform duration-500 hover:scale-105"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-[90px] h-full flex-shrink-0 flex items-center justify-center opacity-10">
+                      <span className="text-4xl">🥐</span>
+                    </div>
                   )}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

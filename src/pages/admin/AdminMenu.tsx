@@ -110,45 +110,84 @@ export default function AdminMenu() {
         </div>
       )}
 
-      {/* Items List */}
+      {/* Items List - 3 Column Live Gradient Preview Cards */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-6 h-6 text-gold-400 animate-spin" />
+          <Loader2 className="w-8 h-8 text-gold-400 animate-spin" />
         </div>
       ) : filtered.length === 0 && !isNew ? (
         <div className="glass-card p-12 text-center">
-          <p className="text-white/30 font-sans">Keine Artikel in dieser Kategorie.</p>
+          <p className="text-white/40 font-sans">Keine Artikel in dieser Kategorie.</p>
         </div>
       ) : (
-        <div className="space-y-3">
-          {filtered.map((item) => (
-            <div key={item.id} className="glass-card overflow-hidden">
-              {editing === item.id ? (
-                <div className="p-6">
-                  <ItemForm form={form} setForm={setForm} saving={saving} onSave={save} onCancel={cancel} />
-                </div>
-              ) : (
-                <div className="flex items-center gap-4 p-4">
-                  {item.image_url && (
-                    <img src={item.image_url} alt={item.name} className="w-12 h-12 rounded-lg object-cover flex-shrink-0" />
-                  )}
-                  <div className="flex-1 min-w-0">
-                    <p className="text-white font-sans font-medium text-sm">{item.name}</p>
-                    {item.description && <p className="text-white/30 font-sans text-xs truncate">{item.description}</p>}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {filtered.map((item, idx) => {
+            const cardThemes = [
+              { bg: 'bg-gradient-to-br from-[#FFE4D6] via-[#FFD8C0] to-[#FCA5A5]/30 border-[#FFAA80]', badgeBg: 'bg-[#D82A6C]', titleColor: 'text-[#9E1B4C]' },
+              { bg: 'bg-gradient-to-br from-[#FFF0D6] via-[#FFE2B3] to-[#FCD34D]/30 border-[#FBBF24]', badgeBg: 'bg-[#E5931A]', titleColor: 'text-[#9C5A08]' },
+              { bg: 'bg-gradient-to-br from-[#E0F2FE] via-[#BAE6FD] to-[#38BDF8]/20 border-[#7DD3FC]', badgeBg: 'bg-[#2563EB]', titleColor: 'text-[#1D4ED8]' },
+              { bg: 'bg-gradient-to-br from-[#FFE4E6] via-[#FECDD3] to-[#FB7185]/30 border-[#FDA4AF]', badgeBg: 'bg-[#E11D48]', titleColor: 'text-[#BE123C]' },
+              { bg: 'bg-gradient-to-br from-[#F3E8FF] via-[#E9D5FF] to-[#C084FC]/30 border-[#DDD6FE]', badgeBg: 'bg-[#7C3AED]', titleColor: 'text-[#6D28D9]' },
+              { bg: 'bg-gradient-to-br from-[#FFEDD5] via-[#FED7AA] to-[#FB923C]/30 border-[#FDBA74]', badgeBg: 'bg-[#EA580C]', titleColor: 'text-[#C2410C]' },
+            ];
+
+            const theme = cardThemes[idx % cardThemes.length];
+
+            return (
+              <div key={item.id} className="relative group">
+                {editing === item.id ? (
+                  <div className="glass-card p-6 col-span-full">
+                    <ItemForm form={form} setForm={setForm} saving={saving} onSave={save} onCancel={cancel} />
                   </div>
-                  <span className="text-gold-400 font-serif font-bold text-sm whitespace-nowrap">{item.price}</span>
-                  <div className="flex items-center gap-1">
-                    <button onClick={() => startEdit(item)} className="p-2 text-white/30 hover:text-gold-400 transition-colors">
-                      <Pencil className="w-4 h-4" />
-                    </button>
-                    <button onClick={() => remove(item.id)} className="p-2 text-white/30 hover:text-red-400 transition-colors">
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                ) : (
+                  <div className={`relative ${theme.bg} rounded-2xl p-5 border transition-all duration-300 hover:scale-[1.02] shadow-md flex justify-between gap-3 overflow-hidden min-h-[180px]`}>
+                    <div className="flex-1 flex flex-col justify-between z-10">
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className={`w-7 h-7 rounded-full ${theme.badgeBg} text-white font-sans font-extrabold text-xs flex items-center justify-center flex-shrink-0 shadow-sm`}>
+                            {idx + 1}
+                          </span>
+                          <h3 className={`text-base font-bold font-sans ${theme.titleColor} leading-tight line-clamp-1`}>
+                            {item.name}
+                          </h3>
+                        </div>
+                        {item.description && (
+                          <p className="text-xs text-[#52443C] font-sans leading-relaxed line-clamp-2 pr-1">
+                            {item.description}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="flex items-center justify-between mt-3 pt-2 border-t border-[#52443C]/10">
+                        <span className="bg-[#251A14] text-white font-sans font-bold text-xs px-3 py-1.5 rounded-full shadow-sm">
+                          {item.price}
+                        </span>
+
+                        <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm rounded-full px-2 py-1 shadow-sm">
+                          <button onClick={() => startEdit(item)} className="p-1 text-[#251A14] hover:text-[#E5931A] transition-colors" title="Bearbeiten">
+                            <Pencil className="w-3.5 h-3.5" />
+                          </button>
+                          <button onClick={() => remove(item.id)} className="p-1 text-[#251A14] hover:text-red-600 transition-colors" title="Löschen">
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {item.image_url && (
+                      <div className="w-[85px] h-full flex-shrink-0 relative overflow-hidden rounded-xl">
+                        <img
+                          src={item.image_url}
+                          alt={item.name}
+                          className="w-full h-full object-cover object-center rounded-xl"
+                        />
+                      </div>
+                    )}
                   </div>
-                </div>
-              )}
-            </div>
-          ))}
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

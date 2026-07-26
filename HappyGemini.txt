@@ -1,0 +1,26 @@
+
+SUPABASE xanadu.ch  emaili 
+
+Dadebank  Passwort adnan1973swiss-
+API URL
+https://sctzgmxlwcuwgoslxhbt.supabase.co/rest/v1/
+Publishable key
+sb_publishable_r80OjRszKcqi9xB9hHpMJQ_prR_ck-P
+Secret keys
+sb_secret_***
+anon public
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjdHpnbXhsd2N1d2dvc2x4aGJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUwNjM2NzcsImV4cCI6MjEwMDYzOTY3N30.od3nJIYEdnjTV2ux8z7bBMQ8HVcGwTuAzQ3ntu25K34
+service_role secret
+sb_secret_service_***
+Project ID
+sctzgmxlwcuwgoslxhbt
+Project Name
+happy
+
+
+aistudio.google.com API Key 
+AIzaSyAW11PGDpTuyle2tqrry0TrTVfVQw3CDaU
+coulddinari aydinswiss gmailinde 
+Cloud Name: dsdsb4lqw
+API Key: 951777884541879
+API Secret: k7omCLij8fbEDhlPf0d6VRolkV4

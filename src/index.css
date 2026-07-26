@@ -18,14 +18,14 @@
 
   body {
     font-family: 'Inter', system-ui, sans-serif;
-    background-color: #0F0D0C;
-    color: #E5E5E5;
+    background-color: #2B201A;
+    color: #F8F4F0;
     overflow-x: hidden;
     touch-action: manipulation;
   }
 
   ::selection {
-    background-color: rgba(212, 175, 55, 0.3);
+    background-color: rgba(212, 175, 55, 0.35);
     color: #fff;
   }
 
@@ -35,7 +35,7 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #0F0D0C;
+    background: #2B201A;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -56,18 +56,19 @@
 @layer components {
   /* Glassmorphism card */
   .glass-card {
-    background: rgba(20, 20, 20, 0.7);
+    background: rgba(58, 46, 39, 0.75);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 1rem;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
   }
 
   .glass-card-light {
-    background: rgba(30, 30, 30, 0.5);
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 1rem;
   }
 

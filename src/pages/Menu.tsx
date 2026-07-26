@@ -72,7 +72,7 @@ export default function MenuPage() {
 
       <div className="container mx-auto px-4 lg:px-8 py-16 max-w-6xl">
         {/* Category Tabs */}
-        <div className="flex flex-wrap gap-4 mb-12 justify-center">
+        <div className="flex flex-wrap gap-3 mb-12 justify-center">
           {CATEGORIES.map((catId) => {
             const m = CATEGORY_META[catId];
             const count = items.filter((i) => i.category === catId).length;
@@ -81,28 +81,20 @@ export default function MenuPage() {
               <button
                 key={catId}
                 onClick={() => setActive(catId)}
-                className={`relative p-[1.5px] rounded-full overflow-hidden transition-all duration-300 cursor-pointer ${
-                  isActive ? 'shadow-[0_0_20px_rgba(212,175,55,0.25)]' : 'hover:scale-102'
+                className={`relative px-5 py-3 rounded-2xl flex items-center gap-2.5 text-sm font-sans font-semibold transition-all duration-300 cursor-pointer ${
+                  isActive
+                    ? 'bg-gradient-to-b from-gold-400/20 via-gold-400/10 to-transparent text-gold-400 border border-gold-400/30 shadow-[0_4px_20px_rgba(212,175,55,0.15)] scale-105'
+                    : 'bg-dark-800/60 border border-white/5 text-white/50 hover:text-white hover:bg-white/5 hover:border-white/10'
                 }`}
               >
-                {/* Rotating Border Light Beam (Active & runs once) */}
-                {isActive && (
-                  <div
-                    key={catId} // Triggers animation reset on select
-                    className="absolute inset-[-150%] bg-[conic-gradient(from_0deg,transparent_50%,#D4AF37_80%,#FFF9E6_95%,transparent_100%)] animate-border-beam-once pointer-events-none"
-                  />
-                )}
+                {m.icon}
+                <span>{m.label}</span>
+                {count > 0 && <span className="text-xs opacity-60 font-mono">({count})</span>}
                 
-                {/* Button Content Inner Wrapper */}
-                <div className={`relative z-10 px-5 py-2.5 rounded-full flex items-center gap-2 text-sm font-sans font-medium transition-all ${
-                  isActive
-                    ? 'bg-dark-900/90 text-gold-400 font-semibold'
-                    : 'bg-dark-400/50 border border-white/5 text-white/50 hover:text-white/80'
-                }`}>
-                  {m.icon}
-                  <span>{m.label}</span>
-                  {count > 0 && <span className="text-xs opacity-60">({count})</span>}
-                </div>
+                {/* Clean Bottom Animated Active Indicator Line */}
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-gold-400 via-amber-300 to-gold-400 rounded-full shadow-[0_0_10px_#D4AF37] animate-pulse" />
+                )}
               </button>
             );
           })}

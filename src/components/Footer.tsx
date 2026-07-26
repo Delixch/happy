@@ -5,7 +5,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-dark-900 border-t border-white/5">
+    <footer className="relative bg-[#474150] border-t border-[#9C99B8]/20">
       {/* Gold top accent */}
       <div className="divider-gold" />
 
@@ -126,9 +126,20 @@ export default function Footer() {
           <p className="text-white/50 text-xs font-sans">
             &copy; {currentYear} Happy Beck. Alle Rechte vorbehalten.
           </p>
-          <p className="text-white/35 text-[10px] font-sans tracking-wider uppercase">
-            Traditionelle Bäckerei · Zürich, Schweiz
-          </p>
+          <div className="flex items-center gap-6">
+            <p className="text-white/35 text-[10px] font-sans tracking-wider uppercase">
+              Traditionelle Bäckerei · Zürich, Schweiz
+            </p>
+
+            {/* HOCH / Back to Top Button */}
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="flex items-center gap-1.5 text-xs font-sans font-bold tracking-widest text-[#FFBB00] hover:text-white transition-colors uppercase bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg border border-white/10"
+            >
+              <span>HOCH</span>
+              <span className="text-base">↑</span>
+            </button>
+          </div>
         </div>
       </div>
     </footer>

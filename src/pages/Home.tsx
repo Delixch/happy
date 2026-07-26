@@ -61,24 +61,40 @@ export default function Home() {
         title: 'Ein Häppchen Glück!',
         subtitle: 'Willkommen bei Happy Beck',
         text: 'Traditionelles Handwerk trifft moderne Innovation. Entdecken Sie unsere Leidenschaft für frisches Brot und feine Backwaren.',
+        bgColor: '#F5FFF4', // Soft Mint Cream
+        cardBg: '#474150',  // Deep Plum Charcoal
+        accentColor: '#FFBB00', // Gold Accent
+        textColor: '#231E2A',
       },
       {
         image: '/Home1.jpg',
         title: 'Frisch. Fein. Happy.',
         subtitle: 'Täglich ofenfrisch',
         text: 'Jeden Tag ofenfrisch – mit ausgewählten Zutaten und viel Liebe zum Detail.',
+        bgColor: '#FFF8F0', // Soft Warm Cream / Warm Bakery Gold
+        cardBg: '#3D2E28',  // Deep Espresso Moka
+        accentColor: '#E5931A', // Warm Amber
+        textColor: '#2D201A',
       },
       {
         image: '/home2.jpg',
         title: 'Süsses und Herzhaftes',
         subtitle: 'Für jeden Geschmack',
         text: 'Von Gipfeli bis Sandwich: Für jeden Geschmack das Richtige.',
+        bgColor: '#F8F6FE', // Soft Lavender Slate
+        cardBg: '#372F47',  // Deep Berry Violet
+        accentColor: '#9C99B8', // Lavender Slate
+        textColor: '#251D33',
       },
       {
         image: '/happylachen.jpg',
         title: 'Freude am Genuss',
         subtitle: 'Happy Beck Lachen',
         text: 'Mit bestem Handwerk und frischen Zutaten zaubern wir Ihnen jeden Tag ein Lächeln ins Gesicht.',
+        bgColor: '#EFFCF6', // Fresh Teal Mint
+        cardBg: '#2A423D',  // Deep Eucalyptus Teal
+        accentColor: '#0D9488', // Emerald Teal
+        textColor: '#192C28',
       },
     ],
     []
@@ -158,217 +174,158 @@ export default function Home() {
       { threshold: 0.1 }
     );
     document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+    }, []);
 
   return (
     <section id="home">
-      {/* Hero - Full Screen */}
-      <div className="relative min-h-screen lg:h-screen overflow-hidden flex flex-col justify-center py-20 lg:py-0">
-        {/* Background Image */}
-        <img
-          src={slides[slide].image}
-          alt={slides[slide].title}
-          className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 scale-105 ${
-            isTransitioning ? 'opacity-0 scale-110' : 'opacity-100'
-          }`}
-          fetchPriority="high"
-        />
-
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-700/70 via-dark-700/40 to-dark-700" />
-        <div className="absolute inset-0 bg-gradient-to-r from-dark-700/60 to-transparent" />
-
-        {/* Content */}
-        <div className="relative container mx-auto px-4 lg:px-8 flex items-center py-8 lg:py-0">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center w-full">
+      {/* Hero Container */}
+      <div 
+        className="relative pt-14 md:pt-16 pb-12 bg-[#FFBB00]"
+      >
+        <div className="w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             
-            {/* Left Column: Slide Content */}
-            <div className={`lg:col-span-7 transition-all duration-500 ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
-              <p className="text-gold-400 font-sans text-sm tracking-[0.3em] uppercase mb-4">
+            {/* LEFT COLUMN: Flush Left & Top Image Slider */}
+            <div className="lg:col-span-6 w-full">
+              <div className="relative w-full h-[400px] sm:h-[480px] lg:h-[580px] overflow-hidden shadow-2xl bg-white group rounded-br-3xl">
+                {/* Changing Image with Gentle Transparency */}
+                <img
+                  src={slides[slide].image}
+                  alt={slides[slide].title}
+                  className={`w-full h-full object-cover transition-all duration-700 brightness-105 ${
+                    isTransitioning ? 'opacity-0 scale-105' : 'opacity-85 scale-100'
+                  }`}
+                  fetchPriority="high"
+                />
+
+                {/* Subtle Image Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
+
+                {/* Image Counter Badge */}
+                <div 
+                  className="absolute top-4 left-4 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 text-white text-[11px] font-sans font-bold tracking-widest uppercase shadow-md transition-colors duration-700"
+                  style={{ backgroundColor: slides[slide].cardBg }}
+                >
+                  {slide + 1} / {slides.length}
+                </div>
+
+                {/* Image Navigation Arrows */}
+                <div className="absolute bottom-4 right-4 flex items-center gap-2 z-10">
+                  <button
+                    onClick={prev}
+                    className="w-9 h-9 rounded-full text-white flex items-center justify-center backdrop-blur-md transition-all shadow-md cursor-pointer hover:scale-110"
+                    style={{ backgroundColor: slides[slide].cardBg }}
+                    aria-label="Vorheriges Bild"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    onClick={next}
+                    className="w-9 h-9 rounded-full text-white flex items-center justify-center backdrop-blur-md transition-all shadow-md cursor-pointer hover:scale-110"
+                    style={{ backgroundColor: slides[slide].cardBg }}
+                    aria-label="Nächstes Bild"
+                  >
+                    ›
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT COLUMN: Hero Text Content (Vertically Centered) */}
+            <div className={`lg:col-span-6 flex flex-col items-start text-left my-auto pt-8 lg:pt-16 px-6 lg:px-12 transition-all duration-500 ${isTransitioning ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}>
+              <span 
+                className="inline-block px-4 py-1.5 rounded-full text-white font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-sm transition-colors duration-700"
+                style={{ backgroundColor: slides[slide].cardBg }}
+              >
                 {slides[slide].subtitle}
-              </p>
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-6 leading-[1.1]">
+              </span>
+              <h1 
+                className="text-4xl md:text-6xl lg:text-7xl font-serif font-black mb-6 leading-[1.15] transition-colors duration-700"
+                style={{ color: slides[slide].textColor }}
+              >
                 {slides[slide].title}
               </h1>
-              <div className="divider-gold w-24 mb-6" />
-              <p className="text-lg md:text-xl text-white/70 font-sans font-light mb-10 max-w-lg leading-relaxed">
+              <div 
+                className="w-20 h-1.5 rounded-full mb-6 transition-colors duration-700"
+                style={{ backgroundColor: slides[slide].accentColor }}
+              />
+              <p 
+                className="text-base md:text-xl font-sans font-normal mb-8 max-w-xl leading-relaxed transition-colors duration-700 opacity-90"
+                style={{ color: slides[slide].textColor }}
+              >
                 {slides[slide].text}
               </p>
               <div className="flex flex-wrap gap-4">
-                <Link to="/menu" className="btn-gold">
+                <Link 
+                  to="/menu" 
+                  className="px-8 py-3.5 rounded-2xl text-white font-sans font-extrabold text-sm tracking-wider uppercase shadow-xl hover:scale-105 transition-all duration-300"
+                  style={{ backgroundColor: slides[slide].cardBg }}
+                >
                   Unsere Speisekarte
                 </Link>
-                <Link to="/kontakt" className="btn-gold-outline">
+                <Link 
+                  to="/kontakt" 
+                  className="px-8 py-3.5 rounded-2xl border-2 font-sans font-extrabold text-sm tracking-wider uppercase shadow-sm transition-all duration-300 hover:scale-105"
+                  style={{ 
+                    borderColor: slides[slide].cardBg, 
+                    color: slides[slide].cardBg 
+                  }}
+                >
                   Kontakt
                 </Link>
               </div>
             </div>
 
-            {/* Right Column: Small Floating Instagram Card */}
-            <div className="col-span-1 lg:col-span-5 flex justify-center lg:justify-end mt-8 lg:mt-0">
-              <div className="w-[210px] sm:w-[280px] glass-card overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.8)] rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-500 hover:glow-gold cursor-pointer transform origin-center">
-                <div className="p-3 border-b border-white/5 flex items-center justify-between bg-dark-900/40">
-                  <div className="flex items-center gap-2">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                    </span>
-                    <span className="text-[10px] font-sans font-bold text-white/80 tracking-wider uppercase flex items-center gap-1">
-                      <Instagram className="w-3.5 h-3.5 text-gold-400" /> Instagram Feed
-                    </span>
-                  </div>
-                  <button 
-                    onClick={fetchRandomInsta}
-                    className="text-white/30 hover:text-gold-400 transition-colors p-1"
-                    title="Anderen Beitrag laden"
-                  >
-                    <RefreshCw className="w-3 h-3" />
-                  </button>
-                </div>
-
-                <div className="relative aspect-square overflow-hidden bg-dark-900">
-                  {loadingInsta ? (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <Loader2 className="w-6 h-6 text-gold-400 animate-spin" />
-                    </div>
-                  ) : instaPost ? (
-                    <a href={instaPost.post_url} target="_blank" rel="noopener noreferrer" className="block w-full h-full relative group">
-                      {instaPost.image_url.match(/\.(mp4|webm|ogg|mov)$/i) || instaPost.image_url.includes('/video/upload') || instaPost.image_url.includes('video') ? (
-                        <video src={optimizeUnsplashUrl(instaPost.image_url)} className="w-full h-full object-cover" autoPlay loop muted playsInline />
-                      ) : (
-                        <img src={optimizeUnsplashUrl(instaPost.image_url)} alt="Instagram Post" className="w-full h-full object-cover" fetchPriority="high" />
-                      )}
-                      <div className="absolute inset-0 bg-dark-900/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
-                        <span className="text-xs font-sans font-bold text-white border border-white/20 px-3 py-1.5 rounded-full bg-dark-900/40 backdrop-blur-sm">
-                          Öffnen
-                        </span>
-                      </div>
-                    </a>
-                  ) : null}
-                </div>
-
-                {instaPost && instaPost.caption && (
-                  <div className="p-3 bg-dark-900/20">
-                    <p className="text-[11px] text-white/60 font-sans line-clamp-2 leading-relaxed">
-                      {instaPost.caption}
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
-
           </div>
         </div>
 
-        {/* Slide Navigation */}
-        <div className="absolute bottom-8 left-0 right-0">
-          <div className="container mx-auto px-4 lg:px-8 flex items-center justify-between">
-            {/* Dots */}
-            <div className="flex items-center gap-3">
-              {slides.map((_, i) => (
-                <button
-                  key={i}
-                  aria-label={`Slide ${i + 1}`}
-                  onClick={() => changeSlide(i)}
-                  className="group relative"
-                >
-                  <div className={`h-[2px] transition-all duration-500 ${
-                    i === slide ? 'w-12 bg-gold-400' : 'w-6 bg-white/30 group-hover:bg-white/50'
-                  }`} />
-                </button>
-              ))}
-              <span className="text-white/30 text-xs font-sans ml-3 tabular-nums">
-                {String(slide + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
-              </span>
-            </div>
-
-            {/* Arrows */}
-            <div className="flex items-center gap-2">
-              <button
-                aria-label="Previous slide"
-                onClick={prev}
-                className="w-10 h-10 rounded-full border border-white/20 hover:border-gold-400/50 flex items-center justify-center text-white/60 hover:text-gold-400 transition-all hover:bg-gold-400/5"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                aria-label="Next slide"
-                onClick={next}
-                className="w-10 h-10 rounded-full border border-white/20 hover:border-gold-400/50 flex items-center justify-center text-white/60 hover:text-gold-400 transition-all hover:bg-gold-400/5"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom gradient to blend into next section */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-dark-700 to-transparent" />
-      </div>
-
-      {/* Features Section */}
-      <div className="relative py-24 bg-dark-700">
-        <div className="container mx-auto px-4 lg:px-8">
+        {/* Features Section - Pulled Right Under Sliding Image */}
+        <div className="container mx-auto px-4 lg:px-8 pt-12 md:pt-16 pb-8">
           {/* Section header */}
-          <div className="text-center mb-16 reveal">
-            <p className="text-gold-400 font-sans text-sm tracking-[0.3em] uppercase mb-4">
+          <div className="text-center mb-8 reveal">
+            <p 
+              className="font-sans text-xs tracking-[0.3em] uppercase mb-2 font-bold transition-colors duration-700"
+              style={{ color: slides[slide].cardBg }}
+            >
               Unsere Philosophie
             </p>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4">
-              Was uns <span className="text-gold-gradient">auszeichnet</span>
+            <h2 
+              className="text-3xl md:text-5xl font-serif font-bold mb-4 transition-colors duration-700"
+              style={{ color: slides[slide].textColor }}
+            >
+              Was uns <span style={{ color: slides[slide].cardBg }}>auszeichnet</span>
             </h2>
-            <div className="divider-gold w-20 mx-auto" />
+            <div 
+              className="w-16 h-1 rounded-full mx-auto transition-colors duration-700"
+              style={{ backgroundColor: slides[slide].accentColor }}
+            />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
             <FeatureCard
               icon={<ChefHat className="w-5.5 h-5.5" />}
               title="Handwerk"
               text="Traditionelle Backkunst, entwickelt über Jahrzehnte voller Erfahrung und Leidenschaft. Unsere Rezepte und handwerklichen Techniken wurden von Generation zu Generation weitergegeben und bis heute bewahrt."
               delay={0}
+              bgColor={slides[slide].cardBg}
+              accentColor={slides[slide].accentColor}
             />
             <FeatureCard
               icon={<Heart className="w-5.5 h-5.5" />}
               title="Qualität"
               text="Wir verwenden nur die besten, sorgfältig ausgewählten Zutaten, um täglich frische Backwaren von höchster Qualität herzustellen. Qualität und Leidenschaft sind die Basis für den Genuss."
               delay={150}
+              bgColor={slides[slide].cardBg}
+              accentColor={slides[slide].accentColor}
             />
             <FeatureCard
               icon={<Award className="w-5.5 h-5.5" />}
               title="Innovation"
               text="Wir verbinden kreative Innovation mit unserer traditionellen Backkunst. So entstehen einzigartige Produkte, die modern und zugleich authentisch sind."
               delay={300}
+              bgColor={slides[slide].cardBg}
+              accentColor={slides[slide].accentColor}
             />
-          </div>
-        </div>
-      </div>
-
-      {/* Confetti Rain */}
-      <Confetti active={confettiActive} />
-
-      {/* ─── SPIEL & SPASS SECTION (INTERACTIVE QUIZ) ─── */}
-      <div className="relative py-24 bg-dark-800 border-t border-white/5 overflow-hidden">
-        {/* Decorative background glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gold-400/[0.02] rounded-full blur-3xl pointer-events-none" />
-
-        <div className="container mx-auto px-4 lg:px-8 max-w-4xl relative z-10">
-          <div className="text-center mb-10 reveal">
-            <p className="text-gold-400 font-sans text-xs tracking-[0.3em] uppercase mb-3">
-              Spiel & Spass
-            </p>
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-2">
-              Hast du <span className="text-gold-gradient">Hunger?</span>
-            </h2>
-            <div className="divider-gold w-16 mx-auto mt-4" />
-          </div>
-
-          <div className="max-w-md mx-auto reveal" style={{ animationDelay: '150ms' }}>
-            <HungerGame onComplete={() => {
-              setConfettiActive(true);
-              setIsDealsModalOpen(true);
-              setTimeout(() => setConfettiActive(false), 4500);
-            }} />
           </div>
         </div>
       </div>
@@ -389,11 +346,15 @@ function FeatureCard({
   title,
   text,
   delay,
+  bgColor,
+  accentColor,
 }: {
   icon: React.ReactNode;
   title: string;
   text: string;
   delay: number;
+  bgColor?: string;
+  accentColor?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const rectRef = useRef<DOMRect | null>(null);
@@ -430,29 +391,34 @@ function FeatureCard({
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMove}
       onMouseLeave={reset}
-      className="reveal"
+      className="reveal h-full"
       style={{ animationDelay: `${delay}ms`, perspective: '1000px' }}
     >
       <div
-        style={{ transform }}
-        className="relative text-left p-6 rounded-2xl glass-card transition-all duration-300 will-change-transform hover:glow-gold group"
+        style={{ 
+          transform,
+          backgroundColor: bgColor || '#474150' 
+        }}
+        className="relative text-left p-6 rounded-2xl glass-card transition-all duration-700 ease-in-out will-change-transform hover:glow-gold group border border-white/10 h-full flex flex-col justify-start"
       >
         {/* Spotlight */}
         <div
           className="pointer-events-none absolute inset-0 rounded-2xl"
           style={{
-            background: `radial-gradient(400px circle at ${bgPos}, rgba(212,175,55,0.06), transparent 40%)`,
+            background: `radial-gradient(400px circle at ${bgPos}, rgba(255,255,255,0.1), transparent 40%)`,
           }}
         />
 
         <div className="relative z-10">
           <div className="flex items-center gap-4 mb-4">
-            <div className="flex-shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-full border border-gold-400/20 text-gold-400 group-hover:border-gold-400/40 group-hover:bg-gold-400/5 transition-all duration-300">
+            <div 
+              className="flex-shrink-0 inline-flex items-center justify-center w-12 h-12 rounded-full border-2 border-white/30 text-[#FFBB00] group-hover:scale-110 transition-all duration-300 bg-black/20"
+            >
               {icon}
             </div>
-            <h3 className="text-lg font-serif font-bold text-white group-hover:text-gold-400 transition-colors">{title}</h3>
+            <h3 className="text-xl md:text-2xl font-serif font-black text-white tracking-wide transition-colors">{title}</h3>
           </div>
-          <p className="text-white/50 font-sans text-xs leading-relaxed">{text}</p>
+          <p className="text-white font-sans text-sm md:text-base font-medium leading-relaxed drop-shadow-sm">{text}</p>
         </div>
       </div>
     </div>

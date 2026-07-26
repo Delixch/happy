@@ -48,241 +48,174 @@ export default function Navigation() {
   ];
 
   const angebotItems = [
-    { label: 'Speisekarte', href: '/menu', desc: 'Gipfeli, Brot, Sandwiches & Mehr', icon: <UtensilsCrossed className="w-4 h-4 text-gold-400" /> },
-    { label: 'Aktuelles & Deals', href: '/aktuelles', desc: 'Jubiläums-Deals & Tagesangebote', icon: <Gift className="w-4 h-4 text-gold-400" /> },
+    { label: 'Speisekarte', href: '/menu', desc: 'Gipfeli, Brot, Sandwiches & Mehr', icon: <UtensilsCrossed className="w-4 h-4 text-white" /> },
+    { label: 'Aktuelle Deals', href: '/aktuelles', desc: 'Jubiläums-Deals & Tagesangebote', icon: <Gift className="w-4 h-4 text-white" /> },
+    { label: 'Bestellung', href: '/kontakt', desc: 'Vorbestellen & Abholen', icon: <Mail className="w-4 h-4 text-white" /> },
   ];
 
   return (
     <>
-      {/* ── TOP UTILITY BAR (Luxury Slim Strip) ── */}
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'
-        }`}
-      >
-        <div className="bg-dark-950/90 backdrop-blur-md border-b border-gold-400/10 py-1.5 px-4 lg:px-12 text-[11px] font-sans text-white/50 flex justify-between items-center">
-          <div className="flex items-center gap-6">
-            <span className="flex items-center gap-1.5 text-gold-400/90 font-medium">
-              <MapPin className="w-3 h-3 text-gold-400" />
-              <span>Langstrasse 120, 8004 Zürich</span>
-            </span>
-            <span className="hidden md:flex items-center gap-1.5 text-white/40">
-              <span>Täglich geöffnet: 06:00 – 22:00 Uhr</span>
-            </span>
-          </div>
-
-          <div className="flex items-center gap-5">
-            <a
-              href="tel:+41440000000"
-              className="hover:text-gold-400 transition-colors flex items-center gap-1.5"
-            >
-              <Phone className="w-3 h-3 text-gold-400" />
-              <span>+41 44 000 00 00</span>
-            </a>
-            <span className="w-[1px] h-3 bg-white/10" />
-            <Link
-              to="/admin"
-              className="text-white/40 hover:text-gold-400 transition-colors flex items-center gap-1 uppercase tracking-wider text-[10px] font-semibold"
-            >
-              <Lock className="w-3 h-3 text-gold-400" />
-              <span>Admin</span>
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      {/* ── MAIN LUXURY FLOATING NAV BAR ── */}
+      {/* ── PARALLELOGRAM RIBBON NAV BAR (Full-Width, Flush, Skewed Ribbons) ── */}
       <nav
         ref={dropdownRef}
-        className={`fixed left-0 right-0 z-50 transition-all duration-500 px-4 lg:px-12 ${
-          scrolled ? 'top-3' : 'top-9'
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 w-full h-14 md:h-16 bg-[#231E2A] flex items-stretch border-b border-black/20"
       >
-        <div className="mx-auto w-full max-w-6xl">
-          <div
-            className={`flex items-center justify-between transition-all duration-500 rounded-2xl border ${
-              scrolled
-                ? 'bg-dark-900/90 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.9)] border-gold-400/30 px-6 py-2.5'
-                : 'bg-dark-800/70 backdrop-blur-xl shadow-2xl border-white/10 px-7 py-3.5'
-            }`}
-          >
-            {/* BRAND LOGO WITH GOLD GLOW */}
-            <Link to="/" className="group flex items-center gap-3.5 z-10">
-              <div className="relative rounded-xl overflow-hidden ring-1 ring-gold-400/40 transition-all duration-500 group-hover:ring-gold-400 group-hover:shadow-[0_0_25px_rgba(212,175,55,0.4)] w-10 h-10 lg:w-11 lg:h-11 bg-dark-950 p-1 flex items-center justify-center">
-                <img
-                  src="/logo.png"
-                  alt="Happy Beck"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <div className="flex flex-col justify-center text-left">
-                <p className="font-serif font-black text-white tracking-wider leading-none text-base lg:text-xl group-hover:text-gold-400 transition-colors">
-                  HAPPY <span className="text-gold-gradient">BECK</span>
-                </p>
-                <p className="tracking-[0.28em] uppercase text-gold-400/80 font-sans font-semibold leading-none mt-1 text-[8px] lg:text-[9px]">
-                  ZÜRICH · SEIT 2006
-                </p>
-              </div>
-            </Link>
-
-            {/* DESKTOP DROPDOWN NAVIGATION */}
-            <div className="hidden lg:flex items-center gap-2 bg-dark-950/80 rounded-xl p-1.5 border border-white/10 shadow-inner">
-              {/* HOME LINK */}
-              <Link
-                to="/"
-                className={`px-4 py-2 rounded-lg text-xs font-sans font-semibold tracking-wider uppercase transition-all ${
-                  location.pathname === '/'
-                    ? 'bg-gold-400/15 text-gold-400 border border-gold-400/30'
-                    : 'text-white/70 hover:text-white hover:bg-white/5'
-                }`}
-              >
-                Home
-              </Link>
-
-              {/* DROPDOWN 1: ÜBER UNS */}
-              <div className="relative">
-                <button
-                  onClick={() => setActiveDropdown(activeDropdown === 'uberUns' ? null : 'uberUns')}
-                  onMouseEnter={() => setActiveDropdown('uberUns')}
-                  className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-sans font-semibold tracking-wider uppercase transition-all cursor-pointer ${
-                    ['/unternehmen', '/team', '/medien'].includes(location.pathname) || activeDropdown === 'uberUns'
-                      ? 'bg-gold-400/15 text-gold-400 border border-gold-400/30'
-                      : 'text-white/70 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  <span>Über Uns</span>
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${activeDropdown === 'uberUns' ? 'rotate-180 text-gold-400' : ''}`} />
-                </button>
-
-                {/* Dropdown Menu Box */}
-                {activeDropdown === 'uberUns' && (
-                  <div 
-                    onMouseLeave={() => setActiveDropdown(null)}
-                    className="absolute top-full left-0 mt-3 w-64 glass-card p-3 rounded-2xl glow-gold border border-gold-400/30 animate-scale-in z-50 bg-dark-900/95 backdrop-blur-2xl shadow-2xl"
-                  >
-                    <div className="space-y-1">
-                      {uberUnsItems.map((item) => (
-                        <Link
-                          key={item.href}
-                          to={item.href}
-                          onClick={() => setActiveDropdown(null)}
-                          className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/5 transition-all group/item"
-                        >
-                          <div className="p-2 rounded-lg bg-dark-800 border border-white/10 group-hover/item:border-gold-400/40 transition-colors">
-                            {item.icon}
-                          </div>
-                          <div>
-                            <p className="text-xs font-sans font-bold text-white group-hover/item:text-gold-400 transition-colors">
-                              {item.label}
-                            </p>
-                            <p className="text-[10px] text-white/40 font-sans mt-0.5">
-                              {item.desc}
-                            </p>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* DROPDOWN 2: ANGEBOT */}
-              <div className="relative">
-                <button
-                  onClick={() => setActiveDropdown(activeDropdown === 'angebot' ? null : 'angebot')}
-                  onMouseEnter={() => setActiveDropdown('angebot')}
-                  className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-sans font-semibold tracking-wider uppercase transition-all cursor-pointer ${
-                    ['/menu', '/aktuelles'].includes(location.pathname) || activeDropdown === 'angebot'
-                      ? 'bg-gold-400/15 text-gold-400 border border-gold-400/30'
-                      : 'text-white/70 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  <span>Angebot</span>
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${activeDropdown === 'angebot' ? 'rotate-180 text-gold-400' : ''}`} />
-                </button>
-
-                {/* Dropdown Menu Box */}
-                {activeDropdown === 'angebot' && (
-                  <div 
-                    onMouseLeave={() => setActiveDropdown(null)}
-                    className="absolute top-full left-0 mt-3 w-72 glass-card p-3 rounded-2xl glow-gold border border-gold-400/30 animate-scale-in z-50 bg-dark-900/95 backdrop-blur-2xl shadow-2xl"
-                  >
-                    <div className="space-y-1">
-                      {angebotItems.map((item) => (
-                        <Link
-                          key={item.href}
-                          to={item.href}
-                          onClick={() => setActiveDropdown(null)}
-                          className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/5 transition-all group/item"
-                        >
-                          <div className="p-2 rounded-lg bg-dark-800 border border-white/10 group-hover/item:border-gold-400/40 transition-colors">
-                            {item.icon}
-                          </div>
-                          <div>
-                            <p className="text-xs font-sans font-bold text-white group-hover/item:text-gold-400 transition-colors">
-                              {item.label}
-                            </p>
-                            <p className="text-[10px] text-white/40 font-sans mt-0.5">
-                              {item.desc}
-                            </p>
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* DIRECT LINKS: JOBS & KONTAKT */}
-              <Link
-                to="/jobs"
-                className={`px-4 py-2 rounded-lg text-xs font-sans font-semibold tracking-wider uppercase transition-all ${
-                  location.pathname === '/jobs'
-                    ? 'bg-gold-400/15 text-gold-400 border border-gold-400/30'
-                    : 'text-white/70 hover:text-white hover:bg-white/5'
-                }`}
-              >
-                Jobs
-              </Link>
-
-              <Link
-                to="/kontakt"
-                className={`px-4 py-2 rounded-lg text-xs font-sans font-semibold tracking-wider uppercase transition-all ${
-                  location.pathname === '/kontakt'
-                    ? 'bg-gold-400/15 text-gold-400 border border-gold-400/30'
-                    : 'text-white/70 hover:text-white hover:bg-white/5'
-                }`}
-              >
-                Kontakt
-              </Link>
-            </div>
-
-            {/* ACTION CTA BUTTON (SPEISEKARTE QUICK ACTION) */}
-            <div className="hidden lg:flex items-center gap-3">
-              <Link
-                to="/menu"
-                className="btn-gold text-xs py-2.5 px-5 rounded-xl font-bold tracking-widest uppercase flex items-center gap-2 shadow-[0_0_20px_rgba(212,175,55,0.25)] hover:shadow-[0_0_30px_rgba(212,175,55,0.45)] hover:scale-105 transition-all"
-              >
-                <Sparkles className="w-4 h-4 text-dark-950" />
-                <span>Speisekarte</span>
-              </Link>
-            </div>
-
-            {/* MOBILE HAMBURGER BUTTON */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden relative z-50 w-11 h-11 rounded-xl border border-gold-400/30 bg-dark-900/90 flex items-center justify-center text-gold-400 hover:bg-gold-400/10 transition-all cursor-pointer shadow-lg"
-              aria-label="Menü umschalten"
-            >
-              {isOpen ? <X className="w-6 h-6" /> : (
-                <div className="flex flex-col gap-1.5 w-5">
-                  <span className="w-full h-[2px] bg-gold-400 rounded-full transition-all" />
-                  <span className="w-3/4 h-[2px] bg-gold-400 rounded-full transition-all self-end" />
-                  <span className="w-full h-[2px] bg-gold-400 rounded-full transition-all" />
-                </div>
-              )}
-            </button>
+        {/* BRAND LOGO TAB (Flush Left) */}
+        <Link
+          to="/"
+          className="flex items-center gap-3 px-6 bg-[#17131D] text-white flex-shrink-0 z-20 hover:bg-[#110E16] transition-colors pr-8 relative"
+          style={{ clipPath: 'polygon(0 0, 100% 0, 85% 100%, 0 100%)' }}
+        >
+          <img src="/logo.png" alt="Happy Beck" className="w-8 h-8 object-contain" />
+          <div className="flex flex-col">
+            <span className="font-serif font-black text-white leading-none text-base tracking-wider">
+              HAPPY <span className="text-[#FFBB00]">BECK</span>
+            </span>
+            <span className="text-[8px] font-sans font-bold uppercase tracking-widest text-[#FFBB00]/80 mt-0.5">
+              ZÜRICH
+            </span>
           </div>
+        </Link>
+
+        {/* DESKTOP PARALLELOGRAM TABS CONTAINER (Edge-To-Edge, Flush, Skewed Ribbons) */}
+        <div className="hidden lg:flex items-stretch flex-1 -ml-4">
+          {/* TAB 1: HOME */}
+          <Link
+            to="/"
+            className={`flex-1 flex items-center justify-center font-sans font-extrabold text-xs md:text-sm text-white uppercase tracking-wider transition-all cursor-pointer relative ${
+              location.pathname === '/' ? 'bg-[#00A8CC] brightness-110 z-10' : 'bg-[#00A8CC] hover:brightness-110'
+            }`}
+            style={{ clipPath: 'polygon(12% 0, 100% 0, 88% 100%, 0 100%)' }}
+          >
+            <span>Home</span>
+          </Link>
+
+          {/* TAB 2: ÜBER UNS (Dropdown: Über Uns, Unser Team, Medien Presse) */}
+          <div
+            className="flex-1 relative flex items-stretch -ml-5 z-30"
+            onMouseEnter={() => setActiveDropdown('uberUns')}
+          >
+            <button
+              onClick={() => setActiveDropdown(activeDropdown === 'uberUns' ? null : 'uberUns')}
+              className={`w-full flex items-center justify-center gap-1.5 font-sans font-extrabold text-xs md:text-sm text-white uppercase tracking-wider transition-all cursor-pointer ${
+                ['/unternehmen', '/team', '/medien'].includes(location.pathname) || activeDropdown === 'uberUns'
+                  ? 'bg-[#E5931A] brightness-110'
+                  : 'bg-[#E5931A] hover:brightness-110'
+              }`}
+              style={{ clipPath: 'polygon(12% 0, 100% 0, 88% 100%, 0 100%)' }}
+            >
+              <span>Über Uns</span>
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${activeDropdown === 'uberUns' ? 'rotate-180' : ''}`} />
+            </button>
+
+            {activeDropdown === 'uberUns' && (
+              <div
+                onMouseLeave={() => setActiveDropdown(null)}
+                className="absolute top-full left-0 mt-0 w-60 p-2 bg-[#E5931A] text-white shadow-2xl z-50 animate-scale-in"
+                style={{ clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0 100%)' }}
+              >
+                <div className="space-y-1">
+                  {uberUnsItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      onClick={() => setActiveDropdown(null)}
+                      className="block p-3 bg-black/20 hover:bg-black/40 transition-all group/item"
+                    >
+                      <p className="text-xs font-sans font-extrabold text-white uppercase tracking-wider">
+                        {item.label}
+                      </p>
+                      <p className="text-[10px] text-white/80 font-sans mt-0.5">
+                        {item.desc}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* TAB 3: ANGEBOT (Dropdown: Speisekarte, Aktuelle Deals, Bestellung) */}
+          <div
+            className="flex-1 relative flex items-stretch -ml-5 z-30"
+            onMouseEnter={() => setActiveDropdown('angebot')}
+          >
+            <button
+              onClick={() => setActiveDropdown(activeDropdown === 'angebot' ? null : 'angebot')}
+              className={`w-full flex items-center justify-center gap-1.5 font-sans font-extrabold text-xs md:text-sm text-white uppercase tracking-wider transition-all cursor-pointer ${
+                ['/menu', '/aktuelles'].includes(location.pathname) || activeDropdown === 'angebot'
+                  ? 'bg-[#7C3AED] brightness-110'
+                  : 'bg-[#7C3AED] hover:brightness-110'
+              }`}
+              style={{ clipPath: 'polygon(12% 0, 100% 0, 88% 100%, 0 100%)' }}
+            >
+              <span>Angebot</span>
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${activeDropdown === 'angebot' ? 'rotate-180' : ''}`} />
+            </button>
+
+            {activeDropdown === 'angebot' && (
+              <div
+                onMouseLeave={() => setActiveDropdown(null)}
+                className="absolute top-full left-0 mt-0 w-64 p-2 bg-[#7C3AED] text-white shadow-2xl z-50 animate-scale-in"
+                style={{ clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0 100%)' }}
+              >
+                <div className="space-y-1">
+                  {angebotItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      onClick={() => setActiveDropdown(null)}
+                      className="block p-3 bg-black/20 hover:bg-black/40 transition-all group/item"
+                    >
+                      <p className="text-xs font-sans font-extrabold text-white uppercase tracking-wider">
+                        {item.label}
+                      </p>
+                      <p className="text-[10px] text-white/80 font-sans mt-0.5">
+                        {item.desc}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* TAB 4: JOBS */}
+          <Link
+            to="/jobs"
+            className={`flex-1 flex items-center justify-center font-sans font-extrabold text-xs md:text-sm text-white uppercase tracking-wider transition-all cursor-pointer relative -ml-5 ${
+              location.pathname === '/jobs' ? 'bg-[#E11D48] brightness-110' : 'bg-[#E11D48] hover:brightness-110'
+            }`}
+            style={{ clipPath: 'polygon(12% 0, 100% 0, 88% 100%, 0 100%)' }}
+          >
+            <span>Jobs</span>
+          </Link>
+
+          {/* TAB 5: KONTAKT */}
+          <Link
+            to="/kontakt"
+            className={`flex-1 flex items-center justify-center gap-2 font-sans font-extrabold text-xs md:text-sm text-white uppercase tracking-wider bg-[#0D9488] hover:brightness-110 transition-all cursor-pointer relative -ml-5`}
+            style={{ clipPath: 'polygon(12% 0, 100% 0, 100% 100%, 0 100%)' }}
+          >
+            <span>Kontakt</span>
+          </Link>
+        </div>
+
+        {/* MOBILE HAMBURGER BUTTON (Flush Right Mobile) */}
+        <div className="flex lg:hidden items-center justify-end px-4 ml-auto">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="w-10 h-10 bg-[#FFBB00] flex items-center justify-center text-[#231E2A] cursor-pointer"
+            aria-label="Menü umschalten"
+          >
+            {isOpen ? <X className="w-6 h-6" /> : (
+              <div className="flex flex-col gap-1.5 w-5">
+                <span className="w-full h-[2px] bg-[#231E2A] rounded-full transition-all" />
+                <span className="w-3/4 h-[2px] bg-[#231E2A] rounded-full transition-all self-end" />
+                <span className="w-full h-[2px] bg-[#231E2A] rounded-full transition-all" />
+              </div>
+            )}
+          </button>
         </div>
       </nav>
 
@@ -326,33 +259,35 @@ export default function Navigation() {
             <Link
               to="/"
               onClick={() => setIsOpen(false)}
-              className="flex items-center justify-between py-2.5 px-4 rounded-xl bg-white/5 text-white font-sans text-xs font-bold uppercase tracking-wider hover:bg-gold-400/10 hover:text-gold-400 transition-all"
+              className="flex items-center justify-between py-2.5 px-4 bg-[#00A8CC] text-white font-sans text-xs font-extrabold uppercase tracking-wider shadow-md"
+              style={{ clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0 100%)' }}
             >
               <span className="flex items-center gap-2">
-                <HomeIcon className="w-4 h-4 text-gold-400" />
+                <HomeIcon className="w-4 h-4 text-white" />
                 Home
               </span>
-              <ChevronRight className="w-4 h-4 text-white/40" />
+              <ChevronRight className="w-4 h-4 text-white" />
             </Link>
 
             {/* Category 1: Angebot */}
             <div>
-              <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-gold-400/70 font-bold px-2 mb-2">
+              <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-[#FFBB00] font-bold px-2 mb-2">
                 Unsere Angebote
               </p>
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 {angebotItems.map((item) => (
                   <Link
                     key={item.href}
                     to={item.href}
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center justify-between py-2.5 px-3 rounded-xl hover:bg-white/5 text-white/80 hover:text-gold-400 font-sans text-xs font-semibold transition-all"
+                    className="flex items-center justify-between py-2.5 px-3 bg-[#7C3AED] text-white font-sans text-xs font-bold transition-all shadow-sm"
+                    style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)' }}
                   >
                     <span className="flex items-center gap-2.5">
                       {item.icon}
                       {item.label}
                     </span>
-                    <ChevronRight className="w-3.5 h-3.5 text-white/30" />
+                    <ChevronRight className="w-3.5 h-3.5 text-white/80" />
                   </Link>
                 ))}
               </div>
@@ -360,50 +295,53 @@ export default function Navigation() {
 
             {/* Category 2: Über Uns */}
             <div>
-              <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-gold-400/70 font-bold px-2 mb-2">
+              <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-[#FFBB00] font-bold px-2 mb-2">
                 Über Happy Beck
               </p>
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 {uberUnsItems.map((item) => (
                   <Link
                     key={item.href}
                     to={item.href}
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center justify-between py-2.5 px-3 rounded-xl hover:bg-white/5 text-white/80 hover:text-gold-400 font-sans text-xs font-semibold transition-all"
+                    className="flex items-center justify-between py-2.5 px-3 bg-[#E5931A] text-white font-sans text-xs font-bold transition-all shadow-sm"
+                    style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)' }}
                   >
                     <span className="flex items-center gap-2.5">
                       {item.icon}
                       {item.label}
                     </span>
-                    <ChevronRight className="w-3.5 h-3.5 text-white/30" />
+                    <ChevronRight className="w-3.5 h-3.5 text-white/80" />
                   </Link>
                 ))}
               </div>
             </div>
 
             {/* Direct Links */}
-            <div className="pt-2 border-t border-white/5 space-y-1">
+            <div className="pt-2 border-t border-white/10 space-y-1.5">
               <Link
                 to="/jobs"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center justify-between py-2.5 px-3 rounded-xl hover:bg-white/5 text-white/80 hover:text-gold-400 font-sans text-xs font-semibold transition-all"
+                className="flex items-center justify-between py-2.5 px-3 bg-[#E11D48] text-white font-sans text-xs font-bold transition-all shadow-sm"
+                style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)' }}
               >
                 <span className="flex items-center gap-2.5">
-                  <Briefcase className="w-4 h-4 text-gold-400" />
+                  <Briefcase className="w-4 h-4 text-white" />
                   Offene Stellen (Jobs)
                 </span>
-                <ChevronRight className="w-3.5 h-3.5 text-white/30" />
+                <ChevronRight className="w-3.5 h-3.5 text-white/80" />
               </Link>
               <Link
                 to="/kontakt"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center justify-between py-2.5 px-3 rounded-xl hover:bg-white/5 text-white/80 hover:text-gold-400 font-sans text-xs font-semibold transition-all"
+                className="flex items-center justify-between py-2.5 px-3 bg-[#0D9488] text-white font-sans text-xs font-bold transition-all shadow-sm"
+                style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)' }}
               >
                 <span className="flex items-center gap-2.5">
-                  <Mail className="w-4 h-4 text-gold-400" />
+                  <Mail className="w-4 h-4 text-white" />
                   Kontakt & Anfahrt
                 </span>
-                <ChevronRight className="w-3.5 h-3.5 text-white/30" />
+                <ChevronRight className="w-3.5 h-3.5 text-white/80" />
               </Link>
             </div>
           </div>

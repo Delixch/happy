@@ -18,8 +18,8 @@
 
   body {
     font-family: 'Inter', system-ui, sans-serif;
-    background-color: #2B201A;
-    color: #F8F4F0;
+    background-color: #FFBB00;
+    color: #231E2A;
     overflow-x: hidden;
     touch-action: manipulation;
   }

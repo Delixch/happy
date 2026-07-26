@@ -1,37 +1,62 @@
 import { Mail, Phone, MapPin, Instagram, Clock, ArrowUp, Lock } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
+
+  // Dynamic theme colors matching the current active page
+  const getPageTheme = () => {
+    switch (location.pathname) {
+      case '/menu':
+        return { bg: 'bg-[#1E293B]', border: 'border-[#FFBB00]', textAccent: 'text-[#FFBB00]', btnBg: 'bg-[#FFBB00]', btnText: 'text-[#1E293B]' };
+      case '/medien':
+        return { bg: 'bg-[#0F766E]', border: 'border-[#FFD700]', textAccent: 'text-[#FFD700]', btnBg: 'bg-[#FFD700]', btnText: 'text-[#0F766E]' };
+      case '/team':
+        return { bg: 'bg-[#312E81]', border: 'border-[#38BDF8]', textAccent: 'text-[#38BDF8]', btnBg: 'bg-[#38BDF8]', btnText: 'text-[#312E81]' };
+      case '/unternehmen':
+        return { bg: 'bg-[#474150]', border: 'border-[#FFBB00]', textAccent: 'text-[#FFBB00]', btnBg: 'bg-[#FFBB00]', btnText: 'text-[#474150]' };
+      case '/aktuelles':
+        return { bg: 'bg-[#881337]', border: 'border-[#FDE047]', textAccent: 'text-[#FDE047]', btnBg: 'bg-[#FDE047]', btnText: 'text-[#881337]' };
+      case '/jobs':
+        return { bg: 'bg-[#78350F]', border: 'border-[#FFAE33]', textAccent: 'text-[#FFAE33]', btnBg: 'bg-[#FFAE33]', btnText: 'text-[#78350F]' };
+      case '/kontakt':
+        return { bg: 'bg-[#1E293B]', border: 'border-[#FFBB00]', textAccent: 'text-[#FFBB00]', btnBg: 'bg-[#FFBB00]', btnText: 'text-[#1E293B]' };
+      default:
+        return { bg: 'bg-[#1E293B]', border: 'border-[#FFBB00]', textAccent: 'text-[#FFBB00]', btnBg: 'bg-[#FFBB00]', btnText: 'text-[#1E293B]' };
+    }
+  };
+
+  const theme = getPageTheme();
 
   return (
-    <footer className="relative bg-[#1E293B] text-white border-t-4 border-[#FFBB00] shadow-2xl">
+    <footer className={`relative ${theme.bg} text-white border-t-4 ${theme.border} shadow-2xl transition-colors duration-500`}>
       <div className="container mx-auto px-4 lg:px-8 py-16 max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link to="/" className="inline-flex items-center gap-3 mb-5 group">
-              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#FFBB00] bg-white p-0.5 shadow-lg group-hover:scale-105 transition-transform">
+              <div className={`w-12 h-12 rounded-full overflow-hidden border-2 ${theme.border} bg-white p-0.5 shadow-lg group-hover:scale-105 transition-transform`}>
                 <img src="/logo.png" alt="Happy Beck" className="w-full h-full object-contain" />
               </div>
               <div>
                 <p className="font-serif text-2xl font-black text-white leading-none">
-                  Happy <span className="text-[#FFBB00]">Beck</span>
+                  Happy <span className={theme.textAccent}>Beck</span>
                 </p>
-                <span className="text-[10px] text-[#FFBB00] font-sans font-bold tracking-[0.2em] uppercase block mt-1">
+                <span className={`text-[10px] ${theme.textAccent} font-sans font-bold tracking-[0.2em] uppercase block mt-1`}>
                   Zürich · Seit 2006
                 </span>
               </div>
             </Link>
-            <p className="text-white/80 text-sm leading-relaxed font-sans font-medium">
+            <p className="text-white/90 text-sm leading-relaxed font-sans font-medium">
               Ein Häppchen Glück — Traditionelle Bäckerei mit Leidenschaft für Qualität und Innovation. 24 Stunden frisch für Sie da.
             </p>
           </div>
 
           {/* Navigation */}
           <div>
-            <h3 className="font-serif text-[#FFBB00] text-sm font-black uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#FFBB00]" />
+            <h3 className={`font-serif ${theme.textAccent} text-sm font-black uppercase tracking-[0.2em] mb-6 flex items-center gap-2`}>
+              <span className={`w-2 h-2 rounded-full ${theme.btnBg}`} />
               Navigation
             </h3>
             <nav className="grid grid-cols-2 gap-2.5">
@@ -44,49 +69,54 @@ export default function Footer() {
                 { label: 'Jobs', href: '/jobs' },
                 { label: 'Medien', href: '/medien' },
                 { label: 'Kontakt', href: '/kontakt' },
-              ].map((link) => (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  className="text-sm text-white/80 hover:text-[#FFBB00] transition-colors font-sans py-1 font-bold flex items-center gap-1.5"
-                >
-                  <span className="text-[#FFBB00] opacity-60 text-xs">›</span>
-                  {link.label}
-                </Link>
-              ))}
+              ].map((link) => {
+                const isActive = location.pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    className={`text-sm font-sans py-1 font-bold flex items-center gap-1.5 transition-colors ${
+                      isActive ? `${theme.textAccent} underline underline-offset-4` : 'text-white/90 hover:text-white'
+                    }`}
+                  >
+                    <span className={`${theme.textAccent} opacity-80 text-xs`}>›</span>
+                    {link.label}
+                  </Link>
+                );
+              })}
             </nav>
           </div>
 
           {/* Contact */}
           <div>
-            <h3 className="font-serif text-[#FFBB00] text-sm font-black uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#FFBB00]" />
+            <h3 className={`font-serif ${theme.textAccent} text-sm font-black uppercase tracking-[0.2em] mb-6 flex items-center gap-2`}>
+              <span className={`w-2 h-2 rounded-full ${theme.btnBg}`} />
               Kontakt
             </h3>
             <div className="space-y-4 text-sm font-sans">
-              <a href="tel:+41432439780" className="flex items-center gap-3 text-white/90 hover:text-[#FFBB00] transition-colors font-bold group">
-                <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#FFBB00] group-hover:bg-[#FFBB00] group-hover:text-[#1E293B] transition-all">
+              <a href="tel:+41432439780" className="flex items-center gap-3 text-white/90 hover:text-white transition-colors font-bold group">
+                <div className={`w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center ${theme.textAccent} group-hover:bg-white group-hover:text-black transition-all`}>
                   <Phone className="w-4 h-4" />
                 </div>
                 <span>043 243 97 80</span>
               </a>
 
-              <a href="mailto:info@happybeck.ch" className="flex items-center gap-3 text-white/90 hover:text-[#FFBB00] transition-colors font-bold group">
-                <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#FFBB00] group-hover:bg-[#FFBB00] group-hover:text-[#1E293B] transition-all">
+              <a href="mailto:info@happybeck.ch" className="flex items-center gap-3 text-white/90 hover:text-white transition-colors font-bold group">
+                <div className={`w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center ${theme.textAccent} group-hover:bg-white group-hover:text-black transition-all`}>
                   <Mail className="w-4 h-4" />
                 </div>
                 <span>info@happybeck.ch</span>
               </a>
 
               <div className="flex items-start gap-3 text-white/90 font-medium">
-                <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#FFBB00] flex-shrink-0 mt-0.5">
+                <div className={`w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center ${theme.textAccent} flex-shrink-0 mt-0.5`}>
                   <MapPin className="w-4 h-4" />
                 </div>
                 <span>Langstrasse 120, 8004 Zürich</span>
               </div>
 
               <div className="flex items-center gap-3 text-white/90 font-medium">
-                <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#FFBB00]">
+                <div className={`w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center ${theme.textAccent}`}>
                   <Clock className="w-4 h-4" />
                 </div>
                 <span>24 Stunden geöffnet</span>
@@ -96,8 +126,8 @@ export default function Footer() {
 
           {/* Social */}
           <div>
-            <h3 className="font-serif text-[#FFBB00] text-sm font-black uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#FFBB00]" />
+            <h3 className={`font-serif ${theme.textAccent} text-sm font-black uppercase tracking-[0.2em] mb-6 flex items-center gap-2`}>
+              <span className={`w-2 h-2 rounded-full ${theme.btnBg}`} />
               Social Media
             </h3>
             <div className="space-y-3 flex flex-col items-start">
@@ -105,9 +135,9 @@ export default function Footer() {
                 href="https://www.instagram.com/happybeck.ch?igsh=eGdtbW1ud3p6ZDFx"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-3 text-sm text-white/90 hover:text-[#FFBB00] transition-colors group font-sans font-bold"
+                className="flex items-center gap-3 text-sm text-white/90 hover:text-white transition-colors group font-sans font-bold"
               >
-                <div className="w-9 h-9 rounded-full bg-white/5 border border-white/10 group-hover:border-[#FFBB00] group-hover:bg-[#FFBB00] group-hover:text-[#1E293B] flex items-center justify-center text-[#FFBB00] transition-all">
+                <div className={`w-9 h-9 rounded-full bg-white/10 border border-white/20 group-hover:bg-white group-hover:text-black flex items-center justify-center ${theme.textAccent} transition-all`}>
                   <Instagram className="w-4 h-4" />
                 </div>
                 <span>@happybeck.ch</span>
@@ -117,9 +147,9 @@ export default function Footer() {
                 href="https://www.instagram.com/happybeck_?igsh=MXM0eGN1enZydzl0cQ=="
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-3 text-sm text-white/90 hover:text-[#FFBB00] transition-colors group font-sans font-bold"
+                className="flex items-center gap-3 text-sm text-white/90 hover:text-white transition-colors group font-sans font-bold"
               >
-                <div className="w-9 h-9 rounded-full bg-white/5 border border-white/10 group-hover:border-[#FFBB00] group-hover:bg-[#FFBB00] group-hover:text-[#1E293B] flex items-center justify-center text-[#FFBB00] transition-all">
+                <div className={`w-9 h-9 rounded-full bg-white/10 border border-white/20 group-hover:bg-white group-hover:text-black flex items-center justify-center ${theme.textAccent} transition-all`}>
                   <Instagram className="w-4 h-4" />
                 </div>
                 <span>@happybeck_</span>
@@ -128,7 +158,7 @@ export default function Footer() {
               {/* Supervisor Login Button */}
               <Link
                 to="/admin"
-                className="mt-4 px-6 py-3 rounded-2xl bg-[#FFBB00] text-[#1E293B] font-sans font-black text-xs uppercase tracking-wider flex items-center gap-2 shadow-xl hover:scale-105 hover:bg-white transition-all cursor-pointer"
+                className={`mt-4 px-6 py-3 rounded-2xl ${theme.btnBg} ${theme.btnText} font-sans font-black text-xs uppercase tracking-wider flex items-center gap-2 shadow-xl hover:scale-105 hover:bg-white hover:text-black transition-all cursor-pointer`}
               >
                 <Lock className="w-4 h-4" />
                 Supervisor Login
@@ -140,18 +170,18 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="w-full h-0.5 bg-white/10 mt-12 mb-8" />
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-white/70 text-xs font-sans font-medium">
+          <p className="text-white/80 text-xs font-sans font-medium">
             &copy; {currentYear} Happy Beck Zürich. Alle Rechte vorbehalten.
           </p>
           <div className="flex items-center gap-6">
-            <p className="text-white/50 text-[11px] font-sans tracking-wider uppercase font-bold">
+            <p className="text-white/60 text-[11px] font-sans tracking-wider uppercase font-bold">
               Traditionelle 24h Bäckerei · Zürich, Schweiz
             </p>
 
             {/* Back to Top Button */}
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="flex items-center gap-2 text-xs font-sans font-black tracking-wider text-[#1E293B] uppercase bg-[#FFBB00] hover:bg-white px-4 py-2 rounded-xl shadow-lg transition-all cursor-pointer"
+              className={`flex items-center gap-2 text-xs font-sans font-black tracking-wider ${theme.btnText} uppercase ${theme.btnBg} hover:bg-white hover:text-black px-4 py-2 rounded-xl shadow-lg transition-all cursor-pointer`}
             >
               <span>HOCH</span>
               <ArrowUp className="w-4 h-4" />

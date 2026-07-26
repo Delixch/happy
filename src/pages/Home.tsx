@@ -74,6 +74,12 @@ export default function Home() {
         subtitle: 'Für jeden Geschmack',
         text: 'Von Gipfeli bis Sandwich: Für jeden Geschmack das Richtige.',
       },
+      {
+        image: '/happylachen.jpg',
+        title: 'Freude am Genuss',
+        subtitle: 'Happy Beck Lachen',
+        text: 'Mit bestem Handwerk und frischen Zutaten zaubern wir Ihnen jeden Tag ein Lächeln ins Gesicht.',
+      },
     ],
     []
   );

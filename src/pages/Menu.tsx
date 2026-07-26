@@ -1,16 +1,46 @@
 import { useEffect, useState } from 'react';
-import { Coffee, UtensilsCrossed, Sandwich as SandwichIcon, IceCream, CupSoda, Loader2 } from 'lucide-react';
+import { Coffee, UtensilsCrossed, Sandwich as SandwichIcon, IceCream, CupSoda, Loader2, Sparkles } from 'lucide-react';
 import { supabase, type MenuItem, type MenuCategory } from '../lib/supabase';
 
-const CATEGORY_META: Record<MenuCategory, { label: string; icon: React.ReactNode; intro: string }> = {
-  fruehstueck: { label: 'Frühstück', icon: <Coffee className="w-4 h-4" />, intro: 'Starten Sie glücklich in den Tag – frisch & fein.' },
-  salziges: { label: 'Salziges', icon: <UtensilsCrossed className="w-4 h-4" />, intro: 'Herzhafte Snacks und kleine Speisen – perfekt für zwischendurch.' },
-  sandwich: { label: 'Sandwiches', icon: <SandwichIcon className="w-4 h-4" />, intro: 'Herzhaft, frisch belegt – perfekt für unterwegs.' },
-  suess: { label: 'Süsses', icon: <IceCream className="w-4 h-4" />, intro: 'Feine Pâtisserie – hausgemacht.' },
-  getraenke: { label: 'Getränke', icon: <CupSoda className="w-4 h-4" />, intro: 'Heiss & kalt – erfrischend oder belebend.' },
+const CATEGORY_META: Record<MenuCategory, { label: string; icon: React.ReactNode; intro: string; bg: string; accent: string }> = {
+  fruehstueck: { 
+    label: 'Frühstück', 
+    icon: <Coffee className="w-5 h-5" />, 
+    intro: 'Starten Sie glücklich in den Tag – frisch & fein.',
+    bg: '#1E293B',
+    accent: '#F59E0B'
+  },
+  salziges: { 
+    label: 'Salziges', 
+    icon: <UtensilsCrossed className="w-5 h-5" />, 
+    intro: 'Herzhafte Snacks und kleine Speisen – perfekt für zwischendurch.',
+    bg: '#0F766E',
+    accent: '#FFD700'
+  },
+  sandwich: { 
+    label: 'Sandwiches', 
+    icon: <SandwichIcon className="w-5 h-5" />, 
+    intro: 'Herzhaft, frisch belegt – perfekt für unterwegs.',
+    bg: '#78350F',
+    accent: '#FFAE33'
+  },
+  suess: { 
+    label: 'Süsses', 
+    icon: <IceCream className="w-5 h-5" />, 
+    intro: 'Feine Pâtisserie – hausgemacht mit Liebe.',
+    bg: '#881337',
+    accent: '#FDE047'
+  },
+  getraenke: { 
+    label: 'Getränke', 
+    icon: <CupSoda className="w-5 h-5" />, 
+    intro: 'Heiss & kalt – erfrischend oder belebend.',
+    bg: '#312E81',
+    accent: '#38BDF8'
+  },
 };
 
-const CATEGORIES: MenuCategory[] = ['fruehstueck', 'salziges', 'sandwich', 'suess', 'getraenke'];
+const CATEGORIES: MenuCategory[] = ['fruehstueck', 'getraenke', 'salziges', 'sandwich', 'suess'];
 
 export default function MenuPage() {
   const [items, setItems] = useState<MenuItem[]>([]);
@@ -32,47 +62,30 @@ export default function MenuPage() {
   const meta = CATEGORY_META[active];
 
   return (
-    <section id="menu" className="pt-20 min-h-screen">
-      {/* CSS animations for Menu page */}
-      <style>{`
-        @keyframes shimmerTwice {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-        .animate-shimmer-twice {
-          animation: shimmerTwice 1.6s cubic-bezier(0.25, 1, 0.5, 1) 2 forwards;
-        }
-
-        @keyframes borderBeamRotate {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-        .animate-border-beam-once {
-          animation: borderBeamRotate 1.3s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
-        }
-      `}</style>
-
+    <section id="menu" className="pt-16 min-h-screen bg-[#FFBB00] pb-24">
       {/* Hero */}
-      <div className="relative h-[30vh] min-h-[220px] overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/menu-hero.jpg')" }} />
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-700/60 via-dark-700/40 to-dark-700" />
-        <div className="absolute inset-0 bg-gradient-to-r from-dark-700/70 via-transparent to-transparent" />
+      <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center brightness-90" style={{ backgroundImage: "url('/menu-hero.jpg')" }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1E293B]/60 via-transparent to-[#FFBB00]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1E293B]/80 via-transparent to-transparent" />
+
         <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-end pb-10">
-          <div>
-            <p className="text-gold-400 font-sans text-sm tracking-[0.3em] uppercase mb-3">
-              Happy Beck
-            </p>
-            <h1 className="text-5xl md:text-6xl font-serif font-bold text-white mb-3">
-              Unsere Speisekarte
-            </h1>
-            <p className="text-white/50 font-sans max-w-xl">{meta.intro}</p>
+          <div className="max-w-xl">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-[#1E293B] text-[#FFBB00] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
+              Ofenfrisch & Hausgemacht
+            </span>
+            <div className="relative inline-block block">
+              <h1 className="text-4xl md:text-6xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md">
+                Unsere <span className="text-[#FFBB00] underline decoration-[#1E293B]">Speisekarte</span>
+              </h1>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 py-16 max-w-6xl">
-        {/* Category Tabs */}
-        <div className="flex flex-wrap gap-3 mb-12 justify-center">
+      <div className="container mx-auto px-4 lg:px-8 py-12 max-w-7xl">
+        {/* Category Tabs - All 5 Buttons in 1 Row */}
+        <div className="flex flex-wrap lg:flex-nowrap gap-3 mb-12 justify-center items-center">
           {CATEGORIES.map((catId) => {
             const m = CATEGORY_META[catId];
             const count = items.filter((i) => i.category === catId).length;
@@ -81,100 +94,105 @@ export default function MenuPage() {
               <button
                 key={catId}
                 onClick={() => setActive(catId)}
-                className={`relative px-5 py-3 rounded-2xl flex items-center gap-2.5 text-sm font-sans font-semibold transition-all duration-300 cursor-pointer ${
+                className={`px-7 py-4 rounded-2xl font-sans font-black text-sm md:text-base uppercase tracking-wider transition-all duration-300 flex items-center gap-3 shadow-xl cursor-pointer hover:scale-105 ${
                   isActive
-                    ? 'bg-gradient-to-b from-gold-400/20 via-gold-400/10 to-transparent text-gold-400 border border-gold-400/30 shadow-[0_4px_20px_rgba(212,175,55,0.15)] scale-105'
-                    : 'bg-dark-800/60 border border-white/5 text-white/50 hover:text-white hover:bg-white/5 hover:border-white/10'
+                    ? 'scale-105 border-2 border-white/40 ring-4 ring-black/20 text-white'
+                    : 'opacity-75 hover:opacity-100 text-white'
                 }`}
+                style={{ backgroundColor: m.bg }}
               >
-                {m.icon}
+                <span style={{ color: m.accent }}>{m.icon}</span>
                 <span>{m.label}</span>
-                {count > 0 && <span className="text-xs opacity-60 font-mono">({count})</span>}
-                
-                {/* Clean Bottom Animated Active Indicator Line */}
-                {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-gold-400 via-amber-300 to-gold-400 rounded-full shadow-[0_0_10px_#D4AF37] animate-pulse" />
-                )}
+                {count > 0 && <span className="text-xs opacity-80 font-mono">({count})</span>}
               </button>
             );
           })}
         </div>
 
-        {/* Menu Items Grid (3 Columns matching photo reference) */}
+        {/* Category Subtitle */}
+        <div className="text-center mb-10">
+          <div 
+            className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full text-white mb-3 shadow-xl border border-white/10"
+            style={{ backgroundColor: meta.bg }}
+          >
+            <span style={{ color: meta.accent }}>{meta.icon}</span>
+            <span className="font-sans text-xs font-black uppercase tracking-widest">{meta.label}</span>
+          </div>
+          <p className="text-[#1E293B] font-sans font-bold text-base md:text-lg max-w-xl mx-auto">
+            {meta.intro}
+          </p>
+        </div>
+
+        {/* Menu Items Grid */}
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 text-gold-400 animate-spin" />
+            <Loader2 className="w-8 h-8 text-[#1E293B] animate-spin" />
           </div>
         ) : filtered.length === 0 ? (
-          <div className="glass-card p-12 text-center">
-            <p className="text-white/40 font-sans">Noch keine Artikel in dieser Kategorie.</p>
+          <div 
+            className="p-16 rounded-3xl text-center text-white/90 font-sans text-lg font-medium shadow-2xl max-w-2xl mx-auto border-2 border-white/20"
+            style={{ backgroundColor: meta.bg }}
+          >
+            <Sparkles className="w-12 h-12 mx-auto mb-4 opacity-80" style={{ color: meta.accent }} />
+            In dieser Kategorie wurden noch keine Speisen veröffentlicht.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filtered.map((item, idx) => {
-              // Rich warm gradient card background themes
-              const cardThemes = [
-                { bg: 'bg-gradient-to-br from-[#FFE4D6] via-[#FFD8C0] to-[#FCA5A5]/30 border-[#FFAA80]', badgeBg: 'bg-[#D82A6C]', titleColor: 'text-[#9E1B4C]', priceBg: 'bg-[#251A14]' },
-                { bg: 'bg-gradient-to-br from-[#FFF0D6] via-[#FFE2B3] to-[#FCD34D]/30 border-[#FBBF24]', badgeBg: 'bg-[#E5931A]', titleColor: 'text-[#9C5A08]', priceBg: 'bg-[#251A14]' },
-                { bg: 'bg-gradient-to-br from-[#E0F2FE] via-[#BAE6FD] to-[#38BDF8]/20 border-[#7DD3FC]', badgeBg: 'bg-[#2563EB]', titleColor: 'text-[#1D4ED8]', priceBg: 'bg-[#251A14]' },
-                { bg: 'bg-gradient-to-br from-[#FFE4E6] via-[#FECDD3] to-[#FB7185]/30 border-[#FDA4AF]', badgeBg: 'bg-[#E11D48]', titleColor: 'text-[#BE123C]', priceBg: 'bg-[#251A14]' },
-                { bg: 'bg-gradient-to-br from-[#F3E8FF] via-[#E9D5FF] to-[#C084FC]/30 border-[#DDD6FE]', badgeBg: 'bg-[#7C3AED]', titleColor: 'text-[#6D28D9]', priceBg: 'bg-[#251A14]' },
-                { bg: 'bg-gradient-to-br from-[#FFEDD5] via-[#FED7AA] to-[#FB923C]/30 border-[#FDBA74]', badgeBg: 'bg-[#EA580C]', titleColor: 'text-[#C2410C]', priceBg: 'bg-[#251A14]' },
-              ];
-
-              const theme = cardThemes[idx % cardThemes.length];
-
-              return (
-                <div
-                  key={item.id}
-                  className={`relative ${theme.bg} rounded-3xl p-6 border transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl flex justify-between gap-3 overflow-hidden min-h-[220px] shadow-lg`}
-                >
-                  {/* Left Column: Number Badge, Title, Description, Price */}
-                  <div className="flex-1 flex flex-col justify-between z-10">
-                    <div>
-                      {/* Top Row: Circular Number & Title */}
-                      <div className="flex items-center gap-2.5 mb-3">
-                        <span className={`w-8 h-8 rounded-full ${theme.badgeBg} text-white font-sans font-extrabold text-sm flex items-center justify-center flex-shrink-0 shadow-sm`}>
-                          {idx + 1}
-                        </span>
-                        <h3 className={`text-lg md:text-xl font-bold font-sans ${theme.titleColor} leading-tight line-clamp-2`}>
-                          {item.name}
-                        </h3>
-                      </div>
-
-                      {/* Description */}
-                      {item.description && (
-                        <p className="text-xs md:text-sm text-[#52443C] font-sans leading-relaxed line-clamp-3 pr-1">
-                          {item.description}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Black Pill Price Tag */}
-                    <div className="mt-4">
-                      <span className={`inline-block ${theme.priceBg} text-white font-sans font-bold text-xs md:text-sm px-4 py-2 rounded-full shadow-md`}>
-                        {item.price}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filtered.map((item, idx) => (
+              <div
+                key={item.id}
+                className="relative rounded-3xl p-6 border-2 border-white/20 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl flex justify-between gap-4 overflow-hidden min-h-[220px] shadow-xl flex-col justify-between"
+                style={{ backgroundColor: meta.bg }}
+              >
+                <div className="flex justify-between items-start gap-3">
+                  <div className="flex-1">
+                    {/* Top Row: Circular Number & Title */}
+                    <div className="flex items-center gap-3 mb-3">
+                      <span 
+                        className="w-9 h-9 rounded-full font-sans font-black text-sm flex items-center justify-center flex-shrink-0 shadow-md"
+                        style={{ backgroundColor: meta.accent, color: '#1E293B' }}
+                      >
+                        {idx + 1}
                       </span>
+                      <h3 className="text-xl font-serif font-black text-white leading-snug line-clamp-2">
+                        {item.name}
+                      </h3>
                     </div>
+
+                    {/* Description */}
+                    {item.description && (
+                      <p className="text-xs md:text-sm text-white/85 font-sans leading-relaxed line-clamp-3 font-medium">
+                        {item.description}
+                      </p>
+                    )}
                   </div>
 
-                  {/* Right Column: Tall Cropped Product Image (If present) */}
-                  {item.image_url ? (
-                    <div className="w-[110px] md:w-[125px] h-full flex-shrink-0 relative overflow-hidden rounded-2xl">
+                  {/* Right Column: Image (If present) */}
+                  {item.image_url && (
+                    <div className="w-[100px] h-[100px] flex-shrink-0 relative overflow-hidden rounded-2xl border border-white/10 shadow-lg">
                       <img
                         src={item.image_url}
                         alt={item.name}
                         className="w-full h-full object-cover object-center rounded-2xl transition-transform duration-500 hover:scale-105"
                       />
                     </div>
-                  ) : (
-                    <div className="w-[90px] h-full flex-shrink-0 flex items-center justify-center opacity-10">
-                      <span className="text-4xl">🥐</span>
-                    </div>
                   )}
                 </div>
-              );
-            })}
+
+                {/* Price Tag */}
+                <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
+                  <span 
+                    className="font-sans font-black text-sm px-5 py-2 rounded-full shadow-lg"
+                    style={{ backgroundColor: meta.accent, color: '#1E293B' }}
+                  >
+                    {item.price}
+                  </span>
+                  <span className="text-white/60 font-sans text-xs uppercase tracking-wider font-extrabold">
+                    HAPPY BECK
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </div>

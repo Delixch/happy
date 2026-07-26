@@ -25,63 +25,67 @@ export default function Unternehmen() {
           if (entry.isIntersecting) entry.target.classList.add('visible');
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.01 }
     );
-    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    const els = document.querySelectorAll('.reveal');
+    els.forEach((el) => {
+      observer.observe(el);
+      // Fallback: force visible if already in viewport or small screen
+      el.classList.add('visible');
+    });
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section id="unternehmen" className="min-h-screen">
+    <section id="unternehmen" className="min-h-screen bg-[#FFBB00] pt-16">
       {/* ─── HERO ─── */}
-      <div className="relative h-[30vh] min-h-[220px] overflow-hidden">
+      <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
         <div
           ref={parallaxRef}
-          className="absolute inset-0 -top-10 bg-cover bg-center will-change-transform"
+          className="absolute inset-0 -top-10 bg-cover bg-center will-change-transform brightness-90"
           style={{ backgroundImage: "url('/uberuns.jpg')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-700/50 via-dark-700/30 to-dark-700" />
-        <div className="absolute inset-0 bg-gradient-to-r from-dark-700/70 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#474150]/60 via-transparent to-[#FFBB00]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#474150]/80 via-transparent to-transparent" />
 
         <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-end pb-10">
           <div className="max-w-xl">
-            <p className="text-gold-400 font-sans text-sm tracking-[0.3em] uppercase mb-4 animate-fade-in">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-[#474150] text-[#FFBB00] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
               Seit 2006 in Zürich
-            </p>
-            <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-5 leading-[1.1] animate-fade-in" style={{ animationDelay: '100ms' }}>
+            </span>
+            <h1 className="text-4xl md:text-6xl font-serif font-black text-white mb-4 leading-[1.15] drop-shadow-md">
               Unsere <br />
-              <span className="text-gold-gradient">Geschichte</span>
+              <span className="text-[#FFBB00] underline decoration-[#474150]">Geschichte</span>
             </h1>
-            <div className="divider-gold w-20 animate-fade-in" style={{ animationDelay: '200ms' }} />
           </div>
         </div>
       </div>
 
       {/* ─── STORY SECTION 1 ─── */}
-      <div className="relative py-24 bg-dark-700 overflow-hidden">
-        {/* Decorative background element */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gold-400/[0.02] rounded-full blur-3xl" />
-
+      <div className="relative py-16 md:py-20 bg-[#FFBB00] overflow-hidden">
         <div className="container mx-auto px-4 lg:px-8 max-w-6xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Text - left */}
             <div className="lg:col-span-7 reveal">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-full border border-gold-400/20 flex items-center justify-center">
-                  <Wheat className="w-5 h-5 text-gold-400" />
+                <div className="w-10 h-10 rounded-full bg-[#474150] flex items-center justify-center text-[#FFBB00] shadow-sm">
+                  <Wheat className="w-5 h-5" />
                 </div>
-                <span className="text-gold-400/60 font-sans text-xs tracking-[0.3em] uppercase">Die Anfänge</span>
+                <span className="text-[#474150] font-sans text-xs font-bold tracking-[0.3em] uppercase">Die Anfänge</span>
               </div>
 
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-8 leading-tight">
-                Tradition trifft <span className="text-gold-gradient">Leidenschaft</span>
-              </h2>
+              <div className="relative inline-block mb-8">
+                <h2 className="text-3xl md:text-5xl font-serif font-black text-[#231E2A] pb-3">
+                  Tradition trifft <span className="text-[#474150]">Leidenschaft</span>
+                </h2>
+                <span className="absolute bottom-0 left-0 w-full h-1.5 bg-[#474150] rounded-full" />
+              </div>
 
-              <div className="space-y-6 text-white/50 font-sans text-base leading-[1.8]">
+              <div className="space-y-6 text-[#231E2A] font-sans text-base md:text-lg leading-[1.8] font-medium">
                 <p>
-                  Die Bäckerei Happy wurde im Jahre <span className="text-white/80 font-medium">2006</span> von der
+                  Die Bäckerei Happy wurde im Jahre <span className="text-[#474150] font-bold underline">2006</span> von der
                   Familie Aydin gegründet. Die Anfänge der Konditorbäckerei Aydin liegen jedoch
-                  <span className="text-gold-400/80"> mehrere Generationen</span> zurück. Dabei wird grosser Wert
+                  <span className="text-[#474150] font-bold"> mehrere Generationen</span> zurück. Dabei wird grosser Wert
                   gelegt auf handwerkliches Können und auf die Einhaltung altbewährter Rezepte, die für den hohen
                   Qualitätsanspruch all unserer Produkte stehen.
                 </p>
@@ -92,11 +96,11 @@ export default function Unternehmen() {
               </div>
 
               {/* Quote */}
-              <blockquote className="mt-10 pl-6 border-l-2 border-gold-400/30">
-                <p className="text-white/60 font-serif italic text-lg leading-relaxed">
+              <blockquote className="mt-8 p-6 rounded-2xl bg-[#474150] text-white shadow-xl border-l-4 border-[#FFBB00]">
+                <p className="font-serif italic text-lg leading-relaxed text-white">
                   „Nur die besten Zutaten und echtes Handwerk machen den Unterschied."
                 </p>
-                <cite className="block mt-3 text-gold-400/50 font-sans text-sm not-italic">
+                <cite className="block mt-3 text-[#FFBB00] font-sans text-xs font-bold tracking-wider not-italic uppercase">
                   — Familie Aydin, Gründer
                 </cite>
               </blockquote>
@@ -115,40 +119,16 @@ export default function Unternehmen() {
                 role="button"
                 aria-label="Bild wechseln"
               >
-                {/* Decorative frame */}
-                <div className="absolute -top-4 -right-4 w-full h-full border border-gold-400/10 rounded-2xl" />
-                <div className="absolute -bottom-4 -left-4 w-full h-full border border-gold-400/5 rounded-2xl" />
-
-                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden">
-                  {/* Glowing gold shimmer line at the top of the image */}
-                  <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-gold-400 via-amber-300 to-gold-400 animate-shimmer z-30" />
-                  
-                  {/* Single image — grayscale by default, color on hover */}
+                <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl bg-[#474150] border-4 border-white p-4">
                   <img
                     src="/logo.png"
                     alt="Happy Beck Bäckerei Logo"
-                    className={`absolute inset-0 w-full h-full object-contain p-12 z-0 transform-gpu transition-all duration-750 bg-dark-800 ${
+                    className={`w-full h-full object-contain p-8 transform-gpu transition-all duration-750 ${
                       hover ? 'scale-105' : 'scale-100'
                     }`}
-                    style={{
-                      filter: hover ? 'grayscale(0%) brightness(110%) drop-shadow(0 0 10px rgba(212,175,55,0.3))' : 'grayscale(100%) brightness(75%)',
-                      WebkitFilter: hover ? 'grayscale(0%) brightness(110%) drop-shadow(0 0 10px rgba(212,175,55,0.3))' : 'grayscale(100%) brightness(75%)'
-                    }}
                   />
-
-                  {/* Overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark-700/60 via-transparent to-transparent z-20" />
-
-                  {/* Gold border glow on hover */}
-                  <div className={`pointer-events-none absolute inset-0 rounded-2xl border-2 transition-all duration-500 z-30 ${
-                    hover ? 'border-gold-400/40 shadow-[inset_0_0_60px_rgba(212,175,55,0.08)]' : 'border-white/5'
-                  }`} />
-
-                  {/* Bottom label */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 z-30">
-                    <p className={`font-serif text-sm italic transition-all duration-500 ${
-                      hover ? 'text-gold-400' : 'text-white/60'
-                    }`}>
+                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-[#474150]/90 text-center backdrop-blur-sm">
+                    <p className="font-serif text-sm italic text-[#FFBB00] font-bold">
                       {hover ? '❝ Happy Beck Emblem ❞' : '❝ Unser Logo ❞'}
                     </p>
                   </div>
@@ -159,69 +139,60 @@ export default function Unternehmen() {
         </div>
       </div>
 
-      {/* ─── STORY SECTION 2 ─── */}
-      <div className="relative py-24 bg-dark-800 overflow-hidden">
-        {/* Full-width image band */}
-        <div className="absolute inset-0 opacity-[0.03]">
-          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/Home.jpg')" }} />
-        </div>
-
-        <div className="container mx-auto px-4 lg:px-8 max-w-6xl relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-            {/* Large number */}
-            <div className="lg:col-span-4 reveal text-center lg:text-left">
-              <div className="inline-block">
-                <p className="text-[120px] md:text-[160px] font-serif font-bold text-gold-gradient leading-none">
-                  20
-                </p>
-                <p className="text-gold-400/60 font-sans text-sm tracking-[0.3em] uppercase mt-2">
-                  Jahre Erfahrung
-                </p>
-              </div>
+      {/* ─── STORY SECTION 2 & STATS HIGHLIGHTS ─── */}
+      <div className="relative py-16 md:py-20 bg-[#FFBB00] overflow-hidden border-t border-[#474150]/10">
+        <div className="container mx-auto px-4 lg:px-8 max-w-5xl relative z-10">
+          <div className="mb-14 reveal">
+            <div className="relative inline-block mb-6">
+              <h2 className="text-3xl md:text-5xl font-serif font-black text-[#231E2A] pb-3">
+                Von Zürich in die <span className="text-[#474150]">ganze Schweiz</span>
+              </h2>
+              <span className="absolute bottom-0 left-0 w-full h-1.5 bg-[#474150] rounded-full" />
             </div>
 
-            {/* Text - right */}
-            <div className="lg:col-span-8 reveal" style={{ animationDelay: '200ms' }}>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-8 leading-tight">
-                Von Zürich in die <span className="text-gold-gradient">ganze Schweiz</span>
-              </h2>
-
-              <div className="space-y-6 text-white/50 font-sans text-base leading-[1.8]">
-                <p>
-                  Die erste Happy-Filiale öffnete in Zürich an der <span className="text-white/80 font-medium">Dienerstrasse</span> ihre
-                  Türen. Unter guter Regie blühte die Bäckerei richtig auf. Aydins Ruf verbreitete sich weit über
-                  Zürich hinaus, und es wurden mehrere Filialen eröffnet.
-                </p>
-                <p>
-                  Heute kommt man sowohl in Filialen im Raum Zürich als auch in der Gesamtschweiz in den Genuss
-                  der breit gefächerten <span className="text-gold-400/80">Happy-Produktpalette</span>.
-                </p>
-              </div>
+            <div className="space-y-6 text-[#231E2A] font-sans text-base md:text-lg leading-[1.8] font-medium max-w-3xl">
+              <p>
+                Die erste Happy-Filiale öffnete in Zürich an der <span className="text-[#474150] font-bold underline">Dienerstrasse</span> ihre
+                Türen. Unter guter Regie blühte die Bäckerei richtig auf. Aydins Ruf verbreitete sich weit über
+                Zürich hinaus, und es wurden mehrere Filialen eröffnet.
+              </p>
+              <p>
+                Heute kommt man sowohl in Filialen im Raum Zürich als auch in der Gesamtschweiz in den Genuss
+                der breit gefächerten <span className="text-[#474150] font-bold">Happy-Produktpalette</span>.
+              </p>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* ─── STATS / HIGHLIGHTS ─── */}
-      <div className="py-20 bg-dark-700">
-        <div className="container mx-auto px-4 lg:px-8 max-w-5xl">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {/* 5-Card Stat Grid - Perfect Large Round Circles */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 items-center justify-center">
             {[
-              { icon: <Clock className="w-5 h-5" />, value: '2006', label: 'Gegründet' },
-              { icon: <MapPin className="w-5 h-5" />, value: 'Zürich', label: 'Hauptsitz' },
-              { icon: <Wheat className="w-5 h-5" />, value: '24h', label: 'Geöffnet' },
-              { icon: <Award className="w-5 h-5" />, value: '20+', label: 'Jahre Tradition' },
+              { icon: <Award className="w-5 h-5" />, value: '20', label: 'Jahre Erfahrung', bg: '#474150', accent: '#FFBB00' },
+              { icon: <Clock className="w-5 h-5" />, value: '2006', label: 'Gegründet', bg: '#3D2E28', accent: '#FFAE33' },
+              { icon: <MapPin className="w-5 h-5" />, value: 'Zürich', label: 'Hauptsitz', bg: '#372F47', accent: '#C8A2C8' },
+              { icon: <Wheat className="w-5 h-5" />, value: '24h', label: 'Geöffnet', bg: '#2A423D', accent: '#4DEECA' },
+              { icon: <Award className="w-5 h-5" />, value: '20+', label: 'Jahre Tradition', bg: '#4A2A2A', accent: '#FF8080' },
             ].map((stat, i) => (
               <div
                 key={i}
-                className="reveal glass-card p-6 text-center group hover:glow-gold transition-all duration-500"
-                style={{ animationDelay: `${i * 100}ms` }}
+                className="reveal rounded-full aspect-square w-full max-w-[180px] sm:max-w-[190px] mx-auto p-4 text-center shadow-2xl border-2 border-white/15 hover:scale-110 hover:shadow-[0_15px_35px_rgba(0,0,0,0.3)] transition-all duration-300 flex flex-col items-center justify-center"
+                style={{ 
+                  animationDelay: `${i * 100}ms`,
+                  backgroundColor: stat.bg
+                }}
               >
-                <div className="w-10 h-10 rounded-full border border-gold-400/20 flex items-center justify-center mx-auto mb-4 text-gold-400 group-hover:border-gold-400/40 group-hover:bg-gold-400/5 transition-all">
+                <div 
+                  className="w-9 h-9 rounded-full flex items-center justify-center mb-2 font-bold shadow-md"
+                  style={{ backgroundColor: stat.accent, color: '#231E2A' }}
+                >
                   {stat.icon}
                 </div>
-                <p className="text-2xl md:text-3xl font-serif font-bold text-white mb-1">{stat.value}</p>
-                <p className="text-white/30 font-sans text-xs uppercase tracking-wider">{stat.label}</p>
+                <p className="text-xl sm:text-2xl font-serif font-bold text-white mb-0.5">{stat.value}</p>
+                <p 
+                  className="font-sans text-[10px] sm:text-[11px] uppercase font-extrabold tracking-wider leading-tight px-2"
+                  style={{ color: stat.accent }}
+                >
+                  {stat.label}
+                </p>
               </div>
             ))}
           </div>
@@ -229,15 +200,15 @@ export default function Unternehmen() {
       </div>
 
       {/* ─── VALUES SECTION ─── */}
-      <div className="py-24 bg-dark-800">
+      <div className="py-20 bg-[#FFBB00] border-t border-[#474150]/10 pb-24">
         <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
-          <div className="text-center mb-16 reveal">
-            <p className="text-gold-400 font-sans text-sm tracking-[0.3em] uppercase mb-4">
-              Unsere Werte
-            </p>
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-white">
-              Was uns <span className="text-gold-gradient">antreibt</span>
-            </h2>
+          <div className="text-center mb-14 reveal">
+            <div className="relative inline-block">
+              <h2 className="text-3xl md:text-5xl font-serif font-black text-[#231E2A] pb-3">
+                Was uns <span className="text-[#474150]">antreibt</span>
+              </h2>
+              <span className="absolute bottom-0 left-0 w-full h-1.5 bg-[#474150] rounded-full" />
+            </div>
           </div>
 
           <div className="space-y-6">
@@ -260,15 +231,15 @@ export default function Unternehmen() {
             ].map((value, i) => (
               <div
                 key={i}
-                className="reveal glass-card p-8 md:p-10 flex items-start gap-8 group hover:glow-gold transition-all duration-500"
+                className="reveal bg-[#474150] p-8 md:p-10 rounded-3xl flex items-start gap-8 shadow-2xl border border-white/10 hover:scale-[1.02] transition-all duration-300"
                 style={{ animationDelay: `${i * 100}ms` }}
               >
-                <span className="text-4xl md:text-5xl font-serif font-bold text-gold-400/20 group-hover:text-gold-400/40 transition-colors flex-shrink-0">
+                <span className="text-4xl md:text-5xl font-serif font-black text-[#FFBB00] flex-shrink-0">
                   {value.num}
                 </span>
                 <div>
-                  <h3 className="text-xl font-serif font-semibold text-white mb-3">{value.title}</h3>
-                  <p className="text-white/40 font-sans text-sm leading-relaxed">{value.text}</p>
+                  <h3 className="text-xl md:text-2xl font-serif font-bold text-white mb-3">{value.title}</h3>
+                  <p className="text-white/90 font-sans text-sm md:text-base leading-relaxed">{value.text}</p>
                 </div>
               </div>
             ))}

@@ -65,7 +65,7 @@ export default function Team() {
   };
 
   return (
-    <section id="team" className="pt-20 min-h-screen overflow-hidden">
+    <section id="team" className="pt-16 min-h-screen w-full bg-[#FFBB00] overflow-hidden">
       {/* Scrollbar hide styling */}
       <style>{`
         .scrollbar-none::-webkit-scrollbar {
@@ -78,26 +78,28 @@ export default function Team() {
       `}</style>
 
       {/* Hero */}
-      <div className="relative h-[30vh] min-h-[220px] overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/default-hero.jpg')" }} />
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-700/60 via-dark-700/40 to-dark-700" />
-        <div className="absolute inset-0 bg-gradient-to-r from-dark-700/70 via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-black/20" />
+      <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center brightness-90" style={{ backgroundImage: "url('/default-hero.jpg')" }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#474150]/60 via-transparent to-[#FFBB00]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#474150]/80 via-transparent to-transparent" />
+        
         <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-end pb-10">
-          <div>
-            <p className="text-gold-400 font-sans text-sm tracking-[0.3em] uppercase mb-3 animate-fade-in">
+          <div className="max-w-xl">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-[#474150] text-[#FFBB00] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
               Die Menschen hinter Happy Beck
-            </p>
-            <h1 className="text-5xl md:text-6xl font-serif font-bold text-white animate-fade-in" style={{ animationDelay: '100ms' }}>
-              Unser Team
-            </h1>
+            </span>
+            <div className="relative inline-block block">
+              <h1 className="text-4xl md:text-6xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md">
+                Unser <span className="text-[#FFBB00] underline decoration-[#474150]">Team</span>
+              </h1>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 py-16 max-w-6xl">
+      <div className="container mx-auto px-4 lg:px-8 py-14 max-w-6xl">
         <div className="text-center mb-10 reveal">
-          <p className="text-white/50 font-sans max-w-2xl mx-auto leading-relaxed">
+          <p className="text-[#231E2A] font-sans max-w-2xl mx-auto leading-relaxed font-semibold text-base md:text-lg">
             Hinter jedem Gipfeli und jedem frischen Brot stehen engagierte Menschen,
             die mit Herz und Handwerk arbeiten. Lernen Sie unser Team kennen.
           </p>
@@ -108,14 +110,14 @@ export default function Team() {
           <div className="flex justify-end gap-3 mb-6 reveal">
             <button
               onClick={() => scrollSlider('left')}
-              className="w-10 h-10 rounded-full border border-white/10 hover:border-gold-400/50 flex items-center justify-center text-white/50 hover:text-gold-400 transition-all hover:bg-white/5 cursor-pointer"
+              className="w-10 h-10 rounded-full bg-[#474150] text-white hover:bg-[#342F3C] flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-110"
               aria-label="Nach links scrollen"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={() => scrollSlider('right')}
-              className="w-10 h-10 rounded-full border border-white/10 hover:border-gold-400/50 flex items-center justify-center text-white/50 hover:text-gold-400 transition-all hover:bg-white/5 cursor-pointer"
+              className="w-10 h-10 rounded-full bg-[#474150] text-white hover:bg-[#342F3C] flex items-center justify-center transition-all shadow-md cursor-pointer hover:scale-110"
               aria-label="Nach rechts scrollen"
             >
               <ChevronRight className="w-5 h-5" />
@@ -125,11 +127,11 @@ export default function Team() {
 
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-6 h-6 text-gold-400 animate-spin" />
+            <Loader2 className="w-8 h-8 text-[#474150] animate-spin" />
           </div>
         ) : members.length === 0 ? (
-          <div className="glass-card p-12 text-center">
-            <p className="text-white/30 font-sans">Team wird bald vorgestellt.</p>
+          <div className="bg-[#474150] p-12 text-center rounded-3xl shadow-xl">
+            <p className="text-white font-sans text-lg font-medium">Team wird bald vorgestellt.</p>
           </div>
         ) : (
           /* Draggable Swipeable Carousel Container */
@@ -141,53 +143,89 @@ export default function Team() {
             onMouseMove={handleMouseMove}
             className={`flex gap-6 overflow-x-auto pb-8 scrollbar-none snap-x snap-mandatory cursor-grab active:cursor-grabbing select-none w-full scroll-smooth`}
           >
-            {members.map((member, i) => (
-              <div
-                key={member.id}
-                className="reveal glass-card overflow-hidden glow-gold group hover:glow-gold-strong transition-all duration-500 hover:-translate-y-1.5 flex-shrink-0 w-[290px] sm:w-[320px] snap-center flex flex-col justify-between"
-                style={{ animationDelay: `${i * 100}ms` }}
-              >
-                {/* Gold Top Border Line */}
-                <div className="h-[2px] bg-gradient-to-r from-gold-400 via-gold-300 to-gold-400" />
-                
-                <div className="p-8 text-center flex-1 flex flex-col justify-between">
-                  <div>
-                    {member.image_url ? (
-                      <div className="w-20 h-20 rounded-full overflow-hidden mx-auto mb-6 ring-2 ring-gold-400/20 group-hover:ring-gold-400/40 transition-all pointer-events-none">
-                        <img src={member.image_url} alt={member.name} className="w-full h-full object-cover" />
-                      </div>
-                    ) : (
-                      <div className="w-20 h-20 rounded-full border border-gold-400/20 flex items-center justify-center mx-auto mb-6 text-gold-400 group-hover:border-gold-400/40 group-hover:bg-gold-400/5 transition-all duration-300 pointer-events-none">
-                        <Users className="w-7 h-7" />
-                      </div>
-                    )}
-                    <h3 className="text-xl font-serif font-bold text-white mb-1">
-                      {member.name}
-                    </h3>
-                    <p className="text-gold-400/70 font-sans text-xs uppercase tracking-wider mb-4">
-                      {member.role}
+            {members.map((member, i) => {
+              // High contrast luxury color palettes for team member cards
+              const palettes = [
+                { bg: '#1E293B', accent: '#F59E0B', text: '#FFFFFF' }, // Navy Moka & Bright Amber
+                { bg: '#0F766E', accent: '#FFD700', text: '#FFFFFF' }, // Emerald Teal & Gold
+                { bg: '#881337', accent: '#FDE047', text: '#FFFFFF' }, // Velvet Crimson & Lemon
+                { bg: '#312E81', accent: '#38BDF8', text: '#FFFFFF' }, // Midnight Indigo & Sky Blue
+                { bg: '#78350F', accent: '#F43F5E', text: '#FFFFFF' }, // Warm Cinnamon & Rose
+              ];
+              const palette = palettes[i % palettes.length];
+
+              return (
+                <div
+                  key={member.id}
+                  className="reveal rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border-2 border-white/20 group hover:scale-[1.04] hover:shadow-[0_25px_60px_rgba(0,0,0,0.4)] transition-all duration-500 flex-shrink-0 w-[290px] sm:w-[320px] snap-center flex flex-col justify-between relative"
+                  style={{ 
+                    animationDelay: `${i * 100}ms`,
+                    backgroundColor: palette.bg 
+                  }}
+                >
+                  {/* Vibrant Top Border Line with Glow */}
+                  <div 
+                    className="h-2.5 w-full shadow-md" 
+                    style={{ 
+                      backgroundColor: palette.accent,
+                      boxShadow: `0 2px 10px ${palette.accent}`
+                    }} 
+                  />
+                  
+                  <div className="p-8 text-center flex-1 flex flex-col justify-between">
+                    <div>
+                      {member.image_url ? (
+                        <div 
+                          className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-6 border-4 shadow-xl pointer-events-none"
+                          style={{ borderColor: palette.accent }}
+                        >
+                          <img src={member.image_url} alt={member.name} className="w-full h-full object-cover" />
+                        </div>
+                      ) : (
+                        <div 
+                          className="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl pointer-events-none font-bold"
+                          style={{ backgroundColor: palette.accent, color: '#1E293B' }}
+                        >
+                          <Users className="w-9 h-9" />
+                        </div>
+                      )}
+                      <h3 className="text-2xl font-serif font-black text-white mb-1 drop-shadow-sm">
+                        {member.name}
+                      </h3>
+                      <p 
+                        className="font-sans text-xs uppercase font-black tracking-widest mb-4 drop-shadow-sm"
+                        style={{ color: palette.accent }}
+                      >
+                        {member.role}
+                      </p>
+                      <div 
+                        className="w-14 h-1.5 rounded-full mx-auto mb-4" 
+                        style={{ backgroundColor: palette.accent }}
+                      />
+                    </div>
+                    <p className="text-white font-sans text-sm leading-relaxed line-clamp-4 font-medium opacity-95">
+                      {member.description}
                     </p>
-                    <div className="divider-gold w-12 mx-auto mb-4" />
                   </div>
-                  <p className="text-white/40 font-sans text-sm leading-relaxed line-clamp-4">
-                    {member.description}
-                  </p>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 
         {/* Join us CTA */}
-        <div className="mt-16 text-center reveal">
-          <div className="glass-card inline-block px-12 py-10">
-            <h3 className="text-2xl font-serif font-bold text-white mb-3">
+        <div className="mt-14 text-center reveal">
+          <div className="bg-[#1E293B] inline-block px-10 sm:px-14 py-10 rounded-3xl shadow-2xl border-2 border-white/20">
+            <h3 className="text-2xl md:text-3xl font-serif font-black text-white mb-3">
               Werden Sie Teil unseres Teams
             </h3>
-            <p className="text-white/40 font-sans text-sm mb-6 max-w-md">
+            <p className="text-white/90 font-sans text-sm md:text-base mb-6 max-w-md mx-auto font-medium">
               Wir suchen immer motivierte Menschen, die unsere Leidenschaft für gutes Brot teilen.
             </p>
-            <a href="/jobs" className="btn-gold-outline inline-block">
+            <a 
+              href="/jobs" 
+              className="inline-block px-8 py-3.5 rounded-2xl bg-[#F59E0B] text-[#1E293B] font-sans font-black text-sm tracking-wider uppercase shadow-xl hover:scale-105 hover:bg-[#FFAE33] transition-all duration-300"
+            >
               Offene Stellen ansehen
             </a>
           </div>

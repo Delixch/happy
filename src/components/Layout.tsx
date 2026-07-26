@@ -2,6 +2,7 @@ import Navigation from './Navigation';
 import Footer from './Footer';
 import ScrollToTop from './ScrollToTop';
 import ScrollPeelButton from './ScrollPeelButton';
+import FreshJuiceModal from './FreshJuiceModal';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -11,6 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <main className="bg-[#FFBB00]">{children}</main>
       <Footer />
       <ScrollPeelButton />
+      <FreshJuiceModal />
     </div>
   );
 }

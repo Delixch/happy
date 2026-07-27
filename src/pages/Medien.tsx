@@ -6,20 +6,29 @@ type MediaType = 'tv' | 'presse' | 'online';
 
 const FALLBACK_MEDIA: MediaItem[] = [
   {
+    id: 'telezueri-1',
+    title: '20 Jahre Happy Beck: Nachtschicht an der Langstrasse',
+    type: 'tv',
+    url: 'https://www.telezueri.ch/zuerinews/20-jahre-happy-beck-nachtschicht-an-der-langstrasse-162235856',
+    description: 'Exklusiver Videobeitrag von TeleZüri über das 20-jährige Jubiläum und die legendäre Nachtschicht bei Happy Beck an der Zürcher Langstrasse.',
+    created_at: new Date().toISOString(),
+    sort_order: 1
+  },
+  {
     id: '20min-1',
     title: 'Zürich: «Happy Beck» kommt zurück an die Langstrasse',
     type: 'online',
     url: 'https://www.20min.ch/story/happy-beck-kommt-zurueck-an-die-langstrasse-491809176239',
     description: 'Grosser Bericht in 20 Minuten über das Comeback der Kult-Bäckerei Happy Beck an die Zürcher Langstrasse.',
     created_at: new Date().toISOString(),
-    sort_order: 1
+    sort_order: 2
   }
 ];
 
 export default function Medien() {
   const [items, setItems] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<MediaType>('online');
+  const [activeTab, setActiveTab] = useState<MediaType>('tv');
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -29,13 +38,13 @@ export default function Medien() {
       .order('sort_order')
       .then(({ data }) => {
         if (data && data.length > 0) {
-          // Check if 20min article is in DB, if not prepend it to online items
+          const hasTeleZueri = data.some(i => i.url?.includes('telezueri.ch'));
           const has20Min = data.some(i => i.url?.includes('20min.ch'));
-          if (!has20Min) {
-            setItems([...FALLBACK_MEDIA, ...data]);
-          } else {
-            setItems(data);
-          }
+          
+          let updated = [...data];
+          if (!hasTeleZueri) updated = [FALLBACK_MEDIA[0], ...updated];
+          if (!has20Min) updated = [FALLBACK_MEDIA[1], ...updated];
+          setItems(updated);
         } else {
           setItems(FALLBACK_MEDIA);
         }
@@ -201,13 +210,27 @@ export default function Medien() {
                     TV BEITRAG
                   </span>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-serif font-black text-white mb-2 line-clamp-2 transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-white/80 font-sans text-xs leading-relaxed line-clamp-3 font-medium">
-                    {item.description || 'Klicken Sie hier, um den Video-Beitrag abzuspielen.'}
-                  </p>
+                <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xl font-serif font-black text-white mb-2 line-clamp-2 transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-white/80 font-sans text-xs leading-relaxed line-clamp-3 font-medium mb-4">
+                      {item.description || 'Klicken Sie hier, um den Video-Beitrag abzuspielen.'}
+                    </p>
+                  </div>
+                  {item.url && item.url.startsWith('http') && (
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="mt-2 w-full py-3 rounded-2xl font-sans font-black text-xs uppercase tracking-wider text-center flex items-center justify-center gap-2 shadow-xl hover:bg-white transition-colors"
+                      style={{ backgroundColor: currentConfig.accent, color: '#1E293B' }}
+                    >
+                      TeleZüri Video öffnen <ExternalLink className="w-4 h-4" />
+                    </a>
+                  )}
                 </div>
               </div>
             ))}

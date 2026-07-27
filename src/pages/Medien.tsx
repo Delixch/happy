@@ -15,13 +15,22 @@ const FALLBACK_MEDIA: MediaItem[] = [
     sort_order: 1
   },
   {
+    id: 'telezueri-3',
+    title: '«Tschüss, Happy Beck!»: Die Langstrasse verliert ein Stück ihrer Geschichte',
+    type: 'tv',
+    url: 'https://www.telezueri.ch/news/tschuess-happy-beck-die-langstrasse-verliert-ein-stueck-ihrer-geschichte-145947860',
+    description: 'TeleZüri TV-Kulturbeitrag über die tief verwurzelte Geschichte und Bedeutung von Happy Beck für das Zürcher Langstrassen-Quartier.',
+    created_at: new Date().toISOString(),
+    sort_order: 2
+  },
+  {
     id: 'telezueri-2',
     title: '«Happy Beck» an der Langstrasse schliesst',
     type: 'tv',
     url: 'https://www.telezueri.ch/zuerinews/happy-beck-an-der-langstrasse-schliesst-145244292',
     description: 'TeleZüri TV-Bericht über die historische Bäckerei Happy Beck und die Geschichte des Standorts an der Langstrasse.',
     created_at: new Date().toISOString(),
-    sort_order: 2
+    sort_order: 3
   },
   {
     id: 'nzz-1',
@@ -30,7 +39,7 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'https://www.nzz.ch/zuerich/yakup-aydin-haette-millionen-waschen-koennen-doch-er-baeckt-lieber-kleine-broetchen-der-happy-beck-ist-zurueck-an-der-langstrasse-ld.1722601',
     description: 'Exklusiver Porträt-Bericht in der NZZ (Neue Zürcher Zeitung) über Yakup Aydin und das Comeback von Happy Beck an der Langstrasse.',
     created_at: new Date().toISOString(),
-    sort_order: 3
+    sort_order: 4
   },
   {
     id: 'tagesanzeiger-1',
@@ -39,7 +48,7 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'https://www.tagesanzeiger.ch/zuercher-happy-beck-aendert-konzept-227165374694',
     description: 'Exklusiver Zeitungsartikel im Tages-Anzeiger über die Weiterentwicklung und das neue Konzept der Kult-Bäckerei Happy Beck in Zürich.',
     created_at: new Date().toISOString(),
-    sort_order: 4
+    sort_order: 5
   },
   {
     id: 'tgtg-1',
@@ -48,7 +57,7 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'https://www.toogoodtogo.com/de-ch/find/zurich/happybeck/bakedgoods/uberraschungspackli-109766089183564896',
     description: 'Gegen Lebensmittelverschwendung: Überraschungspäckli mit frischen Backwaren von Happy Beck über Too Good To Go retten.',
     created_at: new Date().toISOString(),
-    sort_order: 5
+    sort_order: 6
   },
   {
     id: '20min-1',
@@ -57,14 +66,14 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'https://www.20min.ch/story/happy-beck-kommt-zurueck-an-die-langstrasse-491809176239',
     description: 'Grosser Bericht in 20 Minuten über das Comeback der Kult-Bäckerei Happy Beck an die Zürcher Langstrasse.',
     created_at: new Date().toISOString(),
-    sort_order: 6
+    sort_order: 7
   }
 ];
 
 export default function Medien() {
   const [items, setItems] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<MediaType>('presse');
+  const [activeTab, setActiveTab] = useState<MediaType>('tv');
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -75,6 +84,7 @@ export default function Medien() {
       .then(({ data }) => {
         if (data && data.length > 0) {
           const hasTele1 = data.some(i => i.url?.includes('162235856'));
+          const hasTele3 = data.some(i => i.url?.includes('145947860'));
           const hasTele2 = data.some(i => i.url?.includes('145244292'));
           const hasNzz = data.some(i => i.url?.includes('nzz.ch'));
           const hasTagesAnzeiger = data.some(i => i.url?.includes('tagesanzeiger.ch'));
@@ -83,11 +93,12 @@ export default function Medien() {
           
           let updated = [...data];
           if (!hasTele1) updated = [FALLBACK_MEDIA[0], ...updated];
-          if (!hasTele2) updated = [FALLBACK_MEDIA[1], ...updated];
-          if (!hasNzz) updated = [FALLBACK_MEDIA[2], ...updated];
-          if (!hasTagesAnzeiger) updated = [FALLBACK_MEDIA[3], ...updated];
-          if (!hasTgtg) updated = [FALLBACK_MEDIA[4], ...updated];
-          if (!has20Min) updated = [FALLBACK_MEDIA[5], ...updated];
+          if (!hasTele3) updated = [FALLBACK_MEDIA[1], ...updated];
+          if (!hasTele2) updated = [FALLBACK_MEDIA[2], ...updated];
+          if (!hasNzz) updated = [FALLBACK_MEDIA[3], ...updated];
+          if (!hasTagesAnzeiger) updated = [FALLBACK_MEDIA[4], ...updated];
+          if (!hasTgtg) updated = [FALLBACK_MEDIA[5], ...updated];
+          if (!has20Min) updated = [FALLBACK_MEDIA[6], ...updated];
           setItems(updated);
         } else {
           setItems(FALLBACK_MEDIA);

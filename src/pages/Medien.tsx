@@ -6,13 +6,22 @@ type MediaType = 'tv' | 'presse' | 'online';
 
 const FALLBACK_MEDIA: MediaItem[] = [
   {
+    id: 'yt-vyns5cgq8-g',
+    title: 'Happy Beck Langstrasse Spezial',
+    type: 'tv',
+    url: 'https://youtu.be/VyNS5cGQ8-g?si=i0pLi7gTHOUFYzh9',
+    description: 'Spannender Video-Beitrag über Happy Beck und das kulinarische Leben an der Zürcher Langstrasse.',
+    created_at: new Date().toISOString(),
+    sort_order: 1
+  },
+  {
     id: 'yt-promo-2026-1',
     title: '20 Jahre Happy Beck: Nachtschicht an der Langstrasse | ZüriNews',
     type: 'tv',
     url: 'https://youtu.be/oarO4pTkP68?si=mdBumvHa4rNb5ekB',
     description: 'Exklusiver ZüriNews Videobeitrag über das 20-jährige Jubiläum und die legendäre Nachtschicht bei Happy Beck an der Zürcher Langstrasse.',
     created_at: new Date().toISOString(),
-    sort_order: 1
+    sort_order: 2
   },
   {
     id: 'yt-news-zh-1',
@@ -151,6 +160,7 @@ export default function Medien() {
         );
 
         if (validDbData && validDbData.length > 0) {
+          const hasYtNew = validDbData.some(i => i.url?.includes('VyNS5cGQ8-g'));
           const hasYtPromo = validDbData.some(i => i.url?.includes('oarO4pTkP68'));
           const hasYtNews = validDbData.some(i => i.url?.includes('W6cadtvljew'));
           const hasTele4 = validDbData.some(i => i.url?.includes('154012810'));
@@ -167,20 +177,21 @@ export default function Medien() {
           const has20Min = validDbData.some(i => i.url?.includes('20min.ch'));
           
           let updated = [...validDbData];
-          if (!hasYtPromo) updated = [FALLBACK_MEDIA[0], ...updated];
-          if (!hasYtNews) updated = [FALLBACK_MEDIA[1], ...updated];
-          if (!hasTele4) updated = [FALLBACK_MEDIA[2], ...updated];
-          if (!hasTele1) updated = [FALLBACK_MEDIA[3], ...updated];
-          if (!hasTele3) updated = [FALLBACK_MEDIA[4], ...updated];
-          if (!hasTele2) updated = [FALLBACK_MEDIA[5], ...updated];
-          if (!hasNzz) updated = [FALLBACK_MEDIA[6], ...updated];
-          if (!hasTagesAnzeiger) updated = [FALLBACK_MEDIA[7], ...updated];
-          if (!hasLimmattaler) updated = [FALLBACK_MEDIA[8], ...updated];
-          if (!hasVice) updated = [FALLBACK_MEDIA[9], ...updated];
-          if (!hasWatson) updated = [FALLBACK_MEDIA[10], ...updated];
-          if (!hasSolothurner) updated = [FALLBACK_MEDIA[11], ...updated];
-          if (!hasTgtg) updated = [FALLBACK_MEDIA[12], ...updated];
-          if (!has20Min) updated = [FALLBACK_MEDIA[13], ...updated];
+          if (!hasYtNew) updated = [FALLBACK_MEDIA[0], ...updated];
+          if (!hasYtPromo) updated = [FALLBACK_MEDIA[1], ...updated];
+          if (!hasYtNews) updated = [FALLBACK_MEDIA[2], ...updated];
+          if (!hasTele4) updated = [FALLBACK_MEDIA[3], ...updated];
+          if (!hasTele1) updated = [FALLBACK_MEDIA[4], ...updated];
+          if (!hasTele3) updated = [FALLBACK_MEDIA[5], ...updated];
+          if (!hasTele2) updated = [FALLBACK_MEDIA[6], ...updated];
+          if (!hasNzz) updated = [FALLBACK_MEDIA[7], ...updated];
+          if (!hasTagesAnzeiger) updated = [FALLBACK_MEDIA[8], ...updated];
+          if (!hasLimmattaler) updated = [FALLBACK_MEDIA[9], ...updated];
+          if (!hasVice) updated = [FALLBACK_MEDIA[10], ...updated];
+          if (!hasWatson) updated = [FALLBACK_MEDIA[11], ...updated];
+          if (!hasSolothurner) updated = [FALLBACK_MEDIA[12], ...updated];
+          if (!hasTgtg) updated = [FALLBACK_MEDIA[13], ...updated];
+          if (!has20Min) updated = [FALLBACK_MEDIA[14], ...updated];
           setItems(updated);
         } else {
           setItems(FALLBACK_MEDIA);

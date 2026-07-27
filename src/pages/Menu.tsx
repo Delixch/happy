@@ -144,6 +144,11 @@ export default function MenuPage() {
                 className="relative rounded-3xl p-6 border-2 border-white/20 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl flex justify-between gap-4 overflow-hidden min-h-[220px] shadow-xl flex-col justify-between"
                 style={{ backgroundColor: meta.bg }}
               >
+                {/* Red Animated Scanning Top Line */}
+                <div className="h-1.5 w-[calc(100%+3rem)] bg-[#1E293B] relative overflow-hidden flex-shrink-0 -mt-6 -mx-6 mb-2">
+                  <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full shadow-[0_0_12px_#EF4444]" />
+                </div>
+
                 <div className="flex justify-between items-start gap-3">
                   <div className="flex-1">
                     {/* Top Row: Circular Number & Title */}

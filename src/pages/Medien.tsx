@@ -433,7 +433,13 @@ export default function Medien() {
             <div className="relative aspect-video w-full">
               <iframe
                 className="w-full h-full border-0"
-                src={`https://www.youtube.com/embed/${activeVideoUrl}?autoplay=1`}
+                src={`https://www.youtube.com/embed/${
+                  activeVideoUrl.includes('youtu.be/')
+                    ? activeVideoUrl.split('youtu.be/')[1].split('?')[0]
+                    : activeVideoUrl.includes('watch?v=')
+                    ? activeVideoUrl.split('watch?v=')[1].split('&')[0]
+                    : activeVideoUrl
+                }?autoplay=1`}
                 title="Video Oynatıcı"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen

@@ -4,10 +4,22 @@ import { supabase, type MediaItem } from '../lib/supabase';
 
 type MediaType = 'tv' | 'presse' | 'online';
 
+const FALLBACK_MEDIA: MediaItem[] = [
+  {
+    id: '20min-1',
+    title: 'Zürich: «Happy Beck» kommt zurück an die Langstrasse',
+    type: 'online',
+    url: 'https://www.20min.ch/story/happy-beck-kommt-zurueck-an-die-langstrasse-491809176239',
+    description: 'Grosser Bericht in 20 Minuten über das Comeback der Kult-Bäckerei Happy Beck an die Zürcher Langstrasse.',
+    created_at: new Date().toISOString(),
+    sort_order: 1
+  }
+];
+
 export default function Medien() {
   const [items, setItems] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<MediaType>('tv');
+  const [activeTab, setActiveTab] = useState<MediaType>('online');
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -16,7 +28,17 @@ export default function Medien() {
       .select('*')
       .order('sort_order')
       .then(({ data }) => {
-        if (data) setItems(data);
+        if (data && data.length > 0) {
+          // Check if 20min article is in DB, if not prepend it to online items
+          const has20Min = data.some(i => i.url?.includes('20min.ch'));
+          if (!has20Min) {
+            setItems([...FALLBACK_MEDIA, ...data]);
+          } else {
+            setItems(data);
+          }
+        } else {
+          setItems(FALLBACK_MEDIA);
+        }
         setLoading(false);
       });
   }, []);

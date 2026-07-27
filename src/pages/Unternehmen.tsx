@@ -163,32 +163,44 @@ export default function Unternehmen() {
             </div>
           </div>
 
-          {/* 5-Card Stat Grid - Perfect Large Round Circles */}
+          {/* 5-Card Stat Grid - Perfect Large Round Circles with Unique Color Rotating Border Animations */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 items-center justify-center">
             {[
-              { icon: <Award className="w-5 h-5" />, value: '20', label: 'Jahre Erfahrung', bg: '#474150', accent: '#FFBB00' },
-              { icon: <Clock className="w-5 h-5" />, value: '2006', label: 'Gegründet', bg: '#3D2E28', accent: '#FFAE33' },
-              { icon: <MapPin className="w-5 h-5" />, value: 'Zürich', label: 'Hauptsitz', bg: '#372F47', accent: '#C8A2C8' },
-              { icon: <Wheat className="w-5 h-5" />, value: '24h', label: 'Geöffnet', bg: '#2A423D', accent: '#4DEECA' },
-              { icon: <Award className="w-5 h-5" />, value: '20+', label: 'Jahre Tradition', bg: '#4A2A2A', accent: '#FF8080' },
+              { icon: <Award className="w-5 h-5" />, value: '20', label: 'Jahre Erfahrung', bg: '#474150', accent: '#FFBB00', ring: 'conic-gradient(from 0deg, #FFBB00, transparent 60%, #FFBB00)' },
+              { icon: <Clock className="w-5 h-5" />, value: '2006', label: 'Gegründet', bg: '#3D2E28', accent: '#FFAE33', ring: 'conic-gradient(from 72deg, #FF4500, transparent 60%, #FF4500)' },
+              { icon: <MapPin className="w-5 h-5" />, value: 'Zürich', label: 'Hauptsitz', bg: '#372F47', accent: '#C8A2C8', ring: 'conic-gradient(from 144deg, #A855F7, transparent 60%, #A855F7)' },
+              { icon: <Wheat className="w-5 h-5" />, value: '24h', label: 'Geöffnet', bg: '#2A423D', accent: '#4DEECA', ring: 'conic-gradient(from 216deg, #00FFCC, transparent 60%, #00FFCC)' },
+              { icon: <Award className="w-5 h-5" />, value: '20+', label: 'Jahre Tradition', bg: '#4A2A2A', accent: '#FF8080', ring: 'conic-gradient(from 288deg, #FF2D55, transparent 60%, #FF2D55)' },
             ].map((stat, i) => (
               <div
                 key={i}
-                className="reveal rounded-full aspect-square w-full max-w-[180px] sm:max-w-[190px] mx-auto p-4 text-center shadow-2xl border-2 border-white/15 hover:scale-110 hover:shadow-[0_15px_35px_rgba(0,0,0,0.3)] transition-all duration-300 flex flex-col items-center justify-center"
+                className="reveal rounded-full aspect-square w-full max-w-[180px] sm:max-w-[190px] mx-auto p-4 text-center shadow-2xl border-2 border-white/15 hover:scale-110 hover:shadow-[0_15px_35px_rgba(0,0,0,0.3)] transition-all duration-300 flex flex-col items-center justify-center relative overflow-hidden group"
                 style={{ 
                   animationDelay: `${i * 100}ms`,
                   backgroundColor: stat.bg
                 }}
               >
+                {/* Rotating Color Ring Effect */}
+                <div className="absolute inset-0 rounded-full p-[2px] pointer-events-none overflow-hidden">
+                  <div 
+                    className="w-full h-full rounded-full animate-spin-slow"
+                    style={{ 
+                      background: stat.ring,
+                      mask: 'radial-gradient(circle, transparent 66%, black 67%)',
+                      WebkitMask: 'radial-gradient(circle, transparent 66%, black 67%)'
+                    }}
+                  />
+                </div>
+
                 <div 
-                  className="w-9 h-9 rounded-full flex items-center justify-center mb-2 font-bold shadow-md"
+                  className="w-9 h-9 rounded-full flex items-center justify-center mb-2 font-bold shadow-md relative z-10"
                   style={{ backgroundColor: stat.accent, color: '#231E2A' }}
                 >
                   {stat.icon}
                 </div>
-                <p className="text-xl sm:text-2xl font-serif font-bold text-white mb-0.5">{stat.value}</p>
+                <p className="text-xl sm:text-2xl font-serif font-bold text-white mb-0.5 relative z-10">{stat.value}</p>
                 <p 
-                  className="font-sans text-[10px] sm:text-[11px] uppercase font-extrabold tracking-wider leading-tight px-2"
+                  className="font-sans text-[10px] sm:text-[11px] uppercase font-extrabold tracking-wider leading-tight px-2 relative z-10"
                   style={{ color: stat.accent }}
                 >
                   {stat.label}

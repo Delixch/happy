@@ -122,6 +122,34 @@ export default function Kontakt() {
                   <span>@happybeck_</span>
                 </a>
               </div>
+
+              <div className="w-full h-0.5 bg-white/10 my-4" />
+
+              {/* Delivery Partners Box */}
+              <div>
+                <p className="text-white font-bold text-base mb-1">Online Bestellung 🛵</p>
+                <p className="text-white/70 text-xs mb-3 font-medium">Direkt nach Hause liefern lassen:</p>
+                <div className="space-y-2.5">
+                  <a
+                    href="https://www.ubereats.com/ch-de/store/happybeck/1cMo9d_uXNufL0FRptsfcA?diningMode=DELIVERY&surfaceName="
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-full py-2.5 px-4 rounded-xl bg-[#06C167] text-white font-sans font-black text-xs uppercase tracking-wider flex items-center justify-between shadow-md hover:scale-[1.02] transition-transform cursor-pointer"
+                  >
+                    <span>Uber Eats</span>
+                    <span>Bestellen ↗</span>
+                  </a>
+                  <a
+                    href="https://www.just-eat.ch/speisekarte/happybeck-langstrasse"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-full py-2.5 px-4 rounded-xl bg-[#FF8000] text-white font-sans font-black text-xs uppercase tracking-wider flex items-center justify-between shadow-md hover:scale-[1.02] transition-transform cursor-pointer"
+                  >
+                    <span>Just Eat</span>
+                    <span>Bestellen ↗</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </aside>
 

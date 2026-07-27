@@ -1,50 +1,61 @@
 import { useState, useEffect, ReactNode } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { 
+import type { Session } from '@supabase/supabase-js';
+import { supabase } from '../../lib/supabase';
+import {
   LayoutDashboard, UtensilsCrossed, Users, Film, Briefcase, Sparkles, Gift, Instagram,
-  LogOut, ChevronRight, Menu as MenuIcon, X 
+  LogOut, ChevronRight, Menu as MenuIcon, X
 } from 'lucide-react';
 
-const ADMIN_PASSWORD = (import.meta as any).env.VITE_ADMIN_PASSWORD || 'happy2026';
-const AUTH_KEY = 'happybeck_admin_auth';
-
 export function useAdminAuth() {
-  const [authed, setAuthed] = useState(() => sessionStorage.getItem(AUTH_KEY) === 'true');
+  const [session, setSession] = useState<Session | null>(null);
+  const [checking, setChecking] = useState(true);
 
-  const login = (password: string): boolean => {
-    if (password === ADMIN_PASSWORD) {
-      sessionStorage.setItem(AUTH_KEY, 'true');
-      setAuthed(true);
-      return true;
-    }
-    return false;
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      setChecking(false);
+    });
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      setSession(newSession);
+    });
+    return () => listener.subscription.unsubscribe();
+  }, []);
+
+  const login = async (email: string, password: string): Promise<string | null> => {
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    return error ? error.message : null;
   };
 
-  const logout = () => {
-    sessionStorage.removeItem(AUTH_KEY);
-    setAuthed(false);
-  };
+  const logout = () => supabase.auth.signOut();
 
-  return { authed, login, logout };
+  return { authed: !!session, checking, login, logout };
 }
 
 export function AdminLogin() {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
-  const { login, authed } = useAdminAuth();
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const { login, authed, checking } = useAdminAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (authed) navigate('/admin/menu');
   }, [authed, navigate]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!login(password)) {
-      setError(true);
+    setSubmitting(true);
+    const errorMessage = await login(email, password);
+    setSubmitting(false);
+    if (errorMessage) {
+      setError('E-Mail oder Passwort ist falsch.');
       setPassword('');
     }
   };
+
+  if (checking) return null;
 
   return (
     <section className="min-h-screen flex items-center justify-center py-10 px-4">
@@ -59,22 +70,34 @@ export function AdminLogin() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-xs font-sans font-medium text-white/50 uppercase tracking-wider mb-2">
+              E-Mail
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => { setEmail(e.target.value); setError(null); }}
+              className="input-premium"
+              placeholder="admin@happybeck.ch"
+              autoFocus
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-sans font-medium text-white/50 uppercase tracking-wider mb-2">
               Passwort
             </label>
             <input
               type="password"
               value={password}
-              onChange={(e) => { setPassword(e.target.value); setError(false); }}
+              onChange={(e) => { setPassword(e.target.value); setError(null); }}
               className="input-premium"
               placeholder="Admin-Passwort eingeben"
-              autoFocus
             />
           </div>
           {error && (
-            <p className="text-sm text-red-400 font-sans">Falsches Passwort. Bitte versuchen Sie es erneut.</p>
+            <p className="text-sm text-red-400 font-sans">{error}</p>
           )}
-          <button type="submit" className="btn-gold w-full">
-            Anmelden
+          <button type="submit" disabled={submitting} className="btn-gold w-full disabled:opacity-60">
+            {submitting ? 'Anmelden…' : 'Anmelden'}
           </button>
         </form>
       </div>
@@ -93,16 +116,16 @@ const navItems = [
 ];
 
 export function AdminLayout({ children }: { children: ReactNode }) {
-  const { authed, logout } = useAdminAuth();
+  const { authed, checking, logout } = useAdminAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    if (!authed) navigate('/admin');
-  }, [authed, navigate]);
+    if (!checking && !authed) navigate('/admin');
+  }, [authed, checking, navigate]);
 
-  if (!authed) return null;
+  if (checking || !authed) return null;
 
   return (
     <div className="min-h-screen flex">

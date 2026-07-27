@@ -163,14 +163,13 @@ export default function Team() {
                     backgroundColor: palette.bg 
                   }}
                 >
-                  {/* Vibrant Top Border Line with Glow */}
-                  <div 
-                    className="h-2.5 w-full shadow-md" 
-                    style={{ 
-                      backgroundColor: palette.accent,
-                      boxShadow: `0 2px 10px ${palette.accent}`
-                    }} 
-                  />
+                  {/* 2px Animated Scanning Top Line with Matching Palette Accent */}
+                  <div className="h-[2px] w-full bg-black/20 relative overflow-hidden flex-shrink-0">
+                    <div 
+                      className="absolute inset-0 animate-line-scan w-full h-full"
+                      style={{ backgroundColor: palette.accent }}
+                    />
+                  </div>
                   
                   <div className="p-8 text-center flex-1 flex flex-col justify-between">
                     <div>

@@ -155,6 +155,33 @@ export default function Footer() {
                 <span>@happybeck_</span>
               </a>
 
+              {/* Lieferpartner Buttons */}
+              <div className="pt-3 w-full">
+                <p className={`font-serif ${theme.textAccent} text-xs font-black uppercase tracking-[0.15em] mb-2 flex items-center gap-1`}>
+                  <span>🛵</span> Lieferpartner
+                </p>
+                <div className="flex flex-col gap-2">
+                  <a
+                    href="https://www.ubereats.com/ch-de/store/happybeck/1cMo9d_uXNufL0FRptsfcA?diningMode=DELIVERY&surfaceName="
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-3.5 py-2 rounded-xl bg-[#06C167] text-white font-sans font-black text-[11px] uppercase tracking-wider flex items-center justify-between shadow-md hover:scale-105 transition-transform"
+                  >
+                    <span>Uber Eats</span>
+                    <span className="text-[10px]">↗</span>
+                  </a>
+                  <a
+                    href="https://www.just-eat.ch/speisekarte/happybeck-langstrasse"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-3.5 py-2 rounded-xl bg-[#FF8000] text-white font-sans font-black text-[11px] uppercase tracking-wider flex items-center justify-between shadow-md hover:scale-105 transition-transform"
+                  >
+                    <span>Just Eat</span>
+                    <span className="text-[10px]">↗</span>
+                  </a>
+                </div>
+              </div>
+
               {/* Supervisor Login Button */}
               <Link
                 to="/admin"

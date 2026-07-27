@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase, type DailySpecial } from '../../lib/supabase';
 import ImageUpload from '../../components/ImageUpload';
+import ErrorBanner from '../../components/admin/ErrorBanner';
 import { Plus, Pencil, Trash2, Save, X, Loader2, Calendar } from 'lucide-react';
 
 const emptySpecial: Omit<DailySpecial, 'id' | 'created_at'> = {
@@ -15,10 +16,12 @@ export default function AdminAktuelles() {
   const [form, setForm] = useState(emptySpecial);
   const [isNew, setIsNew] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchSpecials = async () => {
     setLoading(true);
-    const { data } = await supabase.from('daily_specials').select('*').order('valid_date', { ascending: false });
+    const { data, error } = await supabase.from('daily_specials').select('*').order('valid_date', { ascending: false });
+    if (error) setError('Tagesangebote konnten nicht geladen werden: ' + error.message);
     if (data) setSpecials(data);
     setLoading(false);
   };
@@ -38,14 +41,18 @@ export default function AdminAktuelles() {
   const save = async () => {
     if (!form.title || !form.special_price) return;
     setSaving(true);
-    if (isNew) await supabase.from('daily_specials').insert([form]);
-    else if (editing) await supabase.from('daily_specials').update(form).eq('id', editing);
-    setSaving(false); cancel(); fetchSpecials();
+    const { error } = isNew
+      ? await supabase.from('daily_specials').insert([form])
+      : await supabase.from('daily_specials').update(form).eq('id', editing!);
+    setSaving(false);
+    if (error) { setError('Speichern fehlgeschlagen: ' + error.message); return; }
+    setError(null); cancel(); fetchSpecials();
   };
 
   const remove = async (id: string) => {
     if (!confirm('Dieses Tagesangebot wirklich löschen?')) return;
-    await supabase.from('daily_specials').delete().eq('id', id);
+    const { error } = await supabase.from('daily_specials').delete().eq('id', id);
+    if (error) { setError('Löschen fehlgeschlagen: ' + error.message); return; }
     fetchSpecials();
   };
 
@@ -64,6 +71,8 @@ export default function AdminAktuelles() {
           <Plus className="w-4 h-4" /> Neues Angebot
         </button>
       </div>
+
+      {error && <ErrorBanner message={error} onDismiss={() => setError(null)} />}
 
       {isNew && (
         <div className="glass-card p-6 mb-6">

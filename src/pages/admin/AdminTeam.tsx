@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase, type TeamMember } from '../../lib/supabase';
 import ImageUpload from '../../components/ImageUpload';
+import ErrorBanner from '../../components/admin/ErrorBanner';
 import { Plus, Pencil, Trash2, Save, X, Loader2 } from 'lucide-react';
 
 const emptyMember: Omit<TeamMember, 'id' | 'created_at'> = {
@@ -14,10 +15,12 @@ export default function AdminTeam() {
   const [form, setForm] = useState(emptyMember);
   const [isNew, setIsNew] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const fetch = async () => {
     setLoading(true);
-    const { data } = await supabase.from('team_members').select('*').order('sort_order');
+    const { data, error } = await supabase.from('team_members').select('*').order('sort_order');
+    if (error) setError('Team konnte nicht geladen werden: ' + error.message);
     if (data) setMembers(data);
     setLoading(false);
   };
@@ -31,14 +34,18 @@ export default function AdminTeam() {
   const save = async () => {
     if (!form.name || !form.role) return;
     setSaving(true);
-    if (isNew) await supabase.from('team_members').insert([form]);
-    else if (editing) await supabase.from('team_members').update(form).eq('id', editing);
-    setSaving(false); cancel(); fetch();
+    const { error } = isNew
+      ? await supabase.from('team_members').insert([form])
+      : await supabase.from('team_members').update(form).eq('id', editing!);
+    setSaving(false);
+    if (error) { setError('Speichern fehlgeschlagen: ' + error.message); return; }
+    setError(null); cancel(); fetch();
   };
 
   const remove = async (id: string) => {
     if (!confirm('Dieses Teammitglied wirklich löschen?')) return;
-    await supabase.from('team_members').delete().eq('id', id);
+    const { error } = await supabase.from('team_members').delete().eq('id', id);
+    if (error) { setError('Löschen fehlgeschlagen: ' + error.message); return; }
     fetch();
   };
 
@@ -53,6 +60,8 @@ export default function AdminTeam() {
           <Plus className="w-4 h-4" /> Neues Mitglied
         </button>
       </div>
+
+      {error && <ErrorBanner message={error} onDismiss={() => setError(null)} />}
 
       {isNew && (
         <div className="glass-card p-6 mb-6">

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase, type Job } from '../../lib/supabase';
+import ErrorBanner from '../../components/admin/ErrorBanner';
 import { Plus, Pencil, Trash2, Save, X, Loader2, ToggleLeft, ToggleRight } from 'lucide-react';
 
 const emptyJob: Omit<Job, 'id' | 'created_at'> = {
@@ -15,10 +16,12 @@ export default function AdminJobs() {
   const [reqInput, setReqInput] = useState('');
   const [isNew, setIsNew] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchJobs = async () => {
     setLoading(true);
-    const { data } = await supabase.from('jobs').select('*').order('sort_order');
+    const { data, error } = await supabase.from('jobs').select('*').order('sort_order');
+    if (error) setError('Inserate konnten nicht geladen werden: ' + error.message);
     if (data) setJobs(data);
     setLoading(false);
   };
@@ -35,19 +38,24 @@ export default function AdminJobs() {
   const save = async () => {
     if (!form.title) return;
     setSaving(true);
-    if (isNew) await supabase.from('jobs').insert([form]);
-    else if (editing) await supabase.from('jobs').update(form).eq('id', editing);
-    setSaving(false); cancel(); fetchJobs();
+    const { error } = isNew
+      ? await supabase.from('jobs').insert([form])
+      : await supabase.from('jobs').update(form).eq('id', editing!);
+    setSaving(false);
+    if (error) { setError('Speichern fehlgeschlagen: ' + error.message); return; }
+    setError(null); cancel(); fetchJobs();
   };
 
   const remove = async (id: string) => {
     if (!confirm('Dieses Inserat wirklich löschen?')) return;
-    await supabase.from('jobs').delete().eq('id', id);
+    const { error } = await supabase.from('jobs').delete().eq('id', id);
+    if (error) { setError('Löschen fehlgeschlagen: ' + error.message); return; }
     fetchJobs();
   };
 
   const toggleActive = async (j: Job) => {
-    await supabase.from('jobs').update({ is_active: !j.is_active }).eq('id', j.id);
+    const { error } = await supabase.from('jobs').update({ is_active: !j.is_active }).eq('id', j.id);
+    if (error) { setError('Status konnte nicht geändert werden: ' + error.message); return; }
     fetchJobs();
   };
 
@@ -72,6 +80,8 @@ export default function AdminJobs() {
           <Plus className="w-4 h-4" /> Neues Inserat
         </button>
       </div>
+
+      {error && <ErrorBanner message={error} onDismiss={() => setError(null)} />}
 
       {isNew && (
         <div className="glass-card p-6 mb-6">

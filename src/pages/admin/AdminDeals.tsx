@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase, type Deal, type DealItem } from '../../lib/supabase';
+import ErrorBanner from '../../components/admin/ErrorBanner';
 import { Plus, Pencil, Trash2, Save, X, Loader2, ArrowUp, ArrowDown } from 'lucide-react';
 
 const THEME_PRESETS = [
@@ -28,10 +29,12 @@ export default function AdminDeals() {
   const [form, setForm] = useState(emptyDeal);
   const [isNew, setIsNew] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchDeals = async () => {
     setLoading(true);
-    const { data } = await supabase.from('deals').select('*').order('sort_order', { ascending: true });
+    const { data, error } = await supabase.from('deals').select('*').order('sort_order', { ascending: true });
+    if (error) setError('Deals konnten nicht geladen werden: ' + error.message);
     if (data) setDeals(data);
     setLoading(false);
   };
@@ -71,19 +74,20 @@ export default function AdminDeals() {
   const save = async () => {
     if (!form.title) return;
     setSaving(true);
-    if (isNew) {
-      await supabase.from('deals').insert([form]);
-    } else if (editing) {
-      await supabase.from('deals').update(form).eq('id', editing);
-    }
+    const { error } = isNew
+      ? await supabase.from('deals').insert([form])
+      : await supabase.from('deals').update(form).eq('id', editing!);
     setSaving(false);
+    if (error) { setError('Speichern fehlgeschlagen: ' + error.message); return; }
+    setError(null);
     cancel();
     fetchDeals();
   };
 
   const remove = async (id: string) => {
     if (!confirm('Diesen Deal wirklich löschen?')) return;
-    await supabase.from('deals').delete().eq('id', id);
+    const { error } = await supabase.from('deals').delete().eq('id', id);
+    if (error) { setError('Löschen fehlgeschlagen: ' + error.message); return; }
     fetchDeals();
   };
 
@@ -93,16 +97,19 @@ export default function AdminDeals() {
 
     const current = deals[index];
     const swap = deals[nextIndex];
-
     const currentOrder = current.sort_order;
-    current.sort_order = swap.sort_order;
-    swap.sort_order = currentOrder;
+    const swapOrder = swap.sort_order;
 
     setLoading(true);
-    await Promise.all([
-      supabase.from('deals').update({ sort_order: current.sort_order }).eq('id', current.id),
-      supabase.from('deals').update({ sort_order: swap.sort_order }).eq('id', swap.id),
+    const [{ error: e1 }, { error: e2 }] = await Promise.all([
+      supabase.from('deals').update({ sort_order: swapOrder }).eq('id', current.id),
+      supabase.from('deals').update({ sort_order: currentOrder }).eq('id', swap.id),
     ]);
+    if (e1 || e2) {
+      setLoading(false);
+      setError('Reihenfolge konnte nicht geändert werden: ' + (e1 || e2)!.message);
+      return;
+    }
     fetchDeals();
   };
 
@@ -119,6 +126,8 @@ export default function AdminDeals() {
           <Plus className="w-4 h-4" /> Neuer Deal
         </button>
       </div>
+
+      {error && <ErrorBanner message={error} onDismiss={() => setError(null)} />}
 
       {isNew && (
         <div className="glass-card p-6 mb-6">

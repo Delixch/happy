@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase, type InstagramPost } from '../../lib/supabase';
+import ErrorBanner from '../../components/admin/ErrorBanner';
 import { Plus, Trash2, Save, X, Loader2, Link2 } from 'lucide-react';
 
 const emptyPost: Omit<InstagramPost, 'id' | 'created_at'> = {
@@ -14,10 +15,12 @@ export default function AdminInstagram() {
   const [form, setForm] = useState(emptyPost);
   const [isNew, setIsNew] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchPosts = async () => {
     setLoading(true);
-    const { data } = await supabase.from('instagram_posts').select('*').order('created_at', { ascending: false });
+    const { data, error } = await supabase.from('instagram_posts').select('*').order('created_at', { ascending: false });
+    if (error) setError('Beiträge konnten nicht geladen werden: ' + error.message);
     if (data) setPosts(data);
     setLoading(false);
   };
@@ -29,8 +32,10 @@ export default function AdminInstagram() {
   const save = async () => {
     if (!form.image_url || !form.post_url) return;
     setSaving(true);
-    await supabase.from('instagram_posts').insert([form]);
+    const { error } = await supabase.from('instagram_posts').insert([form]);
     setSaving(false);
+    if (error) { setError('Speichern fehlgeschlagen: ' + error.message); return; }
+    setError(null);
     setIsNew(false);
     setForm(emptyPost);
     fetchPosts();
@@ -38,7 +43,8 @@ export default function AdminInstagram() {
 
   const remove = async (id: string) => {
     if (!confirm('Diesen Instagram-Beitrag wirklich löschen?')) return;
-    await supabase.from('instagram_posts').delete().eq('id', id);
+    const { error } = await supabase.from('instagram_posts').delete().eq('id', id);
+    if (error) { setError('Löschen fehlgeschlagen: ' + error.message); return; }
     fetchPosts();
   };
 
@@ -55,6 +61,8 @@ export default function AdminInstagram() {
           <Plus className="w-4 h-4" /> Beitrag hinzufügen
         </button>
       </div>
+
+      {error && <ErrorBanner message={error} onDismiss={() => setError(null)} />}
 
       {isNew && (
         <div className="glass-card p-6 mb-6">

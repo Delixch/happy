@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase, type MenuItem, type MenuCategory } from '../../lib/supabase';
 import ImageUpload from '../../components/ImageUpload';
+import ErrorBanner from '../../components/admin/ErrorBanner';
 import { Plus, Pencil, Trash2, Save, X, Loader2 } from 'lucide-react';
 
 const CATEGORIES: { id: MenuCategory; label: string }[] = [
@@ -28,10 +29,12 @@ export default function AdminMenu() {
   const [isNew, setIsNew] = useState(false);
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState<MenuCategory>('fruehstueck');
+  const [error, setError] = useState<string | null>(null);
 
   const fetchItems = async () => {
     setLoading(true);
-    const { data } = await supabase.from('menu_items').select('*').order('sort_order');
+    const { data, error } = await supabase.from('menu_items').select('*').order('sort_order');
+    if (error) setError('Artikel konnten nicht geladen werden: ' + error.message);
     if (data) setItems(data);
     setLoading(false);
   };
@@ -55,19 +58,26 @@ export default function AdminMenu() {
   const save = async () => {
     if (!form.name || !form.price) return;
     setSaving(true);
-    if (isNew) {
-      await supabase.from('menu_items').insert([form]);
-    } else if (editing) {
-      await supabase.from('menu_items').update(form).eq('id', editing);
-    }
+    const { error } = isNew
+      ? await supabase.from('menu_items').insert([form])
+      : await supabase.from('menu_items').update(form).eq('id', editing!);
     setSaving(false);
+    if (error) {
+      setError('Speichern fehlgeschlagen: ' + error.message);
+      return;
+    }
+    setError(null);
     cancel();
     fetchItems();
   };
 
   const remove = async (id: string) => {
     if (!confirm('Diesen Artikel wirklich löschen?')) return;
-    await supabase.from('menu_items').delete().eq('id', id);
+    const { error } = await supabase.from('menu_items').delete().eq('id', id);
+    if (error) {
+      setError('Löschen fehlgeschlagen: ' + error.message);
+      return;
+    }
     fetchItems();
   };
 
@@ -84,6 +94,8 @@ export default function AdminMenu() {
           <Plus className="w-4 h-4" /> Neuer Artikel
         </button>
       </div>
+
+      {error && <ErrorBanner message={error} onDismiss={() => setError(null)} />}
 
       {/* Category Tabs */}
       <div className="flex flex-wrap gap-2 mb-6">

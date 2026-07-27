@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase, type MediaItem } from '../../lib/supabase';
+import ErrorBanner from '../../components/admin/ErrorBanner';
 import { Plus, Pencil, Trash2, Save, X, Loader2, Play } from 'lucide-react';
 
 type MediaType = 'tv' | 'presse' | 'online';
@@ -21,10 +22,12 @@ export default function AdminMedien() {
   const [isNew, setIsNew] = useState(false);
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState<MediaType>('tv');
+  const [error, setError] = useState<string | null>(null);
 
   const fetchItems = async () => {
     setLoading(true);
-    const { data } = await supabase.from('media_items').select('*').order('sort_order');
+    const { data, error } = await supabase.from('media_items').select('*').order('sort_order');
+    if (error) setError('Beiträge konnten nicht geladen werden: ' + error.message);
     if (data) setItems(data);
     setLoading(false);
   };
@@ -38,14 +41,18 @@ export default function AdminMedien() {
   const save = async () => {
     if (!form.title) return;
     setSaving(true);
-    if (isNew) await supabase.from('media_items').insert([form]);
-    else if (editing) await supabase.from('media_items').update(form).eq('id', editing);
-    setSaving(false); cancel(); fetchItems();
+    const { error } = isNew
+      ? await supabase.from('media_items').insert([form])
+      : await supabase.from('media_items').update(form).eq('id', editing!);
+    setSaving(false);
+    if (error) { setError('Speichern fehlgeschlagen: ' + error.message); return; }
+    setError(null); cancel(); fetchItems();
   };
 
   const remove = async (id: string) => {
     if (!confirm('Diesen Medienbeitrag wirklich löschen?')) return;
-    await supabase.from('media_items').delete().eq('id', id);
+    const { error } = await supabase.from('media_items').delete().eq('id', id);
+    if (error) { setError('Löschen fehlgeschlagen: ' + error.message); return; }
     fetchItems();
   };
 
@@ -62,6 +69,8 @@ export default function AdminMedien() {
           <Plus className="w-4 h-4" /> Neuer Beitrag
         </button>
       </div>
+
+      {error && <ErrorBanner message={error} onDismiss={() => setError(null)} />}
 
       <div className="flex flex-wrap gap-2 mb-6">
         {TYPES.map((t) => (

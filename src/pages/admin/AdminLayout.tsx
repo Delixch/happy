@@ -4,7 +4,7 @@ import type { Session } from '@supabase/supabase-js';
 import { supabase } from '../../lib/supabase';
 import {
   LayoutDashboard, UtensilsCrossed, Users, Film, Briefcase, Sparkles, Gift, Instagram,
-  LogOut, ChevronRight, Menu as MenuIcon, X
+  LogOut, ChevronRight, Menu as MenuIcon, X, Home
 } from 'lucide-react';
 
 export function useAdminAuth() {
@@ -152,7 +152,14 @@ export function AdminLayout({ children }: { children: ReactNode }) {
             </Link>
           ))}
         </nav>
-        <div className="p-4 border-t border-white/5">
+        <div className="p-4 border-t border-white/5 space-y-1">
+          <Link
+            to="/"
+            className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-sans text-white/50 hover:text-gold-400 hover:bg-white/5 transition-all"
+          >
+            <Home className="w-4 h-4" />
+            <span>Zur Website</span>
+          </Link>
           <button
             onClick={() => { logout(); navigate('/'); }}
             className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-sans text-white/40 hover:text-red-400 hover:bg-red-400/5 transition-all w-full"
@@ -191,9 +198,17 @@ export function AdminLayout({ children }: { children: ReactNode }) {
                 <span>{item.label}</span>
               </Link>
             ))}
+            <Link
+              to="/"
+              onClick={() => setSidebarOpen(false)}
+              className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-sans text-white/50 hover:text-gold-400 mt-4"
+            >
+              <Home className="w-4 h-4" />
+              <span>Zur Website</span>
+            </Link>
             <button
               onClick={() => { logout(); navigate('/'); }}
-              className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-sans text-white/40 hover:text-red-400 w-full mt-4"
+              className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-sans text-white/40 hover:text-red-400 w-full"
             >
               <LogOut className="w-4 h-4" />
               <span>Abmelden</span>

@@ -80,90 +80,97 @@ export default function Kontakt() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Sidebar */}
-          <aside className="bg-[#1E293B] rounded-3xl p-8 shadow-2xl border-2 border-white/20 h-fit">
-            <h3 className="font-serif text-xl font-black text-white mb-6">Informationen</h3>
-            <div className="space-y-6 font-sans text-sm">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center font-bold shadow-md flex-shrink-0">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-white font-bold text-base">Adresse</p>
-                  <p className="text-white/80 font-medium">Langstrasse 120, 8004 Zürich</p>
-                </div>
-              </div>
+          <aside className="bg-[#1E293B] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 h-fit">
+            {/* Red Animated Scanning Top Line */}
+            <div className="h-1.5 w-full bg-[#1E293B] relative overflow-hidden flex-shrink-0">
+              <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full shadow-[0_0_12px_#EF4444]" />
+            </div>
 
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center font-bold shadow-md flex-shrink-0">
-                  <Clock className="w-5 h-5" />
+            <div className="p-8">
+              <h3 className="font-serif text-xl font-black text-white mb-6">Informationen</h3>
+              <div className="space-y-6 font-sans text-sm">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center font-bold shadow-md flex-shrink-0">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-white font-bold text-base">Adresse</p>
+                    <p className="text-white/80 font-medium">Langstrasse 120, 8004 Zürich</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-white font-bold text-base">Öffnungszeiten</p>
-                  <p className="text-white/80 font-medium">24 Stunden geöffnet</p>
+
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center font-bold shadow-md flex-shrink-0">
+                    <Clock className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-white font-bold text-base">Öffnungszeiten</p>
+                    <p className="text-white/80 font-medium">24 Stunden geöffnet</p>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center font-bold shadow-md flex-shrink-0">
-                  <Mail className="w-5 h-5" />
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center font-bold shadow-md flex-shrink-0">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-white font-bold text-base">E-Mail</p>
+                    <a href="mailto:info@happybeck.ch" className="text-[#FFBB00] font-bold hover:underline">
+                      info@happybeck.ch
+                    </a>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-white font-bold text-base">E-Mail</p>
-                  <a href="mailto:info@happybeck.ch" className="text-[#FFBB00] font-bold hover:underline">
-                    info@happybeck.ch
-                  </a>
-                </div>
-              </div>
 
-              <div className="w-full h-0.5 bg-white/10 my-4" />
+                <div className="w-full h-0.5 bg-white/10 my-4" />
 
-              <p className="text-white font-bold text-base mb-2">Instagram</p>
-              <div className="space-y-3">
-                <a
-                  href="https://www.instagram.com/happybeck.ch?igsh=eGdtbW1ud3p6ZDFx"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2.5 text-white/90 hover:text-[#FFBB00] font-medium transition-colors"
-                >
-                  <Instagram className="w-4 h-4 text-[#FFBB00]" />
-                  <span>@happybeck.ch</span>
-                </a>
-                <a
-                  href="https://www.instagram.com/happybeck_?igsh=MXM0eGN1enZydzl0cQ=="
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2.5 text-white/90 hover:text-[#FFBB00] font-medium transition-colors"
-                >
-                  <Instagram className="w-4 h-4 text-[#FFBB00]" />
-                  <span>@happybeck_</span>
-                </a>
-              </div>
-
-              <div className="w-full h-0.5 bg-white/10 my-4" />
-
-              {/* Delivery Partners Box */}
-              <div>
-                <p className="text-white font-bold text-base mb-1">Online Bestellung 🛵</p>
-                <p className="text-white/70 text-xs mb-3 font-medium">Direkt nach Hause liefern lassen:</p>
-                <div className="space-y-2.5">
+                <p className="text-white font-bold text-base mb-2">Instagram</p>
+                <div className="space-y-3">
                   <a
-                    href="https://www.ubereats.com/ch-de/store/happybeck/1cMo9d_uXNufL0FRptsfcA?diningMode=DELIVERY&surfaceName="
+                    href="https://www.instagram.com/happybeck.ch?igsh=eGdtbW1ud3p6ZDFx"
                     target="_blank"
                     rel="noreferrer"
-                    className="w-full py-2.5 px-4 rounded-xl bg-[#06C167] text-white font-sans font-black text-xs uppercase tracking-wider flex items-center justify-between shadow-md hover:scale-[1.02] transition-transform cursor-pointer"
+                    className="flex items-center gap-2.5 text-white/90 hover:text-[#FFBB00] font-medium transition-colors"
                   >
-                    <span>Uber Eats</span>
-                    <span>Bestellen ↗</span>
+                    <Instagram className="w-4 h-4 text-[#FFBB00]" />
+                    <span>@happybeck.ch</span>
                   </a>
                   <a
-                    href="https://www.just-eat.ch/speisekarte/happybeck-langstrasse"
+                    href="https://www.instagram.com/happybeck_?igsh=MXM0eGN1enZydzl0cQ=="
                     target="_blank"
                     rel="noreferrer"
-                    className="w-full py-2.5 px-4 rounded-xl bg-[#FF8000] text-white font-sans font-black text-xs uppercase tracking-wider flex items-center justify-between shadow-md hover:scale-[1.02] transition-transform cursor-pointer"
+                    className="flex items-center gap-2.5 text-white/90 hover:text-[#FFBB00] font-medium transition-colors"
                   >
-                    <span>Just Eat</span>
-                    <span>Bestellen ↗</span>
+                    <Instagram className="w-4 h-4 text-[#FFBB00]" />
+                    <span>@happybeck_</span>
                   </a>
+                </div>
+
+                <div className="w-full h-0.5 bg-white/10 my-4" />
+
+                {/* Delivery Partners Box */}
+                <div>
+                  <p className="text-white font-bold text-base mb-1">Online Bestellung 🛵</p>
+                  <p className="text-white/70 text-xs mb-3 font-medium">Direkt nach Hause liefern lassen:</p>
+                  <div className="space-y-2.5">
+                    <a
+                      href="https://www.ubereats.com/ch-de/store/happybeck/1cMo9d_uXNufL0FRptsfcA?diningMode=DELIVERY&surfaceName="
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-full py-2.5 px-4 rounded-xl bg-[#06C167] text-white font-sans font-black text-xs uppercase tracking-wider flex items-center justify-between shadow-md hover:scale-[1.02] transition-transform cursor-pointer"
+                    >
+                      <span>Uber Eats</span>
+                      <span>Bestellen ↗</span>
+                    </a>
+                    <a
+                      href="https://www.just-eat.ch/speisekarte/happybeck-langstrasse"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-full py-2.5 px-4 rounded-xl bg-[#FF8000] text-white font-sans font-black text-xs uppercase tracking-wider flex items-center justify-between shadow-md hover:scale-[1.02] transition-transform cursor-pointer"
+                    >
+                      <span>Just Eat</span>
+                      <span>Bestellen ↗</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -182,7 +189,11 @@ export default function Kontakt() {
                 </p>
               </div>
             ) : (
-              <form onSubmit={onSubmit} className="bg-[#1E293B] rounded-3xl p-8 md:p-10 shadow-2xl border-2 border-white/20 space-y-6">
+              <form onSubmit={onSubmit} className="bg-[#1E293B] rounded-3xl p-8 md:p-10 shadow-2xl border-2 border-white/20 space-y-6 relative overflow-hidden">
+                {/* Red Animated Scanning Top Line */}
+                <div className="h-1.5 w-[calc(100%+5rem)] bg-[#1E293B] absolute top-0 left-0 right-0 overflow-hidden flex-shrink-0">
+                  <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full shadow-[0_0_12px_#EF4444]" />
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
                     <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Firma</label>
@@ -211,16 +222,16 @@ export default function Kontakt() {
                   <textarea name="message" className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFBB00] transition-colors min-h-[130px] resize-y" rows={5} placeholder="Ihre Bestellung oder Nachricht..." required />
                 </div>
 
-                {/* Security Question */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end pt-2">
-                  <div>
+                {/* Security Question & Action Row */}
+                <div className="flex flex-wrap items-end gap-4 pt-2">
+                  <div className="w-full sm:w-36">
                     <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Sicherheitsfrage</label>
-                    <input className="w-full px-4 py-3 bg-black/50 border border-white/10 rounded-2xl text-[#FFBB00] font-sans text-sm font-bold" type="text" value={question.text} readOnly />
+                    <input className="w-full px-4 py-3 bg-black/50 border border-white/10 rounded-2xl text-[#FFBB00] font-sans text-sm font-bold text-center" type="text" value={question.text} readOnly />
                   </div>
-                  <div>
+                  <div className="w-full sm:w-28">
                     <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Ergebnis *</label>
                     <input
-                      className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFBB00] transition-colors font-bold"
+                      className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFBB00] transition-colors font-bold text-center"
                       type="number"
                       value={userAnswer}
                       onChange={(e) => setUserAnswer(e.target.value)}
@@ -228,17 +239,17 @@ export default function Kontakt() {
                       required
                     />
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-1 min-w-[240px]">
                     <button
                       type="button"
                       onClick={() => { setQuestion(generateQuestion()); setUserAnswer(''); }}
-                      className="px-4 py-3 rounded-2xl border border-white/20 text-white font-sans font-bold text-xs uppercase hover:bg-white/10 transition-colors whitespace-nowrap cursor-pointer"
+                      className="py-3 px-5 rounded-2xl border border-white/20 text-white font-sans font-bold text-xs uppercase hover:bg-white/10 transition-colors whitespace-nowrap cursor-pointer"
                     >
                       Neu laden
                     </button>
                     <button 
                       type="submit" 
-                      className="flex-1 py-3 px-6 rounded-2xl bg-[#FFBB00] text-[#1E293B] font-sans font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl hover:scale-105 transition-all cursor-pointer"
+                      className="flex-1 py-3 px-6 rounded-2xl bg-[#FFBB00] text-[#1E293B] font-sans font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl hover:scale-105 transition-all cursor-pointer whitespace-nowrap"
                     >
                       <Send className="w-4 h-4 fill-current" />
                       Senden

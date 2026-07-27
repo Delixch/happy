@@ -320,27 +320,13 @@ export default function Medien() {
                     TV BEITRAG
                   </span>
                 </div>
-                <div className="p-6 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-xl font-serif font-black text-white mb-2 line-clamp-2 transition-colors">
-                      {item.title}
-                    </h3>
-                    <p className="text-white/80 font-sans text-xs leading-relaxed line-clamp-3 font-medium mb-4">
-                      {item.description || 'Klicken Sie hier, um den Video-Beitrag abzuspielen.'}
-                    </p>
-                  </div>
-                  {item.url && item.url.startsWith('http') && (
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="mt-2 w-full py-3 rounded-2xl font-sans font-black text-xs uppercase tracking-wider text-center flex items-center justify-center gap-2 shadow-xl hover:bg-white transition-colors"
-                      style={{ backgroundColor: currentConfig.accent, color: '#1E293B' }}
-                    >
-                      TeleZüri Video öffnen <ExternalLink className="w-4 h-4" />
-                    </a>
-                  )}
+                <div className="p-6">
+                  <h3 className="text-xl font-serif font-black text-white mb-2 line-clamp-2 transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-white/80 font-sans text-xs leading-relaxed line-clamp-3 font-medium">
+                    {item.description || 'Klicken Sie hier, um den Video-Beitrag abzuspielen.'}
+                  </p>
                 </div>
               </div>
             ))}

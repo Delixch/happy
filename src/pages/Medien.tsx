@@ -51,13 +51,22 @@ const FALLBACK_MEDIA: MediaItem[] = [
     sort_order: 5
   },
   {
+    id: 'limmattaler-1',
+    title: '«Tschüss, Happy Beck!»: Langstrasse verliert ein Stück Geschichte',
+    type: 'presse',
+    url: 'https://www.limmattalerzeitung.ch/limmattal/zuerich/zuerich-tschuess-happy-beck-die-langstrasse-verliert-ein-stueck-ihrer-geschichte-ld.2268568',
+    description: 'Ausführlicher Presseartikel in der Limmattaler Zeitung über das Erbe und die Bedeutung der Zürcher Kult-Bäckerei Happy Beck.',
+    created_at: new Date().toISOString(),
+    sort_order: 6
+  },
+  {
     id: 'tgtg-1',
     title: 'Happy Beck | Too Good To Go in Zürich',
     type: 'online',
     url: 'https://www.toogoodtogo.com/de-ch/find/zurich/happybeck/bakedgoods/uberraschungspackli-109766089183564896',
     description: 'Gegen Lebensmittelverschwendung: Überraschungspäckli mit frischen Backwaren von Happy Beck über Too Good To Go retten.',
     created_at: new Date().toISOString(),
-    sort_order: 6
+    sort_order: 7
   },
   {
     id: '20min-1',
@@ -66,14 +75,14 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'https://www.20min.ch/story/happy-beck-kommt-zurueck-an-die-langstrasse-491809176239',
     description: 'Grosser Bericht in 20 Minuten über das Comeback der Kult-Bäckerei Happy Beck an die Zürcher Langstrasse.',
     created_at: new Date().toISOString(),
-    sort_order: 7
+    sort_order: 8
   }
 ];
 
 export default function Medien() {
   const [items, setItems] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<MediaType>('tv');
+  const [activeTab, setActiveTab] = useState<MediaType>('presse');
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -88,6 +97,7 @@ export default function Medien() {
           const hasTele2 = data.some(i => i.url?.includes('145244292'));
           const hasNzz = data.some(i => i.url?.includes('nzz.ch'));
           const hasTagesAnzeiger = data.some(i => i.url?.includes('tagesanzeiger.ch'));
+          const hasLimmattaler = data.some(i => i.url?.includes('limmattalerzeitung.ch'));
           const hasTgtg = data.some(i => i.url?.includes('toogoodtogo.com'));
           const has20Min = data.some(i => i.url?.includes('20min.ch'));
           
@@ -97,8 +107,9 @@ export default function Medien() {
           if (!hasTele2) updated = [FALLBACK_MEDIA[2], ...updated];
           if (!hasNzz) updated = [FALLBACK_MEDIA[3], ...updated];
           if (!hasTagesAnzeiger) updated = [FALLBACK_MEDIA[4], ...updated];
-          if (!hasTgtg) updated = [FALLBACK_MEDIA[5], ...updated];
-          if (!has20Min) updated = [FALLBACK_MEDIA[6], ...updated];
+          if (!hasLimmattaler) updated = [FALLBACK_MEDIA[5], ...updated];
+          if (!hasTgtg) updated = [FALLBACK_MEDIA[6], ...updated];
+          if (!has20Min) updated = [FALLBACK_MEDIA[7], ...updated];
           setItems(updated);
         } else {
           setItems(FALLBACK_MEDIA);

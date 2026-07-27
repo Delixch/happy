@@ -24,20 +24,29 @@ const FALLBACK_MEDIA: MediaItem[] = [
     sort_order: 2
   },
   {
+    id: 'tagesanzeiger-1',
+    title: 'Zürcher Happy Beck ändert Konzept',
+    type: 'presse',
+    url: 'https://www.tagesanzeiger.ch/zuercher-happy-beck-aendert-konzept-227165374694',
+    description: 'Exklusiver Zeitungsartikel im Tages-Anzeiger über die Weiterentwicklung und das neue Konzept der Kult-Bäckerei Happy Beck in Zürich.',
+    created_at: new Date().toISOString(),
+    sort_order: 3
+  },
+  {
     id: '20min-1',
     title: 'Zürich: «Happy Beck» kommt zurück an die Langstrasse',
     type: 'online',
     url: 'https://www.20min.ch/story/happy-beck-kommt-zurueck-an-die-langstrasse-491809176239',
     description: 'Grosser Bericht in 20 Minuten über das Comeback der Kult-Bäckerei Happy Beck an die Zürcher Langstrasse.',
     created_at: new Date().toISOString(),
-    sort_order: 3
+    sort_order: 4
   }
 ];
 
 export default function Medien() {
   const [items, setItems] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<MediaType>('tv');
+  const [activeTab, setActiveTab] = useState<MediaType>('presse');
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -49,12 +58,14 @@ export default function Medien() {
         if (data && data.length > 0) {
           const hasTele1 = data.some(i => i.url?.includes('162235856'));
           const hasTele2 = data.some(i => i.url?.includes('145244292'));
+          const hasTagesAnzeiger = data.some(i => i.url?.includes('tagesanzeiger.ch'));
           const has20Min = data.some(i => i.url?.includes('20min.ch'));
           
           let updated = [...data];
           if (!hasTele1) updated = [FALLBACK_MEDIA[0], ...updated];
           if (!hasTele2) updated = [FALLBACK_MEDIA[1], ...updated];
-          if (!has20Min) updated = [FALLBACK_MEDIA[2], ...updated];
+          if (!hasTagesAnzeiger) updated = [FALLBACK_MEDIA[2], ...updated];
+          if (!has20Min) updated = [FALLBACK_MEDIA[3], ...updated];
           setItems(updated);
         } else {
           setItems(FALLBACK_MEDIA);

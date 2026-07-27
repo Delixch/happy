@@ -30,43 +30,7 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'W6cadtvljew',
     description: 'Video-Reportage von News-ZH über die Kult-Bäckerei Happy Beck an der Zürcher Langstrasse.',
     created_at: new Date().toISOString(),
-    sort_order: 2
-  },
-  {
-    id: 'telezueri-4',
-    title: 'Happy Beck macht hungrige Partygänger wieder happy',
-    type: 'tv',
-    url: 'https://www.telezueri.ch/zuerinews/happy-beck-macht-hungrige-partygaenger-wieder-happy-154012810',
-    description: 'TeleZüri TV-Reportage über die Wiedereröffnung und die begeisterten Zürcher Partygänger bei Happy Beck.',
-    created_at: new Date().toISOString(),
     sort_order: 3
-  },
-  {
-    id: 'telezueri-1',
-    title: '20 Jahre Happy Beck: Nachtschicht an der Langstrasse',
-    type: 'tv',
-    url: 'https://www.telezueri.ch/zuerinews/20-jahre-happy-beck-nachtschicht-an-der-langstrasse-162235856',
-    description: 'Exklusiver Videobeitrag von TeleZüri über das 20-jährige Jubiläum und die legendäre Nachtschicht bei Happy Beck an der Zürcher Langstrasse.',
-    created_at: new Date().toISOString(),
-    sort_order: 4
-  },
-  {
-    id: 'telezueri-3',
-    title: '«Tschüss, Happy Beck!»: Die Langstrasse verliert ein Stück ihrer Geschichte',
-    type: 'tv',
-    url: 'https://www.telezueri.ch/news/tschuess-happy-beck-die-langstrasse-verliert-ein-stueck-ihrer-geschichte-145947860',
-    description: 'TeleZüri TV-Kulturbeitrag über die tief verwurzelte Geschichte und Bedeutung von Happy Beck für das Zürcher Langstrassen-Quartier.',
-    created_at: new Date().toISOString(),
-    sort_order: 5
-  },
-  {
-    id: 'telezueri-2',
-    title: '«Happy Beck» an der Langstrasse schliesst',
-    type: 'tv',
-    url: 'https://www.telezueri.ch/zuerinews/happy-beck-an-der-langstrasse-schliesst-145244292',
-    description: 'TeleZüri TV-Bericht über die historische Bäckerei Happy Beck und die Geschichte des Standorts an der Langstrasse.',
-    created_at: new Date().toISOString(),
-    sort_order: 6
   },
   {
     id: 'nzz-1',
@@ -75,7 +39,7 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'https://www.nzz.ch/zuerich/yakup-aydin-haette-millionen-waschen-koennen-doch-er-baeckt-lieber-kleine-broetchen-der-happy-beck-ist-zurueck-an-der-langstrasse-ld.1722601',
     description: 'Exklusiver Porträt-Bericht in der NZZ (Neue Zürcher Zeitung) über Yakup Aydin und das Comeback von Happy Beck an der Langstrasse.',
     created_at: new Date().toISOString(),
-    sort_order: 6
+    sort_order: 4
   },
   {
     id: 'tagesanzeiger-1',
@@ -84,7 +48,7 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'https://www.tagesanzeiger.ch/zuercher-happy-beck-aendert-konzept-227165374694',
     description: 'Exklusiver Zeitungsartikel im Tages-Anzeiger über die Weiterentwicklung und das neue Konzept der Kult-Bäckerei Happy Beck in Zürich.',
     created_at: new Date().toISOString(),
-    sort_order: 7
+    sort_order: 5
   },
   {
     id: 'limmattaler-1',
@@ -93,7 +57,7 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'https://www.limmattalerzeitung.ch/limmattal/zuerich/zuerich-tschuess-happy-beck-die-langstrasse-verliert-ein-stueck-ihrer-geschichte-ld.2268568',
     description: 'Ausführlicher Presseartikel in der Limmattaler Zeitung über das Erbe und die Bedeutung der Zürcher Kult-Bäckerei Happy Beck.',
     created_at: new Date().toISOString(),
-    sort_order: 8
+    sort_order: 6
   },
   {
     id: 'vice-1',
@@ -102,7 +66,7 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'https://www.vice.com/de/article/party-beichten-aus-dem-happy-beck/',
     description: 'Kult-Reportage im VICE Magazin über die legendären Nächte und Geschichten im Happy Beck an der Zürcher Langstrasse.',
     created_at: new Date().toISOString(),
-    sort_order: 9
+    sort_order: 7
   },
   {
     id: 'watson-1',
@@ -111,7 +75,7 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'https://www.watson.ch/zuerich/459897799-haben-seit-7-uhr-offen-happy-beck-stopft-im-kreis-4-wieder-maeuler',
     description: 'Watson.ch Online-Magazinbericht über die Wiedereröffnung und das 24h-Bistro Konzept von Happy Beck im Kreis 4.',
     created_at: new Date().toISOString(),
-    sort_order: 10
+    sort_order: 8
   },
   {
     id: 'solothurner-1',
@@ -120,7 +84,7 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'https://www.solothurnerzeitung.ch/solothurn/stadt-solothurn/ladenwechsel-in-solothurn-die-pandemie-hat-den-happy-beck-kaputt-gemacht-der-zuercher-unternehmer-zieht-sich-aus-solothurn-zurueck-ld.2249537',
     description: 'Zeitungsbericht in der Solothurner Zeitung über die Unternehmensgeschichte und den Fokus auf den Hauptstandort Zürich.',
     created_at: new Date().toISOString(),
-    sort_order: 11
+    sort_order: 9
   },
   {
     id: 'tgtg-1',
@@ -129,7 +93,7 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'https://www.toogoodtogo.com/de-ch/find/zurich/happybeck/bakedgoods/uberraschungspackli-109766089183564896',
     description: 'Gegen Lebensmittelverschwendung: Überraschungspäckli mit frischen Backwaren von Happy Beck über Too Good To Go retten.',
     created_at: new Date().toISOString(),
-    sort_order: 12
+    sort_order: 10
   },
   {
     id: '20min-1',
@@ -138,14 +102,14 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'https://www.20min.ch/story/happy-beck-kommt-zurueck-an-die-langstrasse-491809176239',
     description: 'Grosser Bericht in 20 Minuten über das Comeback der Kult-Bäckerei Happy Beck an die Zürcher Langstrasse.',
     created_at: new Date().toISOString(),
-    sort_order: 13
+    sort_order: 11
   }
 ];
 
 export default function Medien() {
   const [items, setItems] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<MediaType>('online');
+  const [activeTab, setActiveTab] = useState<MediaType>('tv');
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -154,19 +118,15 @@ export default function Medien() {
       .select('*')
       .order('sort_order')
       .then(({ data }) => {
-        // Filter out dummy/placeholder items like Rick Astley (dQw4w9WgXcQ)
+        // Filter out dummy/placeholder items and telezueri external items without video player
         const validDbData = (data || []).filter(
-          i => i.url !== 'dQw4w9WgXcQ' && !i.title?.toLowerCase().includes('kassensturz')
+          i => i.url !== 'dQw4w9WgXcQ' && !i.title?.toLowerCase().includes('kassensturz') && !i.url?.includes('telezueri.ch')
         );
 
         if (validDbData && validDbData.length > 0) {
           const hasYtNew = validDbData.some(i => i.url?.includes('VyNS5cGQ8-g'));
           const hasYtPromo = validDbData.some(i => i.url?.includes('oarO4pTkP68'));
           const hasYtNews = validDbData.some(i => i.url?.includes('W6cadtvljew'));
-          const hasTele4 = validDbData.some(i => i.url?.includes('154012810'));
-          const hasTele1 = validDbData.some(i => i.url?.includes('162235856'));
-          const hasTele3 = validDbData.some(i => i.url?.includes('145947860'));
-          const hasTele2 = validDbData.some(i => i.url?.includes('145244292'));
           const hasNzz = validDbData.some(i => i.url?.includes('nzz.ch'));
           const hasTagesAnzeiger = validDbData.some(i => i.url?.includes('tagesanzeiger.ch'));
           const hasLimmattaler = validDbData.some(i => i.url?.includes('limmattalerzeitung.ch'));
@@ -180,18 +140,14 @@ export default function Medien() {
           if (!hasYtNew) updated = [FALLBACK_MEDIA[0], ...updated];
           if (!hasYtPromo) updated = [FALLBACK_MEDIA[1], ...updated];
           if (!hasYtNews) updated = [FALLBACK_MEDIA[2], ...updated];
-          if (!hasTele4) updated = [FALLBACK_MEDIA[3], ...updated];
-          if (!hasTele1) updated = [FALLBACK_MEDIA[4], ...updated];
-          if (!hasTele3) updated = [FALLBACK_MEDIA[5], ...updated];
-          if (!hasTele2) updated = [FALLBACK_MEDIA[6], ...updated];
-          if (!hasNzz) updated = [FALLBACK_MEDIA[7], ...updated];
-          if (!hasTagesAnzeiger) updated = [FALLBACK_MEDIA[8], ...updated];
-          if (!hasLimmattaler) updated = [FALLBACK_MEDIA[9], ...updated];
-          if (!hasVice) updated = [FALLBACK_MEDIA[10], ...updated];
-          if (!hasWatson) updated = [FALLBACK_MEDIA[11], ...updated];
-          if (!hasSolothurner) updated = [FALLBACK_MEDIA[12], ...updated];
-          if (!hasTgtg) updated = [FALLBACK_MEDIA[13], ...updated];
-          if (!has20Min) updated = [FALLBACK_MEDIA[14], ...updated];
+          if (!hasNzz) updated = [FALLBACK_MEDIA[3], ...updated];
+          if (!hasTagesAnzeiger) updated = [FALLBACK_MEDIA[4], ...updated];
+          if (!hasLimmattaler) updated = [FALLBACK_MEDIA[5], ...updated];
+          if (!hasVice) updated = [FALLBACK_MEDIA[6], ...updated];
+          if (!hasWatson) updated = [FALLBACK_MEDIA[7], ...updated];
+          if (!hasSolothurner) updated = [FALLBACK_MEDIA[8], ...updated];
+          if (!hasTgtg) updated = [FALLBACK_MEDIA[9], ...updated];
+          if (!has20Min) updated = [FALLBACK_MEDIA[10], ...updated];
           setItems(updated);
         } else {
           setItems(FALLBACK_MEDIA);

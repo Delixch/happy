@@ -145,23 +145,28 @@ export default function Medien() {
       .select('*')
       .order('sort_order')
       .then(({ data }) => {
-        if (data && data.length > 0) {
-          const hasYtPromo = data.some(i => i.url?.includes('oarO4pTkP68'));
-          const hasYtNews = data.some(i => i.url?.includes('W6cadtvljew'));
-          const hasTele4 = data.some(i => i.url?.includes('154012810'));
-          const hasTele1 = data.some(i => i.url?.includes('162235856'));
-          const hasTele3 = data.some(i => i.url?.includes('145947860'));
-          const hasTele2 = data.some(i => i.url?.includes('145244292'));
-          const hasNzz = data.some(i => i.url?.includes('nzz.ch'));
-          const hasTagesAnzeiger = data.some(i => i.url?.includes('tagesanzeiger.ch'));
-          const hasLimmattaler = data.some(i => i.url?.includes('limmattalerzeitung.ch'));
-          const hasVice = data.some(i => i.url?.includes('vice.com'));
-          const hasWatson = data.some(i => i.url?.includes('watson.ch'));
-          const hasSolothurner = data.some(i => i.url?.includes('solothurnerzeitung.ch'));
-          const hasTgtg = data.some(i => i.url?.includes('toogoodtogo.com'));
-          const has20Min = data.some(i => i.url?.includes('20min.ch'));
+        // Filter out dummy/placeholder items like Rick Astley (dQw4w9WgXcQ)
+        const validDbData = (data || []).filter(
+          i => i.url !== 'dQw4w9WgXcQ' && !i.title?.toLowerCase().includes('kassensturz')
+        );
+
+        if (validDbData && validDbData.length > 0) {
+          const hasYtPromo = validDbData.some(i => i.url?.includes('oarO4pTkP68'));
+          const hasYtNews = validDbData.some(i => i.url?.includes('W6cadtvljew'));
+          const hasTele4 = validDbData.some(i => i.url?.includes('154012810'));
+          const hasTele1 = validDbData.some(i => i.url?.includes('162235856'));
+          const hasTele3 = validDbData.some(i => i.url?.includes('145947860'));
+          const hasTele2 = validDbData.some(i => i.url?.includes('145244292'));
+          const hasNzz = validDbData.some(i => i.url?.includes('nzz.ch'));
+          const hasTagesAnzeiger = validDbData.some(i => i.url?.includes('tagesanzeiger.ch'));
+          const hasLimmattaler = validDbData.some(i => i.url?.includes('limmattalerzeitung.ch'));
+          const hasVice = validDbData.some(i => i.url?.includes('vice.com'));
+          const hasWatson = validDbData.some(i => i.url?.includes('watson.ch'));
+          const hasSolothurner = validDbData.some(i => i.url?.includes('solothurnerzeitung.ch'));
+          const hasTgtg = validDbData.some(i => i.url?.includes('toogoodtogo.com'));
+          const has20Min = validDbData.some(i => i.url?.includes('20min.ch'));
           
-          let updated = [...data];
+          let updated = [...validDbData];
           if (!hasYtPromo) updated = [FALLBACK_MEDIA[0], ...updated];
           if (!hasYtNews) updated = [FALLBACK_MEDIA[1], ...updated];
           if (!hasTele4) updated = [FALLBACK_MEDIA[2], ...updated];

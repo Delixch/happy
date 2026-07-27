@@ -78,13 +78,22 @@ const FALLBACK_MEDIA: MediaItem[] = [
     sort_order: 8
   },
   {
+    id: 'vice-1',
+    title: 'Party-Beichten aus dem Happy Beck',
+    type: 'online',
+    url: 'https://www.vice.com/de/article/party-beichten-aus-dem-happy-beck/',
+    description: 'Kult-Reportage im VICE Magazin über die legendären Nächte und Geschichten im Happy Beck an der Zürcher Langstrasse.',
+    created_at: new Date().toISOString(),
+    sort_order: 9
+  },
+  {
     id: 'watson-1',
     title: '«Haben seit 7 Uhr offen» – Happy Beck stopft im Kreis 4 wieder Mäuler',
     type: 'online',
     url: 'https://www.watson.ch/zuerich/459897799-haben-seit-7-uhr-offen-happy-beck-stopft-im-kreis-4-wieder-maeuler',
     description: 'Watson.ch Online-Magazinbericht über die Wiedereröffnung und das 24h-Bistro Konzept von Happy Beck im Kreis 4.',
     created_at: new Date().toISOString(),
-    sort_order: 9
+    sort_order: 10
   },
   {
     id: 'solothurner-1',
@@ -93,7 +102,7 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'https://www.solothurnerzeitung.ch/solothurn/stadt-solothurn/ladenwechsel-in-solothurn-die-pandemie-hat-den-happy-beck-kaputt-gemacht-der-zuercher-unternehmer-zieht-sich-aus-solothurn-zurueck-ld.2249537',
     description: 'Zeitungsbericht in der Solothurner Zeitung über die Unternehmensgeschichte und den Fokus auf den Hauptstandort Zürich.',
     created_at: new Date().toISOString(),
-    sort_order: 10
+    sort_order: 11
   },
   {
     id: 'tgtg-1',
@@ -102,7 +111,7 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'https://www.toogoodtogo.com/de-ch/find/zurich/happybeck/bakedgoods/uberraschungspackli-109766089183564896',
     description: 'Gegen Lebensmittelverschwendung: Überraschungspäckli mit frischen Backwaren von Happy Beck über Too Good To Go retten.',
     created_at: new Date().toISOString(),
-    sort_order: 11
+    sort_order: 12
   },
   {
     id: '20min-1',
@@ -111,14 +120,14 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'https://www.20min.ch/story/happy-beck-kommt-zurueck-an-die-langstrasse-491809176239',
     description: 'Grosser Bericht in 20 Minuten über das Comeback der Kult-Bäckerei Happy Beck an die Zürcher Langstrasse.',
     created_at: new Date().toISOString(),
-    sort_order: 12
+    sort_order: 13
   }
 ];
 
 export default function Medien() {
   const [items, setItems] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<MediaType>('tv');
+  const [activeTab, setActiveTab] = useState<MediaType>('online');
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -136,6 +145,7 @@ export default function Medien() {
           const hasNzz = data.some(i => i.url?.includes('nzz.ch'));
           const hasTagesAnzeiger = data.some(i => i.url?.includes('tagesanzeiger.ch'));
           const hasLimmattaler = data.some(i => i.url?.includes('limmattalerzeitung.ch'));
+          const hasVice = data.some(i => i.url?.includes('vice.com'));
           const hasWatson = data.some(i => i.url?.includes('watson.ch'));
           const hasSolothurner = data.some(i => i.url?.includes('solothurnerzeitung.ch'));
           const hasTgtg = data.some(i => i.url?.includes('toogoodtogo.com'));
@@ -150,10 +160,11 @@ export default function Medien() {
           if (!hasNzz) updated = [FALLBACK_MEDIA[5], ...updated];
           if (!hasTagesAnzeiger) updated = [FALLBACK_MEDIA[6], ...updated];
           if (!hasLimmattaler) updated = [FALLBACK_MEDIA[7], ...updated];
-          if (!hasWatson) updated = [FALLBACK_MEDIA[8], ...updated];
-          if (!hasSolothurner) updated = [FALLBACK_MEDIA[9], ...updated];
-          if (!hasTgtg) updated = [FALLBACK_MEDIA[10], ...updated];
-          if (!has20Min) updated = [FALLBACK_MEDIA[11], ...updated];
+          if (!hasVice) updated = [FALLBACK_MEDIA[8], ...updated];
+          if (!hasWatson) updated = [FALLBACK_MEDIA[9], ...updated];
+          if (!hasSolothurner) updated = [FALLBACK_MEDIA[10], ...updated];
+          if (!hasTgtg) updated = [FALLBACK_MEDIA[11], ...updated];
+          if (!has20Min) updated = [FALLBACK_MEDIA[12], ...updated];
           setItems(updated);
         } else {
           setItems(FALLBACK_MEDIA);

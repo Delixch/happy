@@ -272,7 +272,7 @@ export default function Aktuelles() {
   const [passConfetti, setPassConfetti] = useState(false);
 
   const handleStampClick = (num: number) => {
-    setStamps(stamps === num ? num - 1 : num);
+    setStamps((current) => (current === num ? num - 1 : num));
   };
 
   useEffect(() => {

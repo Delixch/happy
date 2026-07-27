@@ -26,8 +26,9 @@ export default function Kontakt() {
   const [userAnswer, setUserAnswer] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (Number(userAnswer) !== question.answer) {
       setError('Bitte beantworten Sie die Sicherheitsfrage richtig.');
@@ -35,8 +36,34 @@ export default function Kontakt() {
       setUserAnswer('');
       return;
     }
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const payload = {
+      company: data.get('company'),
+      name: data.get('name'),
+      email: data.get('email'),
+      phone: data.get('phone'),
+      address: data.get('address'),
+      message: data.get('message'),
+    };
+
     setError(null);
-    setSubmitted(true);
+    setSending(true);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error('request failed');
+      form.reset();
+      setSubmitted(true);
+    } catch {
+      setError('Die Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es später erneut oder rufen Sie uns direkt an.');
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -247,12 +274,13 @@ export default function Kontakt() {
                     >
                       Neu laden
                     </button>
-                    <button 
-                      type="submit" 
-                      className="flex-1 py-3 px-6 rounded-2xl bg-[#FFBB00] text-[#1E293B] font-sans font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl hover:scale-105 transition-all cursor-pointer whitespace-nowrap"
+                    <button
+                      type="submit"
+                      disabled={sending}
+                      className="flex-1 py-3 px-6 rounded-2xl bg-[#FFBB00] text-[#1E293B] font-sans font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl hover:scale-105 transition-all cursor-pointer whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
                     >
                       <Send className="w-4 h-4 fill-current" />
-                      Senden
+                      {sending ? 'Wird gesendet…' : 'Senden'}
                     </button>
                   </div>
                 </div>

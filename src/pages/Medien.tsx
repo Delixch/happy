@@ -344,7 +344,7 @@ export default function Medien() {
                 }}
               >
                 {/* Dark Gold Animated Scanning Top Line */}
-                <div className="h-2 w-full bg-black/20 relative overflow-hidden flex-shrink-0">
+                <div className="h-[2px] w-full bg-black/20 relative overflow-hidden flex-shrink-0">
                   <div className="absolute inset-0 bg-[#FFBB00] animate-line-scan w-full h-full shadow-[0_0_12px_#FFBB00]" />
                 </div>
 

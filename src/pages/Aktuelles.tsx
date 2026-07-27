@@ -120,7 +120,7 @@ function DailySpecialCard({ special }: { special: DailySpecial }) {
           /* Revealed Side */
           <div className="bg-[#1E293B] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 animate-scale-in h-full flex flex-col justify-center">
             {/* Red Animated Scanning Top Line */}
-            <div className="h-2 w-full bg-[#1E293B] relative overflow-hidden">
+            <div className="h-0.5 w-full bg-[#1E293B] relative overflow-hidden">
               <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full shadow-[0_0_12px_#EF4444]" />
             </div>
             <div className="p-7 flex-1 flex flex-col justify-center">
@@ -199,7 +199,7 @@ function DealCard({ deal, index }: { deal: Deal; index: number }) {
       style={{ animationDelay: `${index * 100}ms` }}
     >
       {/* Red Animated Scanning Top Line */}
-      <div className="h-2 w-full bg-[#1E293B] relative overflow-hidden">
+      <div className="h-[2px] w-full bg-[#1E293B] relative overflow-hidden">
         <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full shadow-[0_0_12px_#EF4444]" />
       </div>
       <div className="p-6 md:p-8">
@@ -389,7 +389,7 @@ export default function Aktuelles() {
               ) : (
                 <div className="bg-[#1E293B] rounded-3xl overflow-hidden text-center h-full flex flex-col justify-between items-center shadow-2xl border-2 border-white/20 relative">
                   {/* Red Animated Scanning Top Line */}
-                  <div className="h-2 w-full bg-[#1E293B] relative overflow-hidden flex-shrink-0">
+                  <div className="h-[2px] w-full bg-[#1E293B] relative overflow-hidden flex-shrink-0">
                     <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full shadow-[0_0_12px_#EF4444]" />
                   </div>
                   <div className="p-10 flex flex-col items-center justify-center flex-1">
@@ -416,7 +416,7 @@ export default function Aktuelles() {
             <div className="flex-1 flex flex-col">
               <div className="bg-[#1E293B] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 h-full flex flex-col justify-between relative">
                 {/* Red Animated Scanning Top Line */}
-                <div className="h-2 w-full bg-[#1E293B] relative overflow-hidden">
+                <div className="h-[2px] w-full bg-[#1E293B] relative overflow-hidden">
                   <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full shadow-[0_0_12px_#EF4444]" />
                 </div>
                 

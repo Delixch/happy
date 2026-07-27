@@ -5,15 +5,15 @@ import LoadingScreen from './components/LoadingScreen';
 import CookieConsent from './components/CookieConsent';
 
 // Lazy load public pages
-const Home = lazy(() => import('./pages/Home'));
-const Unternehmen = lazy(() => import('./pages/Unternehmen'));
-const Jobs = lazy(() => import('./pages/Jobs'));
-const Aktuelles = lazy(() => import('./pages/Aktuelles'));
-const Medien = lazy(() => import('./pages/Medien'));
-const Kontakt = lazy(() => import('./pages/Kontakt'));
-const Team = lazy(() => import('./pages/Team'));
-const MenuPage = lazy(() => import('./pages/Menu'));
-const NotFound = lazy(() => import('./pages/NotFound'));
+import Home from './pages/Home';
+import Unternehmen from './pages/Unternehmen';
+import Jobs from './pages/Jobs';
+import Aktuelles from './pages/Aktuelles';
+import Medien from './pages/Medien';
+import Kontakt from './pages/Kontakt';
+import Team from './pages/Team';
+import MenuPage from './pages/Menu';
+import NotFound from './pages/NotFound';
 
 // Lazy load admin pages
 const AdminLayout = lazy(() => import('./pages/admin/AdminLayout').then(m => ({ default: m.AdminLayout })));

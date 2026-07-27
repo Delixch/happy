@@ -38,7 +38,7 @@ export default function LoadingScreen() {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] bg-dark-900 flex flex-col items-center justify-center transition-opacity duration-700 ease-out select-none ${
+      className={`fixed inset-0 z-[9999] bg-[#1E293B] flex flex-col items-center justify-center transition-opacity duration-700 ease-out select-none ${
         visible ? 'opacity-100' : 'opacity-0 pointer-events-none'
       }`}
     >

@@ -9,7 +9,7 @@ const FALLBACK_MEDIA: MediaItem[] = [
     id: 'yt-promo-2026-1',
     title: '20 Jahre Happy Beck: Nachtschicht an der Langstrasse | ZüriNews',
     type: 'tv',
-    url: 'oarO4pTkP68',
+    url: 'https://youtu.be/oarO4pTkP68?si=mdBumvHa4rNb5ekB',
     description: 'Exklusiver ZüriNews Videobeitrag über das 20-jährige Jubiläum und die legendäre Nachtschicht bei Happy Beck an der Zürcher Langstrasse.',
     created_at: new Date().toISOString(),
     sort_order: 1
@@ -327,7 +327,13 @@ export default function Medien() {
               >
                 <div className="relative aspect-video bg-black overflow-hidden">
                   <img
-                    src={`https://i.ytimg.com/vi/${item.url}/hqdefault.jpg`}
+                    src={`https://i.ytimg.com/vi/${
+                      item.url.includes('youtu.be/')
+                        ? item.url.split('youtu.be/')[1].split('?')[0]
+                        : item.url.includes('watch?v=')
+                        ? item.url.split('watch?v=')[1].split('&')[0]
+                        : item.url
+                    }/hqdefault.jpg`}
                     alt={item.title}
                     className="w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105"
                   />

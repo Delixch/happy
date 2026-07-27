@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Play, Loader2, ExternalLink, Tv, Newspaper, Globe, Film, type LucideIcon } from 'lucide-react';
 import { supabase, type MediaItem } from '../lib/supabase';
+import ScanlineAccent from '../components/ScanlineAccent';
 
 type MediaType = 'tv' | 'presse' | 'online';
 
@@ -345,9 +346,7 @@ export default function Medien() {
                 }}
               >
                 {/* Dark Gold Animated Scanning Top Line */}
-                <div className="h-[2px] w-full bg-black/20 relative overflow-hidden flex-shrink-0">
-                  <div className="absolute inset-0 bg-[#FFBB00] animate-line-scan w-full h-full shadow-[0_0_12px_#FFBB00]" />
-                </div>
+                <ScanlineAccent color="#FFBB00" trackColor="rgba(0,0,0,0.2)" />
 
                 <div className="p-7 flex-1 flex flex-col justify-between">
                   <div>

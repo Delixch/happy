@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Mail, MapPin, Clock, Instagram, Send } from 'lucide-react';
+import ScanlineAccent from '../components/ScanlineAccent';
 
 type Operator = '+' | '-' | 'x';
 
@@ -109,9 +110,7 @@ export default function Kontakt() {
           {/* Sidebar */}
           <aside className="bg-[#1E293B] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 h-fit">
             {/* Red Animated Scanning Top Line */}
-            <div className="h-1.5 w-full bg-[#1E293B] relative overflow-hidden flex-shrink-0">
-              <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full shadow-[0_0_12px_#EF4444]" />
-            </div>
+            <ScanlineAccent />
 
             <div className="p-8">
               <h3 className="font-serif text-xl font-black text-white mb-6">Informationen</h3>
@@ -218,9 +217,7 @@ export default function Kontakt() {
             ) : (
               <form onSubmit={onSubmit} className="bg-[#1E293B] rounded-3xl p-8 md:p-10 shadow-2xl border-2 border-white/20 space-y-6 relative overflow-hidden">
                 {/* Red Animated Scanning Top Line */}
-                <div className="h-1.5 w-[calc(100%+5rem)] bg-[#1E293B] absolute top-0 left-0 right-0 overflow-hidden flex-shrink-0">
-                  <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full shadow-[0_0_12px_#EF4444]" />
-                </div>
+                <ScanlineAccent className="absolute top-0 left-0 right-0 w-[calc(100%+5rem)]" />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
                     <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Firma</label>

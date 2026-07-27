@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { Users, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase, type TeamMember } from '../lib/supabase';
+import ScanlineAccent from '../components/ScanlineAccent';
 
 export default function Team() {
   const [members, setMembers] = useState<TeamMember[]>([]);
@@ -164,12 +165,7 @@ export default function Team() {
                   }}
                 >
                   {/* 2px Animated Scanning Top Line with Matching Palette Accent */}
-                  <div className="h-[2px] w-full bg-black/20 relative overflow-hidden flex-shrink-0">
-                    <div 
-                      className="absolute inset-0 animate-line-scan w-full h-full"
-                      style={{ backgroundColor: palette.accent }}
-                    />
-                  </div>
+                  <ScanlineAccent color={palette.accent} trackColor="rgba(0,0,0,0.2)" glow={false} />
                   
                   <div className="p-8 text-center flex-1 flex flex-col justify-between">
                     <div>

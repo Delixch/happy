@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Coffee, UtensilsCrossed, Sandwich as SandwichIcon, IceCream, CupSoda, Loader2, Sparkles } from 'lucide-react';
 import { supabase, type MenuItem, type MenuCategory } from '../lib/supabase';
+import ScanlineAccent from '../components/ScanlineAccent';
 
 const CATEGORY_META: Record<MenuCategory, { label: string; icon: React.ReactNode; intro: string; bg: string; accent: string }> = {
   fruehstueck: { 
@@ -145,9 +146,7 @@ export default function MenuPage() {
                 style={{ backgroundColor: meta.bg }}
               >
                 {/* Red Animated Scanning Top Line */}
-                <div className="h-1.5 w-[calc(100%+3rem)] bg-[#1E293B] relative overflow-hidden flex-shrink-0 -mt-6 -mx-6 mb-2">
-                  <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full shadow-[0_0_12px_#EF4444]" />
-                </div>
+                <ScanlineAccent className="relative w-[calc(100%+3rem)] -mt-6 -mx-6 mb-2" />
 
                 <div className="flex justify-between items-start gap-3">
                   <div className="flex-1">

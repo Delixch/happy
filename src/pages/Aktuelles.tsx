@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Gift, Zap, PartyPopper, Eye, ChevronDown, Loader2 } from 'lucide-react';
 import { supabase, type DailySpecial, type Deal } from '../lib/supabase';
+import ScanlineAccent from '../components/ScanlineAccent';
 
 // ── Confetti Component ──
 function Confetti({ active }: { active: boolean }) {
@@ -91,9 +92,7 @@ function DailySpecialCard({ special }: { special: DailySpecial }) {
             className="w-full h-full bg-[#1E293B] rounded-3xl shadow-2xl border-2 border-white/20 overflow-hidden group cursor-pointer hover:scale-[1.02] transition-all duration-500 flex flex-col justify-center"
           >
             {/* Red Animated Scanning Top Line */}
-            <div className="h-2 w-full bg-[#1E293B] relative overflow-hidden">
-              <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full shadow-[0_0_12px_#EF4444]" />
-            </div>
+            <ScanlineAccent />
             <div className="relative p-7 flex-1 flex flex-col justify-center">
               <div className="relative z-10 text-center">
                 <div className="w-16 h-16 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center mx-auto mb-4 group-hover:scale-110 shadow-xl transition-all duration-500">
@@ -120,9 +119,7 @@ function DailySpecialCard({ special }: { special: DailySpecial }) {
           /* Revealed Side */
           <div className="bg-[#1E293B] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 animate-scale-in h-full flex flex-col justify-center">
             {/* Red Animated Scanning Top Line */}
-            <div className="h-0.5 w-full bg-[#1E293B] relative overflow-hidden">
-              <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full shadow-[0_0_12px_#EF4444]" />
-            </div>
+            <ScanlineAccent />
             <div className="p-7 flex-1 flex flex-col justify-center">
               <div className="text-center">
                 <PartyPopper className="w-10 h-10 text-[#FFBB00] mx-auto mb-3" />
@@ -199,9 +196,7 @@ function DealCard({ deal, index }: { deal: Deal; index: number }) {
       style={{ animationDelay: `${index * 100}ms` }}
     >
       {/* Red Animated Scanning Top Line */}
-      <div className="h-[2px] w-full bg-[#1E293B] relative overflow-hidden">
-        <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full shadow-[0_0_12px_#EF4444]" />
-      </div>
+      <ScanlineAccent />
       <div className="p-6 md:p-8">
         <div className="flex items-start justify-between mb-4">
           <div>
@@ -389,9 +384,7 @@ export default function Aktuelles() {
               ) : (
                 <div className="bg-[#1E293B] rounded-3xl overflow-hidden text-center h-full flex flex-col justify-between items-center shadow-2xl border-2 border-white/20 relative">
                   {/* Red Animated Scanning Top Line */}
-                  <div className="h-[2px] w-full bg-[#1E293B] relative overflow-hidden flex-shrink-0">
-                    <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full shadow-[0_0_12px_#EF4444]" />
-                  </div>
+                  <ScanlineAccent />
                   <div className="p-10 flex flex-col items-center justify-center flex-1">
                     <Eye className="w-12 h-12 text-[#FFBB00] mb-4" />
                     <p className="text-white font-serif text-lg font-bold">Heute's Spezial wird bald bekannt gegeben...</p>
@@ -416,9 +409,7 @@ export default function Aktuelles() {
             <div className="flex-1 flex flex-col">
               <div className="bg-[#1E293B] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 h-full flex flex-col justify-between relative">
                 {/* Red Animated Scanning Top Line */}
-                <div className="h-[2px] w-full bg-[#1E293B] relative overflow-hidden">
-                  <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full shadow-[0_0_12px_#EF4444]" />
-                </div>
+                <ScanlineAccent />
                 
                 <div className="relative p-7 flex-1 flex flex-col justify-between">
                   {/* Interactive Celebrations Overlays */}

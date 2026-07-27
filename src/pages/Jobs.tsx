@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Clock, MapPin, Briefcase, Mail, Loader2 } from 'lucide-react';
 import { supabase, type Job } from '../lib/supabase';
+import ScanlineAccent from '../components/ScanlineAccent';
 
 
 
@@ -96,9 +97,7 @@ export default function Jobs() {
                 className="bg-[#1E293B] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 relative transition-all duration-300 hover:scale-[1.01]"
               >
                 {/* Red Animated Scanning Top Line */}
-                <div className="h-[2px] w-full bg-[#1E293B] relative overflow-hidden flex-shrink-0">
-                  <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full shadow-[0_0_12px_#EF4444]" />
-                </div>
+                <ScanlineAccent />
 
                 <div className="p-8 md:p-10">
                   <div className="flex flex-wrap items-start justify-between gap-4 mb-6">

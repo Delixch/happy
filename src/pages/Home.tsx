@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ChefHat, Heart, Award } from 'lucide-react';
 import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
+import ScanlineAccent from '../components/ScanlineAccent';
 
 export default function Home() {
   const slides = useMemo(
@@ -344,9 +345,7 @@ function FeatureCard({
         className="relative text-left p-6 rounded-2xl glass-card transition-all duration-700 ease-in-out will-change-transform hover:glow-gold group border border-white/10 h-full flex flex-col justify-start overflow-hidden"
       >
         {/* Red Animated Scanning Top Line */}
-        <div className="h-[2px] w-[calc(100%+3rem)] bg-[#1E293B] relative overflow-hidden flex-shrink-0 -mt-6 -mx-6 mb-6">
-          <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full" />
-        </div>
+        <ScanlineAccent className="relative w-[calc(100%+3rem)] -mt-6 -mx-6 mb-6" glow={false} />
         {/* Spotlight */}
         <div
           className="pointer-events-none absolute inset-0 rounded-2xl"

@@ -445,8 +445,12 @@ function FeatureCard({
           transform,
           backgroundColor: bgColor || '#474150' 
         }}
-        className="relative text-left p-6 rounded-2xl glass-card transition-all duration-700 ease-in-out will-change-transform hover:glow-gold group border border-white/10 h-full flex flex-col justify-start"
+        className="relative text-left p-6 rounded-2xl glass-card transition-all duration-700 ease-in-out will-change-transform hover:glow-gold group border border-white/10 h-full flex flex-col justify-start overflow-hidden"
       >
+        {/* Red Animated Scanning Top Line */}
+        <div className="h-1.5 w-[calc(100%+3rem)] bg-[#1E293B] relative overflow-hidden flex-shrink-0 -mt-6 -mx-6 mb-6">
+          <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full shadow-[0_0_12px_#EF4444]" />
+        </div>
         {/* Spotlight */}
         <div
           className="pointer-events-none absolute inset-0 rounded-2xl"

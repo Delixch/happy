@@ -1,5 +1,5 @@
-const CLOUD_NAME = ((import.meta as any).env.VITE_CLOUDINARY_CLOUD_NAME || 'dsdsb4lqw') as string;
-const UPLOAD_PRESET = ((import.meta as any).env.VITE_CLOUDINARY_UPLOAD_PRESET || 'happy_beck') as string;
+const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'dsdsb4lqw';
+const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'happy_beck';
 
 export async function uploadImage(file: File): Promise<string> {
   const formData = new FormData();

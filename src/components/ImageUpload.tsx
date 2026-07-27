@@ -27,8 +27,8 @@ export default function ImageUpload({ value, onChange, className = '' }: ImageUp
     try {
       const url = await uploadImage(file);
       onChange(url);
-    } catch (err: any) {
-      setError(err.message || 'Upload fehlgeschlagen');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Upload fehlgeschlagen');
     } finally {
       setUploading(false);
       if (fileRef.current) fileRef.current.value = '';

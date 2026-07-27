@@ -1,57 +1,6 @@
 import { Link } from 'react-router-dom';
-import { ChefHat, Heart, Award, ChevronLeft, ChevronRight, Instagram, RefreshCw } from 'lucide-react';
+import { ChefHat, Heart, Award } from 'lucide-react';
 import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
-import { supabase, type InstagramPost } from '../lib/supabase';
-
-const DEFAULT_POSTS: InstagramPost[] = [
-  {
-    id: 'def-1',
-    image_url: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=400&q=60',
-    post_url: 'https://www.instagram.com/happybeck.ch',
-    caption: 'Frisches Brot jeden Morgen! 🥖 Frisch gebacken with viel Liebe und Tradition. Besuchen Sie uns in Zürich! #happybeck #zürich #bäckerei',
-    created_at: ''
-  },
-  {
-    id: 'def-2',
-    image_url: 'https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=400&q=60',
-    post_url: 'https://www.instagram.com/happybeck.ch',
-    caption: 'Unsere legendären, goldgelben Gipfeli warten ofenfrisch auf dich. Der perfekte Start in den Züri-Morgen! 🥐 #croissant #gipfeli #zürich',
-    created_at: ''
-  },
-  {
-    id: 'def-3',
-    image_url: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=400&q=60',
-    post_url: 'https://www.instagram.com/happybeck.ch',
-    caption: 'Hausgemachte Spezialitäten und feinste Pâtisserie exklusiv zu unserem 20. Jubiläum. 🎂 #20jahre #happybeck #pâtisserie',
-    created_at: ''
-  },
-  {
-    id: 'def-4',
-    image_url: 'https://images.unsplash.com/photo-1517433456452-f9633a875f6f?auto=format&fit=crop&w=400&q=60',
-    post_url: 'https://www.instagram.com/happybeck.ch',
-    caption: 'Ein Blick hinter die Kulissen: Handgefertigte Teigwaren von unseren Meistern. 🥖🍞 #bäcker #handwerk #zürich',
-    created_at: ''
-  }
-];
-
-const optimizeUnsplashUrl = (url: string) => {
-  if (!url) return '';
-  if (url.includes('images.unsplash.com')) {
-    let opt = url;
-    if (opt.includes('w=')) {
-      opt = opt.replace(/w=\d+/, 'w=300');
-    } else {
-      opt += '&w=300';
-    }
-    if (opt.includes('q=')) {
-      opt = opt.replace(/q=\d+/, 'q=50');
-    } else {
-      opt += '&q=50';
-    }
-    return opt;
-  }
-  return url;
-};
 
 export default function Home() {
   const slides = useMemo(
@@ -102,31 +51,6 @@ export default function Home() {
 
   const [slide, setSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [instaPost, setInstaPost] = useState<InstagramPost>(() => DEFAULT_POSTS[Math.floor(Math.random() * DEFAULT_POSTS.length)]);
-  const [loadingInsta, setLoadingInsta] = useState(false);
-
-  const fetchRandomInsta = useCallback(async () => {
-    setLoadingInsta(true);
-    try {
-      const { data } = await supabase.from('instagram_posts').select('*');
-      if (data && data.length > 0) {
-        const random = data[Math.floor(Math.random() * data.length)];
-        setInstaPost(random);
-      } else {
-        const randomDefault = DEFAULT_POSTS[Math.floor(Math.random() * DEFAULT_POSTS.length)];
-        setInstaPost(randomDefault);
-      }
-    } catch (err) {
-      console.error(err);
-      const randomDefault = DEFAULT_POSTS[Math.floor(Math.random() * DEFAULT_POSTS.length)];
-      setInstaPost(randomDefault);
-    }
-    setLoadingInsta(false);
-  }, []);
-
-  useEffect(() => {
-    fetchRandomInsta();
-  }, [fetchRandomInsta]);
 
   const changeSlide = useCallback((newSlide: number) => {
     setIsTransitioning(true);
@@ -338,7 +262,6 @@ export default function Home() {
               text="Traditionelle Backkunst, entwickelt über Jahrzehnte voller Erfahrung und Leidenschaft. Unsere Rezepte und handwerklichen Techniken wurden von Generation zu Generation weitergegeben und bis heute bewahrt."
               delay={0}
               bgColor={slides[slide].cardBg}
-              accentColor={slides[slide].accentColor}
             />
             <FeatureCard
               icon={<Heart className="w-5.5 h-5.5" />}
@@ -346,7 +269,6 @@ export default function Home() {
               text="Wir verwenden nur die besten, sorgfältig ausgewählten Zutaten, um täglich frische Backwaren von höchster Qualität herzustellen. Qualität und Leidenschaft sind die Basis für den Genuss."
               delay={150}
               bgColor={slides[slide].cardBg}
-              accentColor={slides[slide].accentColor}
             />
             <FeatureCard
               icon={<Award className="w-5.5 h-5.5" />}
@@ -354,7 +276,6 @@ export default function Home() {
               text="Wir verbinden kreative Innovation mit unserer traditionellen Backkunst. So entstehen einzigartige Produkte, die modern und zugleich authentisch sind."
               delay={300}
               bgColor={slides[slide].cardBg}
-              accentColor={slides[slide].accentColor}
             />
           </div>
         </div>
@@ -370,14 +291,12 @@ function FeatureCard({
   text,
   delay,
   bgColor,
-  accentColor,
 }: {
   icon: React.ReactNode;
   title: string;
   text: string;
   delay: number;
   bgColor?: string;
-  accentColor?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const rectRef = useRef<DOMRect | null>(null);

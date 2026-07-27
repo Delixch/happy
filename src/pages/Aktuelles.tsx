@@ -52,7 +52,7 @@ function DailySpecialCard({ special }: { special: DailySpecial }) {
   const [timeLeft, setTimeLeft] = useState(900);
 
   useEffect(() => {
-    let timer: any;
+    let timer: ReturnType<typeof setTimeout>;
     if (couponActive && timeLeft > 0) {
       timer = setInterval(() => {
         setTimeLeft((t) => t - 1);
@@ -276,7 +276,7 @@ export default function Aktuelles() {
   };
 
   useEffect(() => {
-    let timer: any;
+    let timer: ReturnType<typeof setTimeout>;
     if (stamps === 5) {
       setCelebrationType('kaffee');
       setPassConfetti(true);
@@ -298,7 +298,7 @@ export default function Aktuelles() {
   }, [stamps]);
 
   useEffect(() => {
-    let timer: any;
+    let timer: ReturnType<typeof setTimeout>;
     if (celebrationType === 'kasse') {
       timer = setTimeout(() => {
         setCelebrationType(null);
@@ -309,7 +309,7 @@ export default function Aktuelles() {
 
   useEffect(() => {
     if (loadingSpecial || celebrationType) return;
-    let timer: any;
+    let timer: ReturnType<typeof setTimeout>;
     if (stamps < 5 || (stamps > 5 && stamps < 10)) {
       timer = setTimeout(() => {
         setStamps((s) => s + 1);
@@ -502,7 +502,6 @@ export default function Aktuelles() {
                         {group.row.map((num) => {
                           const isReward = num === group.reward.num;
                           const isStamped = num <= stamps;
-                          const isActive = num === stamps;
                           return (
                             <div key={num}>
                               <button

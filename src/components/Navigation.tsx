@@ -1,13 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { 
-  X, ChevronDown, ChevronRight, Instagram, Phone, MapPin, Sparkles, Lock, 
-  Building2, Users, UtensilsCrossed, Gift, Film, Briefcase, Mail, Home as HomeIcon 
+import {
+  X, ChevronDown, ChevronRight, Instagram, Phone, Lock,
+  Building2, Users, UtensilsCrossed, Gift, Film, Briefcase, Mail, Home as HomeIcon
 } from 'lucide-react';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const location = useLocation();
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -21,13 +20,6 @@ export default function Navigation() {
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {

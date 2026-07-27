@@ -1,4 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, CSSProperties } from 'react';
+
+interface SparkleStyle extends CSSProperties {
+  '--x': string;
+  '--y': string;
+}
 
 export default function LoadingScreen() {
   const [mounted, setMounted] = useState(() => {
@@ -66,7 +71,7 @@ export default function LoadingScreen() {
               animationIterationCount: 'infinite',
               '--x': star.x,
               '--y': star.y,
-            } as any}
+            } as SparkleStyle}
           >
             ✦
           </div>

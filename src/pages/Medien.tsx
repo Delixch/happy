@@ -1,8 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Play, Loader2, ExternalLink, Tv, Newspaper, Globe, Sparkles, Film } from 'lucide-react';
+import { Play, Loader2, ExternalLink, Tv, Newspaper, Globe, Film, type LucideIcon } from 'lucide-react';
 import { supabase, type MediaItem } from '../lib/supabase';
 
 type MediaType = 'tv' | 'presse' | 'online';
+
+function getYoutubeThumbId(url: string | null): string {
+  if (!url) return '';
+  if (url.includes('youtu.be/')) return url.split('youtu.be/')[1].split('?')[0];
+  if (url.includes('watch?v=')) return url.split('watch?v=')[1].split('&')[0];
+  return url;
+}
 
 const FALLBACK_MEDIA: MediaItem[] = [
   {
@@ -171,7 +178,7 @@ export default function Medien() {
 
   const activeItems = items.filter((i) => i.type === activeTab);
 
-  const categoryConfig: Record<MediaType, { title: string; subtitle: string; icon: any; bg: string; accent: string; text: string }> = {
+  const categoryConfig: Record<MediaType, { title: string; subtitle: string; icon: LucideIcon; bg: string; accent: string; text: string }> = {
     tv: {
       title: 'TV & Video Berichte',
       subtitle: 'Happy Beck in Fernsehbeiträgen und exklusiven Interviews',
@@ -294,13 +301,7 @@ export default function Medien() {
               >
                 <div className="relative aspect-video bg-black overflow-hidden">
                   <img
-                    src={`https://i.ytimg.com/vi/${
-                      item.url.includes('youtu.be/')
-                        ? item.url.split('youtu.be/')[1].split('?')[0]
-                        : item.url.includes('watch?v=')
-                        ? item.url.split('watch?v=')[1].split('&')[0]
-                        : item.url
-                    }/hqdefault.jpg`}
+                    src={`https://i.ytimg.com/vi/${getYoutubeThumbId(item.url)}/hqdefault.jpg`}
                     alt={item.title}
                     className="w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105"
                   />

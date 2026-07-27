@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
-import { supabase, type MediaItem } from '../../lib/supabase';
+import { useState } from 'react';
+import { type MediaItem } from '../../lib/supabase';
 import ErrorBanner from '../../components/admin/ErrorBanner';
+import { useAdminCrud } from '../../hooks/useAdminCrud';
 import { Plus, Pencil, Trash2, Save, X, Loader2, Play } from 'lucide-react';
 
 type MediaType = 'tv' | 'presse' | 'online';
@@ -10,53 +11,30 @@ const TYPES: { id: MediaType; label: string }[] = [
   { id: 'online', label: 'Online News' },
 ];
 
-const emptyItem: Omit<MediaItem, 'id' | 'created_at'> = {
+type MediaForm = Omit<MediaItem, 'id' | 'created_at'>;
+
+const emptyItem: MediaForm = {
   type: 'tv', title: '', url: '', description: '', sort_order: 0,
 };
 
 export default function AdminMedien() {
-  const [items, setItems] = useState<MediaItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [editing, setEditing] = useState<string | null>(null);
-  const [form, setForm] = useState(emptyItem);
-  const [isNew, setIsNew] = useState(false);
-  const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState<MediaType>('tv');
-  const [error, setError] = useState<string | null>(null);
 
-  const fetchItems = async () => {
-    setLoading(true);
-    const { data, error } = await supabase.from('media_items').select('*').order('sort_order');
-    if (error) setError('Beiträge konnten nicht geladen werden: ' + error.message);
-    if (data) setItems(data);
-    setLoading(false);
-  };
-
-  useEffect(() => { fetchItems(); }, []);
-
-  const startNew = () => { setForm({ ...emptyItem, type: activeTab, sort_order: filtered.length + 1 }); setIsNew(true); setEditing(null); };
-  const startEdit = (item: MediaItem) => { setForm({ type: item.type, title: item.title, url: item.url, description: item.description, sort_order: item.sort_order }); setEditing(item.id); setIsNew(false); };
-  const cancel = () => { setEditing(null); setIsNew(false); };
-
-  const save = async () => {
-    if (!form.title) return;
-    setSaving(true);
-    const { error } = isNew
-      ? await supabase.from('media_items').insert([form])
-      : await supabase.from('media_items').update(form).eq('id', editing!);
-    setSaving(false);
-    if (error) { setError('Speichern fehlgeschlagen: ' + error.message); return; }
-    setError(null); cancel(); fetchItems();
-  };
-
-  const remove = async (id: string) => {
-    if (!confirm('Diesen Medienbeitrag wirklich löschen?')) return;
-    const { error } = await supabase.from('media_items').delete().eq('id', id);
-    if (error) { setError('Löschen fehlgeschlagen: ' + error.message); return; }
-    fetchItems();
-  };
+  const {
+    items, loading, editing, form, setForm, isNew, saving, error, setError,
+    startNew: startNewItem, startEdit, cancel, save, remove,
+  } = useAdminCrud<MediaItem, MediaForm>({
+    table: 'media_items',
+    orderBy: { column: 'sort_order' },
+    emptyForm: emptyItem,
+    toForm: (item) => ({ type: item.type, title: item.title, url: item.url, description: item.description, sort_order: item.sort_order }),
+    isValid: (f) => !!f.title,
+    confirmDeleteMessage: 'Diesen Medienbeitrag wirklich löschen?',
+  });
 
   const filtered = items.filter((i) => i.type === activeTab);
+
+  const startNew = () => startNewItem({ type: activeTab, sort_order: filtered.length + 1 });
 
   return (
     <div>

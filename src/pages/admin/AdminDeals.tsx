@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
 import { supabase, type Deal, type DealItem } from '../../lib/supabase';
 import ErrorBanner from '../../components/admin/ErrorBanner';
+import { useAdminCrud } from '../../hooks/useAdminCrud';
 import { Plus, Pencil, Trash2, Save, X, Loader2, ArrowUp, ArrowDown } from 'lucide-react';
 
 const THEME_PRESETS = [
@@ -10,7 +10,9 @@ const THEME_PRESETS = [
   { label: 'Gold (Spezial)', gradient: 'from-gold-400/20 to-amber-500/20', accent: 'text-gold-400' },
 ];
 
-const emptyDeal: Omit<Deal, 'id' | 'created_at'> = {
+type DealForm = Omit<Deal, 'id' | 'created_at'>;
+
+const emptyDeal: DealForm = {
   title: '',
   subtitle: '',
   description: '',
@@ -23,35 +25,14 @@ const emptyDeal: Omit<Deal, 'id' | 'created_at'> = {
 };
 
 export default function AdminDeals() {
-  const [deals, setDeals] = useState<Deal[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [editing, setEditing] = useState<string | null>(null);
-  const [form, setForm] = useState(emptyDeal);
-  const [isNew, setIsNew] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchDeals = async () => {
-    setLoading(true);
-    const { data, error } = await supabase.from('deals').select('*').order('sort_order', { ascending: true });
-    if (error) setError('Deals konnten nicht geladen werden: ' + error.message);
-    if (data) setDeals(data);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchDeals();
-  }, []);
-
-  const startNew = () => {
-    const nextSort = deals.length > 0 ? Math.max(...deals.map(d => d.sort_order)) + 1 : 0;
-    setForm({ ...emptyDeal, sort_order: nextSort });
-    setIsNew(true);
-    setEditing(null);
-  };
-
-  const startEdit = (d: Deal) => {
-    setForm({
+  const {
+    items: deals, loading, editing, form, setForm, isNew, saving, error, setError,
+    startNew: startNewDeal, startEdit, cancel, save, remove, fetchItems: fetchDeals,
+  } = useAdminCrud<Deal, DealForm>({
+    table: 'deals',
+    orderBy: { column: 'sort_order', ascending: true },
+    emptyForm: emptyDeal,
+    toForm: (d) => ({
       title: d.title,
       subtitle: d.subtitle || '',
       description: d.description || '',
@@ -61,34 +42,14 @@ export default function AdminDeals() {
       is_special: d.is_special,
       items: d.items || [],
       sort_order: d.sort_order,
-    });
-    setEditing(d.id);
-    setIsNew(false);
-  };
+    }),
+    isValid: (f) => !!f.title,
+    confirmDeleteMessage: 'Diesen Deal wirklich löschen?',
+  });
 
-  const cancel = () => {
-    setEditing(null);
-    setIsNew(false);
-  };
-
-  const save = async () => {
-    if (!form.title) return;
-    setSaving(true);
-    const { error } = isNew
-      ? await supabase.from('deals').insert([form])
-      : await supabase.from('deals').update(form).eq('id', editing!);
-    setSaving(false);
-    if (error) { setError('Speichern fehlgeschlagen: ' + error.message); return; }
-    setError(null);
-    cancel();
-    fetchDeals();
-  };
-
-  const remove = async (id: string) => {
-    if (!confirm('Diesen Deal wirklich löschen?')) return;
-    const { error } = await supabase.from('deals').delete().eq('id', id);
-    if (error) { setError('Löschen fehlgeschlagen: ' + error.message); return; }
-    fetchDeals();
+  const startNew = () => {
+    const nextSort = deals.length > 0 ? Math.max(...deals.map(d => d.sort_order)) + 1 : 0;
+    startNewDeal({ sort_order: nextSort });
   };
 
   const move = async (index: number, direction: 'up' | 'down') => {
@@ -100,13 +61,11 @@ export default function AdminDeals() {
     const currentOrder = current.sort_order;
     const swapOrder = swap.sort_order;
 
-    setLoading(true);
     const [{ error: e1 }, { error: e2 }] = await Promise.all([
       supabase.from('deals').update({ sort_order: swapOrder }).eq('id', current.id),
       supabase.from('deals').update({ sort_order: currentOrder }).eq('id', swap.id),
     ]);
     if (e1 || e2) {
-      setLoading(false);
       setError('Reihenfolge konnte nicht geändert werden: ' + (e1 || e2)!.message);
       return;
     }

@@ -1,52 +1,30 @@
-import { useState, useEffect } from 'react';
-import { supabase, type InstagramPost } from '../../lib/supabase';
+import { type InstagramPost } from '../../lib/supabase';
 import ErrorBanner from '../../components/admin/ErrorBanner';
+import { useAdminCrud } from '../../hooks/useAdminCrud';
 import { Plus, Trash2, Save, X, Loader2, Link2 } from 'lucide-react';
 
-const emptyPost: Omit<InstagramPost, 'id' | 'created_at'> = {
+type PostForm = Omit<InstagramPost, 'id' | 'created_at'>;
+
+const emptyPost: PostForm = {
   image_url: '',
   post_url: 'https://www.instagram.com/happybeck.ch',
   caption: '',
 };
 
 export default function AdminInstagram() {
-  const [posts, setPosts] = useState<InstagramPost[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [form, setForm] = useState(emptyPost);
-  const [isNew, setIsNew] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const {
+    items: posts, loading, form, setForm, isNew, saving, error, setError,
+    startNew: startNewPost, cancel, save, remove,
+  } = useAdminCrud<InstagramPost, PostForm>({
+    table: 'instagram_posts',
+    orderBy: { column: 'created_at', ascending: false },
+    emptyForm: emptyPost,
+    toForm: (p) => ({ image_url: p.image_url, post_url: p.post_url, caption: p.caption }),
+    isValid: (f) => !!f.image_url && !!f.post_url,
+    confirmDeleteMessage: 'Diesen Instagram-Beitrag wirklich löschen?',
+  });
 
-  const fetchPosts = async () => {
-    setLoading(true);
-    const { data, error } = await supabase.from('instagram_posts').select('*').order('created_at', { ascending: false });
-    if (error) setError('Beiträge konnten nicht geladen werden: ' + error.message);
-    if (data) setPosts(data);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  const save = async () => {
-    if (!form.image_url || !form.post_url) return;
-    setSaving(true);
-    const { error } = await supabase.from('instagram_posts').insert([form]);
-    setSaving(false);
-    if (error) { setError('Speichern fehlgeschlagen: ' + error.message); return; }
-    setError(null);
-    setIsNew(false);
-    setForm(emptyPost);
-    fetchPosts();
-  };
-
-  const remove = async (id: string) => {
-    if (!confirm('Diesen Instagram-Beitrag wirklich löschen?')) return;
-    const { error } = await supabase.from('instagram_posts').delete().eq('id', id);
-    if (error) { setError('Löschen fehlgeschlagen: ' + error.message); return; }
-    fetchPosts();
-  };
+  const startNew = () => startNewPost();
 
   return (
     <div>
@@ -57,7 +35,7 @@ export default function AdminInstagram() {
             Verwalten Sie die Beiträge, die auf der Homepage angezeigt werden
           </p>
         </div>
-        <button onClick={() => setIsNew(true)} className="btn-gold flex items-center gap-2 text-sm">
+        <button onClick={startNew} className="btn-gold flex items-center gap-2 text-sm">
           <Plus className="w-4 h-4" /> Beitrag hinzufügen
         </button>
       </div>
@@ -84,7 +62,7 @@ export default function AdminInstagram() {
               <button onClick={save} disabled={saving || !form.image_url || !form.post_url} className="btn-gold flex items-center gap-2 text-sm disabled:opacity-50">
                 {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} Speichern
               </button>
-              <button onClick={() => setIsNew(false)} className="btn-gold-outline flex items-center gap-2 text-sm"><X className="w-4 h-4" /> Abbrechen</button>
+              <button onClick={cancel} className="btn-gold-outline flex items-center gap-2 text-sm"><X className="w-4 h-4" /> Abbrechen</button>
             </div>
           </div>
         </div>

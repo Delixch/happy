@@ -1,57 +1,36 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { supabase, type Job } from '../../lib/supabase';
 import ErrorBanner from '../../components/admin/ErrorBanner';
+import { useAdminCrud } from '../../hooks/useAdminCrud';
 import { Plus, Pencil, Trash2, Save, X, Loader2, ToggleLeft, ToggleRight } from 'lucide-react';
 
-const emptyJob: Omit<Job, 'id' | 'created_at'> = {
+type JobForm = Omit<Job, 'id' | 'created_at'>;
+
+const emptyJob: JobForm = {
   title: '', location: '', type: 'Vollzeit', shift: '', description: '',
   requirements: [], is_active: true, sort_order: 0,
 };
 
 export default function AdminJobs() {
-  const [jobs, setJobs] = useState<Job[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [editing, setEditing] = useState<string | null>(null);
-  const [form, setForm] = useState(emptyJob);
   const [reqInput, setReqInput] = useState('');
-  const [isNew, setIsNew] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const fetchJobs = async () => {
-    setLoading(true);
-    const { data, error } = await supabase.from('jobs').select('*').order('sort_order');
-    if (error) setError('Inserate konnten nicht geladen werden: ' + error.message);
-    if (data) setJobs(data);
-    setLoading(false);
-  };
+  const {
+    items: jobs, loading, editing, form, setForm, isNew, saving, error, setError,
+    startNew: startNewJob, startEdit: startEditJob, cancel, save, remove, fetchItems: fetchJobs,
+  } = useAdminCrud<Job, JobForm>({
+    table: 'jobs',
+    orderBy: { column: 'sort_order' },
+    emptyForm: emptyJob,
+    toForm: (j) => ({
+      title: j.title, location: j.location, type: j.type, shift: j.shift, description: j.description,
+      requirements: j.requirements || [], is_active: j.is_active, sort_order: j.sort_order,
+    }),
+    isValid: (f) => !!f.title,
+    confirmDeleteMessage: 'Dieses Inserat wirklich löschen?',
+  });
 
-  useEffect(() => { fetchJobs(); }, []);
-
-  const startNew = () => { setForm({ ...emptyJob, sort_order: jobs.length + 1 }); setIsNew(true); setEditing(null); setReqInput(''); };
-  const startEdit = (j: Job) => {
-    setForm({ title: j.title, location: j.location, type: j.type, shift: j.shift, description: j.description, requirements: j.requirements || [], is_active: j.is_active, sort_order: j.sort_order });
-    setEditing(j.id); setIsNew(false); setReqInput('');
-  };
-  const cancel = () => { setEditing(null); setIsNew(false); };
-
-  const save = async () => {
-    if (!form.title) return;
-    setSaving(true);
-    const { error } = isNew
-      ? await supabase.from('jobs').insert([form])
-      : await supabase.from('jobs').update(form).eq('id', editing!);
-    setSaving(false);
-    if (error) { setError('Speichern fehlgeschlagen: ' + error.message); return; }
-    setError(null); cancel(); fetchJobs();
-  };
-
-  const remove = async (id: string) => {
-    if (!confirm('Dieses Inserat wirklich löschen?')) return;
-    const { error } = await supabase.from('jobs').delete().eq('id', id);
-    if (error) { setError('Löschen fehlgeschlagen: ' + error.message); return; }
-    fetchJobs();
-  };
+  const startNew = () => { startNewJob({ sort_order: jobs.length + 1 }); setReqInput(''); };
+  const startEdit = (j: Job) => { startEditJob(j); setReqInput(''); };
 
   const toggleActive = async (j: Job) => {
     const { error } = await supabase.from('jobs').update({ is_active: !j.is_active }).eq('id', j.id);

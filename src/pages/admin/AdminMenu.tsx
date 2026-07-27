@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
-import { supabase, type MenuItem, type MenuCategory } from '../../lib/supabase';
+import { useState } from 'react';
+import { type MenuItem, type MenuCategory } from '../../lib/supabase';
 import ImageUpload from '../../components/ImageUpload';
 import ErrorBanner from '../../components/admin/ErrorBanner';
+import { useAdminCrud } from '../../hooks/useAdminCrud';
 import { Plus, Pencil, Trash2, Save, X, Loader2 } from 'lucide-react';
 
 const CATEGORIES: { id: MenuCategory; label: string }[] = [
@@ -12,7 +13,9 @@ const CATEGORIES: { id: MenuCategory; label: string }[] = [
   { id: 'getraenke', label: 'Getränke' },
 ];
 
-const emptyItem: Omit<MenuItem, 'id' | 'created_at'> = {
+type MenuForm = Omit<MenuItem, 'id' | 'created_at'>;
+
+const emptyItem: MenuForm = {
   category: 'fruehstueck',
   name: '',
   description: '',
@@ -22,66 +25,26 @@ const emptyItem: Omit<MenuItem, 'id' | 'created_at'> = {
 };
 
 export default function AdminMenu() {
-  const [items, setItems] = useState<MenuItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [editing, setEditing] = useState<string | null>(null);
-  const [form, setForm] = useState(emptyItem);
-  const [isNew, setIsNew] = useState(false);
-  const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState<MenuCategory>('fruehstueck');
-  const [error, setError] = useState<string | null>(null);
 
-  const fetchItems = async () => {
-    setLoading(true);
-    const { data, error } = await supabase.from('menu_items').select('*').order('sort_order');
-    if (error) setError('Artikel konnten nicht geladen werden: ' + error.message);
-    if (data) setItems(data);
-    setLoading(false);
-  };
-
-  useEffect(() => { fetchItems(); }, []);
-
-  const startNew = () => {
-    setForm({ ...emptyItem, category: activeTab, sort_order: filtered.length + 1 });
-    setIsNew(true);
-    setEditing(null);
-  };
-
-  const startEdit = (item: MenuItem) => {
-    setForm({ category: item.category, name: item.name, description: item.description, price: item.price, image_url: item.image_url, sort_order: item.sort_order });
-    setEditing(item.id);
-    setIsNew(false);
-  };
-
-  const cancel = () => { setEditing(null); setIsNew(false); };
-
-  const save = async () => {
-    if (!form.name || !form.price) return;
-    setSaving(true);
-    const { error } = isNew
-      ? await supabase.from('menu_items').insert([form])
-      : await supabase.from('menu_items').update(form).eq('id', editing!);
-    setSaving(false);
-    if (error) {
-      setError('Speichern fehlgeschlagen: ' + error.message);
-      return;
-    }
-    setError(null);
-    cancel();
-    fetchItems();
-  };
-
-  const remove = async (id: string) => {
-    if (!confirm('Diesen Artikel wirklich löschen?')) return;
-    const { error } = await supabase.from('menu_items').delete().eq('id', id);
-    if (error) {
-      setError('Löschen fehlgeschlagen: ' + error.message);
-      return;
-    }
-    fetchItems();
-  };
+  const {
+    items, loading, editing, form, setForm, isNew, saving, error, setError,
+    startNew: startNewItem, startEdit, cancel, save, remove,
+  } = useAdminCrud<MenuItem, MenuForm>({
+    table: 'menu_items',
+    orderBy: { column: 'sort_order' },
+    emptyForm: emptyItem,
+    toForm: (item) => ({
+      category: item.category, name: item.name, description: item.description,
+      price: item.price, image_url: item.image_url, sort_order: item.sort_order,
+    }),
+    isValid: (f) => !!f.name && !!f.price,
+    confirmDeleteMessage: 'Diesen Artikel wirklich löschen?',
+  });
 
   const filtered = items.filter((i) => i.category === activeTab);
+
+  const startNew = () => startNewItem({ category: activeTab, sort_order: filtered.length + 1 });
 
   return (
     <div>

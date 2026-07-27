@@ -1,60 +1,33 @@
-import { useState, useEffect } from 'react';
-import { supabase, type DailySpecial } from '../../lib/supabase';
+import { type DailySpecial } from '../../lib/supabase';
 import ImageUpload from '../../components/ImageUpload';
 import ErrorBanner from '../../components/admin/ErrorBanner';
+import { useAdminCrud } from '../../hooks/useAdminCrud';
 import { Plus, Pencil, Trash2, Save, X, Loader2, Calendar } from 'lucide-react';
 
-const emptySpecial: Omit<DailySpecial, 'id' | 'created_at'> = {
+type SpecialForm = Omit<DailySpecial, 'id' | 'created_at'>;
+
+const emptySpecial: SpecialForm = {
   title: '', description: '', original_price: '', special_price: '',
   image_url: null, valid_date: new Date().toISOString().split('T')[0], is_active: true,
 };
 
 export default function AdminAktuelles() {
-  const [specials, setSpecials] = useState<DailySpecial[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [editing, setEditing] = useState<string | null>(null);
-  const [form, setForm] = useState(emptySpecial);
-  const [isNew, setIsNew] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchSpecials = async () => {
-    setLoading(true);
-    const { data, error } = await supabase.from('daily_specials').select('*').order('valid_date', { ascending: false });
-    if (error) setError('Tagesangebote konnten nicht geladen werden: ' + error.message);
-    if (data) setSpecials(data);
-    setLoading(false);
-  };
-
-  useEffect(() => { fetchSpecials(); }, []);
-
-  const startNew = () => { setForm({ ...emptySpecial }); setIsNew(true); setEditing(null); };
-  const startEdit = (s: DailySpecial) => {
-    setForm({
+  const {
+    items: specials, loading, editing, form, setForm, isNew, saving, error, setError,
+    startNew: startNewSpecial, startEdit, cancel, save, remove,
+  } = useAdminCrud<DailySpecial, SpecialForm>({
+    table: 'daily_specials',
+    orderBy: { column: 'valid_date', ascending: false },
+    emptyForm: emptySpecial,
+    toForm: (s) => ({
       title: s.title, description: s.description, original_price: s.original_price,
       special_price: s.special_price, image_url: s.image_url, valid_date: s.valid_date, is_active: s.is_active,
-    });
-    setEditing(s.id); setIsNew(false);
-  };
-  const cancel = () => { setEditing(null); setIsNew(false); };
+    }),
+    isValid: (f) => !!f.title && !!f.special_price,
+    confirmDeleteMessage: 'Dieses Tagesangebot wirklich löschen?',
+  });
 
-  const save = async () => {
-    if (!form.title || !form.special_price) return;
-    setSaving(true);
-    const { error } = isNew
-      ? await supabase.from('daily_specials').insert([form])
-      : await supabase.from('daily_specials').update(form).eq('id', editing!);
-    setSaving(false);
-    if (error) { setError('Speichern fehlgeschlagen: ' + error.message); return; }
-    setError(null); cancel(); fetchSpecials();
-  };
-
-  const remove = async (id: string) => {
-    if (!confirm('Dieses Tagesangebot wirklich löschen?')) return;
-    const { error } = await supabase.from('daily_specials').delete().eq('id', id);
-    if (error) { setError('Löschen fehlgeschlagen: ' + error.message); return; }
-    fetchSpecials();
-  };
+  const startNew = () => startNewSpecial();
 
   const today = new Date().toISOString().split('T')[0];
 

@@ -1,53 +1,29 @@
-import { useState, useEffect } from 'react';
-import { supabase, type TeamMember } from '../../lib/supabase';
+import { type TeamMember } from '../../lib/supabase';
 import ImageUpload from '../../components/ImageUpload';
 import ErrorBanner from '../../components/admin/ErrorBanner';
+import { useAdminCrud } from '../../hooks/useAdminCrud';
 import { Plus, Pencil, Trash2, Save, X, Loader2 } from 'lucide-react';
 
-const emptyMember: Omit<TeamMember, 'id' | 'created_at'> = {
+type MemberForm = Omit<TeamMember, 'id' | 'created_at'>;
+
+const emptyMember: MemberForm = {
   name: '', role: '', description: '', image_url: null, sort_order: 0,
 };
 
 export default function AdminTeam() {
-  const [members, setMembers] = useState<TeamMember[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [editing, setEditing] = useState<string | null>(null);
-  const [form, setForm] = useState(emptyMember);
-  const [isNew, setIsNew] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const {
+    items: members, loading, editing, form, setForm, isNew, saving, error, setError,
+    startNew: startNewMember, startEdit, cancel, save, remove,
+  } = useAdminCrud<TeamMember, MemberForm>({
+    table: 'team_members',
+    orderBy: { column: 'sort_order' },
+    emptyForm: emptyMember,
+    toForm: (m) => ({ name: m.name, role: m.role, description: m.description, image_url: m.image_url, sort_order: m.sort_order }),
+    isValid: (f) => !!f.name && !!f.role,
+    confirmDeleteMessage: 'Dieses Teammitglied wirklich löschen?',
+  });
 
-  const fetch = async () => {
-    setLoading(true);
-    const { data, error } = await supabase.from('team_members').select('*').order('sort_order');
-    if (error) setError('Team konnte nicht geladen werden: ' + error.message);
-    if (data) setMembers(data);
-    setLoading(false);
-  };
-
-  useEffect(() => { fetch(); }, []);
-
-  const startNew = () => { setForm({ ...emptyMember, sort_order: members.length + 1 }); setIsNew(true); setEditing(null); };
-  const startEdit = (m: TeamMember) => { setForm({ name: m.name, role: m.role, description: m.description, image_url: m.image_url, sort_order: m.sort_order }); setEditing(m.id); setIsNew(false); };
-  const cancel = () => { setEditing(null); setIsNew(false); };
-
-  const save = async () => {
-    if (!form.name || !form.role) return;
-    setSaving(true);
-    const { error } = isNew
-      ? await supabase.from('team_members').insert([form])
-      : await supabase.from('team_members').update(form).eq('id', editing!);
-    setSaving(false);
-    if (error) { setError('Speichern fehlgeschlagen: ' + error.message); return; }
-    setError(null); cancel(); fetch();
-  };
-
-  const remove = async (id: string) => {
-    if (!confirm('Dieses Teammitglied wirklich löschen?')) return;
-    const { error } = await supabase.from('team_members').delete().eq('id', id);
-    if (error) { setError('Löschen fehlgeschlagen: ' + error.message); return; }
-    fetch();
-  };
+  const startNew = () => startNewMember({ sort_order: members.length + 1 });
 
   return (
     <div>

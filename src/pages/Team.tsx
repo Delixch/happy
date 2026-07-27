@@ -91,7 +91,7 @@ export default function Team() {
             </span>
             <div className="relative inline-block block">
               <h1 className="text-4xl md:text-6xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md">
-                Unser <span className="text-[#FFBB00] underline decoration-[#474150]">Team</span>
+                Unser <span className="text-[#FFBB00]">Team</span>
               </h1>
             </div>
           </div>

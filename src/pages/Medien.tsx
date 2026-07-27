@@ -223,8 +223,8 @@ export default function Medien() {
               Medien & Pressezentrum
             </span>
             <div className="relative inline-block block">
-              <h1 className="text-4xl md:text-6xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md">
-                Happy Beck <span className="text-[#FFBB00] underline decoration-[#1E293B]">in den Medien</span>
+              <h1 className="text-2xl md:text-6xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md whitespace-nowrap">
+                Happy Beck in den <span className="text-[#FFBB00]">Medien</span>
               </h1>
             </div>
           </div>

@@ -54,8 +54,7 @@ export default function Unternehmen() {
               Seit 2006 in Zürich
             </span>
             <h1 className="text-4xl md:text-6xl font-serif font-black text-white mb-4 leading-[1.15] drop-shadow-md">
-              Unsere <br />
-              <span className="text-[#FFBB00] underline decoration-[#474150]">Geschichte</span>
+              Unsere <span className="text-[#FFBB00]">Geschichte</span>
             </h1>
           </div>
         </div>

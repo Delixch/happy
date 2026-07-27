@@ -77,7 +77,7 @@ export default function Jobs() {
             </span>
             <div className="relative inline-block block">
               <h1 className="text-4xl md:text-6xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md">
-                Offene <span className="text-[#FFBB00] underline decoration-[#1E293B]">Stellen</span>
+                Offene <span className="text-[#FFBB00]">Stellen</span>
               </h1>
             </div>
           </div>

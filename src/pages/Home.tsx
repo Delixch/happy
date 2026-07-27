@@ -13,7 +13,7 @@ export default function Home() {
         text: 'Traditionelles Handwerk trifft moderne Innovation. Entdecken Sie unsere Leidenschaft für frisches Brot und feine Backwaren.',
         bgColor: '#F5FFF4', // Soft Mint Cream
         cardBg: '#474150',  // Deep Plum Charcoal
-        accentColor: '#FFBB00', // Gold Accent
+        accentColor: '#474150', // Deep Plum (contrasts against the yellow hero background)
         textColor: '#231E2A',
       },
       {

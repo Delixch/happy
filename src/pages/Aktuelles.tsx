@@ -351,7 +351,7 @@ export default function Aktuelles() {
             </span>
             <div className="relative inline-block block">
               <h1 className="text-4xl md:text-6xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md">
-                Aktuelles & <span className="text-[#FFBB00] underline decoration-[#1E293B]">Deals</span>
+                Aktuelles & <span className="text-[#FFBB00]">Deals</span>
               </h1>
             </div>
           </div>

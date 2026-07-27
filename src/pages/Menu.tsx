@@ -77,7 +77,7 @@ export default function MenuPage() {
             </span>
             <div className="relative inline-block block">
               <h1 className="text-4xl md:text-6xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md">
-                Unsere <span className="text-[#FFBB00] underline decoration-[#1E293B]">Speisekarte</span>
+                Unsere <span className="text-[#FFBB00]">Speisekarte</span>
               </h1>
             </div>
           </div>

@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
-  X, ChevronDown, ChevronRight, Instagram, Phone, Lock,
-  Building2, Users, UtensilsCrossed, Gift, Film, Briefcase, Mail, Home as HomeIcon
+  X, ChevronDown, ChevronRight, Check, Instagram, Phone, Lock,
 } from 'lucide-react';
 
 export default function Navigation() {
@@ -34,15 +33,15 @@ export default function Navigation() {
 
   // Dropdown navigation groups
   const uberUnsItems = [
-    { label: 'Über Uns', href: '/unternehmen', desc: 'Unsere Geschichte & Philosophie', icon: <Building2 className="w-4 h-4 text-gold-400" /> },
-    { label: 'Unser Team', href: '/team', desc: 'Die Menschen hinter Happy Beck', icon: <Users className="w-4 h-4 text-gold-400" /> },
-    { label: 'Medien & Presse', href: '/medien', desc: 'Artikel, TV & Berichte', icon: <Film className="w-4 h-4 text-gold-400" /> },
+    { label: 'Über Uns', href: '/unternehmen', desc: 'Unsere Geschichte & Philosophie' },
+    { label: 'Unser Team', href: '/team', desc: 'Die Menschen hinter Happy Beck' },
+    { label: 'Medien & Presse', href: '/medien', desc: 'Artikel, TV & Berichte' },
   ];
 
   const angebotItems = [
-    { label: 'Speisekarte', href: '/menu', desc: 'Gipfeli, Brot, Sandwiches & Mehr', icon: <UtensilsCrossed className="w-4 h-4 text-white" /> },
-    { label: 'Aktuelle Deals', href: '/aktuelles', desc: 'Jubiläums-Deals & Tagesangebote', icon: <Gift className="w-4 h-4 text-white" /> },
-    { label: 'Bestellung', href: '/kontakt', desc: 'Vorbestellen & Abholen', icon: <Mail className="w-4 h-4 text-white" /> },
+    { label: 'Speisekarte', href: '/menu', desc: 'Gipfeli, Brot, Sandwiches & Mehr' },
+    { label: 'Aktuelle Deals', href: '/aktuelles', desc: 'Jubiläums-Deals & Tagesangebote' },
+    { label: 'Bestellung', href: '/kontakt', desc: 'Vorbestellen & Abholen' },
   ];
 
   return (
@@ -200,13 +199,11 @@ export default function Navigation() {
             className="w-10 h-10 bg-[#FFBB00] flex items-center justify-center text-[#231E2A] cursor-pointer"
             aria-label="Menü umschalten"
           >
-            {isOpen ? <X className="w-6 h-6" /> : (
-              <div className="flex flex-col gap-1.5 w-5">
-                <span className="w-full h-[2px] bg-[#231E2A] rounded-full transition-all" />
-                <span className="w-3/4 h-[2px] bg-[#231E2A] rounded-full transition-all self-end" />
-                <span className="w-full h-[2px] bg-[#231E2A] rounded-full transition-all" />
-              </div>
-            )}
+            <div className="relative w-5 h-4">
+              <span className={`absolute left-0 w-full h-[2px] bg-[#231E2A] rounded-full transition-all duration-300 ${isOpen ? 'top-1/2 -translate-y-1/2 rotate-45' : 'top-0'}`} />
+              <span className={`absolute left-0 top-1/2 -translate-y-1/2 w-3/4 h-[2px] bg-[#231E2A] rounded-full transition-all duration-300 ${isOpen ? 'opacity-0 translate-x-2' : 'opacity-100'}`} />
+              <span className={`absolute left-0 w-full h-[2px] bg-[#231E2A] rounded-full transition-all duration-300 ${isOpen ? 'top-1/2 -translate-y-1/2 -rotate-45' : 'bottom-0'}`} />
+            </div>
           </button>
         </div>
       </nav>
@@ -251,14 +248,13 @@ export default function Navigation() {
             <Link
               to="/"
               onClick={() => setIsOpen(false)}
-              className="flex items-center justify-between py-2.5 px-4 bg-[#00A8CC] text-white font-sans text-xs font-extrabold uppercase tracking-wider shadow-md"
+              className={`flex items-center justify-between py-2.5 px-4 bg-[#00A8CC] text-white font-sans text-xs font-extrabold uppercase tracking-wider shadow-md transition-all duration-300 ${
+                location.pathname === '/' ? 'ring-2 ring-white' : ''
+              } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
               style={{ clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0 100%)' }}
             >
-              <span className="flex items-center gap-2">
-                <HomeIcon className="w-4 h-4 text-white" />
-                Home
-              </span>
-              <ChevronRight className="w-4 h-4 text-white" />
+              <span>Home</span>
+              {location.pathname === '/' ? <Check className="w-4 h-4 text-white" /> : <ChevronRight className="w-4 h-4 text-white" />}
             </Link>
 
             {/* Category 1: Angebot */}
@@ -267,19 +263,18 @@ export default function Navigation() {
                 Unsere Angebote
               </p>
               <div className="space-y-1.5">
-                {angebotItems.map((item) => (
+                {angebotItems.map((item, i) => (
                   <Link
                     key={item.href}
                     to={item.href}
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center justify-between py-2.5 px-3 bg-[#7C3AED] text-white font-sans text-xs font-bold transition-all shadow-sm"
-                    style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)' }}
+                    className={`flex items-center justify-between py-2.5 px-3 bg-[#7C3AED] text-white font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
+                      location.pathname === item.href ? 'ring-2 ring-white' : ''
+                    } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
+                    style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)', transitionDelay: isOpen ? `${(1 + i) * 40}ms` : '0ms' }}
                   >
-                    <span className="flex items-center gap-2.5">
-                      {item.icon}
-                      {item.label}
-                    </span>
-                    <ChevronRight className="w-3.5 h-3.5 text-white/80" />
+                    <span>{item.label}</span>
+                    {location.pathname === item.href ? <Check className="w-3.5 h-3.5 text-white" /> : <ChevronRight className="w-3.5 h-3.5 text-white/80" />}
                   </Link>
                 ))}
               </div>
@@ -291,19 +286,18 @@ export default function Navigation() {
                 Über Happy Beck
               </p>
               <div className="space-y-1.5">
-                {uberUnsItems.map((item) => (
+                {uberUnsItems.map((item, i) => (
                   <Link
                     key={item.href}
                     to={item.href}
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center justify-between py-2.5 px-3 bg-[#E5931A] text-white font-sans text-xs font-bold transition-all shadow-sm"
-                    style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)' }}
+                    className={`flex items-center justify-between py-2.5 px-3 bg-[#E5931A] text-white font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
+                      location.pathname === item.href ? 'ring-2 ring-white' : ''
+                    } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
+                    style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)', transitionDelay: isOpen ? `${(4 + i) * 40}ms` : '0ms' }}
                   >
-                    <span className="flex items-center gap-2.5">
-                      {item.icon}
-                      {item.label}
-                    </span>
-                    <ChevronRight className="w-3.5 h-3.5 text-white/80" />
+                    <span>{item.label}</span>
+                    {location.pathname === item.href ? <Check className="w-3.5 h-3.5 text-white" /> : <ChevronRight className="w-3.5 h-3.5 text-white/80" />}
                   </Link>
                 ))}
               </div>
@@ -314,26 +308,24 @@ export default function Navigation() {
               <Link
                 to="/jobs"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center justify-between py-2.5 px-3 bg-[#E11D48] text-white font-sans text-xs font-bold transition-all shadow-sm"
-                style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)' }}
+                className={`flex items-center justify-between py-2.5 px-3 bg-[#E11D48] text-white font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
+                  location.pathname === '/jobs' ? 'ring-2 ring-white' : ''
+                } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
+                style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)', transitionDelay: isOpen ? '280ms' : '0ms' }}
               >
-                <span className="flex items-center gap-2.5">
-                  <Briefcase className="w-4 h-4 text-white" />
-                  Offene Stellen (Jobs)
-                </span>
-                <ChevronRight className="w-3.5 h-3.5 text-white/80" />
+                <span>Offene Stellen (Jobs)</span>
+                {location.pathname === '/jobs' ? <Check className="w-3.5 h-3.5 text-white" /> : <ChevronRight className="w-3.5 h-3.5 text-white/80" />}
               </Link>
               <Link
                 to="/kontakt"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center justify-between py-2.5 px-3 bg-[#0D9488] text-white font-sans text-xs font-bold transition-all shadow-sm"
-                style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)' }}
+                className={`flex items-center justify-between py-2.5 px-3 bg-[#0D9488] text-white font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
+                  location.pathname === '/kontakt' ? 'ring-2 ring-white' : ''
+                } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
+                style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)', transitionDelay: isOpen ? '320ms' : '0ms' }}
               >
-                <span className="flex items-center gap-2.5">
-                  <Mail className="w-4 h-4 text-white" />
-                  Kontakt & Anfahrt
-                </span>
-                <ChevronRight className="w-3.5 h-3.5 text-white/80" />
+                <span>Kontakt & Anfahrt</span>
+                {location.pathname === '/kontakt' ? <Check className="w-3.5 h-3.5 text-white" /> : <ChevronRight className="w-3.5 h-3.5 text-white/80" />}
               </Link>
             </div>
           </div>

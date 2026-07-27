@@ -15,13 +15,22 @@ const FALLBACK_MEDIA: MediaItem[] = [
     sort_order: 1
   },
   {
+    id: 'telezueri-2',
+    title: '«Happy Beck» an der Langstrasse schliesst',
+    type: 'tv',
+    url: 'https://www.telezueri.ch/zuerinews/happy-beck-an-der-langstrasse-schliesst-145244292',
+    description: 'TeleZüri TV-Bericht über die historische Bäckerei Happy Beck und die Geschichte des Standorts an der Langstrasse.',
+    created_at: new Date().toISOString(),
+    sort_order: 2
+  },
+  {
     id: '20min-1',
     title: 'Zürich: «Happy Beck» kommt zurück an die Langstrasse',
     type: 'online',
     url: 'https://www.20min.ch/story/happy-beck-kommt-zurueck-an-die-langstrasse-491809176239',
     description: 'Grosser Bericht in 20 Minuten über das Comeback der Kult-Bäckerei Happy Beck an die Zürcher Langstrasse.',
     created_at: new Date().toISOString(),
-    sort_order: 2
+    sort_order: 3
   }
 ];
 
@@ -38,12 +47,14 @@ export default function Medien() {
       .order('sort_order')
       .then(({ data }) => {
         if (data && data.length > 0) {
-          const hasTeleZueri = data.some(i => i.url?.includes('telezueri.ch'));
+          const hasTele1 = data.some(i => i.url?.includes('162235856'));
+          const hasTele2 = data.some(i => i.url?.includes('145244292'));
           const has20Min = data.some(i => i.url?.includes('20min.ch'));
           
           let updated = [...data];
-          if (!hasTeleZueri) updated = [FALLBACK_MEDIA[0], ...updated];
-          if (!has20Min) updated = [FALLBACK_MEDIA[1], ...updated];
+          if (!hasTele1) updated = [FALLBACK_MEDIA[0], ...updated];
+          if (!hasTele2) updated = [FALLBACK_MEDIA[1], ...updated];
+          if (!has20Min) updated = [FALLBACK_MEDIA[2], ...updated];
           setItems(updated);
         } else {
           setItems(FALLBACK_MEDIA);

@@ -24,13 +24,22 @@ const FALLBACK_MEDIA: MediaItem[] = [
     sort_order: 2
   },
   {
+    id: 'telezueri-4',
+    title: 'Happy Beck macht hungrige Partygänger wieder happy',
+    type: 'tv',
+    url: 'https://www.telezueri.ch/zuerinews/happy-beck-macht-hungrige-partygaenger-wieder-happy-154012810',
+    description: 'TeleZüri TV-Reportage über die Wiedereröffnung und die begeisterten Zürcher Partygänger bei Happy Beck.',
+    created_at: new Date().toISOString(),
+    sort_order: 3
+  },
+  {
     id: 'telezueri-1',
     title: '20 Jahre Happy Beck: Nachtschicht an der Langstrasse',
     type: 'tv',
     url: 'https://www.telezueri.ch/zuerinews/20-jahre-happy-beck-nachtschicht-an-der-langstrasse-162235856',
     description: 'Exklusiver Videobeitrag von TeleZüri über das 20-jährige Jubiläum und die legendäre Nachtschicht bei Happy Beck an der Zürcher Langstrasse.',
     created_at: new Date().toISOString(),
-    sort_order: 3
+    sort_order: 4
   },
   {
     id: 'telezueri-3',
@@ -39,7 +48,7 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'https://www.telezueri.ch/news/tschuess-happy-beck-die-langstrasse-verliert-ein-stueck-ihrer-geschichte-145947860',
     description: 'TeleZüri TV-Kulturbeitrag über die tief verwurzelte Geschichte und Bedeutung von Happy Beck für das Zürcher Langstrassen-Quartier.',
     created_at: new Date().toISOString(),
-    sort_order: 4
+    sort_order: 5
   },
   {
     id: 'telezueri-2',
@@ -48,7 +57,7 @@ const FALLBACK_MEDIA: MediaItem[] = [
     url: 'https://www.telezueri.ch/zuerinews/happy-beck-an-der-langstrasse-schliesst-145244292',
     description: 'TeleZüri TV-Bericht über die historische Bäckerei Happy Beck und die Geschichte des Standorts an der Langstrasse.',
     created_at: new Date().toISOString(),
-    sort_order: 5
+    sort_order: 6
   },
   {
     id: 'nzz-1',
@@ -139,6 +148,7 @@ export default function Medien() {
         if (data && data.length > 0) {
           const hasYtPromo = data.some(i => i.url?.includes('oarO4pTkP68'));
           const hasYtNews = data.some(i => i.url?.includes('W6cadtvljew'));
+          const hasTele4 = data.some(i => i.url?.includes('154012810'));
           const hasTele1 = data.some(i => i.url?.includes('162235856'));
           const hasTele3 = data.some(i => i.url?.includes('145947860'));
           const hasTele2 = data.some(i => i.url?.includes('145244292'));
@@ -154,17 +164,18 @@ export default function Medien() {
           let updated = [...data];
           if (!hasYtPromo) updated = [FALLBACK_MEDIA[0], ...updated];
           if (!hasYtNews) updated = [FALLBACK_MEDIA[1], ...updated];
-          if (!hasTele1) updated = [FALLBACK_MEDIA[2], ...updated];
-          if (!hasTele3) updated = [FALLBACK_MEDIA[3], ...updated];
-          if (!hasTele2) updated = [FALLBACK_MEDIA[4], ...updated];
-          if (!hasNzz) updated = [FALLBACK_MEDIA[5], ...updated];
-          if (!hasTagesAnzeiger) updated = [FALLBACK_MEDIA[6], ...updated];
-          if (!hasLimmattaler) updated = [FALLBACK_MEDIA[7], ...updated];
-          if (!hasVice) updated = [FALLBACK_MEDIA[8], ...updated];
-          if (!hasWatson) updated = [FALLBACK_MEDIA[9], ...updated];
-          if (!hasSolothurner) updated = [FALLBACK_MEDIA[10], ...updated];
-          if (!hasTgtg) updated = [FALLBACK_MEDIA[11], ...updated];
-          if (!has20Min) updated = [FALLBACK_MEDIA[12], ...updated];
+          if (!hasTele4) updated = [FALLBACK_MEDIA[2], ...updated];
+          if (!hasTele1) updated = [FALLBACK_MEDIA[3], ...updated];
+          if (!hasTele3) updated = [FALLBACK_MEDIA[4], ...updated];
+          if (!hasTele2) updated = [FALLBACK_MEDIA[5], ...updated];
+          if (!hasNzz) updated = [FALLBACK_MEDIA[6], ...updated];
+          if (!hasTagesAnzeiger) updated = [FALLBACK_MEDIA[7], ...updated];
+          if (!hasLimmattaler) updated = [FALLBACK_MEDIA[8], ...updated];
+          if (!hasVice) updated = [FALLBACK_MEDIA[9], ...updated];
+          if (!hasWatson) updated = [FALLBACK_MEDIA[10], ...updated];
+          if (!hasSolothurner) updated = [FALLBACK_MEDIA[11], ...updated];
+          if (!hasTgtg) updated = [FALLBACK_MEDIA[12], ...updated];
+          if (!has20Min) updated = [FALLBACK_MEDIA[13], ...updated];
           setItems(updated);
         } else {
           setItems(FALLBACK_MEDIA);

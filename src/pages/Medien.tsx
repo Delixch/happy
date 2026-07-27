@@ -7,10 +7,10 @@ type MediaType = 'tv' | 'presse' | 'online';
 const FALLBACK_MEDIA: MediaItem[] = [
   {
     id: 'yt-promo-2026-1',
-    title: 'Happy Beck – Spot 2026',
+    title: '20 Jahre Happy Beck: Nachtschicht an der Langstrasse | ZüriNews',
     type: 'tv',
     url: 'oarO4pTkP68',
-    description: 'Offizieller Video-Spot über die Bäckerei Happy Beck, frische Backwaren und das Bistro-Erlebnis.',
+    description: 'Exklusiver ZüriNews Videobeitrag über das 20-jährige Jubiläum und die legendäre Nachtschicht bei Happy Beck an der Zürcher Langstrasse.',
     created_at: new Date().toISOString(),
     sort_order: 1
   },

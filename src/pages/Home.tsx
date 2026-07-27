@@ -260,7 +260,7 @@ export default function Home() {
               >
                 {slides[slide].text}
               </p>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4 mb-6">
                 <Link 
                   to="/menu" 
                   className="px-8 py-3.5 rounded-2xl text-white font-sans font-extrabold text-sm tracking-wider uppercase shadow-xl hover:scale-105 transition-all duration-300"
@@ -278,6 +278,42 @@ export default function Home() {
                 >
                   Kontakt
                 </Link>
+              </div>
+
+              {/* Uber Eats & Just Eat Delivery Banner */}
+              <div className="w-full max-w-xl bg-[#1E293B] rounded-2xl p-4 shadow-xl border border-white/20 flex flex-col sm:flex-row items-center justify-between gap-4 mt-2">
+                <div className="flex items-center gap-3">
+                  <span className="text-3xl animate-bounce">🛵</span>
+                  <div>
+                    <p className="text-white font-sans font-bold text-sm leading-snug">
+                      Lieferung direkt zu dir!
+                    </p>
+                    <p className="text-white/70 font-sans text-xs">
+                      Jetzt bequem online bestellen bei:
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2.5 w-full sm:w-auto justify-end">
+                  <a
+                    href="https://www.ubereats.com/ch-de/store/happybeck/1cMo9d_uXNufL0FRptsfcA?diningMode=DELIVERY&surfaceName="
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-3.5 py-2 rounded-xl bg-[#06C167] text-white font-sans font-black text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-md hover:scale-105 transition-all cursor-pointer"
+                  >
+                    <span>Uber Eats</span>
+                    <span className="text-[10px]">↗</span>
+                  </a>
+                  <a
+                    href="https://www.just-eat.ch/speisekarte/happybeck-langstrasse"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-3.5 py-2 rounded-xl bg-[#FF8000] text-white font-sans font-black text-xs uppercase tracking-wider flex items-center gap-1.5 shadow-md hover:scale-105 transition-all cursor-pointer"
+                  >
+                    <span>Just Eat</span>
+                    <span className="text-[10px]">↗</span>
+                  </a>
+                </div>
               </div>
             </div>
 

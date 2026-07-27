@@ -337,21 +337,30 @@ export default function Medien() {
             {activeItems.map((item, i) => (
               <div
                 key={item.id}
-                className="reveal rounded-3xl p-7 shadow-2xl border-2 border-white/20 flex flex-col justify-between group hover:scale-[1.03] transition-all duration-300"
+                className="reveal rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 flex flex-col justify-between group hover:scale-[1.03] transition-all duration-300 relative"
                 style={{ 
                   animationDelay: `${i * 100}ms`,
                   backgroundColor: currentConfig.bg 
                 }}
               >
-                <div>
-                  <div className="flex items-center justify-between mb-5">
+                {/* Dark Gold Animated Scanning Top Line */}
+                <div className="h-2 w-full bg-black/20 relative overflow-hidden flex-shrink-0">
+                  <div className="absolute inset-0 bg-[#FFBB00] animate-line-scan w-full h-full shadow-[0_0_12px_#FFBB00]" />
+                </div>
+
+                <div className="p-7 flex-1 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-5">
                     <span 
                       className="px-3.5 py-1 rounded-full font-sans text-[10px] font-black uppercase tracking-wider shadow-sm"
                       style={{ backgroundColor: currentConfig.accent, color: '#1E293B' }}
                     >
                       {activeTab === 'presse' ? 'ZEITUNG' : 'DIGITAL MEDIEN'}
                     </span>
-                    <ActiveIcon className="w-6 h-6" style={{ color: currentConfig.accent }} />
+                    <ActiveIcon 
+                      className={`w-6 h-6 ${activeTab === 'online' ? 'animate-spin' : activeTab === 'presse' ? 'animate-page-flip' : ''}`} 
+                      style={{ color: currentConfig.accent, animationDuration: activeTab === 'online' ? '12s' : '2.5s' }} 
+                    />
                   </div>
                   <h3 className="text-xl font-serif font-black text-white mb-3 leading-snug">
                     {item.title}
@@ -373,6 +382,7 @@ export default function Medien() {
                   </a>
                 )}
               </div>
+            </div>
             ))}
           </div>
         )}

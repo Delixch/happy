@@ -95,7 +95,10 @@ export default function Jobs() {
                 key={job.id}
                 className="bg-[#1E293B] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 relative transition-all duration-300 hover:scale-[1.01]"
               >
-                <div className="h-2 w-full bg-[#FFBB00]" />
+                {/* Red Animated Scanning Top Line */}
+                <div className="h-2 w-full bg-[#1E293B] relative overflow-hidden">
+                  <div className="absolute inset-0 bg-[#EF4444] animate-line-scan w-full h-full shadow-[0_0_12px_#EF4444]" />
+                </div>
 
                 <div className="p-8 md:p-10">
                   <div className="flex flex-wrap items-start justify-between gap-4 mb-6">

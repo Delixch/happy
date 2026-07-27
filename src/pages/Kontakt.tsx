@@ -62,6 +62,22 @@ export default function Kontakt() {
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 py-12 max-w-6xl">
+        {/* Yellow Area Title & Intro Text */}
+        <div className="mb-10 text-center max-w-3xl mx-auto">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#1E293B] text-[#FFBB00] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
+            NACHRICHT & VORBESTELLUNG
+          </span>
+          <h2 className="text-3xl md:text-5xl font-serif font-black text-[#1E293B] mb-3 leading-tight flex items-center justify-center gap-3">
+            <span>Schreiben Sie uns oder bestellen Sie vor</span>
+            <div className="w-12 h-12 rounded-2xl bg-[#1E293B] text-[#FFBB00] flex items-center justify-center shadow-lg border border-white/20 inline-flex flex-shrink-0 animate-envelope-open">
+              <Mail className="w-6 h-6 stroke-[2.5]" />
+            </div>
+          </h2>
+          <p className="text-[#1E293B]/85 font-sans text-sm md:text-base leading-relaxed font-semibold">
+            Haben Sie Fragen zu unseren Produkten, möchten Sie eine Vorbestellung für Events tätigen oder Feedback teilen? Füllen Sie einfach das Formular aus – wir melden uns umgehend bei Ihnen!
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Sidebar */}
           <aside className="bg-[#1E293B] rounded-3xl p-8 shadow-2xl border-2 border-white/20 h-fit">

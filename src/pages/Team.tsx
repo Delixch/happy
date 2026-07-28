@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { Users, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase, type TeamMember } from '../lib/supabase';
-import ScanlineAccent from '../components/ScanlineAccent';
 
 export default function Team() {
   const [members, setMembers] = useState<TeamMember[]>([]);
@@ -131,7 +130,7 @@ export default function Team() {
             <Loader2 className="w-8 h-8 text-[#474150] animate-spin" />
           </div>
         ) : members.length === 0 ? (
-          <div className="bg-[#474150] p-12 text-center rounded-3xl shadow-xl">
+          <div className="bg-[#474150]/85 backdrop-blur-xl p-12 text-center rounded-3xl shadow-xl border border-[#FFBB00]/20">
             <p className="text-white font-sans text-lg font-medium">Team wird bald vorgestellt.</p>
           </div>
         ) : (
@@ -158,15 +157,12 @@ export default function Team() {
               return (
                 <div
                   key={member.id}
-                  className="reveal rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border-2 border-white/20 group hover:scale-[1.04] hover:shadow-[0_25px_60px_rgba(0,0,0,0.4)] transition-all duration-500 flex-shrink-0 w-[290px] sm:w-[320px] snap-center flex flex-col justify-between relative"
-                  style={{ 
+                  className="reveal rounded-3xl overflow-hidden backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-[#FFBB00]/25 group hover:scale-[1.04] hover:shadow-[0_25px_60px_rgba(0,0,0,0.4)] transition-all duration-500 flex-shrink-0 w-[290px] sm:w-[320px] snap-center flex flex-col justify-between relative"
+                  style={{
                     animationDelay: `${i * 100}ms`,
-                    backgroundColor: palette.bg 
+                    backgroundColor: `${palette.bg}D9`,
                   }}
                 >
-                  {/* 2px Animated Scanning Top Line with Matching Palette Accent */}
-                  <ScanlineAccent color={palette.accent} trackColor="rgba(0,0,0,0.2)" glow={false} />
-                  
                   <div className="p-8 text-center flex-1 flex flex-col justify-between">
                     <div>
                       {member.image_url ? (
@@ -184,12 +180,14 @@ export default function Team() {
                           <Users className="w-9 h-9" />
                         </div>
                       )}
-                      <h3 className="text-2xl font-serif font-black text-white mb-1 drop-shadow-sm">
+                      <h3
+                        className="text-2xl font-serif font-black mb-1 drop-shadow-sm"
+                        style={{ color: palette.accent }}
+                      >
                         {member.name}
                       </h3>
-                      <p 
-                        className="font-sans text-xs uppercase font-black tracking-widest mb-4 drop-shadow-sm"
-                        style={{ color: palette.accent }}
+                      <p
+                        className="font-sans text-xs uppercase font-black tracking-widest mb-4 text-white/70"
                       >
                         {member.role}
                       </p>
@@ -210,7 +208,7 @@ export default function Team() {
 
         {/* Join us CTA */}
         <div className="mt-14 text-center reveal">
-          <div className="bg-[#1E293B] inline-block px-10 sm:px-14 py-10 rounded-3xl shadow-2xl border-2 border-white/20">
+          <div className="bg-[#1E293B]/85 backdrop-blur-xl inline-block px-10 sm:px-14 py-10 rounded-3xl shadow-2xl border border-[#FFBB00]/20">
             <h3 className="text-2xl md:text-3xl font-serif font-black text-white mb-3">
               Werden Sie Teil unseres Teams
             </h3>

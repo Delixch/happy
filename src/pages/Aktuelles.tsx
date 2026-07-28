@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Gift, Zap, PartyPopper, Eye, ChevronDown, Loader2 } from 'lucide-react';
 import { supabase, type DailySpecial, type Deal } from '../lib/supabase';
-import ScanlineAccent from '../components/ScanlineAccent';
 
 // ── Confetti Component ──
 function Confetti({ active }: { active: boolean }) {
@@ -89,10 +88,8 @@ function DailySpecialCard({ special }: { special: DailySpecial }) {
           /* Mystery Side */
           <button
             onClick={handleReveal}
-            className="w-full h-full bg-[#1E293B] rounded-3xl shadow-2xl border-2 border-white/20 overflow-hidden group cursor-pointer hover:scale-[1.02] transition-all duration-500 flex flex-col justify-center"
+            className="w-full h-full bg-[#1E293B]/85 backdrop-blur-xl rounded-3xl shadow-2xl border border-[#FFBB00]/20 overflow-hidden group cursor-pointer hover:scale-[1.02] hover:glow-gold transition-all duration-500 flex flex-col justify-center"
           >
-            {/* Red Animated Scanning Top Line */}
-            <ScanlineAccent />
             <div className="relative p-7 flex-1 flex flex-col justify-center">
               <div className="relative z-10 text-center">
                 <div className="w-16 h-16 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center mx-auto mb-4 group-hover:scale-110 shadow-xl transition-all duration-500">
@@ -117,16 +114,14 @@ function DailySpecialCard({ special }: { special: DailySpecial }) {
           </button>
         ) : (
           /* Revealed Side */
-          <div className="bg-[#1E293B] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 animate-scale-in h-full flex flex-col justify-center">
-            {/* Red Animated Scanning Top Line */}
-            <ScanlineAccent />
+          <div className="bg-[#1E293B]/85 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-[#FFBB00]/20 animate-scale-in h-full flex flex-col justify-center">
             <div className="p-7 flex-1 flex flex-col justify-center">
               <div className="text-center">
                 <PartyPopper className="w-10 h-10 text-[#FFBB00] mx-auto mb-3" />
                 <span className="inline-block px-3.5 py-1 rounded-full bg-[#FFBB00] text-[#1E293B] font-sans text-[10px] font-black uppercase tracking-wider mb-3 shadow-md">
                   🎉 SPEZIAL ENTHÜLLT!
                 </span>
-                <h3 className="text-2xl font-serif font-black text-white mb-2">
+                <h3 className="text-2xl font-serif font-black text-gold-gradient mb-2">
                   {special.title}
                 </h3>
                 {special.description && (
@@ -191,16 +186,14 @@ function DealCard({ deal, index }: { deal: Deal; index: number }) {
 
   return (
     <div
-      className="bg-[#1E293B] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 group hover:scale-[1.02] transition-all duration-500 cursor-pointer"
+      className="bg-[#1E293B]/85 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-[#FFBB00]/20 group hover:scale-[1.02] hover:glow-gold transition-all duration-500 cursor-pointer"
       onClick={() => setExpanded(!expanded)}
       style={{ animationDelay: `${index * 100}ms` }}
     >
-      {/* Red Animated Scanning Top Line */}
-      <ScanlineAccent />
       <div className="p-6 md:p-8">
         <div className="flex items-start justify-between mb-4">
           <div>
-            <h3 className="text-2xl font-serif font-black text-white mb-1 group-hover:text-[#FFBB00] transition-colors">
+            <h3 className="text-2xl font-serif font-black text-gold-gradient mb-1">
               {deal.title}
             </h3>
             {deal.subtitle && <p className="text-xs text-white/80 font-sans font-medium">{deal.subtitle}</p>}
@@ -382,9 +375,7 @@ export default function Aktuelles() {
               ) : dailySpecial ? (
                 <DailySpecialCard special={dailySpecial} />
               ) : (
-                <div className="bg-[#1E293B] rounded-3xl overflow-hidden text-center h-full flex flex-col justify-between items-center shadow-2xl border-2 border-white/20 relative">
-                  {/* Red Animated Scanning Top Line */}
-                  <ScanlineAccent />
+                <div className="bg-[#1E293B]/85 backdrop-blur-xl rounded-3xl overflow-hidden text-center h-full flex flex-col justify-between items-center shadow-2xl border border-[#FFBB00]/20 relative">
                   <div className="p-10 flex flex-col items-center justify-center flex-1">
                     <Eye className="w-12 h-12 text-[#FFBB00] mb-4" />
                     <p className="text-white font-serif text-lg font-bold">Heute's Spezial wird bald bekannt gegeben...</p>
@@ -407,10 +398,7 @@ export default function Aktuelles() {
               </h2>
             </div>
             <div className="flex-1 flex flex-col">
-              <div className="bg-[#1E293B] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 h-full flex flex-col justify-between relative">
-                {/* Red Animated Scanning Top Line */}
-                <ScanlineAccent />
-                
+              <div className="bg-[#1E293B]/85 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-[#FFBB00]/20 h-full flex flex-col justify-between relative">
                 <div className="relative p-7 flex-1 flex flex-col justify-between">
                   {/* Interactive Celebrations Overlays */}
                   {celebrationType === 'kaffee' && (
@@ -418,7 +406,7 @@ export default function Aktuelles() {
                       <div className="w-14 h-14 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center mb-4 shadow-xl">
                         <span className="text-3xl">☕</span>
                       </div>
-                      <h3 className="text-2xl font-serif font-black text-white mb-2">
+                      <h3 className="text-2xl font-serif font-black text-gold-gradient mb-2">
                         5. Kaffee GRATIS!
                       </h3>
                       <p className="text-white/90 font-sans text-xs max-w-[220px] mb-6 font-medium">
@@ -438,7 +426,7 @@ export default function Aktuelles() {
                       <div className="w-14 h-14 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center mb-4 shadow-xl">
                         <span className="text-3xl">🥪</span>
                       </div>
-                      <h3 className="text-2xl font-serif font-black text-white mb-2">
+                      <h3 className="text-2xl font-serif font-black text-gold-gradient mb-2">
                         Gratis SANDWICH!
                       </h3>
                       <p className="text-white/90 font-sans text-xs max-w-[220px] mb-6 font-medium">
@@ -571,7 +559,7 @@ export default function Aktuelles() {
             <Loader2 className="w-8 h-8 text-[#1E293B] animate-spin" />
           </div>
         ) : deals.length === 0 ? (
-          <div className="bg-[#1E293B] p-10 rounded-3xl text-center text-white font-sans max-w-md mx-auto shadow-2xl">
+          <div className="bg-[#1E293B]/85 backdrop-blur-xl p-10 rounded-3xl text-center text-white font-sans max-w-md mx-auto shadow-2xl border border-[#FFBB00]/20">
             Zurzeit keine Jubiläums-Deals verfügbar.
           </div>
         ) : (

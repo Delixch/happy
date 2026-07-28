@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Coffee, UtensilsCrossed, Sandwich as SandwichIcon, IceCream, CupSoda, Loader2, Sparkles } from 'lucide-react';
 import { supabase, type MenuItem, type MenuCategory } from '../lib/supabase';
-import ScanlineAccent from '../components/ScanlineAccent';
 
 const CATEGORY_META: Record<MenuCategory, { label: string; icon: React.ReactNode; intro: string; bg: string; accent: string }> = {
   fruehstueck: { 
@@ -130,9 +129,9 @@ export default function MenuPage() {
             <Loader2 className="w-8 h-8 text-[#1E293B] animate-spin" />
           </div>
         ) : filtered.length === 0 ? (
-          <div 
-            className="p-16 rounded-3xl text-center text-white/90 font-sans text-lg font-medium shadow-2xl max-w-2xl mx-auto border-2 border-white/20"
-            style={{ backgroundColor: meta.bg }}
+          <div
+            className="p-16 rounded-3xl text-center text-white/90 font-sans text-lg font-medium shadow-2xl max-w-2xl mx-auto border border-[#FFBB00]/20 backdrop-blur-xl"
+            style={{ backgroundColor: `${meta.bg}D9` }}
           >
             <Sparkles className="w-12 h-12 mx-auto mb-4 opacity-80" style={{ color: meta.accent }} />
             In dieser Kategorie wurden noch keine Speisen veröffentlicht.
@@ -142,12 +141,9 @@ export default function MenuPage() {
             {filtered.map((item, idx) => (
               <div
                 key={item.id}
-                className="relative rounded-3xl p-6 border-2 border-white/20 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl flex justify-between gap-4 overflow-hidden min-h-[220px] shadow-xl flex-col justify-between"
-                style={{ backgroundColor: meta.bg }}
+                className="relative rounded-3xl p-6 border border-[#FFBB00]/20 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:glow-gold flex justify-between gap-4 overflow-hidden min-h-[220px] shadow-xl flex-col justify-between"
+                style={{ backgroundColor: `${meta.bg}D9` }}
               >
-                {/* Red Animated Scanning Top Line */}
-                <ScanlineAccent className="relative w-[calc(100%+3rem)] -mt-6 -mx-6 mb-2" />
-
                 <div className="flex justify-between items-start gap-3">
                   <div className="flex-1">
                     {/* Top Row: Circular Number & Title */}
@@ -158,7 +154,7 @@ export default function MenuPage() {
                       >
                         {idx + 1}
                       </span>
-                      <h3 className="text-xl font-serif font-black text-white leading-snug line-clamp-2">
+                      <h3 className="text-xl font-serif font-black text-gold-gradient leading-snug line-clamp-2">
                         {item.name}
                       </h3>
                     </div>

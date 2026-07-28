@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Play, Loader2, ExternalLink, Tv, Newspaper, Globe, Film, type LucideIcon } from 'lucide-react';
 import { supabase, type MediaItem } from '../lib/supabase';
-import ScanlineAccent from '../components/ScanlineAccent';
 
 type MediaType = 'tv' | 'presse' | 'online';
 
@@ -280,9 +279,9 @@ export default function Medien() {
             <Loader2 className="w-8 h-8 text-[#1E293B] animate-spin" />
           </div>
         ) : activeItems.length === 0 ? (
-          <div 
-            className="p-16 rounded-3xl text-center text-white/90 font-sans text-lg font-medium shadow-2xl max-w-2xl mx-auto border-2 border-white/20"
-            style={{ backgroundColor: currentConfig.bg }}
+          <div
+            className="p-16 rounded-3xl text-center text-white/90 font-sans text-lg font-medium shadow-2xl max-w-2xl mx-auto border border-[#FFBB00]/20 backdrop-blur-xl"
+            style={{ backgroundColor: `${currentConfig.bg}D9` }}
           >
             <Film className="w-12 h-12 mx-auto mb-4 opacity-80" style={{ color: currentConfig.accent }} />
             In dieser Kategorie wurden noch keine Medienbeiträge veröffentlicht.
@@ -294,10 +293,10 @@ export default function Medien() {
               <div
                 key={item.id}
                 onClick={() => setActiveVideoUrl(item.url)}
-                className="reveal rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 group cursor-pointer hover:scale-[1.03] transition-all duration-300 flex flex-col justify-between"
-                style={{ 
+                className="reveal rounded-3xl overflow-hidden shadow-2xl border border-[#FFBB00]/20 backdrop-blur-xl group cursor-pointer hover:scale-[1.03] hover:glow-gold transition-all duration-300 flex flex-col justify-between"
+                style={{
                   animationDelay: `${i * 100}ms`,
-                  backgroundColor: currentConfig.bg 
+                  backgroundColor: `${currentConfig.bg}D9`,
                 }}
               >
                 <div className="relative aspect-video bg-black overflow-hidden">
@@ -323,7 +322,10 @@ export default function Medien() {
                   </span>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-serif font-black text-white mb-2 line-clamp-2 transition-colors">
+                  <h3
+                    className="text-xl font-serif font-black mb-2 line-clamp-2 transition-colors"
+                    style={{ color: currentConfig.accent }}
+                  >
                     {item.title}
                   </h3>
                   <p className="text-white/80 font-sans text-xs leading-relaxed line-clamp-3 font-medium">
@@ -339,15 +341,12 @@ export default function Medien() {
             {activeItems.map((item, i) => (
               <div
                 key={item.id}
-                className="reveal rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 flex flex-col justify-between group hover:scale-[1.03] transition-all duration-300 relative"
-                style={{ 
+                className="reveal rounded-3xl overflow-hidden shadow-2xl border border-[#FFBB00]/20 backdrop-blur-xl flex flex-col justify-between group hover:scale-[1.03] hover:glow-gold transition-all duration-300 relative"
+                style={{
                   animationDelay: `${i * 100}ms`,
-                  backgroundColor: currentConfig.bg 
+                  backgroundColor: `${currentConfig.bg}D9`,
                 }}
               >
-                {/* Dark Gold Animated Scanning Top Line */}
-                <ScanlineAccent color="#FFBB00" trackColor="rgba(0,0,0,0.2)" />
-
                 <div className="p-7 flex-1 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center justify-between mb-5">
@@ -362,7 +361,10 @@ export default function Medien() {
                       style={{ color: currentConfig.accent, animationDuration: activeTab === 'online' ? '12s' : '2.5s' }} 
                     />
                   </div>
-                  <h3 className="text-xl font-serif font-black text-white mb-3 leading-snug">
+                  <h3
+                    className="text-xl font-serif font-black mb-3 leading-snug"
+                    style={{ color: currentConfig.accent }}
+                  >
                     {item.title}
                   </h3>
                   <p className="text-white/85 font-sans text-sm leading-relaxed line-clamp-4 font-medium">

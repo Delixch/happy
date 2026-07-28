@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import { Mail, MapPin, Clock, Instagram, Send } from 'lucide-react';
-import ScanlineAccent from '../components/ScanlineAccent';
 
 type Operator = '+' | '-' | 'x';
 
@@ -108,12 +107,9 @@ export default function Kontakt() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Sidebar */}
-          <aside className="bg-[#1E293B] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 h-fit">
-            {/* Red Animated Scanning Top Line */}
-            <ScanlineAccent />
-
+          <aside className="bg-[#1E293B]/85 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-[#FFBB00]/20 h-fit">
             <div className="p-8">
-              <h3 className="font-serif text-xl font-black text-white mb-6">Informationen</h3>
+              <h3 className="font-serif text-xl font-black text-gold-gradient mb-6">Informationen</h3>
               <div className="space-y-6 font-sans text-sm">
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center font-bold shadow-md flex-shrink-0">
@@ -205,19 +201,17 @@ export default function Kontakt() {
           {/* Form */}
           <div className="lg:col-span-2">
             {submitted ? (
-              <div className="bg-[#1E293B] p-12 text-center rounded-3xl shadow-2xl border-2 border-white/20">
+              <div className="bg-[#1E293B]/85 backdrop-blur-xl p-12 text-center rounded-3xl shadow-2xl border border-[#FFBB00]/20">
                 <div className="w-16 h-16 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center mx-auto mb-6 shadow-xl font-bold">
                   <Send className="w-8 h-8" />
                 </div>
-                <h3 className="text-3xl font-serif font-black text-white mb-3">Vielen Dank!</h3>
+                <h3 className="text-3xl font-serif font-black text-gold-gradient mb-3">Vielen Dank!</h3>
                 <p className="text-white/90 font-sans text-base font-medium">
                   Ihre Nachricht wurde erfolgreich gesendet. Wir melden uns in Kürze bei Ihnen.
                 </p>
               </div>
             ) : (
-              <form onSubmit={onSubmit} className="bg-[#1E293B] rounded-3xl p-8 md:p-10 shadow-2xl border-2 border-white/20 space-y-6 relative overflow-hidden">
-                {/* Red Animated Scanning Top Line */}
-                <ScanlineAccent className="absolute top-0 left-0 right-0 w-[calc(100%+5rem)]" />
+              <form onSubmit={onSubmit} className="bg-[#1E293B]/85 backdrop-blur-xl rounded-3xl p-8 md:p-10 shadow-2xl border border-[#FFBB00]/20 space-y-6 relative overflow-hidden">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
                     <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Firma</label>
@@ -363,10 +357,10 @@ export default function Kontakt() {
           </div>
         </div>
 
-        <div className="bg-[#1E293B] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20">
+        <div className="bg-[#1E293B]/85 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-[#FFBB00]/20 hover:glow-gold transition-all duration-500">
           <div className="h-2.5 w-full bg-[#FFBB00]" />
           <div className="p-8 md:p-10">
-            <h3 className="font-serif text-2xl font-black text-white mb-3 flex items-center gap-3">
+            <h3 className="font-serif text-2xl font-black text-gold-gradient mb-3 flex items-center gap-3">
               <MapPin className="w-6 h-6 text-[#FFBB00]" /> Wegbeschreibung & Standort
             </h3>
             <p className="text-white/90 font-sans text-sm mb-6 leading-relaxed font-medium">

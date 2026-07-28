@@ -98,11 +98,10 @@ export default function Home() {
               <div className="relative w-full h-[400px] sm:h-[480px] lg:h-[580px] overflow-hidden shadow-2xl bg-white group rounded-br-3xl">
                 {/* Changing Image with Gentle Transparency */}
                 <img
+                  key={slide}
                   src={slides[slide].image}
                   alt={slides[slide].title}
-                  className={`w-full h-full object-cover transition-all duration-700 brightness-105 ${
-                    isTransitioning ? 'opacity-0 scale-105' : 'opacity-85 scale-100'
-                  }`}
+                  className="w-full h-full object-cover brightness-105 animate-hero-ken-burns"
                   fetchPriority="high"
                 />
 

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ChefHat, Heart, Award } from 'lucide-react';
+import { ChefHat, Heart, Award, Bike } from 'lucide-react';
 import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 import ScanlineAccent from '../components/ScanlineAccent';
 
@@ -190,37 +190,37 @@ export default function Home() {
               </div>
 
               {/* Uber Eats & Just Eat Delivery Banner */}
-              <div className="w-full max-w-[420px] bg-[#1E293B] rounded-xl p-3 shadow-xl border border-white/20 flex flex-row items-center justify-between gap-2 mt-2">
-                <div className="flex items-center gap-2 min-w-0">
-                  <span className="text-xl animate-bounce flex-shrink-0">🛵</span>
+              <div className="w-full max-w-[420px] bg-[#1E293B]/95 rounded-2xl px-4 py-3 shadow-lg border border-[#FFBB00]/15 flex flex-row items-center justify-between gap-3 mt-2">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-8 h-8 rounded-full bg-[#FFBB00]/10 flex items-center justify-center flex-shrink-0">
+                    <Bike className="w-4 h-4 text-[#FFBB00]" />
+                  </div>
                   <div className="min-w-0">
-                    <p className="text-white font-sans font-bold text-xs leading-snug truncate">
-                      Lieferung direkt zu dir!
+                    <p className="text-white font-sans font-semibold text-xs leading-snug truncate">
+                      Lieferung direkt zu dir
                     </p>
-                    <p className="text-white/70 font-sans text-[10px] leading-tight truncate">
-                      Jetzt bestellen bei:
+                    <p className="text-white/50 font-sans text-[10px] leading-tight truncate">
+                      Jetzt bestellen bei
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1.5 flex-shrink-0">
+                <div className="flex items-center gap-2 flex-shrink-0">
                   <a
                     href="https://www.ubereats.com/ch-de/store/happybeck/1cMo9d_uXNufL0FRptsfcA?diningMode=DELIVERY&surfaceName="
                     target="_blank"
                     rel="noreferrer"
-                    className="px-2.5 py-1.5 rounded-lg bg-[#06C167] text-white font-sans font-black text-[11px] uppercase tracking-wider flex items-center justify-center gap-1 shadow-md hover:scale-105 transition-all cursor-pointer whitespace-nowrap"
+                    className="px-3 py-1.5 rounded-full bg-[#06C167]/90 hover:bg-[#06C167] text-white font-sans font-semibold text-[11px] tracking-wide transition-colors cursor-pointer whitespace-nowrap"
                   >
-                    <span>Uber Eats</span>
-                    <span className="text-[9px]">↗</span>
+                    Uber Eats
                   </a>
                   <a
                     href="https://www.just-eat.ch/speisekarte/happybeck-langstrasse"
                     target="_blank"
                     rel="noreferrer"
-                    className="px-2.5 py-1.5 rounded-lg bg-[#FF8000] text-white font-sans font-black text-[11px] uppercase tracking-wider flex items-center justify-center gap-1 shadow-md hover:scale-105 transition-all cursor-pointer whitespace-nowrap"
+                    className="px-3 py-1.5 rounded-full bg-[#FF8000]/90 hover:bg-[#FF8000] text-white font-sans font-semibold text-[11px] tracking-wide transition-colors cursor-pointer whitespace-nowrap"
                   >
-                    <span>Just Eat</span>
-                    <span className="text-[9px]">↗</span>
+                    Just Eat
                   </a>
                 </div>
               </div>

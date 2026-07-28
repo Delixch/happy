@@ -111,7 +111,9 @@ export default function Navigation() {
                       key={item.href}
                       to={item.href}
                       onClick={() => setActiveDropdown(null)}
-                      className="block p-3 bg-white/5 hover:bg-[#FFBB00]/15 transition-all group/item"
+                      className={`block p-3 transition-all group/item ${
+                        location.pathname === item.href ? 'bg-[#FFBB00]/15' : 'bg-white/5 hover:bg-[#FFBB00]/15'
+                      }`}
                     >
                       <p className="text-xs font-sans font-extrabold text-[#FFBB00] uppercase tracking-wider">
                         {item.label}
@@ -156,7 +158,9 @@ export default function Navigation() {
                       key={item.href}
                       to={item.href}
                       onClick={() => setActiveDropdown(null)}
-                      className="block p-3 bg-white/5 hover:bg-[#FFBB00]/15 transition-all group/item"
+                      className={`block p-3 transition-all group/item ${
+                        location.pathname === item.href ? 'bg-[#FFBB00]/15' : 'bg-white/5 hover:bg-[#FFBB00]/15'
+                      }`}
                     >
                       <p className="text-xs font-sans font-extrabold text-[#FFBB00] uppercase tracking-wider">
                         {item.label}

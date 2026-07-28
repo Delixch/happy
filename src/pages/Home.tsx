@@ -92,7 +92,7 @@ export default function Home() {
         className="relative pt-14 md:pt-16 pb-12 bg-[#FFBB00]"
       >
         <div className="w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
             {/* LEFT COLUMN: Flush Left & Top Image Slider */}
             <div className="lg:col-span-6 w-full">
@@ -141,7 +141,7 @@ export default function Home() {
             </div>
 
             {/* RIGHT COLUMN: Hero Text Content (Vertically Centered) */}
-            <div className={`lg:col-span-6 flex flex-col items-start text-left my-auto pt-8 lg:pt-16 px-6 lg:pl-0 lg:pr-12 transition-all duration-500 ${isTransitioning ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}>
+            <div className={`lg:col-span-6 flex flex-col items-start text-left pt-8 lg:pt-0 px-6 lg:pl-0 lg:pr-12 transition-all duration-500 ${isTransitioning ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}>
               <span 
                 className="inline-block px-4 py-1.5 rounded-full text-white font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-sm transition-colors duration-700"
                 style={{ backgroundColor: slides[slide].cardBg }}

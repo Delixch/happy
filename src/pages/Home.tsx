@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ChefHat, Heart, Award, Bike } from 'lucide-react';
 import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
-import ScanlineAccent from '../components/ScanlineAccent';
 
 export default function Home() {
   const slides = useMemo(
@@ -338,26 +337,24 @@ function FeatureCard({
       style={{ animationDelay: `${delay}ms`, perspective: '1000px' }}
     >
       <div
-        style={{ 
+        style={{
           transform,
-          backgroundColor: bgColor || '#474150' 
+          backgroundColor: `${bgColor || '#474150'}CC`,
         }}
-        className="relative text-left p-6 rounded-2xl glass-card transition-all duration-700 ease-in-out will-change-transform hover:glow-gold group border border-white/10 h-full flex flex-col justify-start overflow-hidden"
+        className="relative text-left p-6 rounded-2xl backdrop-blur-xl transition-all duration-700 ease-in-out will-change-transform hover:-translate-y-1 hover:glow-gold group border border-white/15 shadow-[0_12px_35px_rgba(0,0,0,0.25)] h-full flex flex-col justify-start overflow-hidden"
       >
-        {/* Red Animated Scanning Top Line */}
-        <ScanlineAccent className="relative w-[calc(100%+3rem)] -mt-6 -mx-6 mb-6" glow={false} />
         {/* Spotlight */}
         <div
           className="pointer-events-none absolute inset-0 rounded-2xl"
           style={{
-            background: `radial-gradient(400px circle at ${bgPos}, rgba(255,255,255,0.1), transparent 40%)`,
+            background: `radial-gradient(400px circle at ${bgPos}, rgba(255,255,255,0.12), transparent 40%)`,
           }}
         />
 
         <div className="relative z-10">
           <div className="flex items-center gap-4 mb-4">
-            <div 
-              className="flex-shrink-0 inline-flex items-center justify-center w-12 h-12 rounded-full border-2 border-white/30 text-[#FFBB00] group-hover:scale-110 transition-all duration-300 bg-black/20"
+            <div
+              className="flex-shrink-0 inline-flex items-center justify-center w-12 h-12 rounded-full border border-[#FFBB00]/40 text-[#FFBB00] group-hover:scale-110 group-hover:bg-[#FFBB00]/20 transition-all duration-300 bg-[#FFBB00]/10 shadow-[0_0_20px_rgba(255,187,0,0.15)]"
             >
               {icon}
             </div>

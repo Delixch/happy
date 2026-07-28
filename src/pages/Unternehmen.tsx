@@ -197,7 +197,7 @@ export default function Unternehmen() {
                 >
                   {stat.icon}
                 </div>
-                <p className="text-xl sm:text-2xl font-serif font-bold text-white mb-0.5 relative z-10">{stat.value}</p>
+                <p className="text-xl sm:text-2xl font-serif font-black text-white mb-0.5 relative z-10">{stat.value}</p>
                 <p 
                   className="font-sans text-[10px] sm:text-[11px] uppercase font-extrabold tracking-wider leading-tight px-2 relative z-10"
                   style={{ color: stat.accent }}
@@ -249,7 +249,7 @@ export default function Unternehmen() {
                   {value.num}
                 </span>
                 <div>
-                  <h3 className="text-xl md:text-2xl font-serif font-bold text-white mb-3">{value.title}</h3>
+                  <h3 className="text-xl md:text-2xl font-serif font-black text-white mb-3">{value.title}</h3>
                   <p className="text-white/90 font-sans text-sm md:text-base leading-relaxed">{value.text}</p>
                 </div>
               </div>

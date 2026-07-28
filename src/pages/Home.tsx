@@ -241,7 +241,7 @@ export default function Home() {
             </p>
             <div className="relative inline-block">
               <h2 
-                className="text-3xl md:text-5xl font-serif font-bold transition-colors duration-700 pb-3"
+                className="text-3xl md:text-5xl font-serif font-black transition-colors duration-700 pb-3"
                 style={{ color: slides[slide].textColor }}
               >
                 Was uns <span style={{ color: slides[slide].cardBg }}>auszeichnet</span>

@@ -203,7 +203,7 @@ export default function NotFound() {
           <p className="text-xs uppercase font-sans font-bold text-gold-400 tracking-[0.25em] mb-2 animate-pulse">
             {allBlownOut ? 'Pust! Alle Kerzen sind aus.' : 'Puste die Kerzen aus!'}
           </p>
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-serif font-black text-white mb-4">
             {allBlownOut ? 'Oops! Hier ist das Licht ausgegangen.' : '404 — Seite nicht gefunden'}
           </h2>
           <p className="text-white/50 font-sans text-sm md:text-base max-w-md mx-auto mb-8 leading-relaxed">

@@ -141,7 +141,7 @@ export default function Home() {
             </div>
 
             {/* RIGHT COLUMN: Hero Text Content (Vertically Centered) */}
-            <div className={`lg:col-span-6 flex flex-col items-start text-left my-auto pt-8 lg:pt-16 px-6 lg:px-12 transition-all duration-500 ${isTransitioning ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}>
+            <div className={`lg:col-span-6 flex flex-col items-start text-left my-auto pt-8 lg:pt-16 px-6 lg:pl-0 lg:pr-12 transition-all duration-500 ${isTransitioning ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}>
               <span 
                 className="inline-block px-4 py-1.5 rounded-full text-white font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-sm transition-colors duration-700"
                 style={{ backgroundColor: slides[slide].cardBg }}
@@ -150,7 +150,7 @@ export default function Home() {
               </span>
               <div className="relative mb-6">
                 <h1 
-                  className="text-4xl md:text-6xl lg:text-7xl font-serif font-black leading-[1.15] transition-colors duration-700 inline-block pb-4"
+                  className="text-3xl md:text-6xl lg:text-7xl font-serif font-black leading-[1.15] transition-colors duration-700 inline-block pb-4 whitespace-nowrap md:whitespace-normal"
                   style={{ color: slides[slide].textColor }}
                 >
                   {slides[slide].title}

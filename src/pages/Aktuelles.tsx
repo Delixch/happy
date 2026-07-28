@@ -330,7 +330,7 @@ export default function Aktuelles() {
   }, []);
 
   return (
-    <div className="min-h-screen pt-16 bg-[#FFBB00] pb-24">
+    <div className="min-h-screen pt-16 bg-warm-yellow pb-24">
       {/* ── HERO ── */}
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center brightness-90" style={{ backgroundImage: "url('/default-hero.jpg')" }} />

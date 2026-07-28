@@ -37,7 +37,7 @@ export default function Unternehmen() {
   }, []);
 
   return (
-    <section id="unternehmen" className="min-h-screen bg-[#FFBB00] pt-16">
+    <section id="unternehmen" className="min-h-screen bg-warm-yellow pt-16">
       {/* ─── HERO ─── */}
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
         <div

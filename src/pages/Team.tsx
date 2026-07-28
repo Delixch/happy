@@ -65,7 +65,7 @@ export default function Team() {
   };
 
   return (
-    <section id="team" className="pt-16 min-h-screen w-full bg-[#FFBB00] overflow-hidden">
+    <section id="team" className="pt-16 min-h-screen w-full bg-warm-yellow overflow-hidden">
       {/* Scrollbar hide styling */}
       <style>{`
         .scrollbar-none::-webkit-scrollbar {

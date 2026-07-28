@@ -209,7 +209,7 @@ export default function Medien() {
   const ActiveIcon = currentConfig.icon;
 
   return (
-    <div className="pt-16 min-h-screen bg-[#FFBB00] pb-24">
+    <div className="pt-16 min-h-screen bg-warm-yellow pb-24">
       {/* ─── HERO HEADER ─── */}
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center brightness-90" style={{ backgroundImage: "url('/default-hero.jpg')" }} />

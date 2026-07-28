@@ -88,7 +88,7 @@ export default function Home() {
     <section id="home">
       {/* Hero Container */}
       <div 
-        className="relative pt-14 md:pt-16 pb-12 bg-[#FFBB00]"
+        className="relative pt-14 md:pt-16 pb-12 bg-warm-yellow"
       >
         <div className="w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">

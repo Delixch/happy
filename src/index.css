@@ -18,7 +18,7 @@
 
   body {
     font-family: 'Karla', system-ui, sans-serif;
-    background-color: #FFBB00;
+    background-color: #FFCC4D;
     color: #231E2A;
     overflow-x: hidden;
     touch-action: manipulation;
@@ -195,6 +195,14 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  @keyframes warmYellowShift {
+    0%, 100% { background-color: #FFCC4D; }
+    50% { background-color: #FFD966; }
+  }
+  .bg-warm-yellow {
+    animation: warmYellowShift 10s ease-in-out infinite;
   }
 
   @keyframes stampReveal {

@@ -150,7 +150,7 @@ export default function Home() {
               </span>
               <div className="relative mb-6">
                 <h1 
-                  className="text-3xl md:text-6xl lg:text-7xl font-serif font-black leading-[1.15] transition-colors duration-700 inline-block pb-4 whitespace-nowrap md:whitespace-normal"
+                  className="text-2xl md:text-6xl lg:text-7xl font-serif font-black leading-[1.15] transition-colors duration-700 inline-block pb-4 whitespace-nowrap md:whitespace-normal"
                   style={{ color: slides[slide].textColor }}
                 >
                   {slides[slide].title}

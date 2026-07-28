@@ -73,8 +73,8 @@ export default function Navigation() {
           {/* TAB 1: HOME */}
           <Link
             to="/"
-            className={`flex-1 flex items-center justify-center font-sans font-extrabold text-xs md:text-sm text-white uppercase tracking-wider transition-all cursor-pointer relative ${
-              location.pathname === '/' ? 'bg-[#00A8CC] brightness-110 z-10' : 'bg-[#00A8CC] hover:brightness-110'
+            className={`flex-1 flex items-center justify-center font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer relative ${
+              location.pathname === '/' ? 'bg-[#FFBB00] text-[#231E2A] z-10' : 'bg-[#2A2530] text-white hover:bg-[#3A3542]'
             }`}
             style={{ clipPath: 'polygon(12% 0, 100% 0, 88% 100%, 0 100%)' }}
           >
@@ -88,10 +88,10 @@ export default function Navigation() {
           >
             <button
               onClick={() => setActiveDropdown(activeDropdown === 'uberUns' ? null : 'uberUns')}
-              className={`w-full flex items-center justify-center gap-1.5 font-sans font-extrabold text-xs md:text-sm text-white uppercase tracking-wider transition-all cursor-pointer ${
+              className={`w-full flex items-center justify-center gap-1.5 font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer ${
                 ['/unternehmen', '/team', '/medien'].includes(location.pathname) || activeDropdown === 'uberUns'
-                  ? 'bg-[#E5931A] brightness-110'
-                  : 'bg-[#E5931A] hover:brightness-110'
+                  ? 'bg-[#FFBB00] text-[#231E2A]'
+                  : 'bg-[#2A2530] text-white hover:bg-[#3A3542]'
               }`}
               style={{ clipPath: 'polygon(12% 0, 100% 0, 88% 100%, 0 100%)' }}
             >
@@ -102,7 +102,7 @@ export default function Navigation() {
             {activeDropdown === 'uberUns' && (
               <div
                 onMouseLeave={() => setActiveDropdown(null)}
-                className="absolute top-full left-0 mt-0 w-60 p-2 bg-[#E5931A] text-white shadow-2xl z-50 animate-scale-in"
+                className="absolute top-full left-0 mt-0 w-60 p-2 bg-[#2A2530] border border-[#FFBB00]/20 text-white shadow-2xl z-50 animate-scale-in"
                 style={{ clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0 100%)' }}
               >
                 <div className="space-y-1">
@@ -111,12 +111,12 @@ export default function Navigation() {
                       key={item.href}
                       to={item.href}
                       onClick={() => setActiveDropdown(null)}
-                      className="block p-3 bg-black/20 hover:bg-black/40 transition-all group/item"
+                      className="block p-3 bg-white/5 hover:bg-[#FFBB00]/15 transition-all group/item"
                     >
-                      <p className="text-xs font-sans font-extrabold text-white uppercase tracking-wider">
+                      <p className="text-xs font-sans font-extrabold text-[#FFBB00] uppercase tracking-wider">
                         {item.label}
                       </p>
-                      <p className="text-[10px] text-white/80 font-sans mt-0.5">
+                      <p className="text-[10px] text-white/70 font-sans mt-0.5">
                         {item.desc}
                       </p>
                     </Link>
@@ -133,10 +133,10 @@ export default function Navigation() {
           >
             <button
               onClick={() => setActiveDropdown(activeDropdown === 'angebot' ? null : 'angebot')}
-              className={`w-full flex items-center justify-center gap-1.5 font-sans font-extrabold text-xs md:text-sm text-white uppercase tracking-wider transition-all cursor-pointer ${
+              className={`w-full flex items-center justify-center gap-1.5 font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer ${
                 ['/menu', '/aktuelles'].includes(location.pathname) || activeDropdown === 'angebot'
-                  ? 'bg-[#7C3AED] brightness-110'
-                  : 'bg-[#7C3AED] hover:brightness-110'
+                  ? 'bg-[#FFBB00] text-[#231E2A]'
+                  : 'bg-[#2A2530] text-white hover:bg-[#3A3542]'
               }`}
               style={{ clipPath: 'polygon(12% 0, 100% 0, 88% 100%, 0 100%)' }}
             >
@@ -147,7 +147,7 @@ export default function Navigation() {
             {activeDropdown === 'angebot' && (
               <div
                 onMouseLeave={() => setActiveDropdown(null)}
-                className="absolute top-full left-0 mt-0 w-64 p-2 bg-[#7C3AED] text-white shadow-2xl z-50 animate-scale-in"
+                className="absolute top-full left-0 mt-0 w-64 p-2 bg-[#2A2530] border border-[#FFBB00]/20 text-white shadow-2xl z-50 animate-scale-in"
                 style={{ clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0 100%)' }}
               >
                 <div className="space-y-1">
@@ -156,12 +156,12 @@ export default function Navigation() {
                       key={item.href}
                       to={item.href}
                       onClick={() => setActiveDropdown(null)}
-                      className="block p-3 bg-black/20 hover:bg-black/40 transition-all group/item"
+                      className="block p-3 bg-white/5 hover:bg-[#FFBB00]/15 transition-all group/item"
                     >
-                      <p className="text-xs font-sans font-extrabold text-white uppercase tracking-wider">
+                      <p className="text-xs font-sans font-extrabold text-[#FFBB00] uppercase tracking-wider">
                         {item.label}
                       </p>
-                      <p className="text-[10px] text-white/80 font-sans mt-0.5">
+                      <p className="text-[10px] text-white/70 font-sans mt-0.5">
                         {item.desc}
                       </p>
                     </Link>
@@ -174,8 +174,8 @@ export default function Navigation() {
           {/* TAB 4: JOBS */}
           <Link
             to="/jobs"
-            className={`flex-1 flex items-center justify-center font-sans font-extrabold text-xs md:text-sm text-white uppercase tracking-wider transition-all cursor-pointer relative -ml-5 ${
-              location.pathname === '/jobs' ? 'bg-[#E11D48] brightness-110' : 'bg-[#E11D48] hover:brightness-110'
+            className={`flex-1 flex items-center justify-center font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer relative -ml-5 ${
+              location.pathname === '/jobs' ? 'bg-[#FFBB00] text-[#231E2A]' : 'bg-[#2A2530] text-white hover:bg-[#3A3542]'
             }`}
             style={{ clipPath: 'polygon(12% 0, 100% 0, 88% 100%, 0 100%)' }}
           >
@@ -185,7 +185,9 @@ export default function Navigation() {
           {/* TAB 5: KONTAKT */}
           <Link
             to="/kontakt"
-            className={`flex-1 flex items-center justify-center gap-2 font-sans font-extrabold text-xs md:text-sm text-white uppercase tracking-wider bg-[#0D9488] hover:brightness-110 transition-all cursor-pointer relative -ml-5`}
+            className={`flex-1 flex items-center justify-center gap-2 font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer relative -ml-5 ${
+              location.pathname === '/kontakt' ? 'bg-[#FFBB00] text-[#231E2A]' : 'bg-[#2A2530] text-white hover:bg-[#3A3542]'
+            }`}
             style={{ clipPath: 'polygon(12% 0, 100% 0, 100% 100%, 0 100%)' }}
           >
             <span>Kontakt</span>
@@ -248,8 +250,8 @@ export default function Navigation() {
             <Link
               to="/"
               onClick={() => setIsOpen(false)}
-              className={`flex items-center justify-between py-2.5 px-4 bg-[#00A8CC] text-white font-sans text-xs font-extrabold uppercase tracking-wider shadow-md transition-all duration-300 ${
-                location.pathname === '/' ? 'ring-2 ring-white' : ''
+              className={`flex items-center justify-between py-2.5 px-4 bg-white/5 border border-white/10 text-white font-sans text-xs font-extrabold uppercase tracking-wider shadow-md transition-all duration-300 ${
+                location.pathname === '/' ? 'ring-2 ring-[#FFBB00] text-[#FFBB00]' : 'hover:bg-white/10'
               } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
               style={{ clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0 100%)' }}
             >
@@ -268,8 +270,8 @@ export default function Navigation() {
                     key={item.href}
                     to={item.href}
                     onClick={() => setIsOpen(false)}
-                    className={`flex items-center justify-between py-2.5 px-3 bg-[#7C3AED] text-white font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
-                      location.pathname === item.href ? 'ring-2 ring-white' : ''
+                    className={`flex items-center justify-between py-2.5 px-3 bg-white/5 border border-white/10 text-white font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
+                      location.pathname === item.href ? 'ring-2 ring-[#FFBB00] text-[#FFBB00]' : 'hover:bg-white/10'
                     } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
                     style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)', transitionDelay: isOpen ? `${(1 + i) * 40}ms` : '0ms' }}
                   >
@@ -291,8 +293,8 @@ export default function Navigation() {
                     key={item.href}
                     to={item.href}
                     onClick={() => setIsOpen(false)}
-                    className={`flex items-center justify-between py-2.5 px-3 bg-[#E5931A] text-white font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
-                      location.pathname === item.href ? 'ring-2 ring-white' : ''
+                    className={`flex items-center justify-between py-2.5 px-3 bg-white/5 border border-white/10 text-white font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
+                      location.pathname === item.href ? 'ring-2 ring-[#FFBB00] text-[#FFBB00]' : 'hover:bg-white/10'
                     } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
                     style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)', transitionDelay: isOpen ? `${(4 + i) * 40}ms` : '0ms' }}
                   >
@@ -308,8 +310,8 @@ export default function Navigation() {
               <Link
                 to="/jobs"
                 onClick={() => setIsOpen(false)}
-                className={`flex items-center justify-between py-2.5 px-3 bg-[#E11D48] text-white font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
-                  location.pathname === '/jobs' ? 'ring-2 ring-white' : ''
+                className={`flex items-center justify-between py-2.5 px-3 bg-white/5 border border-white/10 text-white font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
+                  location.pathname === '/jobs' ? 'ring-2 ring-[#FFBB00] text-[#FFBB00]' : 'hover:bg-white/10'
                 } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
                 style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)', transitionDelay: isOpen ? '280ms' : '0ms' }}
               >
@@ -319,8 +321,8 @@ export default function Navigation() {
               <Link
                 to="/kontakt"
                 onClick={() => setIsOpen(false)}
-                className={`flex items-center justify-between py-2.5 px-3 bg-[#0D9488] text-white font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
-                  location.pathname === '/kontakt' ? 'ring-2 ring-white' : ''
+                className={`flex items-center justify-between py-2.5 px-3 bg-white/5 border border-white/10 text-white font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
+                  location.pathname === '/kontakt' ? 'ring-2 ring-[#FFBB00] text-[#FFBB00]' : 'hover:bg-white/10'
                 } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
                 style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)', transitionDelay: isOpen ? '320ms' : '0ms' }}
               >

@@ -358,7 +358,7 @@ function FeatureCard({
             >
               {icon}
             </div>
-            <h3 className="text-xl md:text-2xl font-serif font-black text-white tracking-wide transition-colors">{title}</h3>
+            <h3 className="text-xl md:text-2xl font-serif font-black text-[#FFBB00] tracking-wide transition-colors">{title}</h3>
           </div>
           <p className="text-white font-sans text-sm md:text-base font-medium leading-relaxed drop-shadow-sm">{text}</p>
         </div>

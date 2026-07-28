@@ -61,7 +61,7 @@ export default function Unternehmen() {
       </div>
 
       {/* ─── STORY SECTION 1 ─── */}
-      <div className="relative py-16 md:py-20 bg-[#FFBB00] overflow-hidden">
+      <div className="relative py-16 md:py-20 bg-warm-yellow overflow-hidden">
         <div className="container mx-auto px-4 lg:px-8 max-w-6xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Text - left */}
@@ -139,7 +139,7 @@ export default function Unternehmen() {
       </div>
 
       {/* ─── STORY SECTION 2 & STATS HIGHLIGHTS ─── */}
-      <div className="relative py-16 md:py-20 bg-[#FFBB00] overflow-hidden border-t border-[#474150]/10">
+      <div className="relative py-16 md:py-20 bg-warm-yellow overflow-hidden border-t border-[#474150]/10">
         <div className="container mx-auto px-4 lg:px-8 max-w-5xl relative z-10">
           <div className="mb-14 reveal">
             <div className="relative inline-block mb-6">
@@ -211,7 +211,7 @@ export default function Unternehmen() {
       </div>
 
       {/* ─── VALUES SECTION ─── */}
-      <div className="py-20 bg-[#FFBB00] border-t border-[#474150]/10 pb-24">
+      <div className="py-20 bg-warm-yellow border-t border-[#474150]/10 pb-24">
         <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
           <div className="text-center mb-14 reveal">
             <div className="relative inline-block">

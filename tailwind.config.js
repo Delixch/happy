@@ -31,8 +31,8 @@ export default {
         },
       },
       fontFamily: {
-        serif: ['"Playfair Display"', 'Georgia', 'serif'],
-        sans: ['"Inter"', 'system-ui', 'sans-serif'],
+        serif: ['"Fraunces"', 'Georgia', 'serif'],
+        sans: ['"Karla"', 'system-ui', 'sans-serif'],
       },
       animation: {
         'shimmer': 'shimmer 2.5s linear infinite',

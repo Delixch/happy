@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Coffee, UtensilsCrossed, Sandwich as SandwichIcon, IceCream, CupSoda, Loader2, Sparkles, ChevronDown, type LucideIcon } from 'lucide-react';
 import { supabase, type MenuItem, type MenuCategory } from '../lib/supabase';
 
@@ -51,6 +51,17 @@ export default function MenuPage() {
   const [items, setItems] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [active, setActive] = useState<MenuCategory | null>(null);
+  const mobileCatRefs = useRef<Partial<Record<MenuCategory, HTMLDivElement | null>>>({});
+
+  const selectMobileCategory = (catId: MenuCategory, isActive: boolean) => {
+    const opening = !isActive;
+    setActive(isActive ? null : catId);
+    if (opening) {
+      requestAnimationFrame(() => {
+        mobileCatRefs.current[catId]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  };
 
   useEffect(() => {
     supabase
@@ -173,10 +184,11 @@ export default function MenuPage() {
                 return (
                   <div
                     key={catId}
-                    className={`rounded-2xl overflow-hidden shadow-xl transition-all duration-300 ${isActive ? 'ring-2 ring-[#FFBB00] shadow-2xl' : ''}`}
+                    ref={(el) => { mobileCatRefs.current[catId] = el; }}
+                    className={`scroll-mt-20 rounded-2xl overflow-hidden shadow-xl transition-all duration-300 ${isActive ? 'ring-2 ring-[#FFBB00] shadow-2xl' : ''}`}
                   >
                     <button
-                      onClick={() => setActive(isActive ? null : catId)}
+                      onClick={() => selectMobileCategory(catId, isActive)}
                       className="relative w-full px-5 py-5 font-sans font-black text-base uppercase tracking-wider flex items-center justify-between gap-3 cursor-pointer text-white overflow-hidden"
                       style={{ background: `linear-gradient(135deg, ${m.bg} 0%, ${m.bg2} 100%)` }}
                     >

@@ -11,7 +11,7 @@ export default function Footer() {
       case '/menu':
         return { bg: 'bg-[#1E293B]', border: 'border-[#FFBB00]', textAccent: 'text-[#FFBB00]', btnBg: 'bg-[#FFBB00]', btnText: 'text-[#1E293B]' };
       case '/medien':
-        return { bg: 'bg-[#0F766E]', border: 'border-[#FFD700]', textAccent: 'text-[#FFD700]', btnBg: 'bg-[#FFD700]', btnText: 'text-[#0F766E]' };
+        return { bg: 'bg-[#1E293B]', border: 'border-[#FFBB00]', textAccent: 'text-[#FFBB00]', btnBg: 'bg-[#FFBB00]', btnText: 'text-[#1E293B]' };
       case '/team':
         return { bg: 'bg-[#312E81]', border: 'border-[#38BDF8]', textAccent: 'text-[#38BDF8]', btnBg: 'bg-[#38BDF8]', btnText: 'text-[#312E81]' };
       case '/unternehmen':

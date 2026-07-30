@@ -1,16 +1,24 @@
-import { useState, useEffect } from 'react';
-import { Play, Loader2, ExternalLink, Tv, Newspaper, Globe, Film, type LucideIcon } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Play, Loader2, ExternalLink, Tv, Newspaper, Globe, Sparkles, ChevronDown, type LucideIcon } from 'lucide-react';
 import { supabase, type MediaItem } from '../lib/supabase';
 import HeroVideo from '../components/HeroVideo';
 
 type MediaType = 'tv' | 'presse' | 'online';
-type Filter = 'alle' | MediaType;
 
 function getYoutubeThumbId(url: string | null): string {
   if (!url) return '';
   if (url.includes('youtu.be/')) return url.split('youtu.be/')[1].split('?')[0];
   if (url.includes('watch?v=')) return url.split('watch?v=')[1].split('&')[0];
   return url;
+}
+
+function getHostname(url: string | null): string | null {
+  if (!url) return null;
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return null;
+  }
 }
 
 const FALLBACK_MEDIA: MediaItem[] = [
@@ -115,17 +123,54 @@ const FALLBACK_MEDIA: MediaItem[] = [
   }
 ];
 
-const CATEGORY_CONFIG: Record<MediaType, { label: string; icon: LucideIcon; bg: string; accent: string }> = {
-  tv: { label: 'TV Berichte', icon: Tv, bg: '#7C2D12', accent: '#FFBB00' },
-  presse: { label: 'Presse', icon: Newspaper, bg: '#B45309', accent: '#FFBB00' },
-  online: { label: 'Online News', icon: Globe, bg: '#A16207', accent: '#FFBB00' },
+// Same color system as the Speisekarte (Menu.tsx): each category gets a
+// bg → bg2 gradient for its button/panel, and every category shares the
+// same gold accent for badges, pills and highlights.
+const CATEGORY_META: Record<MediaType, { label: string; Icon: LucideIcon; intro: string; bg: string; bg2: string; accent: string }> = {
+  tv: {
+    label: 'TV Berichte',
+    Icon: Tv,
+    intro: 'Reportagen und Videobeiträge über Happy Beck im Fernsehen.',
+    bg: '#7C2D12',
+    bg2: '#431407',
+    accent: '#FFBB00'
+  },
+  presse: {
+    label: 'Presse',
+    Icon: Newspaper,
+    intro: 'Porträts und Artikel aus Zeitungen und Magazinen.',
+    bg: '#431407',
+    bg2: '#1F0900',
+    accent: '#FFBB00'
+  },
+  online: {
+    label: 'Online News',
+    Icon: Globe,
+    intro: 'Beiträge und Berichte von Online-Magazinen und Portalen.',
+    bg: '#9A3412',
+    bg2: '#7C2D12',
+    accent: '#FFBB00'
+  },
 };
+
+const CATEGORIES: MediaType[] = ['tv', 'presse', 'online'];
 
 export default function Medien() {
   const [items, setItems] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<Filter>('alle');
+  const [active, setActive] = useState<MediaType | null>(null);
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
+  const mobileCatRefs = useRef<Partial<Record<MediaType, HTMLDivElement | null>>>({});
+
+  const selectMobileCategory = (catId: MediaType, isActive: boolean) => {
+    const opening = !isActive;
+    setActive(isActive ? null : catId);
+    if (opening) {
+      requestAnimationFrame(() => {
+        mobileCatRefs.current[catId]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  };
 
   useEffect(() => {
     supabase
@@ -171,24 +216,9 @@ export default function Medien() {
       });
   }, []);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-      },
-      { threshold: 0.05 }
-    );
-    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [items, filter]);
-
-  const displayed = filter === 'alle' ? items : items.filter((i) => i.type === filter);
-
   return (
-    <div className="pt-14 md:pt-16 min-h-screen bg-warm-yellow pb-24">
-      {/* ─── HERO HEADER ─── */}
+    <section className="pt-14 md:pt-16 min-h-screen bg-warm-yellow pb-24">
+      {/* Hero */}
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
         <HeroVideo
           src="https://res.cloudinary.com/dsdsb4lqw/video/upload/v1785404003/resmi_harketlendir_video_gibi_f3beop.mp4"
@@ -211,139 +241,113 @@ export default function Medien() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 py-12 max-w-5xl">
+      <div className="container mx-auto px-4 lg:px-8 py-12 max-w-7xl">
+        <div className="max-w-6xl mx-auto">
 
-        {/* ─── FILTER CHIPS ─── */}
-        <div className="flex flex-wrap justify-center gap-3 mb-16 reveal">
-          {([
-            { id: 'alle' as Filter, label: 'Alle', count: items.length },
-            { id: 'tv' as Filter, label: 'TV', count: items.filter((i) => i.type === 'tv').length },
-            { id: 'presse' as Filter, label: 'Presse', count: items.filter((i) => i.type === 'presse').length },
-            { id: 'online' as Filter, label: 'Online', count: items.filter((i) => i.type === 'online').length },
-          ]).map((chip) => {
-            const isActive = filter === chip.id;
-            return (
-              <button
-                key={chip.id}
-                onClick={() => setFilter(chip.id)}
-                className={`px-5 py-2.5 rounded-full font-sans font-black text-xs uppercase tracking-wider transition-all duration-300 shadow-md cursor-pointer ${
-                  isActive
-                    ? 'bg-[#1E293B] text-[#FFBB00] scale-105 shadow-xl'
-                    : 'bg-white/50 text-[#1E293B] hover:bg-white/80'
-                }`}
-              >
-                {chip.label} ({chip.count})
-              </button>
-            );
-          })}
-        </div>
-
-        {/* ─── TIMELINE ─── */}
-        {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 text-[#1E293B] animate-spin" />
-          </div>
-        ) : displayed.length === 0 ? (
-          <div className="p-16 rounded-3xl text-center text-white/90 font-sans text-lg font-medium shadow-2xl max-w-2xl mx-auto border border-[#FFBB00]/20 backdrop-blur-xl bg-[#1E293B]/85">
-            <Film className="w-12 h-12 mx-auto mb-4 opacity-80 text-[#FFBB00]" />
-            In dieser Kategorie wurden noch keine Medienbeiträge veröffentlicht.
-          </div>
-        ) : (
-          <div className="relative">
-            {/* Timeline spine */}
-            <div className="absolute left-5 md:left-1/2 md:-translate-x-1/2 top-2 bottom-2 w-0.5 bg-[#1E293B]/25" />
-
-            <div className="space-y-10 md:space-y-4">
-              {displayed.map((item, i) => {
-                const config = CATEGORY_CONFIG[item.type];
-                const Icon = config.icon;
-                const isLeft = i % 2 === 0;
-
-                const card = (
-                  <div
-                    onClick={item.type === 'tv' ? () => setActiveVideoUrl(item.url) : undefined}
-                    className={`relative rounded-3xl overflow-hidden shadow-2xl border border-[#FFBB00]/20 backdrop-blur-xl group transition-all duration-300 hover:scale-[1.02] hover:glow-gold ${
-                      item.type === 'tv' ? 'cursor-pointer' : ''
-                    }`}
-                    style={{ backgroundColor: `${config.bg}D9` }}
-                  >
-                    {item.type === 'tv' && (
-                      <div className="relative aspect-video bg-black overflow-hidden">
-                        <img
-                          src={`https://i.ytimg.com/vi/${getYoutubeThumbId(item.url)}/hqdefault.jpg`}
-                          alt={item.title}
-                          className="w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span
-                            className="w-12 h-12 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform"
-                            style={{ backgroundColor: config.accent, color: '#1E293B' }}
-                          >
-                            <Play className="w-5 h-5 ml-0.5 fill-current" />
-                          </span>
-                        </div>
-                      </div>
-                    )}
-                    <div className="p-6">
-                      <div className="flex items-center gap-2 mb-3">
-                        <Icon className="w-4 h-4" style={{ color: config.accent }} />
-                        <span className="font-sans text-[10px] font-black uppercase tracking-widest" style={{ color: config.accent }}>
-                          {config.label}
+          {/* ── DESKTOP: category buttons | intro, shared content panel below ── */}
+          <div className="hidden lg:block">
+            <div className="mb-10 flex flex-row items-stretch justify-center gap-10">
+              <div className="flex flex-col gap-3 w-full max-w-sm pt-2">
+                {CATEGORIES.map((catId) => {
+                  const m = CATEGORY_META[catId];
+                  const count = items.filter((i) => i.type === catId).length;
+                  const isActive = active === catId;
+                  return (
+                    <button
+                      key={catId}
+                      onClick={() => setActive(isActive ? null : catId)}
+                      className={`relative w-full px-5 py-4 rounded-2xl font-sans font-black text-sm uppercase tracking-wider flex items-center justify-between gap-3 cursor-pointer text-white overflow-hidden shadow-xl transition-all duration-300 ${isActive ? 'ring-2 ring-[#FFBB00] scale-[1.02]' : 'opacity-90 hover:opacity-100'}`}
+                      style={{ background: `linear-gradient(135deg, ${m.bg} 0%, ${m.bg2} 100%)` }}
+                    >
+                      <m.Icon className="absolute -right-2 -bottom-3 w-16 h-16 opacity-10 pointer-events-none rotate-[-12deg]" />
+                      <span className="relative z-10 flex items-center gap-3">
+                        <span
+                          className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 shadow-md"
+                          style={{ backgroundColor: m.accent, color: m.bg2 }}
+                        >
+                          <m.Icon className="w-4 h-4" />
                         </span>
-                      </div>
-                      <h3 className="text-lg font-serif font-black text-white mb-2 leading-snug">
-                        {item.title}
-                      </h3>
-                      <p className="text-white/80 font-sans text-xs leading-relaxed line-clamp-3 font-medium mb-4">
-                        {item.description || 'Details zum Medienbeitrag.'}
-                      </p>
-                      {item.type === 'tv' ? (
-                        <span className="inline-flex items-center gap-1.5 font-sans font-black text-[10px] uppercase tracking-wider" style={{ color: config.accent }}>
-                          <Play className="w-3 h-3 fill-current" /> Video ansehen
+                        <span className="flex flex-col items-start">
+                          <span>{m.label}</span>
+                          {count > 0 && <span className="text-[10px] font-mono font-normal normal-case tracking-normal opacity-70">{count} Beiträge</span>}
                         </span>
-                      ) : (
-                        item.url && (
-                          <a
-                            href={item.url}
-                            target="_blank"
-                            rel="noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            className="inline-flex items-center gap-1.5 font-sans font-black text-[10px] uppercase tracking-wider hover:underline"
-                            style={{ color: config.accent }}
-                          >
-                            Beitrag öffnen <ExternalLink className="w-3 h-3" />
-                          </a>
-                        )
-                      )}
-                    </div>
-                  </div>
-                );
+                      </span>
+                      <ChevronDown className="relative z-10 w-5 h-5 transition-transform duration-300" style={{ transform: isActive ? 'rotate(180deg)' : 'none' }} />
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="text-left pt-2 max-w-sm">
+                <h2 className="text-2xl md:text-3xl font-serif font-black text-[#1E293B] mb-3">
+                  Happy Beck <span className="text-[#C2410C]">in der Presse</span>
+                </h2>
+                <p className="text-[#1E293B]/80 font-sans font-bold text-sm md:text-base leading-relaxed">
+                  Von TV-Reportagen bis Zeitungsartikel – hier finden Sie eine Auswahl der Medienbeiträge über Happy Beck. Wählen Sie eine Kategorie, um alle Beiträge zu sehen.
+                </p>
+              </div>
+            </div>
 
+            {active && (
+              <div className="rounded-3xl p-6 md:p-8" style={{ backgroundColor: CATEGORY_META[active].bg2 }}>
+                <CategoryContent catId={active} items={items} loading={loading} onPlay={setActiveVideoUrl} />
+              </div>
+            )}
+          </div>
+
+          {/* ── MOBILE/TABLET: title, then accordion — content opens directly under the tapped category ── */}
+          <div className="lg:hidden">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-serif font-black text-[#1E293B] mb-3">
+                Happy Beck <span className="text-[#C2410C]">in der Presse</span>
+              </h2>
+              <p className="text-[#1E293B]/80 font-sans font-bold text-sm leading-relaxed">
+                Von TV-Reportagen bis Zeitungsartikel – hier finden Sie eine Auswahl der Medienbeiträge über Happy Beck.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              {CATEGORIES.map((catId) => {
+                const m = CATEGORY_META[catId];
+                const count = items.filter((i) => i.type === catId).length;
+                const isActive = active === catId;
                 return (
                   <div
-                    key={item.id}
-                    className={`reveal relative md:flex md:items-start md:gap-8 ${isLeft ? '' : 'md:flex-row-reverse'}`}
+                    key={catId}
+                    ref={(el) => { mobileCatRefs.current[catId] = el; }}
+                    className={`scroll-mt-20 rounded-2xl overflow-hidden shadow-xl transition-all duration-300 ${isActive ? 'ring-2 ring-[#FFBB00] shadow-2xl' : ''}`}
                   >
-                    {/* Dot on the spine */}
-                    <span
-                      className="absolute left-5 md:left-1/2 top-2 -translate-x-1/2 w-4 h-4 rounded-full border-4 border-[#FFCC4D] shadow-md z-10"
-                      style={{ backgroundColor: config.accent }}
-                    />
-
-                    {/* Desktop: alternating sides */}
-                    <div className="hidden md:block md:w-1/2">{card}</div>
-                    <div className="hidden md:block md:w-1/2" />
-
-                    {/* Mobile: single column, cards to the right of the spine */}
-                    <div className="md:hidden pl-12">{card}</div>
+                    <button
+                      onClick={() => selectMobileCategory(catId, isActive)}
+                      className="relative w-full px-5 py-5 font-sans font-black text-base uppercase tracking-wider flex items-center justify-between gap-3 cursor-pointer text-white overflow-hidden"
+                      style={{ background: `linear-gradient(135deg, ${m.bg} 0%, ${m.bg2} 100%)` }}
+                    >
+                      <m.Icon className="absolute -right-3 -bottom-4 w-24 h-24 opacity-10 pointer-events-none rotate-[-12deg]" />
+                      <span className="relative z-10 flex items-center gap-3">
+                        <span
+                          className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 shadow-md"
+                          style={{ backgroundColor: m.accent, color: m.bg2 }}
+                        >
+                          <m.Icon className="w-5 h-5" />
+                        </span>
+                        <span className="flex flex-col items-start">
+                          <span>{m.label}</span>
+                          {count > 0 && <span className="text-[10px] font-mono font-normal normal-case tracking-normal opacity-70">{count} Beiträge</span>}
+                        </span>
+                      </span>
+                      <ChevronDown className="relative z-10 w-6 h-6 transition-transform duration-300" style={{ transform: isActive ? 'rotate(180deg)' : 'none' }} />
+                    </button>
+                    <div className={`transition-all duration-300 ${isActive ? 'max-h-[6000px] opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+                      <div className="p-4" style={{ backgroundColor: m.bg2 }}>
+                        <CategoryContent catId={catId} items={items} loading={loading} onPlay={setActiveVideoUrl} />
+                      </div>
+                    </div>
                   </div>
                 );
               })}
             </div>
           </div>
-        )}
 
+        </div>
       </div>
 
       {/* ─── VIDEO POPUP CINEMA MODAL ─── */}
@@ -372,6 +376,134 @@ export default function Medien() {
               />
             </div>
           </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+function CategoryContent({
+  catId,
+  items,
+  loading,
+  onPlay,
+}: {
+  catId: MediaType;
+  items: MediaItem[];
+  loading: boolean;
+  onPlay: (url: string | null) => void;
+}) {
+  const meta = CATEGORY_META[catId];
+  const filtered = items.filter((i) => i.type === catId);
+
+  return (
+    <div>
+      {/* Category Intro */}
+      <div className="text-center mb-10">
+        <p className="text-white/90 font-sans font-bold text-base md:text-lg max-w-xl mx-auto">
+          {meta.intro}
+        </p>
+      </div>
+
+      {/* Media Items Grid */}
+      {loading ? (
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="w-8 h-8 text-[#FFBB00] animate-spin" />
+        </div>
+      ) : filtered.length === 0 ? (
+        <div
+          className="p-16 rounded-3xl text-center text-white/90 font-sans text-lg font-medium shadow-2xl max-w-2xl mx-auto border border-[#FFBB00]/20 backdrop-blur-xl"
+          style={{ backgroundColor: `${meta.bg}D9` }}
+        >
+          <Sparkles className="w-12 h-12 mx-auto mb-4 opacity-80" style={{ color: meta.accent }} />
+          In dieser Kategorie wurden noch keine Medienbeiträge veröffentlicht.
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filtered.map((item, idx) => {
+            const isTv = item.type === 'tv';
+            const hostname = !isTv ? getHostname(item.url) : null;
+
+            return (
+              <div
+                key={item.id}
+                onClick={isTv ? () => onPlay(item.url) : undefined}
+                className={`relative rounded-3xl p-6 border border-[#FFBB00]/20 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:glow-gold flex flex-col justify-between gap-4 overflow-hidden min-h-[220px] shadow-xl ${isTv ? 'cursor-pointer' : ''}`}
+                style={{ backgroundColor: `${meta.bg}D9` }}
+              >
+                <div className="flex justify-between items-start gap-3">
+                  <div className="flex-1">
+                    {/* Top Row: Circular Number & Title */}
+                    <div className="flex items-center gap-3 mb-3">
+                      <span
+                        className="w-9 h-9 rounded-full font-sans font-black text-sm flex items-center justify-center flex-shrink-0 shadow-md"
+                        style={{ backgroundColor: meta.accent, color: '#1E293B' }}
+                      >
+                        {idx + 1}
+                      </span>
+                      <h3 className="text-xl font-serif font-black text-gold-gradient leading-snug line-clamp-2">
+                        {item.title}
+                      </h3>
+                    </div>
+
+                    {/* Description */}
+                    {item.description && (
+                      <p className="text-xs md:text-sm text-white/85 font-sans leading-relaxed line-clamp-3 font-medium">
+                        {item.description}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Right Column: TV Thumbnail (If present) */}
+                  {isTv && (
+                    <div className="w-[100px] h-[100px] flex-shrink-0 relative overflow-hidden rounded-2xl border border-white/10 shadow-lg group">
+                      <img
+                        src={`https://i.ytimg.com/vi/${getYoutubeThumbId(item.url)}/hqdefault.jpg`}
+                        alt={item.title}
+                        className="w-full h-full object-cover object-center rounded-2xl transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                        <span
+                          className="w-8 h-8 rounded-full flex items-center justify-center shadow-md"
+                          style={{ backgroundColor: meta.accent, color: '#1E293B' }}
+                        >
+                          <Play className="w-3.5 h-3.5 ml-0.5 fill-current" />
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Action Row */}
+                <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
+                  {isTv ? (
+                    <span
+                      className="font-sans font-black text-sm px-5 py-2 rounded-full shadow-lg flex items-center gap-1.5"
+                      style={{ backgroundColor: meta.accent, color: '#1E293B' }}
+                    >
+                      <Play className="w-3 h-3 fill-current" /> Ansehen
+                    </span>
+                  ) : (
+                    item.url && (
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="font-sans font-black text-sm px-5 py-2 rounded-full shadow-lg flex items-center gap-1.5"
+                        style={{ backgroundColor: meta.accent, color: '#1E293B' }}
+                      >
+                        Öffnen <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )
+                  )}
+                  <span className="text-white/60 font-sans text-xs uppercase tracking-wider font-extrabold">
+                    {hostname || 'HAPPY BECK'}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

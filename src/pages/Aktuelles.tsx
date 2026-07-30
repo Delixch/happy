@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Gift, Zap, PartyPopper, Eye, ChevronDown, Loader2 } from 'lucide-react';
 import { supabase, type DailySpecial, type Deal } from '../lib/supabase';
+import HeroVideo from '../components/HeroVideo';
 
 // Shared "kavun" (melon) gradient used across all cards on this page
 const CARD_GRADIENT = 'linear-gradient(135deg, #6B2E0F 0%, #3B1A08 100%)';
@@ -338,10 +339,13 @@ export default function Aktuelles() {
   }, []);
 
   return (
-    <div className="min-h-screen pt-16 bg-warm-yellow pb-24">
+    <div className="min-h-screen pt-14 md:pt-16 bg-warm-yellow pb-24">
       {/* ── HERO ── */}
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center brightness-90" style={{ backgroundImage: "url('/default-hero.jpg')" }} />
+        <HeroVideo
+          src="https://res.cloudinary.com/dsdsb4lqw/video/upload/v1785405038/3_d4eggy.mp4"
+          poster="/default-hero.jpg"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-[#1E293B]/60 via-transparent to-[#FFBB00]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1E293B]/80 via-transparent to-transparent" />
 

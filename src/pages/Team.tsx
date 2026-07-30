@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { Users, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase, type TeamMember } from '../lib/supabase';
+import HeroVideo from '../components/HeroVideo';
 
 export default function Team() {
   const [members, setMembers] = useState<TeamMember[]>([]);
@@ -65,7 +66,7 @@ export default function Team() {
   };
 
   return (
-    <section id="team" className="pt-16 min-h-screen w-full bg-warm-yellow overflow-hidden">
+    <section id="team" className="pt-14 md:pt-16 min-h-screen w-full bg-warm-yellow overflow-hidden">
       {/* Scrollbar hide styling */}
       <style>{`
         .scrollbar-none::-webkit-scrollbar {
@@ -79,7 +80,10 @@ export default function Team() {
 
       {/* Hero */}
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center brightness-90" style={{ backgroundImage: "url('/default-hero.jpg')" }} />
+        <HeroVideo
+          src="https://res.cloudinary.com/dsdsb4lqw/video/upload/v1785404776/2_bxyceq.mp4"
+          poster="/default-hero.jpg"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-[#474150]/60 via-transparent to-[#FFBB00]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#474150]/80 via-transparent to-transparent" />
         

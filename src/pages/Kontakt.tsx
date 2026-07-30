@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Mail, MapPin, Clock, Instagram, Send } from 'lucide-react';
+import HeroVideo from '../components/HeroVideo';
 
 type Operator = '+' | '-' | 'x';
 
@@ -67,10 +68,13 @@ export default function Kontakt() {
   };
 
   return (
-    <section id="kontakt" className="pt-16 min-h-screen bg-warm-yellow pb-24">
+    <section id="kontakt" className="pt-14 md:pt-16 min-h-screen bg-warm-yellow pb-24">
       {/* Hero */}
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center brightness-90" style={{ backgroundImage: "url('/default-hero.jpg')" }} />
+        <HeroVideo
+          src="https://res.cloudinary.com/dsdsb4lqw/video/upload/v1785405572/4_jc4bnc.mp4"
+          poster="/default-hero.jpg"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-[#1E293B]/60 via-transparent to-[#FFBB00]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1E293B]/80 via-transparent to-transparent" />
 

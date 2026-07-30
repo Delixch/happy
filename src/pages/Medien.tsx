@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Play, Loader2, ExternalLink, Tv, Newspaper, Globe, Film, type LucideIcon } from 'lucide-react';
 import { supabase, type MediaItem } from '../lib/supabase';
+import HeroVideo from '../components/HeroVideo';
 
 type MediaType = 'tv' | 'presse' | 'online';
+type Filter = 'alle' | MediaType;
 
 function getYoutubeThumbId(url: string | null): string {
   if (!url) return '';
@@ -113,10 +115,16 @@ const FALLBACK_MEDIA: MediaItem[] = [
   }
 ];
 
+const CATEGORY_CONFIG: Record<MediaType, { label: string; icon: LucideIcon; bg: string; accent: string }> = {
+  tv: { label: 'TV Berichte', icon: Tv, bg: '#7C2D12', accent: '#FFBB00' },
+  presse: { label: 'Presse', icon: Newspaper, bg: '#B45309', accent: '#FFBB00' },
+  online: { label: 'Online News', icon: Globe, bg: '#A16207', accent: '#FFBB00' },
+};
+
 export default function Medien() {
   const [items, setItems] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<MediaType>('tv');
+  const [filter, setFilter] = useState<Filter>('alle');
   const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -142,7 +150,7 @@ export default function Medien() {
           const hasSolothurner = validDbData.some(i => i.url?.includes('solothurnerzeitung.ch'));
           const hasTgtg = validDbData.some(i => i.url?.includes('toogoodtogo.com'));
           const has20Min = validDbData.some(i => i.url?.includes('20min.ch'));
-          
+
           let updated = [...validDbData];
           if (!hasYtNew) updated = [FALLBACK_MEDIA[0], ...updated];
           if (!hasYtPromo) updated = [FALLBACK_MEDIA[1], ...updated];
@@ -174,45 +182,18 @@ export default function Medien() {
     );
     document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [items, activeTab]);
+  }, [items, filter]);
 
-  const activeItems = items.filter((i) => i.type === activeTab);
-
-  const categoryConfig: Record<MediaType, { title: string; subtitle: string; icon: LucideIcon; bg: string; accent: string; text: string }> = {
-    tv: {
-      title: 'TV & Video Berichte',
-      subtitle: 'Happy Beck in Fernsehbeiträgen und exklusiven Interviews',
-      icon: Tv,
-      bg: '#1E293B',
-      accent: '#F59E0B',
-      text: '#FFFFFF'
-    },
-    presse: {
-      title: 'Presse & Zeitungsartikel',
-      subtitle: 'Zeitungsberichte und Magazinbeiträge über unsere Bäckerei',
-      icon: Newspaper,
-      bg: '#0F766E',
-      accent: '#FFD700',
-      text: '#FFFFFF'
-    },
-    online: {
-      title: 'Online News & Webportale',
-      subtitle: 'Berichte in digitalen Medien und Online-Magazinen',
-      icon: Globe,
-      bg: '#312E81',
-      accent: '#38BDF8',
-      text: '#FFFFFF'
-    },
-  };
-
-  const currentConfig = categoryConfig[activeTab];
-  const ActiveIcon = currentConfig.icon;
+  const displayed = filter === 'alle' ? items : items.filter((i) => i.type === filter);
 
   return (
-    <div className="pt-16 min-h-screen bg-warm-yellow pb-24">
+    <div className="pt-14 md:pt-16 min-h-screen bg-warm-yellow pb-24">
       {/* ─── HERO HEADER ─── */}
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center brightness-90" style={{ backgroundImage: "url('/default-hero.jpg')" }} />
+        <HeroVideo
+          src="https://res.cloudinary.com/dsdsb4lqw/video/upload/v1785404003/resmi_harketlendir_video_gibi_f3beop.mp4"
+          poster="/default-hero.jpg"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-[#1E293B]/60 via-transparent to-[#FFBB00]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1E293B]/80 via-transparent to-transparent" />
 
@@ -230,162 +211,136 @@ export default function Medien() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 py-12 max-w-6xl">
+      <div className="container mx-auto px-4 lg:px-8 py-12 max-w-5xl">
 
-        {/* ─── SHOWROOM CATEGORY TAB SELECTOR ─── */}
-        <div className="flex flex-wrap justify-center gap-4 mb-14 reveal">
-          {[
-            { id: 'tv', label: 'TV Berichte', count: items.filter(i => i.type === 'tv').length, icon: Tv, bg: '#1E293B', accent: '#F59E0B' },
-            { id: 'presse', label: 'Presse Berichte', count: items.filter(i => i.type === 'presse').length, icon: Newspaper, bg: '#0F766E', accent: '#FFD700' },
-            { id: 'online', label: 'Online News', count: items.filter(i => i.type === 'online').length, icon: Globe, bg: '#312E81', accent: '#38BDF8' },
-          ].map((tab) => {
-            const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
+        {/* ─── FILTER CHIPS ─── */}
+        <div className="flex flex-wrap justify-center gap-3 mb-16 reveal">
+          {([
+            { id: 'alle' as Filter, label: 'Alle', count: items.length },
+            { id: 'tv' as Filter, label: 'TV', count: items.filter((i) => i.type === 'tv').length },
+            { id: 'presse' as Filter, label: 'Presse', count: items.filter((i) => i.type === 'presse').length },
+            { id: 'online' as Filter, label: 'Online', count: items.filter((i) => i.type === 'online').length },
+          ]).map((chip) => {
+            const isActive = filter === chip.id;
             return (
               <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as MediaType)}
-                className={`px-8 py-4 rounded-2xl font-sans font-black text-sm md:text-base uppercase tracking-wider transition-all duration-300 flex items-center gap-3 shadow-xl cursor-pointer hover:scale-105 ${
+                key={chip.id}
+                onClick={() => setFilter(chip.id)}
+                className={`px-5 py-2.5 rounded-full font-sans font-black text-xs uppercase tracking-wider transition-all duration-300 shadow-md cursor-pointer ${
                   isActive
-                    ? 'scale-105 border-2 border-white/40 ring-4 ring-black/20 text-white'
-                    : 'opacity-70 hover:opacity-100 text-white'
+                    ? 'bg-[#1E293B] text-[#FFBB00] scale-105 shadow-xl'
+                    : 'bg-white/50 text-[#1E293B] hover:bg-white/80'
                 }`}
-                style={{ backgroundColor: tab.bg }}
               >
-                <Icon className="w-5 h-5" style={{ color: tab.accent }} />
-                {tab.label} ({tab.count})
+                {chip.label} ({chip.count})
               </button>
             );
           })}
         </div>
 
-        {/* ─── SECTION TITLE & DESCRIPTION ─── */}
-        <div className="text-center mb-12 reveal">
-          <div 
-            className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full text-white mb-3 shadow-xl border border-white/10"
-            style={{ backgroundColor: currentConfig.bg }}
-          >
-            <ActiveIcon className="w-5 h-5" style={{ color: currentConfig.accent }} />
-            <span className="font-sans text-xs font-black uppercase tracking-widest">{currentConfig.title}</span>
-          </div>
-          <p className="text-[#1E293B] font-sans font-bold text-base md:text-lg max-w-xl mx-auto">
-            {currentConfig.subtitle}
-          </p>
-        </div>
-
-        {/* ─── SHOWROOM GRID CONTENT ─── */}
+        {/* ─── TIMELINE ─── */}
         {loading ? (
           <div className="flex items-center justify-center py-20">
             <Loader2 className="w-8 h-8 text-[#1E293B] animate-spin" />
           </div>
-        ) : activeItems.length === 0 ? (
-          <div
-            className="p-16 rounded-3xl text-center text-white/90 font-sans text-lg font-medium shadow-2xl max-w-2xl mx-auto border border-[#FFBB00]/20 backdrop-blur-xl"
-            style={{ backgroundColor: `${currentConfig.bg}D9` }}
-          >
-            <Film className="w-12 h-12 mx-auto mb-4 opacity-80" style={{ color: currentConfig.accent }} />
+        ) : displayed.length === 0 ? (
+          <div className="p-16 rounded-3xl text-center text-white/90 font-sans text-lg font-medium shadow-2xl max-w-2xl mx-auto border border-[#FFBB00]/20 backdrop-blur-xl bg-[#1E293B]/85">
+            <Film className="w-12 h-12 mx-auto mb-4 opacity-80 text-[#FFBB00]" />
             In dieser Kategorie wurden noch keine Medienbeiträge veröffentlicht.
           </div>
-        ) : activeTab === 'tv' ? (
-          /* TV SHOWROOM GRID */
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {activeItems.map((item, i) => (
-              <div
-                key={item.id}
-                onClick={() => setActiveVideoUrl(item.url)}
-                className="reveal rounded-3xl overflow-hidden shadow-2xl border border-[#FFBB00]/20 backdrop-blur-xl group cursor-pointer hover:scale-[1.03] hover:glow-gold transition-all duration-300 flex flex-col justify-between"
-                style={{
-                  animationDelay: `${i * 100}ms`,
-                  backgroundColor: `${currentConfig.bg}D9`,
-                }}
-              >
-                <div className="relative aspect-video bg-black overflow-hidden">
-                  <img
-                    src={`https://i.ytimg.com/vi/${getYoutubeThumbId(item.url)}/hqdefault.jpg`}
-                    alt={item.title}
-                    className="w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span 
-                      className="w-16 h-16 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform font-bold"
-                      style={{ backgroundColor: currentConfig.accent, color: '#1E293B' }}
-                    >
-                      <Play className="w-7 h-7 ml-1 fill-current" />
-                    </span>
-                  </div>
-                  <span 
-                    className="absolute top-4 left-4 px-3 py-1 rounded-full font-sans text-[10px] font-black uppercase tracking-wider shadow-md"
-                    style={{ backgroundColor: currentConfig.accent, color: '#1E293B' }}
-                  >
-                    TV BEITRAG
-                  </span>
-                </div>
-                <div className="p-6">
-                  <h3
-                    className="text-xl font-serif font-black mb-2 line-clamp-2 transition-colors"
-                    style={{ color: currentConfig.accent }}
-                  >
-                    {item.title}
-                  </h3>
-                  <p className="text-white/80 font-sans text-xs leading-relaxed line-clamp-3 font-medium">
-                    {item.description || 'Klicken Sie hier, um den Video-Beitrag abzuspielen.'}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
         ) : (
-          /* PRESSE & ONLINE NEWS SHOWROOM GRID */
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {activeItems.map((item, i) => (
-              <div
-                key={item.id}
-                className="reveal rounded-3xl overflow-hidden shadow-2xl border border-[#FFBB00]/20 backdrop-blur-xl flex flex-col justify-between group hover:scale-[1.03] hover:glow-gold transition-all duration-300 relative"
-                style={{
-                  animationDelay: `${i * 100}ms`,
-                  backgroundColor: `${currentConfig.bg}D9`,
-                }}
-              >
-                <div className="p-7 flex-1 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between mb-5">
-                    <span 
-                      className="px-3.5 py-1 rounded-full font-sans text-[10px] font-black uppercase tracking-wider shadow-sm"
-                      style={{ backgroundColor: currentConfig.accent, color: '#1E293B' }}
-                    >
-                      {activeTab === 'presse' ? 'ZEITUNG' : 'DIGITAL MEDIEN'}
-                    </span>
-                    <ActiveIcon 
-                      className={`w-6 h-6 ${activeTab === 'online' ? 'animate-spin' : activeTab === 'presse' ? 'animate-page-flip' : ''}`} 
-                      style={{ color: currentConfig.accent, animationDuration: activeTab === 'online' ? '12s' : '2.5s' }} 
-                    />
-                  </div>
-                  <h3
-                    className="text-xl font-serif font-black mb-3 leading-snug"
-                    style={{ color: currentConfig.accent }}
-                  >
-                    {item.title}
-                  </h3>
-                  <p className="text-white/85 font-sans text-sm leading-relaxed line-clamp-4 font-medium">
-                    {item.description || 'Presseartikel und Details zum Beitrag.'}
-                  </p>
-                </div>
+          <div className="relative">
+            {/* Timeline spine */}
+            <div className="absolute left-5 md:left-1/2 md:-translate-x-1/2 top-2 bottom-2 w-0.5 bg-[#1E293B]/25" />
 
-                {item.url && (
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-8 w-full py-3.5 rounded-2xl font-sans font-black text-xs uppercase tracking-wider text-center flex items-center justify-center gap-2 shadow-xl hover:bg-white transition-colors"
-                    style={{ backgroundColor: currentConfig.accent, color: '#1E293B' }}
+            <div className="space-y-10 md:space-y-4">
+              {displayed.map((item, i) => {
+                const config = CATEGORY_CONFIG[item.type];
+                const Icon = config.icon;
+                const isLeft = i % 2 === 0;
+
+                const card = (
+                  <div
+                    onClick={item.type === 'tv' ? () => setActiveVideoUrl(item.url) : undefined}
+                    className={`relative rounded-3xl overflow-hidden shadow-2xl border border-[#FFBB00]/20 backdrop-blur-xl group transition-all duration-300 hover:scale-[1.02] hover:glow-gold ${
+                      item.type === 'tv' ? 'cursor-pointer' : ''
+                    }`}
+                    style={{ backgroundColor: `${config.bg}D9` }}
                   >
-                    Beitrag öffnen <ExternalLink className="w-4 h-4" />
-                  </a>
-                )}
-              </div>
+                    {item.type === 'tv' && (
+                      <div className="relative aspect-video bg-black overflow-hidden">
+                        <img
+                          src={`https://i.ytimg.com/vi/${getYoutubeThumbId(item.url)}/hqdefault.jpg`}
+                          alt={item.title}
+                          className="w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span
+                            className="w-12 h-12 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform"
+                            style={{ backgroundColor: config.accent, color: '#1E293B' }}
+                          >
+                            <Play className="w-5 h-5 ml-0.5 fill-current" />
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                    <div className="p-6">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Icon className="w-4 h-4" style={{ color: config.accent }} />
+                        <span className="font-sans text-[10px] font-black uppercase tracking-widest" style={{ color: config.accent }}>
+                          {config.label}
+                        </span>
+                      </div>
+                      <h3 className="text-lg font-serif font-black text-white mb-2 leading-snug">
+                        {item.title}
+                      </h3>
+                      <p className="text-white/80 font-sans text-xs leading-relaxed line-clamp-3 font-medium mb-4">
+                        {item.description || 'Details zum Medienbeitrag.'}
+                      </p>
+                      {item.type === 'tv' ? (
+                        <span className="inline-flex items-center gap-1.5 font-sans font-black text-[10px] uppercase tracking-wider" style={{ color: config.accent }}>
+                          <Play className="w-3 h-3 fill-current" /> Video ansehen
+                        </span>
+                      ) : (
+                        item.url && (
+                          <a
+                            href={item.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="inline-flex items-center gap-1.5 font-sans font-black text-[10px] uppercase tracking-wider hover:underline"
+                            style={{ color: config.accent }}
+                          >
+                            Beitrag öffnen <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )
+                      )}
+                    </div>
+                  </div>
+                );
+
+                return (
+                  <div
+                    key={item.id}
+                    className={`reveal relative md:flex md:items-start md:gap-8 ${isLeft ? '' : 'md:flex-row-reverse'}`}
+                  >
+                    {/* Dot on the spine */}
+                    <span
+                      className="absolute left-5 md:left-1/2 top-2 -translate-x-1/2 w-4 h-4 rounded-full border-4 border-[#FFCC4D] shadow-md z-10"
+                      style={{ backgroundColor: config.accent }}
+                    />
+
+                    {/* Desktop: alternating sides */}
+                    <div className="hidden md:block md:w-1/2">{card}</div>
+                    <div className="hidden md:block md:w-1/2" />
+
+                    {/* Mobile: single column, cards to the right of the spine */}
+                    <div className="md:hidden pl-12">{card}</div>
+                  </div>
+                );
+              })}
             </div>
-            ))}
           </div>
         )}
 

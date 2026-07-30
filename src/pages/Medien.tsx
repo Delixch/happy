@@ -233,8 +233,8 @@ export default function Medien() {
               Medien & Pressezentrum
             </span>
             <div className="relative inline-block block">
-              <h1 className="text-2xl md:text-6xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md whitespace-nowrap">
-                Happy Beck in den <span className="text-[#FFBB00]">Medien</span>
+              <h1 className="text-2xl md:text-5xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md whitespace-nowrap">
+                Happy Beck in den <span className="text-[#FFBB00] [-webkit-text-stroke:1px_#1E293B]" style={{ paintOrder: 'stroke fill' }}>Medien</span>
               </h1>
             </div>
           </div>
@@ -244,9 +244,17 @@ export default function Medien() {
       <div className="container mx-auto px-4 lg:px-8 py-12 max-w-7xl">
         <div className="max-w-6xl mx-auto">
 
-          {/* ── DESKTOP: category buttons | intro, shared content panel below ── */}
+          {/* ── DESKTOP: video | menu | title in one row, shared content panel below ── */}
           <div className="hidden lg:block">
             <div className="mb-10 flex flex-row items-stretch justify-center gap-10">
+              <video
+                src="https://res.cloudinary.com/dsdsb4lqw/video/upload/v1785432305/6_xbsfpy.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-80 h-auto rounded-3xl object-cover shadow-2xl border-2 border-[#FFBB00]/30 flex-shrink-0"
+              />
               <div className="flex flex-col gap-3 w-full max-w-sm pt-2">
                 {CATEGORIES.map((catId) => {
                   const m = CATEGORY_META[catId];
@@ -294,8 +302,16 @@ export default function Medien() {
             )}
           </div>
 
-          {/* ── MOBILE/TABLET: title, then accordion — content opens directly under the tapped category ── */}
+          {/* ── MOBILE/TABLET: video, title, then accordion — content opens directly under the tapped category ── */}
           <div className="lg:hidden">
+            <video
+              src="https://res.cloudinary.com/dsdsb4lqw/video/upload/v1785432305/6_xbsfpy.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-64 rounded-3xl object-cover shadow-2xl border-2 border-[#FFBB00]/30 mb-6"
+            />
             <div className="text-center mb-8">
               <h2 className="text-2xl font-serif font-black text-[#1E293B] mb-3">
                 Happy Beck <span className="text-[#C2410C]">in der Presse</span>

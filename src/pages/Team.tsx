@@ -93,8 +93,8 @@ export default function Team() {
               Die Menschen hinter Happy Beck
             </span>
             <div className="relative inline-block block">
-              <h1 className="text-4xl md:text-6xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md">
-                Unser <span className="text-[#FFBB00]">Team</span>
+              <h1 className="text-4xl md:text-5xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md">
+                Unser <span className="text-[#FFBB00] [-webkit-text-stroke:1px_#474150]" style={{ paintOrder: 'stroke fill' }}>Team</span>
               </h1>
             </div>
           </div>

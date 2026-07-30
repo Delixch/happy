@@ -355,8 +355,8 @@ export default function Aktuelles() {
               Seit 20 Jahren Ihr Bäcker
             </span>
             <div className="relative inline-block block">
-              <h1 className="text-4xl md:text-6xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md">
-                Aktuelles & <span className="text-[#FFBB00]">Deals</span>
+              <h1 className="text-4xl md:text-5xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md">
+                Aktuelles & <span className="text-[#FFBB00] [-webkit-text-stroke:1px_#1E293B]" style={{ paintOrder: 'stroke fill' }}>Deals</span>
               </h1>
             </div>
           </div>

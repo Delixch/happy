@@ -53,8 +53,8 @@ export default function Unternehmen() {
             <span className="inline-block px-4 py-1.5 rounded-full bg-[#474150] text-[#FFBB00] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
               Seit 2006 in Zürich
             </span>
-            <h1 className="text-4xl md:text-6xl font-serif font-black text-white mb-4 leading-[1.15] drop-shadow-md">
-              Unsere <span className="text-[#FFBB00]">Geschichte</span>
+            <h1 className="text-4xl md:text-5xl font-serif font-black text-white mb-4 leading-[1.15] drop-shadow-md">
+              Unsere <span className="text-[#FFBB00] [-webkit-text-stroke:1px_#474150]" style={{ paintOrder: 'stroke fill' }}>Geschichte</span>
             </h1>
           </div>
         </div>

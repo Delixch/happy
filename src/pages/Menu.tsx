@@ -88,8 +88,8 @@ export default function MenuPage() {
               Ofenfrisch & Hausgemacht
             </span>
             <div className="relative inline-block block">
-              <h1 className="text-4xl md:text-6xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md">
-                Unsere <span className="text-[#FFBB00]">Speisekarte</span>
+              <h1 className="text-4xl md:text-5xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md">
+                Unsere <span className="text-[#FFBB00] [-webkit-text-stroke:1px_#1E293B]" style={{ paintOrder: 'stroke fill' }}>Speisekarte</span>
               </h1>
             </div>
           </div>

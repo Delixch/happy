@@ -35,6 +35,7 @@ export default function Navigation() {
   const uberUnsItems = [
     { label: 'Über Uns', href: '/unternehmen', desc: 'Unsere Geschichte & Philosophie' },
     { label: 'Unser Team', href: '/team', desc: 'Die Menschen hinter Happy Beck' },
+    { label: 'Karriere & Jobs', href: '/jobs', desc: 'Offene Stellen bei Happy Beck' },
     { label: 'Medien & Presse', href: '/medien', desc: 'Artikel, TV & Berichte' },
   ];
 
@@ -89,7 +90,7 @@ export default function Navigation() {
             <button
               onClick={() => setActiveDropdown(activeDropdown === 'uberUns' ? null : 'uberUns')}
               className={`w-full flex items-center justify-center gap-1.5 font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer ${
-                ['/unternehmen', '/team', '/medien'].includes(location.pathname) || activeDropdown === 'uberUns'
+                ['/unternehmen', '/team', '/jobs', '/medien'].includes(location.pathname) || activeDropdown === 'uberUns'
                   ? 'bg-[#FFBB00] text-[#231E2A]'
                   : 'bg-[#2A2530] text-white hover:bg-[#3A3542]'
               }`}
@@ -175,18 +176,7 @@ export default function Navigation() {
             )}
           </div>
 
-          {/* TAB 4: JOBS */}
-          <Link
-            to="/jobs"
-            className={`flex-1 flex items-center justify-center font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer relative -ml-5 ${
-              location.pathname === '/jobs' ? 'bg-[#FFBB00] text-[#231E2A]' : 'bg-[#2A2530] text-white hover:bg-[#3A3542]'
-            }`}
-            style={{ clipPath: 'polygon(12% 0, 100% 0, 88% 100%, 0 100%)' }}
-          >
-            <span>Jobs</span>
-          </Link>
-
-          {/* TAB 5: KONTAKT */}
+          {/* TAB 4: KONTAKT */}
           <Link
             to="/kontakt"
             className={`flex-1 flex items-center justify-center gap-2 font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer relative -ml-5 ${
@@ -311,17 +301,6 @@ export default function Navigation() {
 
             {/* Direct Links */}
             <div className="pt-2 border-t border-white/10 space-y-1.5">
-              <Link
-                to="/jobs"
-                onClick={() => setIsOpen(false)}
-                className={`flex items-center justify-between py-2.5 px-3 bg-white/5 border border-white/10 text-white font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
-                  location.pathname === '/jobs' ? 'ring-2 ring-[#FFBB00] text-[#FFBB00]' : 'hover:bg-white/10'
-                } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
-                style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)', transitionDelay: isOpen ? '280ms' : '0ms' }}
-              >
-                <span>Offene Stellen (Jobs)</span>
-                {location.pathname === '/jobs' ? <Check className="w-3.5 h-3.5 text-white" /> : <ChevronRight className="w-3.5 h-3.5 text-white/80" />}
-              </Link>
               <Link
                 to="/kontakt"
                 onClick={() => setIsOpen(false)}

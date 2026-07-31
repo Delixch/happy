@@ -49,7 +49,7 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-white/90 text-sm leading-relaxed font-sans font-medium">
-              Ein Häppchen Glück — Traditionelle Bäckerei mit Leidenschaft für Qualität und Innovation. 24 Stunden frisch für Sie da.
+              Ein Häppchen Glück — Traditionelle Bäckerei mit Leidenschaft für Qualität und Innovation.&nbsp;24&nbsp;Stunden frisch für&nbsp;Sie&nbsp;da.
             </p>
           </div>
 

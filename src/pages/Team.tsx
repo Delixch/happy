@@ -41,6 +41,25 @@ export default function Team() {
   const activeIndex = activeMember ? members.findIndex((m) => m.id === activeMember.id) : 0;
   const activePalette = PALETTES[activeIndex % PALETTES.length];
 
+  const [activeTop, setActiveTop] = useState(0);
+
+  useEffect(() => {
+    const updateActiveTop = () => {
+      if (!activeMember) return;
+      const cardEl = document.getElementById(`card-${activeMember.id}`);
+      const containerEl = document.getElementById('team-container');
+      if (cardEl && containerEl) {
+        const cardRect = cardEl.getBoundingClientRect();
+        const containerRect = containerEl.getBoundingClientRect();
+        setActiveTop(cardRect.top - containerRect.top);
+      }
+    };
+
+    updateActiveTop();
+    window.addEventListener('resize', updateActiveTop);
+    return () => window.removeEventListener('resize', updateActiveTop);
+  }, [activeId, activeMember, members]);
+
   return (
     <section id="team" className="pt-14 md:pt-16 min-h-screen w-full bg-warm-yellow overflow-hidden">
       {/* Hero */}
@@ -83,37 +102,42 @@ export default function Team() {
             <p className="text-white font-sans text-lg font-medium">Team wird bald vorgestellt.</p>
           </div>
         ) : (
-          <div className="flex flex-col lg:flex-row gap-10 items-start">
+          <div id="team-container" className="relative flex flex-col lg:flex-row gap-10 items-start">
 
-            {/* Desktop: sticky circular photo that follows the scroll, updates on hover */}
-            <div className="hidden lg:block lg:sticky lg:top-24 flex-shrink-0 w-56">
+            {/* Desktop: circle profile picture smoothly sliding vertically to match the active member's row top */}
+            <div className="hidden lg:block w-56 flex-shrink-0 relative">
               <div
-                className="w-56 h-56 rounded-full overflow-hidden shadow-2xl border-4 mx-auto transition-colors duration-500"
-                style={{ borderColor: activePalette.accent }}
+                className="absolute left-0 right-0 transition-all duration-500 ease-in-out flex flex-col items-center text-center"
+                style={{ top: `${activeTop}px` }}
               >
-                {activeMember?.image_url ? (
-                  <img src={activeMember.image_url} alt={activeMember.name} className="w-full h-full object-cover transition-all duration-300" />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: activePalette.accent }}>
-                    <Users className="w-16 h-16" style={{ color: activePalette.bg }} />
+                <div
+                  className="w-56 h-56 rounded-full overflow-hidden shadow-2xl border-4 mx-auto transition-colors duration-500"
+                  style={{ borderColor: activePalette.accent }}
+                >
+                  {activeMember?.image_url ? (
+                    <img src={activeMember.image_url} alt={activeMember.name} className="w-full h-full object-cover transition-all duration-300" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: activePalette.accent }}>
+                      <Users className="w-16 h-16" style={{ color: activePalette.bg }} />
+                    </div>
+                  )}
+                </div>
+                {activeMember && (
+                  <div className="text-center mt-4">
+                    <p className="font-serif font-black text-xl text-[#1E293B]">{activeMember.name}</p>
+                    <p className="font-sans text-xs uppercase font-black tracking-widest text-[#1E293B]/60 mt-1">{activeMember.role}</p>
                   </div>
                 )}
               </div>
-              {activeMember && (
-                <div className="text-center mt-4">
-                  <p className="font-serif font-black text-xl text-[#1E293B]">{activeMember.name}</p>
-                  <p className="font-sans text-xs uppercase font-black tracking-widest text-[#1E293B]/60 mt-1">{activeMember.role}</p>
-                </div>
-              )}
             </div>
 
             {/* Card list */}
             <div className="flex-1 w-full space-y-4">
               {members.map((member, i) => {
                 const palette = PALETTES[i % PALETTES.length];
-                const isActive = activeId === member.id;
+                const isActive = activeMember.id === member.id;
                 return (
-                  <div key={member.id} className="reveal" style={{ animationDelay: `${i * 80}ms` }}>
+                  <div id={`card-${member.id}`} key={member.id} className="reveal" style={{ animationDelay: `${i * 80}ms` }}>
 
                     {/* Mobile: photo panel opens above the card when tapped */}
                     <div
@@ -134,7 +158,7 @@ export default function Team() {
 
                     <button
                       onMouseEnter={() => setActiveId(member.id)}
-                      onClick={() => setActiveId(isActive ? null : member.id)}
+                      onClick={() => setActiveId(member.id)}
                       className={`w-full text-left rounded-3xl p-6 shadow-xl transition-all duration-300 cursor-pointer ${
                         isActive ? 'ring-2 ring-[#FFBB00]' : ''
                       } ${isActive ? 'lg:rounded-3xl rounded-t-none' : ''}`}

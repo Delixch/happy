@@ -2,6 +2,10 @@ import { Link } from 'react-router-dom';
 import { ChefHat, Heart, Award, Bike } from 'lucide-react';
 import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 
+// One dark-to-light shade per hero slide — the underline and all 3 cards
+// below it switch to this same color together as the slide changes.
+const PHILOSOPHY_PALETTE = ['#7C2D12', '#9A3412', '#C2410C', '#EA580C'];
+
 export default function Home() {
   const slides = useMemo(
     () => [
@@ -12,7 +16,6 @@ export default function Home() {
         text: 'Traditionelles Handwerk trifft moderne Innovation. Entdecken Sie unsere Leidenschaft für frisches Brot und feine Backwaren.',
         bgColor: '#F5FFF4', // Soft Mint Cream
         cardBg: '#474150',  // Deep Plum Charcoal
-        accentColor: '#474150', // Deep Plum (contrasts against the yellow hero background)
         textColor: '#231E2A',
       },
       {
@@ -22,7 +25,6 @@ export default function Home() {
         text: 'Jeden Tag ofenfrisch – mit ausgewählten Zutaten und viel Liebe zum Detail.',
         bgColor: '#FFF8F0', // Soft Warm Cream / Warm Bakery Gold
         cardBg: '#3D2E28',  // Deep Espresso Moka
-        accentColor: '#E5931A', // Warm Amber
         textColor: '#2D201A',
       },
       {
@@ -32,7 +34,6 @@ export default function Home() {
         text: 'Von Gipfeli bis Sandwich: Für jeden Geschmack das Richtige.',
         bgColor: '#F8F6FE', // Soft Lavender Slate
         cardBg: '#372F47',  // Deep Berry Violet
-        accentColor: '#9C99B8', // Lavender Slate
         textColor: '#251D33',
       },
       {
@@ -42,7 +43,6 @@ export default function Home() {
         text: 'Mit bestem Handwerk und frischen Zutaten zaubern wir Ihnen jeden Tag ein Lächeln ins Gesicht.',
         bgColor: '#EFFCF6', // Fresh Teal Mint
         cardBg: '#2A423D',  // Deep Eucalyptus Teal
-        accentColor: '#0D9488', // Emerald Teal
         textColor: '#192C28',
       },
     ],
@@ -152,10 +152,10 @@ export default function Home() {
                   style={{ color: slides[slide].textColor }}
                 >
                   {slides[slide].title}
-                  <span 
+                  <span
                     className="absolute bottom-0 left-0 h-1.5 rounded-full transition-all duration-700"
-                    style={{ 
-                      backgroundColor: slides[slide].accentColor,
+                    style={{
+                      backgroundColor: PHILOSOPHY_PALETTE[slide],
                       width: '100%'
                     }}
                   />
@@ -231,9 +231,9 @@ export default function Home() {
         <div className="container mx-auto px-4 lg:px-8 pt-12 md:pt-16 pb-8">
           {/* Section header */}
           <div className="text-center mb-10 reveal">
-            <p 
+            <p
               className="font-sans text-xs tracking-[0.3em] uppercase mb-2 font-bold transition-colors duration-700"
-              style={{ color: slides[slide].cardBg }}
+              style={{ color: PHILOSOPHY_PALETTE[slide] }}
             >
               Unsere Philosophie
             </p>
@@ -242,12 +242,12 @@ export default function Home() {
                 className="text-3xl md:text-5xl font-serif font-black transition-colors duration-700 pb-3"
                 style={{ color: slides[slide].textColor }}
               >
-                Was uns <span style={{ color: slides[slide].cardBg }}>auszeichnet</span>
+                Was uns <span style={{ color: PHILOSOPHY_PALETTE[slide] }}>auszeichnet</span>
               </h2>
-              <span 
-                className="absolute bottom-0 left-0 h-1.5 rounded-full transition-all duration-700"
-                style={{ 
-                  backgroundColor: slides[slide].accentColor,
+              <span
+                className="absolute bottom-0 left-0 h-1.5 rounded-full transition-colors duration-700"
+                style={{
+                  backgroundColor: PHILOSOPHY_PALETTE[slide],
                   width: '100%'
                 }}
               />
@@ -260,21 +260,21 @@ export default function Home() {
               title="Handwerk"
               text="Traditionelle Backkunst, entwickelt über Jahrzehnte voller Erfahrung und Leidenschaft. Unsere Rezepte und handwerklichen Techniken wurden von Generation zu Generation weitergegeben und bis heute bewahrt."
               delay={0}
-              bgColor={slides[slide].cardBg}
+              bgColor={PHILOSOPHY_PALETTE[slide]}
             />
             <FeatureCard
               icon={<Heart className="w-5.5 h-5.5" />}
               title="Qualität"
               text="Wir verwenden nur die besten, sorgfältig ausgewählten Zutaten, um täglich frische Backwaren von höchster Qualität herzustellen. Qualität und Leidenschaft sind die Basis für den Genuss."
               delay={150}
-              bgColor={slides[slide].cardBg}
+              bgColor={PHILOSOPHY_PALETTE[slide]}
             />
             <FeatureCard
               icon={<Award className="w-5.5 h-5.5" />}
               title="Innovation"
               text="Wir verbinden kreative Innovation mit unserer traditionellen Backkunst. So entstehen einzigartige Produkte, die modern und zugleich authentisch sind."
               delay={300}
-              bgColor={slides[slide].cardBg}
+              bgColor={PHILOSOPHY_PALETTE[slide]}
             />
           </div>
         </div>

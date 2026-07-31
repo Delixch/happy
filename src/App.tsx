@@ -13,6 +13,7 @@ import Medien from './pages/Medien';
 import Kontakt from './pages/Kontakt';
 import Team from './pages/Team';
 import MenuPage from './pages/Menu';
+import Datenschutz from './pages/Datenschutz';
 import NotFound from './pages/NotFound';
 
 // Lazy load admin pages
@@ -81,6 +82,7 @@ function App() {
             <Route path="/aktuelles" element={<Aktuelles />} />
             <Route path="/medien" element={<Medien />} />
             <Route path="/kontakt" element={<Kontakt />} />
+            <Route path="/datenschutz" element={<Datenschutz />} />
             <Route path="*" element={<NotFound />} />
           </Route>
 

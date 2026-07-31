@@ -58,7 +58,7 @@ export default function CookieConsent() {
         {/* Description */}
         <p className="text-white/50 font-sans text-xs leading-relaxed mb-5">
           Wir verwenden Cookies, um Ihr Erlebnis zu verbessern, den Datenverkehr zu analysieren und Social-Media-Funktionen bereitzustellen. Mit Klick auf «Alle akzeptieren» stimmen Sie dieser Verwendung zu. Weitere Informationen finden Sie in unserer{' '}
-          <a href="/kontakt" className="text-gold-400 hover:underline">
+          <a href="/datenschutz" className="text-gold-400 hover:underline">
             Datenschutzerklärung
           </a>
           .

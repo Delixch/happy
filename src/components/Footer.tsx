@@ -197,8 +197,12 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="w-full h-0.5 bg-white/10 mt-12 mb-8" />
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-white/80 text-xs font-sans font-medium">
-            &copy; {currentYear} Happy Beck Zürich. Alle Rechte vorbehalten.
+          <p className="text-white/80 text-xs font-sans font-medium flex items-center gap-3">
+            <span>&copy; {currentYear} Happy Beck Zürich. Alle Rechte vorbehalten.</span>
+            <span className="text-white/30">·</span>
+            <Link to="/datenschutz" className="hover:text-white transition-colors underline underline-offset-2">
+              Datenschutz
+            </Link>
           </p>
           <div className="flex items-center gap-6">
             <p className="text-white/60 text-[11px] font-sans tracking-wider uppercase font-bold">

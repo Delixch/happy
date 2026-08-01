@@ -170,7 +170,7 @@ export default function Team() {
                       <p className="font-sans text-xs uppercase font-black tracking-widest mb-3 text-white/70">
                         {member.role}
                       </p>
-                      <p className="text-white font-sans text-sm leading-relaxed line-clamp-3 font-medium opacity-95">
+                      <p className="text-white font-sans text-sm leading-relaxed font-medium opacity-95">
                         {member.description}
                       </p>
                     </button>

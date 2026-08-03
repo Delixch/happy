@@ -1,21 +1,14 @@
-import { useEffect, useState } from 'react';
-import { Users, Loader2 } from 'lucide-react';
+import { useEffect, useState, useCallback } from 'react';
+import { Users, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase, type TeamMember } from '../lib/supabase';
 import HeroVideo from '../components/HeroVideo';
-
-// Same dark-to-light cascading palette used on the Speisekarte (Menu.tsx)
-const PALETTES = [
-  { bg: '#431407', bg2: '#1F0900', accent: '#FFBB00' },
-  { bg: '#7C2D12', bg2: '#431407', accent: '#FFBB00' },
-  { bg: '#9A3412', bg2: '#7C2D12', accent: '#FFBB00' },
-  { bg: '#C2410C', bg2: '#9A3412', accent: '#FFBB00' },
-  { bg: '#EA580C', bg2: '#C2410C', accent: '#FFBB00' },
-];
 
 export default function Team() {
   const [members, setMembers] = useState<TeamMember[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
   useEffect(() => {
     supabase
@@ -28,53 +21,66 @@ export default function Team() {
       });
   }, []);
 
+  const totalMembers = members.length;
+
+  const paginate = useCallback(
+    (newDirection: number) => {
+      if (totalMembers === 0) return;
+      setCurrentIndex((prev) => (prev + newDirection + totalMembers) % totalMembers);
+    },
+    [totalMembers]
+  );
+
+  // Keyboard navigation
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => { entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); },
-      { threshold: 0.1 }
-    );
-    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [members]);
-
-  const activeMember = members.find((m) => m.id === activeId) ?? members[0];
-  const activeIndex = activeMember ? members.findIndex((m) => m.id === activeMember.id) : 0;
-  const activePalette = PALETTES[activeIndex % PALETTES.length];
-
-  const [activeTop, setActiveTop] = useState(0);
-
-  useEffect(() => {
-    const updateActiveTop = () => {
-      if (!activeMember) return;
-      const cardEl = document.getElementById(`card-${activeMember.id}`);
-      const containerEl = document.getElementById('team-container');
-      if (cardEl && containerEl) {
-        const cardRect = cardEl.getBoundingClientRect();
-        const containerRect = containerEl.getBoundingClientRect();
-        setActiveTop(cardRect.top - containerRect.top);
-      }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') paginate(-1);
+      if (e.key === 'ArrowRight') paginate(1);
     };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [paginate]);
 
-    updateActiveTop();
-    window.addEventListener('resize', updateActiveTop);
-    return () => window.removeEventListener('resize', updateActiveTop);
-  }, [activeId, activeMember, members]);
+  // Touch navigation
+  const handleTouchStart = (e: React.TouchEvent) => setTouchStart(e.targetTouches[0].clientX);
+  const handleTouchMove = (e: React.TouchEvent) => setTouchEnd(e.targetTouches[0].clientX);
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const diff = touchStart - touchEnd;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) paginate(1);
+      else paginate(-1);
+    }
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
+
+  const wrapIndex = (index: number) => (index + totalMembers) % totalMembers;
+
+  const calculatePosition = (index: number) => {
+    const activeIndex = currentIndex;
+    const diff = wrapIndex(index - activeIndex);
+    if (diff === 0) return 'center';
+    if (diff === 1 || diff === totalMembers - 1) return diff === 1 ? 'right-1' : 'left-1';
+    if (diff === 2 || diff === totalMembers - 2) return diff === 2 ? 'right-2' : 'left-2';
+    return 'hidden';
+  };
 
   return (
-    <section id="team" className="pt-14 md:pt-16 min-h-screen w-full bg-warm-yellow overflow-hidden">
-      {/* Hero */}
+    <section id="team" className="min-h-screen bg-[#FFBB00] pt-16 pb-20">
+      {/* ─── HERO HEADER ─── */}
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
         <HeroVideo
           src="https://res.cloudinary.com/dsdsb4lqw/video/upload/v1785404776/2_bxyceq.mp4"
           poster="/default-hero.jpg"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#474150]/60 via-transparent to-[#FFBB00]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#474150]/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1E293B]/60 via-transparent to-[#FFBB00]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1E293B]/80 via-transparent to-transparent" />
 
-        <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-end pb-10">
+        <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-end pb-10 z-20">
           <div className="max-w-xl">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-[#474150] text-[#FFBB00] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
-              Die Menschen hinter Happy Beck
+            <span className="inline-block px-4 py-1.5 rounded-full bg-[#1E293B] text-[#FFBB00] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
+              Das Herz von Happy Beck
             </span>
             <div className="relative inline-block block">
               <h1 className="text-4xl md:text-5xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md">
@@ -85,9 +91,9 @@ export default function Team() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 py-14 max-w-6xl">
-        <div className="text-center mb-10 reveal">
-          <p className="text-[#231E2A] font-sans max-w-2xl mx-auto leading-relaxed font-semibold text-base md:text-lg">
+      <div className="container mx-auto px-4 lg:px-8 py-10 max-w-6xl">
+        <div className="text-[#231E2A] text-center mb-8">
+          <p className="font-sans max-w-2xl mx-auto leading-relaxed font-semibold text-base md:text-lg">
             Hinter jedem Gipfeli und jedem frischen Brot stehen engagierte Menschen,
             die mit Herz und Handwerk arbeiten. Lernen Sie unser Team kennen.
           </p>
@@ -95,95 +101,157 @@ export default function Team() {
 
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 text-[#474150] animate-spin" />
+            <Loader2 className="w-8 h-8 text-[#1E293B] animate-spin" />
           </div>
         ) : members.length === 0 ? (
-          <div className="bg-[#474150]/85 backdrop-blur-xl p-12 text-center rounded-3xl shadow-xl border border-[#FFBB00]/20">
+          <div className="bg-[#1E293B] p-12 text-center rounded-3xl shadow-xl border border-white/20">
             <p className="text-white font-sans text-lg font-medium">Team wird bald vorgestellt.</p>
           </div>
         ) : (
-          <div id="team-container" className="relative flex flex-col lg:flex-row gap-10 items-start">
-
-            {/* Desktop: circle profile picture smoothly sliding vertically to match the active member's row top */}
-            <div className="hidden lg:block w-56 flex-shrink-0 relative">
-              <div
-                className="absolute left-0 right-0 transition-all duration-500 ease-in-out flex flex-col items-center text-center"
-                style={{ top: `${activeTop}px` }}
+          <div
+            className="relative flex flex-col items-center justify-center overflow-hidden py-6 select-none"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            {/* 3D Carousel Stage */}
+            <div className="w-full max-w-4xl relative h-[400px] md:h-[450px] flex items-center justify-center perspective-[1000px]">
+              
+              {/* Navigation Arrows */}
+              <button
+                onClick={() => paginate(-1)}
+                className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 bg-[#1E293B] hover:bg-[#FFBB00] text-[#FFBB00] hover:text-[#1E293B] w-12 h-12 rounded-full flex items-center justify-center z-30 transition-all duration-300 shadow-2xl border border-white/20 hover:scale-110 cursor-pointer"
+                aria-label="Vorheriges Mitglied"
               >
-                <div
-                  className="w-56 h-56 rounded-full overflow-hidden shadow-2xl border-4 mx-auto transition-colors duration-500"
-                  style={{ borderColor: activePalette.accent }}
-                >
-                  {activeMember?.image_url ? (
-                    <img src={activeMember.image_url} alt={activeMember.name} className="w-full h-full object-cover transition-all duration-300" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: activePalette.accent }}>
-                      <Users className="w-16 h-16" style={{ color: activePalette.bg }} />
+                <ChevronLeft className="w-7 h-7" />
+              </button>
+
+              <button
+                onClick={() => paginate(1)}
+                className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 bg-[#1E293B] hover:bg-[#FFBB00] text-[#FFBB00] hover:text-[#1E293B] w-12 h-12 rounded-full flex items-center justify-center z-30 transition-all duration-300 shadow-2xl border border-white/20 hover:scale-110 cursor-pointer"
+                aria-label="Nächstes Mitglied"
+              >
+                <ChevronRight className="w-7 h-7" />
+              </button>
+
+              {/* 3D Cards Track */}
+              <div className="w-full h-full relative flex items-center justify-center">
+                {members.map((member, index) => {
+                  const pos = calculatePosition(index);
+                  if (pos === 'hidden') return null;
+
+                  let style: React.CSSProperties = {};
+                  if (pos === 'center') {
+                    style = {
+                      zIndex: 20,
+                      transform: 'translateX(0) scale(1.05)',
+                      opacity: 1,
+                      filter: 'grayscale(0%)',
+                    };
+                  } else if (pos === 'right-1') {
+                    style = {
+                      zIndex: 10,
+                      transform: 'translateX(45%) scale(0.82)',
+                      opacity: 0.65,
+                      filter: 'grayscale(100%)',
+                    };
+                  } else if (pos === 'left-1') {
+                    style = {
+                      zIndex: 10,
+                      transform: 'translateX(-45%) scale(0.82)',
+                      opacity: 0.65,
+                      filter: 'grayscale(100%)',
+                    };
+                  } else if (pos === 'right-2') {
+                    style = {
+                      zIndex: 5,
+                      transform: 'translateX(85%) scale(0.68)',
+                      opacity: 0.3,
+                      filter: 'grayscale(100%)',
+                    };
+                  } else if (pos === 'left-2') {
+                    style = {
+                      zIndex: 5,
+                      transform: 'translateX(-85%) scale(0.68)',
+                      opacity: 0.3,
+                      filter: 'grayscale(100%)',
+                    };
+                  }
+
+                  return (
+                    <div
+                      key={member.id}
+                      onClick={() => {
+                        if (index !== currentIndex) {
+                          setCurrentIndex(index);
+                        }
+                      }}
+                      className="absolute w-[240px] sm:w-[290px] h-[330px] sm:h-[390px] bg-[#1E293B] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 transition-all duration-500 ease-out cursor-pointer group"
+                      style={style}
+                    >
+                      {/* 2px Animated Scanning Top Line */}
+                      <div className="h-[2px] w-full bg-black/20 relative overflow-hidden flex-shrink-0 z-20">
+                        <div className="absolute inset-0 bg-[#FFBB00] animate-line-scan w-full h-full shadow-[0_0_12px_#FFBB00]" />
+                      </div>
+
+                      {/* Full Background Photo */}
+                      {member.image_url ? (
+                        <img src={member.image_url} alt={member.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-[#1E293B] text-[#FFBB00]">
+                          <Users className="w-20 h-20" />
+                        </div>
+                      )}
+
+                      {/* Bottom Overlay Info Gradient */}
+                      <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-black/90 via-black/50 to-transparent text-center z-10">
+                        <h3 className="text-xl sm:text-2xl font-serif font-black text-white drop-shadow-md">
+                          {member.name}
+                        </h3>
+                        <p className="font-sans text-xs uppercase font-black tracking-widest text-[#FFBB00] mt-0.5">
+                          {member.role}
+                        </p>
+                      </div>
                     </div>
-                  )}
-                </div>
-                {activeMember && (
-                  <div className="text-center mt-4">
-                    <p className="font-serif font-black text-xl text-[#1E293B]">{activeMember.name}</p>
-                    <p className="font-sans text-xs uppercase font-black tracking-widest text-[#1E293B]/60 mt-1">{activeMember.role}</p>
-                  </div>
-                )}
+                  );
+                })}
               </div>
             </div>
 
-            {/* Card list */}
-            <div className="flex-1 w-full space-y-4">
-              {members.map((member, i) => {
-                const palette = PALETTES[i % PALETTES.length];
-                const isActive = activeMember.id === member.id;
-                return (
-                  <div id={`card-${member.id}`} key={member.id} className="reveal" style={{ animationDelay: `${i * 80}ms` }}>
+            {/* Active Member Full Bio / Details Card below */}
+            {members[currentIndex] && (
+              <div className="w-full max-w-2xl mt-8 bg-[#1E293B] rounded-3xl p-8 shadow-2xl border-2 border-white/20 text-center animate-scale-in">
+                <span className="inline-block px-4 py-1 rounded-full bg-[#FFBB00] text-[#1E293B] font-sans text-xs font-black uppercase tracking-wider mb-3 shadow-md">
+                  {members[currentIndex].role}
+                </span>
+                <h2 className="text-3xl font-serif font-black text-white mb-3">
+                  {members[currentIndex].name}
+                </h2>
+                <p className="text-white/90 font-sans text-sm md:text-base leading-relaxed font-medium">
+                  {members[currentIndex].description || 'Keine Beschreibung vorhanden.'}
+                </p>
+              </div>
+            )}
 
-                    {/* Mobile: photo panel opens above the card when tapped */}
-                    <div
-                      className={`lg:hidden overflow-hidden transition-all duration-300 ${isActive ? 'max-h-[240px] opacity-100' : 'max-h-0 opacity-0'}`}
-                    >
-                      <div className="rounded-t-3xl p-6 flex justify-center" style={{ backgroundColor: palette.bg2 }}>
-                        <div className="w-24 h-24 rounded-full overflow-hidden border-4 shadow-xl" style={{ borderColor: palette.accent }}>
-                          {member.image_url ? (
-                            <img src={member.image_url} alt={member.name} className="w-full h-full object-cover" />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: palette.accent }}>
-                              <Users className="w-8 h-8" style={{ color: palette.bg }} />
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    <button
-                      onMouseEnter={() => setActiveId(member.id)}
-                      onClick={() => setActiveId(member.id)}
-                      className={`w-full text-left rounded-3xl p-6 shadow-xl transition-all duration-300 cursor-pointer ${
-                        isActive ? 'ring-2 ring-[#FFBB00]' : ''
-                      } ${isActive ? 'lg:rounded-3xl rounded-t-none' : ''}`}
-                      style={{ background: `linear-gradient(135deg, ${palette.bg} 0%, ${palette.bg2} 100%)` }}
-                    >
-                      <h3 className="text-xl font-serif font-black mb-1" style={{ color: palette.accent }}>
-                        {member.name}
-                      </h3>
-                      <p className="font-sans text-xs uppercase font-black tracking-widest mb-3 text-white/70">
-                        {member.role}
-                      </p>
-                      <p className="text-white font-sans text-sm leading-relaxed font-medium opacity-95">
-                        {member.description}
-                      </p>
-                    </button>
-                  </div>
-                );
-              })}
+            {/* Dots Indicator */}
+            <div className="flex justify-center gap-2.5 mt-8">
+              {members.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentIndex(idx)}
+                  className={`h-3 rounded-full transition-all duration-300 cursor-pointer ${
+                    idx === currentIndex ? 'w-8 bg-[#1E293B]' : 'w-3 bg-[#1E293B]/40 hover:bg-[#1E293B]/70'
+                  }`}
+                  aria-label={`Gehe zu Mitglied ${idx + 1}`}
+                />
+              ))}
             </div>
           </div>
         )}
 
         {/* Join us CTA */}
-        <div className="mt-14 text-center reveal">
-          <div className="bg-[#1E293B]/85 backdrop-blur-xl inline-block px-10 sm:px-14 py-10 rounded-3xl shadow-2xl border border-[#FFBB00]/20">
+        <div className="mt-14 text-center">
+          <div className="bg-[#1E293B] inline-block px-10 sm:px-14 py-10 rounded-3xl shadow-2xl border-2 border-white/20">
             <h3 className="text-2xl md:text-3xl font-serif font-black text-white mb-3">
               Werden Sie Teil unseres Teams
             </h3>
@@ -192,7 +260,7 @@ export default function Team() {
             </p>
             <a
               href="/jobs"
-              className="inline-block px-8 py-3.5 rounded-2xl bg-[#F59E0B] text-[#1E293B] font-sans font-black text-sm tracking-wider uppercase shadow-xl hover:scale-105 hover:bg-[#FFAE33] transition-all duration-300"
+              className="inline-block px-8 py-3.5 rounded-2xl bg-[#FFBB00] text-[#1E293B] font-sans font-black text-sm tracking-wider uppercase shadow-xl hover:scale-105 transition-all duration-300"
             >
               Offene Stellen ansehen
             </a>

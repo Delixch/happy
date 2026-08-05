@@ -13,6 +13,7 @@ import Medien from './pages/Medien';
 import Kontakt from './pages/Kontakt';
 import Team from './pages/Team';
 import MenuPage from './pages/Menu';
+import SandwichBauen from './pages/SandwichBauen';
 import Datenschutz from './pages/Datenschutz';
 import NotFound from './pages/NotFound';
 
@@ -78,6 +79,7 @@ function App() {
             <Route path="/unternehmen" element={<Unternehmen />} />
             <Route path="/team" element={<Team />} />
             <Route path="/menu" element={<MenuPage />} />
+            <Route path="/sandwich-bauen" element={<SandwichBauen />} />
             <Route path="/jobs" element={<Jobs />} />
             <Route path="/aktuelles" element={<Aktuelles />} />
             <Route path="/medien" element={<Medien />} />

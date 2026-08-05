@@ -57,6 +57,7 @@ export default function Navigation() {
 
   const angebotItems = [
     { label: 'Speisekarte', href: '/menu', desc: 'Gipfeli, Brot, Sandwiches & Mehr' },
+    { label: 'Sandwich Builder', href: '/sandwich-bauen', desc: 'Bau dir dein Traum-Sandwich', isNew: true },
     { label: 'Aktuelle Deals', href: '/aktuelles', desc: 'Jubiläums-Deals & Tagesangebote' },
     { label: 'Bestellung', href: '/kontakt', desc: 'Vorbestellen & Abholen' },
   ];
@@ -170,7 +171,7 @@ export default function Navigation() {
             <button
               onClick={() => setActiveDropdown(activeDropdown === 'angebot' ? null : 'angebot')}
               className={`px-8 md:px-10 flex items-center justify-center gap-1.5 font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer ${
-                ['/menu', '/aktuelles'].includes(location.pathname) || activeDropdown === 'angebot'
+                ['/menu', '/sandwich-bauen', '/aktuelles'].includes(location.pathname) || activeDropdown === 'angebot'
                   ? 'bg-[#FFFFCC] text-[#1A1A00] font-black'
                   : 'bg-[#1A1A00] text-[#FFFFCC] hover:bg-[#2A2A00]'
               }`}
@@ -193,11 +194,18 @@ export default function Navigation() {
                       to={item.href}
                       onClick={() => setActiveDropdown(null)}
                       className={`block p-3 transition-all group/item ${
-                        location.pathname === item.href ? 'bg-[#FFFFCC]/20' : 'bg-white/5 hover:bg-[#FFFFCC]/20'
+                        item.isNew
+                          ? 'bg-gradient-to-r from-[#FFBB00]/20 to-transparent border-l-2 border-[#FFBB00] hover:from-[#FFBB00]/30'
+                          : location.pathname === item.href ? 'bg-[#FFFFCC]/20' : 'bg-white/5 hover:bg-[#FFFFCC]/20'
                       }`}
                     >
-                      <p className="text-xs font-sans font-extrabold text-[#FFFFCC] uppercase tracking-wider">
+                      <p className="text-xs font-sans font-extrabold text-[#FFFFCC] uppercase tracking-wider flex items-center gap-2">
                         {item.label}
+                        {item.isNew && (
+                          <span className="px-1.5 py-0.5 rounded-full bg-[#FFBB00] text-[#1A1A00] text-[9px] font-black uppercase animate-pulse">
+                            Neu
+                          </span>
+                        )}
                       </p>
                       <p className="text-[10px] text-white/80 font-sans mt-0.5">
                         {item.desc}
@@ -315,12 +323,21 @@ export default function Navigation() {
                     key={item.href}
                     to={item.href}
                     onClick={() => setIsOpen(false)}
-                    className={`flex items-center justify-between py-2.5 px-3 border border-white/10 font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
-                      location.pathname === item.href ? 'bg-[#FFFFCC] text-[#1A1A00] font-black' : 'bg-white/5 text-white hover:bg-white/10'
+                    className={`flex items-center justify-between py-2.5 px-3 border font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
+                      item.isNew
+                        ? 'border-[#FFBB00] bg-[#FFBB00]/15 text-[#FFBB00] hover:bg-[#FFBB00]/25'
+                        : `border-white/10 ${location.pathname === item.href ? 'bg-[#FFFFCC] text-[#1A1A00] font-black' : 'bg-white/5 text-white hover:bg-white/10'}`
                     } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
                     style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)', transitionDelay: isOpen ? `${(1 + i) * 40}ms` : '0ms' }}
                   >
-                    <span>{item.label}</span>
+                    <span className="flex items-center gap-2">
+                      {item.label}
+                      {item.isNew && (
+                        <span className="px-1.5 py-0.5 rounded-full bg-[#FFBB00] text-[#1A1A00] text-[9px] font-black uppercase animate-pulse">
+                          Neu
+                        </span>
+                      )}
+                    </span>
                     {location.pathname === item.href ? <Check className="w-3.5 h-3.5 text-[#1A1A00]" /> : <ChevronRight className="w-3.5 h-3.5 text-white/80" />}
                   </Link>
                 ))}

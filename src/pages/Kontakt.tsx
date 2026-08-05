@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Mail, MapPin, Clock, Instagram, Send } from 'lucide-react';
 import HeroVideo from '../components/HeroVideo';
 
@@ -22,6 +23,8 @@ function generateQuestion() {
 }
 
 export default function Kontakt() {
+  const location = useLocation();
+  const prefillMessage = (location.state as { prefillMessage?: string } | null)?.prefillMessage ?? '';
   const initial = useMemo(() => generateQuestion(), []);
   const [question, setQuestion] = useState(initial);
   const [userAnswer, setUserAnswer] = useState('');
@@ -241,7 +244,7 @@ export default function Kontakt() {
 
                 <div>
                   <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Nachricht / Bestellung *</label>
-                  <textarea name="message" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFFFCC] transition-colors min-h-[130px] resize-y" rows={5} placeholder="Ihre Bestellung oder Nachricht..." required />
+                  <textarea name="message" defaultValue={prefillMessage} className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFFFCC] transition-colors min-h-[130px] resize-y" rows={5} placeholder="Ihre Bestellung oder Nachricht..." required />
                 </div>
 
                 {/* Security Question & Action Row */}

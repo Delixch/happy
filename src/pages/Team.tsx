@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { Users, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Users, Loader2 } from 'lucide-react';
 import { supabase, type TeamMember } from '../lib/supabase';
 import HeroVideo from '../components/HeroVideo';
 
@@ -61,17 +61,6 @@ export default function Team() {
     }
     setTouchStart(0);
     setTouchEnd(0);
-  };
-
-  const wrapIndex = (index: number) => (index + totalMembers) % totalMembers;
-
-  const calculatePosition = (index: number) => {
-    const activeIndex = currentIndex;
-    const diff = wrapIndex(index - activeIndex);
-    if (diff === 0) return 'center';
-    if (diff === 1 || diff === totalMembers - 1) return diff === 1 ? 'right-1' : 'left-1';
-    if (diff === 2 || diff === totalMembers - 2) return diff === 2 ? 'right-2' : 'left-2';
-    return 'hidden';
   };
 
   return (
@@ -138,7 +127,7 @@ export default function Team() {
                   let translateY = 0;
                   let scale = 1;
                   let opacity = 1;
-                  let zIndex = totalMembers - offset;
+                  const zIndex = totalMembers - offset;
 
                   if (offset === 0) {
                     // Top active card

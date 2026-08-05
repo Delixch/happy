@@ -4,6 +4,27 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const TO_EMAIL = 'xddswi@gmail.com';
 const FROM_EMAIL = 'Happy Beck Kontakt <kontakt@superonline.ch>';
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const FIELD_MAX_LENGTHS: Record<string, number> = {
+  company: 200,
+  name: 200,
+  email: 200,
+  phone: 50,
+  address: 300,
+  message: 5000,
+};
+
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX = 5;
+// Resets on cold start / across instances, but stops single-instance spam floods.
+const rateLimitHits = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const hits = (rateLimitHits.get(ip) ?? []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
+  hits.push(now);
+  rateLimitHits.set(ip, hits);
+  return hits.length > RATE_LIMIT_MAX;
+}
 
 function escapeHtml(value: string) {
   return value
@@ -25,6 +46,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(500).json({ error: 'Server misconfigured' });
   }
 
+  const ip = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.socket.remoteAddress || 'unknown';
+  if (isRateLimited(ip)) {
+    return res.status(429).json({ error: 'Too many requests, please try again later' });
+  }
+
   const { company, name, email, phone, address, message } = (req.body ?? {}) as Record<string, unknown>;
 
   if (typeof email !== 'string' || typeof message !== 'string' || !email.trim() || !message.trim()) {
@@ -33,6 +59,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (!EMAIL_REGEX.test(email)) {
     return res.status(400).json({ error: 'Invalid email address' });
+  }
+
+  for (const [field, value] of Object.entries({ company, name, email, phone, address, message })) {
+    if (typeof value === 'string' && value.length > FIELD_MAX_LENGTHS[field]) {
+      return res.status(400).json({ error: `Field "${field}" exceeds max length` });
+    }
   }
 
   const rows: Array<[string, unknown]> = [

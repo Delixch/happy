@@ -34,7 +34,6 @@ function FrameAnimationCard() {
 }
 
 export default function Unternehmen() {
-  const [hover, setHover] = useState(false);
   const parallaxRef = useRef<HTMLDivElement>(null);
 
   // Parallax effect on hero

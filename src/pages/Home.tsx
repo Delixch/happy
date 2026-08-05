@@ -50,6 +50,32 @@ export default function Home() {
 
   const [slide, setSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [mouseX, setMouseX] = useState(0);
+  const [mouseY, setMouseY] = useState(0);
+  const chefRef = useRef<HTMLDivElement>(null);
+
+  // Track global mouse position for chef mascot
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMouseX(e.clientX);
+      setMouseY(e.clientY);
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Calculate chef transform based on mouse position
+  const chefTransform = useMemo(() => {
+    if (!chefRef.current) return '';
+    const rect = chefRef.current.getBoundingClientRect();
+    const chefCenterX = rect.left + rect.width / 2;
+    const chefCenterY = rect.top + rect.height / 2;
+    const dx = mouseX - chefCenterX;
+    const dy = mouseY - chefCenterY;
+    const tiltX = Math.max(-12, Math.min(12, (dy / window.innerHeight) * 20));
+    const scaleX = dx < 0 ? -1 : 1; // mirror when mouse is on left
+    return `scaleX(${scaleX}) rotate(${tiltX * 0.4}deg)`;
+  }, [mouseX, mouseY]);
 
   const changeSlide = useCallback((newSlide: number) => {
     setIsTransitioning(true);
@@ -282,14 +308,43 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-            <FeatureCard
-              icon={<ChefHat className="w-5.5 h-5.5" />}
-              title="Handwerk"
-              text="Traditionelle Backkunst, entwickelt über Jahrzehnte voller Erfahrung und Leidenschaft. Unsere Rezepte und handwerklichen Techniken wurden von Generation zu Generation weitergegeben und bis heute bewahrt."
-              delay={0}
-              bgColor={PHILOSOPHY_PALETTE[slide]}
-            />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch relative">
+
+            {/* FIRST CARD WITH CHEF MASCOT ON TOP */}
+            <div className="relative pt-16 md:pt-0">
+              {/* Chef Mascot — Mobile: on top of first card | Desktop: between card 1 & 2 (via absolute on grid) */}
+              <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-32 h-32 z-30 pointer-events-none
+                             md:fixed md:hidden">
+                <img
+                  src="/b2.png"
+                  alt="Happy Beck Chefkoch"
+                  className="w-full h-full object-contain"
+                  style={{ mixBlendMode: 'multiply', filter: 'drop-shadow(0 6px 16px rgba(0,0,0,0.4))' }}
+                />
+              </div>
+              <FeatureCard
+                icon={<ChefHat className="w-5.5 h-5.5" />}
+                title="Handwerk"
+                text="Traditionelle Backkunst, entwickelt über Jahrzehnte voller Erfahrung und Leidenschaft. Unsere Rezepte und handwerklichen Techniken wurden von Generation zu Generation weitergegeben und bis heute bewahrt."
+                delay={0}
+                bgColor={PHILOSOPHY_PALETTE[slide]}
+              />
+            </div>
+
+            {/* Desktop-only chef: near left edge of 3rd card — tracks mouse */}
+            <div ref={chefRef} className="hidden md:block absolute -top-20 left-[calc(66.66%-16px)] w-36 h-36 z-30 pointer-events-none">
+              <img
+                src="/b2.png"
+                alt="Happy Beck Chefkoch"
+                className="w-full h-full object-contain transition-transform duration-150 ease-out"
+                style={{
+                  mixBlendMode: 'multiply',
+                  filter: 'drop-shadow(0 6px 16px rgba(0,0,0,0.4))',
+                  transform: chefTransform,
+                }}
+              />
+            </div>
+
             <FeatureCard
               icon={<Heart className="w-5.5 h-5.5" />}
               title="Qualität"

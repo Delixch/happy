@@ -3,15 +3,6 @@ type Section = {
   body: string[];
 };
 
-// Interpolates between two hex colors (0 = start, 1 = end)
-function interpolateColor(start: string, end: string, t: number): string {
-  const hex = (c: string) => [parseInt(c.slice(1, 3), 16), parseInt(c.slice(3, 5), 16), parseInt(c.slice(5, 7), 16)];
-  const [r1, g1, b1] = hex(start);
-  const [r2, g2, b2] = hex(end);
-  const channel = (a: number, b: number) => Math.round(a + (b - a) * t).toString(16).padStart(2, '0');
-  return `#${channel(r1, r2)}${channel(g1, g2)}${channel(b1, b2)}`;
-}
-
 const SECTIONS: Section[] = [
   {
     title: '1. Verantwortliche Stelle',

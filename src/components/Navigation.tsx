@@ -68,32 +68,32 @@ export default function Navigation() {
           </div>
         </Link>
 
-        {/* DESKTOP PARALLELOGRAM TABS CONTAINER (Edge-To-Edge, Flush, Skewed Ribbons) */}
-        <div className="hidden lg:flex items-stretch flex-1 -ml-4">
+        {/* DESKTOP PARALLELOGRAM TABS CONTAINER (Tight Compact Widths, Flush Left) */}
+        <div className="hidden lg:flex items-stretch justify-start -ml-4">
           {/* TAB 1: HOME */}
           <Link
             to="/"
-            className={`flex-1 flex items-center justify-center font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer relative ${
+            className={`px-8 md:px-10 flex items-center justify-center font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer relative ${
               location.pathname === '/' ? 'bg-[#FFFFCC] text-[#1A1A00] z-10 font-black' : 'bg-[#1A1A00] text-[#FFFFCC] hover:bg-[#2A2A00]'
             }`}
-            style={{ clipPath: 'polygon(12% 0, 100% 0, 88% 100%, 0 100%)' }}
+            style={{ clipPath: 'polygon(16px 0, 100% 0, calc(100% - 16px) 100%, 0 100%)' }}
           >
             <span>Home</span>
           </Link>
 
           {/* TAB 2: ÜBER UNS (Dropdown: Über Uns, Unser Team, Medien Presse) */}
           <div
-            className="flex-1 relative flex items-stretch -ml-5 z-30"
+            className="relative flex items-stretch -ml-4 z-30"
             onMouseEnter={() => setActiveDropdown('uberUns')}
           >
             <button
               onClick={() => setActiveDropdown(activeDropdown === 'uberUns' ? null : 'uberUns')}
-              className={`w-full flex items-center justify-center gap-1.5 font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer ${
+              className={`px-8 md:px-10 flex items-center justify-center gap-1.5 font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer ${
                 ['/unternehmen', '/team', '/jobs', '/medien'].includes(location.pathname) || activeDropdown === 'uberUns'
                   ? 'bg-[#FFFFCC] text-[#1A1A00] font-black'
                   : 'bg-[#1A1A00] text-[#FFFFCC] hover:bg-[#2A2A00]'
               }`}
-              style={{ clipPath: 'polygon(12% 0, 100% 0, 88% 100%, 0 100%)' }}
+              style={{ clipPath: 'polygon(16px 0, 100% 0, calc(100% - 16px) 100%, 0 100%)' }}
             >
               <span>Über Uns</span>
               <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${activeDropdown === 'uberUns' ? 'rotate-180' : ''}`} />
@@ -130,17 +130,17 @@ export default function Navigation() {
 
           {/* TAB 3: ANGEBOT (Dropdown: Speisekarte, Aktuelle Deals, Bestellung) */}
           <div
-            className="flex-1 relative flex items-stretch -ml-5 z-30"
+            className="relative flex items-stretch -ml-4 z-30"
             onMouseEnter={() => setActiveDropdown('angebot')}
           >
             <button
               onClick={() => setActiveDropdown(activeDropdown === 'angebot' ? null : 'angebot')}
-              className={`w-full flex items-center justify-center gap-1.5 font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer ${
+              className={`px-8 md:px-10 flex items-center justify-center gap-1.5 font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer ${
                 ['/menu', '/aktuelles'].includes(location.pathname) || activeDropdown === 'angebot'
                   ? 'bg-[#FFFFCC] text-[#1A1A00] font-black'
                   : 'bg-[#1A1A00] text-[#FFFFCC] hover:bg-[#2A2A00]'
               }`}
-              style={{ clipPath: 'polygon(12% 0, 100% 0, 88% 100%, 0 100%)' }}
+              style={{ clipPath: 'polygon(16px 0, 100% 0, calc(100% - 16px) 100%, 0 100%)' }}
             >
               <span>Angebot</span>
               <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${activeDropdown === 'angebot' ? 'rotate-180' : ''}`} />
@@ -178,10 +178,10 @@ export default function Navigation() {
           {/* TAB 4: KONTAKT */}
           <Link
             to="/kontakt"
-            className={`flex-1 flex items-center justify-center font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer relative -ml-5 ${
+            className={`px-8 md:px-10 flex items-center justify-center font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer relative -ml-4 ${
               location.pathname === '/kontakt' ? 'bg-[#FFFFCC] text-[#1A1A00] font-black' : 'bg-[#1A1A00] text-[#FFFFCC] hover:bg-[#2A2A00]'
             }`}
-            style={{ clipPath: 'polygon(12% 0, 100% 0, 100% 100%, 0 100%)' }}
+            style={{ clipPath: 'polygon(16px 0, 100% 0, 100% 100%, 0 100%)' }}
           >
             <span>Kontakt</span>
           </Link>

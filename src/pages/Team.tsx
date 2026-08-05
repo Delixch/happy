@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { Users, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase, type TeamMember } from '../lib/supabase';
 import HeroVideo from '../components/HeroVideo';
@@ -9,6 +9,14 @@ export default function Team() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
+  const deckRef = useRef<HTMLDivElement>(null);
+
+  const selectMember = (idx: number) => {
+    setCurrentIndex(idx);
+    if (window.innerWidth < 1024 && deckRef.current) {
+      deckRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
 
   useEffect(() => {
     supabase
@@ -108,93 +116,99 @@ export default function Team() {
             <p className="text-white font-sans text-lg font-medium">Team wird bald vorgestellt.</p>
           </div>
         ) : (
-          <div
-            className="relative flex flex-col items-center justify-center overflow-hidden py-6 select-none"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
-            {/* 3D Carousel Stage */}
-            <div className="w-full max-w-4xl relative h-[400px] md:h-[450px] flex items-center justify-center perspective-[1000px]">
-              
-              {/* Navigation Arrows */}
-              <button
-                onClick={() => paginate(-1)}
-                className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 bg-[#1A1A00] hover:bg-[#FFFFCC] text-[#FFFFCC] hover:text-[#1A1A00] w-12 h-12 rounded-full flex items-center justify-center z-30 transition-all duration-300 shadow-2xl border border-white/20 hover:scale-110 cursor-pointer"
-                aria-label="Vorheriges Mitglied"
-              >
-                <ChevronLeft className="w-7 h-7" />
-              </button>
-
-              <button
-                onClick={() => paginate(1)}
-                className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 bg-[#1A1A00] hover:bg-[#FFFFCC] text-[#FFFFCC] hover:text-[#1A1A00] w-12 h-12 rounded-full flex items-center justify-center z-30 transition-all duration-300 shadow-2xl border border-white/20 hover:scale-110 cursor-pointer"
-                aria-label="Nächstes Mitglied"
-              >
-                <ChevronRight className="w-7 h-7" />
-              </button>
-
-              {/* 3D Cards Track */}
-              <div className="w-full h-full relative flex items-center justify-center">
+          /* ── 2-COLUMN LIGHTSWIND PRO HOLOGRAPHIC DECK LAYOUT ── */
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center my-6">
+            
+            {/* LEFT COLUMN: 3D Holographic Stacked Deck (Preserves Mobile mt-0 Intact, Shifts Higher Up Only on Desktop) */}
+            <div 
+              ref={deckRef}
+              className="lg:col-span-6 relative h-[380px] sm:h-[430px] flex items-center justify-center select-none mt-0 lg:-mt-[420px] scroll-mt-24"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              {/* Stacked Cards */}
+              <div className="relative w-[280px] sm:w-[330px] h-[370px] sm:h-[430px] flex items-center justify-center perspective-[1200px]">
                 {members.map((member, index) => {
-                  const pos = calculatePosition(index);
-                  if (pos === 'hidden') return null;
+                  const isCurrent = index === currentIndex;
+                  const offset = (index - currentIndex + totalMembers) % totalMembers;
+                  
+                  // Stack offsets for non-active cards behind
+                  let translateX = 0;
+                  let translateY = 0;
+                  let scale = 1;
+                  let opacity = 1;
+                  let zIndex = totalMembers - offset;
 
-                  let style: React.CSSProperties = {};
-                  if (pos === 'center') {
-                    style = {
-                      zIndex: 20,
-                      transform: 'translateX(0) scale(1.05)',
-                      opacity: 1,
-                      filter: 'grayscale(0%)',
-                    };
-                  } else if (pos === 'right-1') {
-                    style = {
-                      zIndex: 10,
-                      transform: 'translateX(45%) scale(0.82)',
-                      opacity: 0.65,
-                      filter: 'grayscale(100%)',
-                    };
-                  } else if (pos === 'left-1') {
-                    style = {
-                      zIndex: 10,
-                      transform: 'translateX(-45%) scale(0.82)',
-                      opacity: 0.65,
-                      filter: 'grayscale(100%)',
-                    };
-                  } else if (pos === 'right-2') {
-                    style = {
-                      zIndex: 5,
-                      transform: 'translateX(85%) scale(0.68)',
-                      opacity: 0.3,
-                      filter: 'grayscale(100%)',
-                    };
-                  } else if (pos === 'left-2') {
-                    style = {
-                      zIndex: 5,
-                      transform: 'translateX(-85%) scale(0.68)',
-                      opacity: 0.3,
-                      filter: 'grayscale(100%)',
-                    };
+                  if (offset === 0) {
+                    // Top active card
+                    translateX = 0;
+                    translateY = 0;
+                    scale = 1;
+                    opacity = 1;
+                  } else if (offset === 1) {
+                    // 1st card behind
+                    translateX = -28;
+                    translateY = -24;
+                    scale = 0.94;
+                    opacity = 0.85;
+                  } else if (offset === 2) {
+                    // 2nd card behind
+                    translateX = -52;
+                    translateY = -46;
+                    scale = 0.88;
+                    opacity = 0.65;
+                  } else {
+                    // Remaining cards deeper behind
+                    translateX = -70;
+                    translateY = -65;
+                    scale = 0.82;
+                    opacity = 0.35;
                   }
 
                   return (
                     <div
                       key={member.id}
-                      onClick={() => {
-                        if (index !== currentIndex) {
-                          setCurrentIndex(index);
-                        }
+                      onClick={() => setCurrentIndex(index)}
+                      onMouseMove={(e) => {
+                        if (!isCurrent) return;
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        const rx = (y / rect.height - 0.5) * -24; // Tilt X
+                        const ry = (x / rect.width - 0.5) * 24;  // Tilt Y
+                        e.currentTarget.style.transform = `translate3d(${translateX}px, ${translateY}px, 0px) scale(${scale}) rotateX(${rx}deg) rotateY(${ry}deg)`;
                       }}
-                      className="absolute w-[240px] sm:w-[290px] h-[330px] sm:h-[390px] bg-[#1A1A00] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 transition-all duration-500 ease-out cursor-pointer group"
-                      style={style}
+                      onMouseLeave={(e) => {
+                        if (!isCurrent) return;
+                        e.currentTarget.style.transform = `translate3d(${translateX}px, ${translateY}px, 0px) scale(${scale}) rotateX(0deg) rotateY(0deg)`;
+                      }}
+                      className="absolute inset-0 bg-[#1A1A00] rounded-3xl overflow-hidden shadow-2xl border-2 border-[#FFFFCC]/40 transition-all duration-500 ease-out cursor-pointer group"
+                      style={{
+                        zIndex,
+                        transform: `translate3d(${translateX}px, ${translateY}px, 0px) scale(${scale})`,
+                        opacity,
+                        transformStyle: 'preserve-3d',
+                      }}
                     >
-                      {/* 2px Animated Scanning Top Line */}
-                      <div className="h-[2px] w-full bg-black/20 relative overflow-hidden flex-shrink-0 z-20">
-                        <div className="absolute inset-0 bg-[#FFFFCC] animate-line-scan w-full h-full shadow-[0_0_12px_#FFFFCC]" />
+                      {/* Scanning Top Glow Line */}
+                      <div className="h-[3px] w-full bg-black/30 relative overflow-hidden flex-shrink-0 z-20">
+                        <div className="absolute inset-0 bg-[#FFFFCC] animate-line-scan w-full h-full shadow-[0_0_15px_#FFFFCC]" />
                       </div>
 
-                      {/* Full Background Photo */}
+                      {/* 3D Holographic Rainbow Shimmer Foil */}
+                      {isCurrent && (
+                        <div 
+                          className="absolute inset-0 pointer-events-none z-30 opacity-50 group-hover:opacity-80 transition-opacity duration-500 rounded-3xl mix-blend-color-dodge"
+                          style={{
+                            background: 'linear-gradient(125deg, transparent 20%, rgba(255,255,204,0.7) 40%, rgba(255,187,0,0.9) 50%, rgba(255,255,204,0.7) 60%, transparent 80%)',
+                            backgroundSize: '200% 200%',
+                            animation: 'spinSlow 5s linear infinite'
+                          }}
+                        />
+                      )}
+
+                      {/* Full Photo */}
                       {member.image_url ? (
                         <img src={member.image_url} alt={member.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                       ) : (
@@ -203,14 +217,17 @@ export default function Team() {
                         </div>
                       )}
 
-                      {/* Bottom Overlay Info Gradient */}
-                      <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-black/90 via-black/50 to-transparent text-center z-10">
-                        <h3 className="text-xl sm:text-2xl font-serif font-black text-white drop-shadow-md">
+                      {/* Card Overlay Text */}
+                      <div 
+                        className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/95 via-black/60 to-transparent text-left z-20"
+                        style={{ transform: isCurrent ? 'translateZ(35px)' : 'none' }}
+                      >
+                        <span className="inline-block px-3 py-1 rounded-full bg-[#FFFFCC] text-[#1A1A00] font-sans text-[10px] font-black uppercase tracking-wider mb-2">
+                          {member.role}
+                        </span>
+                        <h3 className="text-2xl sm:text-3xl font-serif font-black text-white leading-tight drop-shadow-md">
                           {member.name}
                         </h3>
-                        <p className="font-sans text-xs uppercase font-black tracking-widest text-[#FFFFCC] mt-0.5">
-                          {member.role}
-                        </p>
                       </div>
                     </div>
                   );
@@ -218,54 +235,89 @@ export default function Team() {
               </div>
             </div>
 
-            {/* Active Member Full Bio / Details Card below */}
-            {members[currentIndex] && (
-              <div className="w-full max-w-2xl mt-8 rounded-3xl p-8 shadow-xl border-2 border-[#1A1A00] text-center animate-scale-in">
-                <span className="inline-block px-4 py-1 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-xs font-black uppercase tracking-wider mb-3 shadow-md">
-                  {members[currentIndex].role}
-                </span>
-                <h2 className="text-3xl font-serif font-black text-[#1A1A00] mb-3">
-                  {members[currentIndex].name}
+            {/* RIGHT COLUMN: Lightswind PRO Holographic Control Deck Panel */}
+            <div className="lg:col-span-6 bg-white/60 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border-2 border-[#1A1A00]/20 shadow-2xl flex flex-col justify-between min-h-[440px]">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-[10px] font-sans font-black uppercase tracking-[0.25em] text-[#1A1A00]/70">
+                    HAPPY BECK TEAM DECK
+                  </span>
+                  <span className="text-[11px] font-sans font-extrabold text-[#1A1A00] bg-[#FFFFCC] px-3 py-1 rounded-full border border-[#1A1A00]/15">
+                    {currentIndex + 1} / {totalMembers}
+                  </span>
+                </div>
+
+                <h2 className="text-3xl sm:text-4xl font-serif font-black text-[#1A1A00] mb-2 leading-tight">
+                  Unsere Mitarbeiter
                 </h2>
-                <p className="text-[#1A1A00]/90 font-sans text-sm md:text-base leading-relaxed font-semibold">
-                  {members[currentIndex].description || 'Keine Beschreibung vorhanden.'}
+
+                <div className="flex items-center gap-2 mb-6">
+                  <span className="px-3 py-1 rounded-lg bg-[#1A1A00] text-[#FFFFCC] font-sans font-black text-[11px] uppercase tracking-wider">
+                    {members[currentIndex]?.role || 'Team Member'}
+                  </span>
+                  <span className="text-xs font-sans text-[#1A1A00]/70 font-semibold">
+                    Happy Beck Expert
+                  </span>
+                </div>
+
+                <h3 className="text-2xl font-serif font-black text-[#1A1A00] mb-3">
+                  {members[currentIndex]?.name}
+                </h3>
+
+                <p className="text-[#1A1A00]/80 font-sans text-sm sm:text-base leading-relaxed font-medium mb-6">
+                  {members[currentIndex]?.description || 'Keine Beschreibung vorhanden.'}
                 </p>
               </div>
-            )}
 
-            {/* Dots Indicator */}
-            <div className="flex justify-center gap-2.5 mt-8">
-              {members.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentIndex(idx)}
-                  className={`h-3 rounded-full transition-all duration-300 cursor-pointer ${
-                    idx === currentIndex ? 'w-8 bg-[#1A1A00]' : 'w-3 bg-[#1A1A00]/40 hover:bg-[#1A1A00]/70'
-                  }`}
-                  aria-label={`Gehe zu Mitglied ${idx + 1}`}
-                />
-              ))}
+              {/* Interactive Layer Selection Deck Buttons (Lightswind PRO Style) */}
+              <div className="space-y-2.5 pt-4 border-t border-[#1A1A00]/15">
+                <p className="text-[10px] font-sans font-black uppercase tracking-widest text-[#1A1A00]/60 mb-1">
+                  Klick zum Auswählen des Team-Mitglieds:
+                </p>
+
+                {members.map((member, idx) => {
+                  const isActive = idx === currentIndex;
+                  return (
+                    <button
+                      key={member.id}
+                      onClick={() => selectMember(idx)}
+                      className={`w-full px-4 py-3 rounded-2xl font-sans font-bold text-xs uppercase tracking-wider flex items-center justify-between transition-all duration-300 cursor-pointer ${
+                        isActive
+                          ? 'bg-[#1A1A00] text-[#FFFFCC] shadow-lg translate-x-2'
+                          : 'bg-white/70 text-[#1A1A00] hover:bg-white hover:translate-x-1 border border-[#1A1A00]/10'
+                      }`}
+                    >
+                      <span className="font-extrabold flex items-center gap-2">
+                        <span className={`w-2 h-2 rounded-full ${isActive ? 'bg-[#FFFFCC] animate-ping' : 'bg-[#1A1A00]/30'}`} />
+                        {member.name}
+                      </span>
+                      <span className="text-[10px] opacity-75 font-mono">
+                        {member.role} →
+                      </span>
+                    </button>
+                  );
+                })}
+                {/* Join Us CTA Box Inside Right Panel (Matching Exact Styling & Alignment) */}
+                <div className="mt-6 pt-6 border-t border-[#1A1A00]/15 text-center bg-white/40 rounded-2xl p-5 border border-[#1A1A00]/10">
+                  <h4 className="text-lg font-serif font-black text-[#1A1A00] mb-1">
+                    Werden Sie Teil unseres Teams
+                  </h4>
+                  <p className="text-[#1A1A00]/80 font-sans text-xs mb-4 font-semibold">
+                    Wir suchen immer motivierte Menschen, die unsere Leidenschaft teilen.
+                  </p>
+                  <a
+                    href="/jobs"
+                    className="w-full py-3 px-6 rounded-2xl bg-[#1A1A00] text-[#FFFFCC] font-sans font-black text-xs uppercase tracking-wider shadow-lg hover:scale-[1.02] hover:bg-[#2A2A00] transition-all duration-300 inline-block text-center cursor-pointer"
+                  >
+                    Offene Stellen ansehen →
+                  </a>
+                </div>
+              </div>
+
             </div>
+
           </div>
         )}
-
-        {/* Join us CTA */}
-        <div className="mt-14 text-center">
-          <div className="bg-[#1A1A00] inline-block px-10 sm:px-14 py-10 rounded-3xl shadow-2xl border-2 border-white/20">
-            <h3 className="text-2xl md:text-3xl font-serif font-black text-white mb-3">
-              Werden Sie Teil unseres Teams
-            </h3>
-            <p className="text-white/90 font-sans text-sm md:text-base mb-6 max-w-md mx-auto font-medium">
-              Wir suchen immer motivierte Menschen, die unsere Leidenschaft für gutes Brot teilen.
-            </p>
-            <a
-              href="/jobs"
-              className="inline-block px-8 py-3.5 rounded-2xl bg-[#FFFFCC] text-[#1A1A00] font-sans font-black text-sm tracking-wider uppercase shadow-xl hover:scale-105 transition-all duration-300"
-            >
-              Offene Stellen ansehen
-            </a>
-          </div>
-        </div>
       </div>
     </section>
   );

@@ -92,46 +92,43 @@ const SECTIONS: Section[] = [
 
 export default function Datenschutz() {
   return (
-    <div className="pt-14 md:pt-16 min-h-screen bg-warm-yellow pb-24">
-      {/* Simple legal-page header, no hero photo */}
-      <div className="bg-[#1E293B] pt-10 pb-14">
+    <div className="pt-14 md:pt-16 min-h-screen bg-[#FFFFCC] pb-24">
+      {/* Brand header */}
+      <div className="bg-[#1A1A00] pt-10 pb-14">
         <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 text-[#FFBB00] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#FFFFCC]/10 text-[#FFFFCC] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4">
             Rechtliches
           </span>
           <h1 className="text-3xl md:text-5xl font-serif font-black text-white leading-tight">
-            Datenschutz<span className="text-[#FFBB00]">erklärung</span>
+            Datenschutz<span className="text-[#FFFFCC]">erklärung</span>
           </h1>
-          <p className="text-white/50 font-sans text-sm mt-3">Stand: Juli 2026</p>
+          <p className="text-white/60 font-sans text-sm mt-3">Stand: Juli 2026</p>
         </div>
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 py-12 max-w-4xl space-y-6">
-        {SECTIONS.map((section, i) => {
-          const t = i / (SECTIONS.length - 1);
-          const bg = interpolateColor('#1F0900', '#F97316', t);
+        {SECTIONS.map((section) => {
           return (
-          <div
-            key={section.title}
-            className="rounded-3xl p-7 md:p-9 shadow-xl border border-[#FFBB00]/15"
-            style={{ backgroundColor: bg }}
-          >
-            <h2 className="text-xl md:text-2xl font-serif font-black text-[#FFBB00] mb-3">
-              {section.title}
-            </h2>
-            <div className="text-white/85 font-sans text-sm md:text-base leading-relaxed space-y-3">
-              {section.body.map((paragraph, pi) => (
-                <p key={pi}>{paragraph}</p>
-              ))}
+            <div
+              key={section.title}
+              className="bg-[#1A1A00] rounded-3xl p-7 md:p-9 shadow-xl border-2 border-[#FFFFCC]/20"
+            >
+              <h2 className="text-xl md:text-2xl font-serif font-black text-[#FFFFCC] mb-3">
+                {section.title}
+              </h2>
+              <div className="text-white/90 font-sans text-sm md:text-base leading-relaxed space-y-3 font-medium">
+                {section.body.map((paragraph, pi) => (
+                  <p key={pi}>{paragraph}</p>
+                ))}
+              </div>
             </div>
-          </div>
           );
         })}
 
         <div className="text-center pt-4">
-          <p className="text-[#1E293B]/70 font-sans text-sm">
+          <p className="text-[#1A1A00]/80 font-sans text-sm font-semibold">
             Fragen zum Datenschutz? Schreiben Sie uns an{' '}
-            <a href="mailto:info@happybeck.ch" className="font-bold text-[#1E293B] underline">
+            <a href="mailto:info@happybeck.ch" className="font-black text-[#1A1A00] underline">
               info@happybeck.ch
             </a>
             .

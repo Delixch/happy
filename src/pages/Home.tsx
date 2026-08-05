@@ -110,6 +110,9 @@ export default function Home() {
                 {/* Smooth Right Edge Gradient Overlay Blending Image into Text Area */}
                 <div className="absolute inset-y-0 right-0 w-24 sm:w-36 lg:w-48 bg-gradient-to-r from-transparent via-[#FFFFCC]/40 to-[#FFFFCC] pointer-events-none z-10" />
 
+                {/* Mobile-Only Bottom Edge Soft Gradient Overlay (Preserves Edge Gradient Intact) */}
+                <div className="block lg:hidden absolute inset-x-0 bottom-0 h-16 sm:h-20 bg-gradient-to-b from-transparent via-[#FFFFCC]/30 to-[#FFFFCC] pointer-events-none z-10" />
+
                 {/* Image Counter Badge */}
                 <div 
                   className="absolute top-4 left-4 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 text-white text-[11px] font-sans font-bold tracking-widest uppercase shadow-md transition-colors duration-700"

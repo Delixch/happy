@@ -392,15 +392,19 @@ function FeatureCard({
       <div
         style={{
           transform,
-          backgroundColor: `${bgColor || '#474150'}CC`,
+          backgroundColor: `${bgColor || '#474150'}A8`,
+          boxShadow: '0 12px 35px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.25)',
         }}
-        className="relative text-left p-6 rounded-2xl backdrop-blur-xl transition-all duration-700 ease-in-out will-change-transform hover:-translate-y-1 hover:glow-gold group border border-white/15 shadow-[0_12px_35px_rgba(0,0,0,0.25)] h-full flex flex-col justify-start overflow-hidden"
+        className="relative text-left p-6 rounded-2xl backdrop-blur-2xl transition-all duration-700 ease-in-out will-change-transform hover:-translate-y-1 hover:glow-gold group border border-white/25 h-full flex flex-col justify-start overflow-hidden"
       >
+        {/* Glass sheen */}
+        <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/15 via-transparent to-transparent" />
+
         {/* Spotlight */}
         <div
           className="pointer-events-none absolute inset-0 rounded-2xl"
           style={{
-            background: `radial-gradient(400px circle at ${bgPos}, rgba(255,255,255,0.12), transparent 40%)`,
+            background: `radial-gradient(400px circle at ${bgPos}, rgba(255,255,255,0.18), transparent 40%)`,
           }}
         />
 

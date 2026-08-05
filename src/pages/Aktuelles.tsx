@@ -556,6 +556,8 @@ export default function Aktuelles() {
         </div>
       </div>
 
+      <ProductGallery />
+
       {/* ── DEALS ── */}
       <div className="container mx-auto px-4 lg:px-8 py-12">
         <div className="text-center mb-8 animate-fade-in">
@@ -584,8 +586,6 @@ export default function Aktuelles() {
           </div>
         )}
       </div>
-
-      <ProductGallery />
     </div>
   );
 }

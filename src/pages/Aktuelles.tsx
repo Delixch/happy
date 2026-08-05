@@ -364,11 +364,11 @@ export default function Aktuelles() {
       </div>
 
       {/* ── INTERACTIVE AREA (2-COLUMN LAYOUT: SPECIAL, LUNCH PASS) ── */}
-      <div className="container mx-auto px-4 lg:px-8 py-10 max-w-4xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-          
-          {/* Left Column: Daily Special */}
-          <div className="flex flex-col h-full animate-fade-in">
+      <div className="container mx-auto px-4 lg:px-8 py-10 max-w-5xl">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-stretch">
+
+          {/* Left Column: Daily Special — deliberately wider, the story card */}
+          <div className="flex flex-col h-full animate-fade-in md:col-span-3">
             <div className="text-center mb-4">
               <span className="inline-block px-3 py-1 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-[10px] font-black uppercase tracking-wider mb-2 shadow-sm">
                 JEDEN TAG NEU
@@ -399,8 +399,8 @@ export default function Aktuelles() {
             </div>
           </div>
 
-          {/* Right Column: Lunch-Pass */}
-          <div className="flex flex-col h-full animate-fade-in" style={{ animationDelay: '100ms' }}>
+          {/* Right Column: Lunch-Pass — narrower, compact action widget */}
+          <div className="flex flex-col h-full animate-fade-in md:col-span-2" style={{ animationDelay: '100ms' }}>
             <Confetti active={passConfetti} />
             <div className="text-center mb-4">
               <span className="inline-block px-3 py-1 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-[10px] font-black uppercase tracking-wider mb-2 shadow-sm">

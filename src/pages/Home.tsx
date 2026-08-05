@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { ChefHat, Heart, Award, Bike } from 'lucide-react';
 import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
+import { useRevealAnimation } from '../hooks/useRevealAnimation';
+import MarqueeTicker from '../components/MarqueeTicker';
 
 // Dark-to-light muted olive green palette going from dark (#1A1A00) to progressively lighter shades
 const PHILOSOPHY_PALETTE = ['#1A1A00', '#2C2C00', '#3D3D00', '#4E4E00'];
@@ -94,20 +96,7 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [next]);
 
-  // Intersection Observer for reveal animations
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-    }, []);
+  useRevealAnimation();
 
   return (
     <section id="home">
@@ -259,26 +248,8 @@ export default function Home() {
         </div>
 
         {/* ── FULL WIDTH 24H SCROLLING MARQUEE BANNER (RIGHT UNDER HERO) ── */}
-        <div className="w-full bg-[#1A1A00] py-2.5 md:py-3.5 border-y-2 border-white/20 overflow-hidden shadow-2xl mt-8 md:-mt-2 mb-4 relative z-20">
-          <div className="animate-marquee flex items-center whitespace-nowrap">
-            {[1, 2, 3, 4].map((groupKey) => (
-              <div key={groupKey} className="flex items-center gap-8 px-4 flex-shrink-0">
-                <span className="flex items-center gap-3 text-[#FFFFCC] font-sans font-black text-sm md:text-base tracking-widest uppercase">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#FFFFCC] animate-ping" />
-                  🔥 24 STUNDEN AN 7 TAGEN FÜR SIE GEÖFFNET!
-                </span>
-                <span className="text-[#FFFFCC]/40 text-xl font-bold">•</span>
-                <span className="text-white font-sans font-bold text-sm md:text-base tracking-wider">
-                  🥐 Frische Gipfeli & Sandwiches – Tag & Nacht ofenfrisch!
-                </span>
-                <span className="text-[#FFFFCC]/40 text-xl font-bold">•</span>
-                <span className="text-[#FFFFCC] font-serif italic text-sm md:text-base font-bold">
-                  ✨ Wir freuen uns auf Ihren Besuch bei Happy Beck!
-                </span>
-                <span className="text-[#FFFFCC]/40 text-xl font-bold">•</span>
-              </div>
-            ))}
-          </div>
+        <div className="mt-8 md:-mt-2 mb-4">
+          <MarqueeTicker />
         </div>
 
         {/* Features Section - Pulled Right Under Sliding Image */}

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Clock, MapPin, Briefcase, Mail, Loader2 } from 'lucide-react';
 import { supabase, type Job } from '../lib/supabase';
 import HeroVideo from '../components/HeroVideo';
+import MarqueeTicker from '../components/MarqueeTicker';
 
 
 
@@ -86,6 +87,14 @@ export default function Jobs() {
           </div>
         </div>
       </div>
+
+      <MarqueeTicker
+        items={[
+          { text: '💼 Wir suchen dich – jetzt bewerben!', emphasis: true },
+          { text: '🤝 Werde Teil des herzlichsten Teams an der Langstrasse.' },
+          { text: '⏰ Flexible Schichten, faire Bezahlung.' },
+        ]}
+      />
 
       <div className="container mx-auto px-4 lg:px-8 py-12 max-w-4xl">
         {loading ? (

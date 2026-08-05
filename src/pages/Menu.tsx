@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Coffee, UtensilsCrossed, Sandwich as SandwichIcon, IceCream, CupSoda, Loader2, Sparkles, ChevronDown, type LucideIcon } from 'lucide-react';
 import { supabase, type MenuItem, type MenuCategory } from '../lib/supabase';
+import MarqueeTicker from '../components/MarqueeTicker';
 
 const CATEGORY_META: Record<MenuCategory, { label: string; Icon: LucideIcon; intro: string; bg: string; bg2: string; accent: string }> = {
   fruehstueck: {
@@ -95,6 +96,14 @@ export default function MenuPage() {
           </div>
         </div>
       </div>
+
+      <MarqueeTicker
+        items={[
+          { text: '🥐 Täglich frisch aus dem Ofen!', emphasis: true },
+          { text: '🥪 Von Frühstück bis Sandwich – für jeden Geschmack.' },
+          { text: '✨ Jetzt bestellen bei Uber Eats & Just Eat.' },
+        ]}
+      />
 
       <div className="container mx-auto px-4 lg:px-8 py-12 max-w-7xl">
         <div className="max-w-6xl mx-auto">

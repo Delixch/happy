@@ -55,15 +55,14 @@ export default function Navigation() {
         {/* BRAND LOGO TAB (Flush Left) */}
         <Link
           to="/"
-          className="flex items-center gap-2.5 px-4 sm:px-5 bg-[#0E0E00] text-white flex-shrink-0 z-20 hover:bg-black transition-colors pr-6 lg:pr-8 relative border-r border-[#FFFFCC]/20"
+          className="flex items-center gap-2.5 px-5 sm:px-8 bg-[#0E0E00] text-white flex-shrink-0 z-20 hover:bg-black transition-colors pr-9 lg:pr-14 relative border-r border-[#FFFFCC]/20"
           style={{ clipPath: window.innerWidth >= 1024 ? 'polygon(0 0, 100% 0, 85% 100%, 0 100%)' : 'none' }}
         >
-          <img src="/logo.png" alt="Happy Beck" className="h-8 sm:h-9 w-auto object-contain brightness-125 drop-shadow-[0_0_6px_rgba(255,255,204,0.4)]" />
           <div className="flex flex-col">
-            <span className="font-serif font-black text-white leading-none text-sm sm:text-base tracking-wider drop-shadow-md">
+            <span className="font-serif font-black text-white leading-none text-xl sm:text-2xl tracking-wider drop-shadow-md">
               HAPPY <span className="text-[#FFFFCC]">BECK</span>
             </span>
-            <span className="text-[8px] font-sans font-black uppercase tracking-[0.2em] text-[#FFFFCC] mt-0.5">
+            <span className="text-xs font-sans font-black uppercase tracking-[0.3em] text-[#FFFFCC] mt-1">
               ZÜRICH
             </span>
           </div>

@@ -55,8 +55,8 @@ export default function Navigation() {
         {/* BRAND LOGO TAB (Flush Left) */}
         <Link
           to="/"
-          className="flex items-center gap-2.5 px-4 sm:px-5 bg-[#0E0E00] text-white flex-shrink-0 z-20 hover:bg-black transition-colors pr-8 relative border-r border-[#FFFFCC]/20"
-          style={{ clipPath: 'polygon(0 0, 100% 0, 85% 100%, 0 100%)' }}
+          className="flex items-center gap-2.5 px-4 sm:px-5 bg-[#0E0E00] text-white flex-shrink-0 z-20 hover:bg-black transition-colors pr-6 lg:pr-8 relative border-r border-[#FFFFCC]/20"
+          style={{ clipPath: window.innerWidth >= 1024 ? 'polygon(0 0, 100% 0, 85% 100%, 0 100%)' : 'none' }}
         >
           <img src="/logo.png" alt="Happy Beck" className="h-8 sm:h-9 w-auto object-contain brightness-125 drop-shadow-[0_0_6px_rgba(255,255,204,0.4)]" />
           <div className="flex flex-col">
@@ -192,13 +192,13 @@ export default function Navigation() {
         <div className="flex lg:hidden items-center justify-end px-4 ml-auto">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="w-10 h-10 bg-[#FFBB00] flex items-center justify-center text-[#231E2A] cursor-pointer"
+            className="w-10 h-10 bg-[#FFFFCC] flex items-center justify-center text-[#1A1A00] cursor-pointer rounded-xl shadow-md"
             aria-label="Menü umschalten"
           >
             <div className="relative w-5 h-4">
-              <span className={`absolute left-0 w-full h-[2px] bg-[#231E2A] rounded-full transition-all duration-300 ${isOpen ? 'top-1/2 -translate-y-1/2 rotate-45' : 'top-0'}`} />
-              <span className={`absolute left-0 top-1/2 -translate-y-1/2 w-3/4 h-[2px] bg-[#231E2A] rounded-full transition-all duration-300 ${isOpen ? 'opacity-0 translate-x-2' : 'opacity-100'}`} />
-              <span className={`absolute left-0 w-full h-[2px] bg-[#231E2A] rounded-full transition-all duration-300 ${isOpen ? 'top-1/2 -translate-y-1/2 -rotate-45' : 'bottom-0'}`} />
+              <span className={`absolute left-0 w-full h-[2.5px] bg-[#1A1A00] rounded-full transition-all duration-300 ${isOpen ? 'top-1/2 -translate-y-1/2 rotate-45' : 'top-0'}`} />
+              <span className={`absolute left-0 top-1/2 -translate-y-1/2 w-3/4 h-[2.5px] bg-[#1A1A00] rounded-full transition-all duration-300 ${isOpen ? 'opacity-0 translate-x-2' : 'opacity-100'}`} />
+              <span className={`absolute left-0 w-full h-[2.5px] bg-[#1A1A00] rounded-full transition-all duration-300 ${isOpen ? 'top-1/2 -translate-y-1/2 -rotate-45' : 'bottom-0'}`} />
             </div>
           </button>
         </div>
@@ -214,7 +214,7 @@ export default function Navigation() {
 
       {/* MOBILE LUXURY CATEGORIZED DRAWER MENU */}
       <div
-        className={`fixed top-4 right-4 bottom-4 z-50 w-[310px] rounded-3xl bg-dark-900/95 backdrop-blur-2xl border border-gold-400/30 shadow-2xl lg:hidden transition-all duration-500 ease-out transform ${
+        className={`fixed top-4 right-4 bottom-4 z-50 w-[310px] rounded-3xl bg-[#1A1A00] backdrop-blur-2xl border-2 border-[#FFFFCC]/30 shadow-2xl lg:hidden transition-all duration-500 ease-out transform ${
           isOpen ? 'translate-x-0 opacity-100' : 'translate-x-12 opacity-0 pointer-events-none'
         }`}
       >
@@ -222,17 +222,17 @@ export default function Navigation() {
           {/* Header */}
           <div className="flex items-center justify-between pb-4 border-b border-white/10">
             <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center gap-3">
-              <img src="/logo.png" alt="Logo" className="w-9 h-9 object-contain" />
+              <img src="/logo.png" alt="Logo" className="w-9 h-9 object-contain brightness-125" />
               <div>
                 <p className="font-serif text-base font-bold text-white leading-none">
-                  HAPPY <span className="text-gold-gradient">BECK</span>
+                  HAPPY <span className="text-[#FFFFCC]">BECK</span>
                 </p>
-                <p className="text-[8px] font-sans uppercase tracking-widest text-gold-400/80 mt-1">Zürich</p>
+                <p className="text-[8px] font-sans uppercase tracking-widest text-[#FFFFCC] mt-1">Zürich</p>
               </div>
             </Link>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-white/60 hover:text-gold-400 p-2 rounded-xl border border-white/10 bg-white/5 transition-colors"
+              className="text-white/60 hover:text-[#FFFFCC] p-2 rounded-xl border border-white/10 bg-white/5 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -244,18 +244,18 @@ export default function Navigation() {
             <Link
               to="/"
               onClick={() => setIsOpen(false)}
-              className={`flex items-center justify-between py-2.5 px-4 bg-white/5 border border-white/10 text-white font-sans text-xs font-extrabold uppercase tracking-wider shadow-md transition-all duration-300 ${
-                location.pathname === '/' ? 'ring-2 ring-[#FFBB00] text-[#FFBB00]' : 'hover:bg-white/10'
+              className={`flex items-center justify-between py-2.5 px-4 border border-white/10 font-sans text-xs font-extrabold uppercase tracking-wider shadow-md transition-all duration-300 ${
+                location.pathname === '/' ? 'bg-[#FFFFCC] text-[#1A1A00] font-black' : 'bg-white/5 text-white hover:bg-white/10'
               } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
               style={{ clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0 100%)' }}
             >
               <span>Home</span>
-              {location.pathname === '/' ? <Check className="w-4 h-4 text-white" /> : <ChevronRight className="w-4 h-4 text-white" />}
+              {location.pathname === '/' ? <Check className="w-4 h-4 text-[#1A1A00]" /> : <ChevronRight className="w-4 h-4 text-white" />}
             </Link>
 
             {/* Category 1: Angebot */}
             <div>
-              <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-[#FFBB00] font-bold px-2 mb-2">
+              <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-[#FFFFCC] font-bold px-2 mb-2">
                 Unsere Angebote
               </p>
               <div className="space-y-1.5">
@@ -264,13 +264,13 @@ export default function Navigation() {
                     key={item.href}
                     to={item.href}
                     onClick={() => setIsOpen(false)}
-                    className={`flex items-center justify-between py-2.5 px-3 bg-white/5 border border-white/10 text-white font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
-                      location.pathname === item.href ? 'ring-2 ring-[#FFBB00] text-[#FFBB00]' : 'hover:bg-white/10'
+                    className={`flex items-center justify-between py-2.5 px-3 border border-white/10 font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
+                      location.pathname === item.href ? 'bg-[#FFFFCC] text-[#1A1A00] font-black' : 'bg-white/5 text-white hover:bg-white/10'
                     } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
                     style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)', transitionDelay: isOpen ? `${(1 + i) * 40}ms` : '0ms' }}
                   >
                     <span>{item.label}</span>
-                    {location.pathname === item.href ? <Check className="w-3.5 h-3.5 text-white" /> : <ChevronRight className="w-3.5 h-3.5 text-white/80" />}
+                    {location.pathname === item.href ? <Check className="w-3.5 h-3.5 text-[#1A1A00]" /> : <ChevronRight className="w-3.5 h-3.5 text-white/80" />}
                   </Link>
                 ))}
               </div>
@@ -278,7 +278,7 @@ export default function Navigation() {
 
             {/* Category 2: Über Uns */}
             <div>
-              <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-[#FFBB00] font-bold px-2 mb-2">
+              <p className="text-[10px] font-sans uppercase tracking-[0.2em] text-[#FFFFCC] font-bold px-2 mb-2">
                 Über Happy Beck
               </p>
               <div className="space-y-1.5">
@@ -287,13 +287,13 @@ export default function Navigation() {
                     key={item.href}
                     to={item.href}
                     onClick={() => setIsOpen(false)}
-                    className={`flex items-center justify-between py-2.5 px-3 bg-white/5 border border-white/10 text-white font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
-                      location.pathname === item.href ? 'ring-2 ring-[#FFBB00] text-[#FFBB00]' : 'hover:bg-white/10'
+                    className={`flex items-center justify-between py-2.5 px-3 border border-white/10 font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
+                      location.pathname === item.href ? 'bg-[#FFFFCC] text-[#1A1A00] font-black' : 'bg-white/5 text-white hover:bg-white/10'
                     } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
                     style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)', transitionDelay: isOpen ? `${(4 + i) * 40}ms` : '0ms' }}
                   >
                     <span>{item.label}</span>
-                    {location.pathname === item.href ? <Check className="w-3.5 h-3.5 text-white" /> : <ChevronRight className="w-3.5 h-3.5 text-white/80" />}
+                    {location.pathname === item.href ? <Check className="w-3.5 h-3.5 text-[#1A1A00]" /> : <ChevronRight className="w-3.5 h-3.5 text-white/80" />}
                   </Link>
                 ))}
               </div>
@@ -304,13 +304,13 @@ export default function Navigation() {
               <Link
                 to="/kontakt"
                 onClick={() => setIsOpen(false)}
-                className={`flex items-center justify-between py-2.5 px-3 bg-white/5 border border-white/10 text-white font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
-                  location.pathname === '/kontakt' ? 'ring-2 ring-[#FFBB00] text-[#FFBB00]' : 'hover:bg-white/10'
+                className={`flex items-center justify-between py-2.5 px-3 border border-white/10 font-sans text-xs font-bold shadow-sm transition-all duration-300 ${
+                  location.pathname === '/kontakt' ? 'bg-[#FFFFCC] text-[#1A1A00] font-black' : 'bg-white/5 text-white hover:bg-white/10'
                 } ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
                 style={{ clipPath: 'polygon(0 0, 100% 0, 96% 100%, 0 100%)', transitionDelay: isOpen ? '320ms' : '0ms' }}
               >
                 <span>Kontakt & Anfahrt</span>
-                {location.pathname === '/kontakt' ? <Check className="w-3.5 h-3.5 text-white" /> : <ChevronRight className="w-3.5 h-3.5 text-white/80" />}
+                {location.pathname === '/kontakt' ? <Check className="w-3.5 h-3.5 text-[#1A1A00]" /> : <ChevronRight className="w-3.5 h-3.5 text-white/80" />}
               </Link>
             </div>
           </div>
@@ -320,16 +320,16 @@ export default function Navigation() {
             <Link
               to="/admin"
               onClick={() => setIsOpen(false)}
-              className="w-full py-2.5 rounded-xl border border-gold-400/30 bg-gold-400/10 text-gold-400 font-sans text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center gap-2 hover:bg-gold-400/20 transition-all"
+              className="w-full py-2.5 rounded-xl border border-[#FFFFCC]/30 bg-[#FFFFCC]/10 text-[#FFFFCC] font-sans text-xs font-bold uppercase tracking-wider text-center flex items-center justify-center gap-2 hover:bg-[#FFFFCC]/20 transition-all"
             >
               <Lock className="w-3.5 h-3.5" />
               <span>Admin Panel Login</span>
             </Link>
             <div className="flex items-center gap-4 text-white/40">
-              <a href="https://instagram.com/happybeck.ch" target="_blank" rel="noopener noreferrer" className="hover:text-gold-400 transition-colors">
+              <a href="https://instagram.com/happybeck.ch" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFFFCC] transition-colors">
                 <Instagram className="w-4 h-4" />
               </a>
-              <a href="tel:+41440000000" className="hover:text-gold-400 transition-colors">
+              <a href="tel:+41440000000" className="hover:text-[#FFFFCC] transition-colors">
                 <Phone className="w-4 h-4" />
               </a>
             </div>

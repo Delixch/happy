@@ -67,7 +67,7 @@ export default function Team() {
   };
 
   return (
-    <section id="team" className="min-h-screen bg-[#FFFFCC] pt-16 pb-20">
+    <section id="team" className="min-h-screen bg-[#FFFFCC] pt-14 md:pt-16 pb-20">
       {/* ─── HERO HEADER ─── */}
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
         <HeroVideo

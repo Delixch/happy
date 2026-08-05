@@ -3,6 +3,7 @@ import { Clock, MapPin, Briefcase, Mail, Loader2 } from 'lucide-react';
 import { supabase, type Job } from '../lib/supabase';
 import HeroVideo from '../components/HeroVideo';
 import MarqueeTicker from '../components/MarqueeTicker';
+import TiltCard from '../components/TiltCard';
 
 
 
@@ -104,9 +105,9 @@ export default function Jobs() {
         ) : (
           <div className="space-y-8">
             {jobs.map((job) => (
-              <div
+              <TiltCard
                 key={job.id}
-                className="bg-[#1A1A00] backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-white/20 relative transition-all duration-300 hover:scale-[1.01]"
+                className="bg-[#1A1A00] backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-white/20"
               >
                 <div className="p-8 md:p-10">
                   <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
@@ -165,7 +166,7 @@ export default function Jobs() {
                     Jetzt bewerben
                   </a>
                 </div>
-              </div>
+              </TiltCard>
             ))}
           </div>
         )}

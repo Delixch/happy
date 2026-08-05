@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Coffee, UtensilsCrossed, Sandwich as SandwichIcon, IceCream, CupSoda, Loader2, Sparkles, ChevronDown, type LucideIcon } from 'lucide-react';
 import { supabase, type MenuItem, type MenuCategory } from '../lib/supabase';
 import MarqueeTicker from '../components/MarqueeTicker';
+import TiltCard from '../components/TiltCard';
 
 const CATEGORY_META: Record<MenuCategory, { label: string; Icon: LucideIcon; intro: string; bg: string; bg2: string; accent: string }> = {
   fruehstueck: {
@@ -270,9 +271,9 @@ function CategoryContent({
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filtered.map((item, idx) => (
-            <div
+            <TiltCard
               key={item.id}
-              className="relative rounded-3xl p-6 border border-[#FFBB00]/20 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:glow-gold flex justify-between gap-4 overflow-hidden min-h-[220px] shadow-xl flex-col justify-between"
+              className="rounded-3xl p-6 border border-[#FFBB00]/20 backdrop-blur-xl hover:shadow-2xl hover:glow-gold flex justify-between gap-4 overflow-hidden min-h-[220px] shadow-xl flex-col justify-between"
               style={{ backgroundColor: `${meta.bg}D9` }}
             >
               <div className="flex justify-between items-start gap-3">
@@ -322,7 +323,7 @@ function CategoryContent({
                   HAPPY BECK
                 </span>
               </div>
-            </div>
+            </TiltCard>
           ))}
         </div>
       )}

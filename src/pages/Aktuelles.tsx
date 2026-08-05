@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Gift, Zap, PartyPopper, Eye, ChevronDown, Loader2 } from 'lucide-react';
 import { supabase, type DailySpecial, type Deal } from '../lib/supabase';
 import HeroVideo from '../components/HeroVideo';
+import TiltCard from '../components/TiltCard';
 
 // Shared dark olive gradient used across all cards on this page
 const CARD_GRADIENT = 'linear-gradient(135deg, #1A1A00 0%, #0D0D00 100%)';
@@ -193,8 +194,8 @@ function DealCard({ deal, index }: { deal: Deal; index: number }) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div
-      className={`relative rounded-3xl overflow-hidden shadow-2xl ${CARD_BORDER} group hover:scale-[1.02] transition-all duration-500 cursor-pointer h-full flex flex-col`}
+    <TiltCard
+      className={`rounded-3xl overflow-hidden shadow-2xl ${CARD_BORDER} group flex flex-col`}
       onClick={() => setExpanded(!expanded)}
       style={{ background: CARD_GRADIENT, animationDelay: `${index * 100}ms` }}
     >
@@ -252,7 +253,7 @@ function DealCard({ deal, index }: { deal: Deal; index: number }) {
           </p>
         )}
       </div>
-    </div>
+    </TiltCard>
   );
 }
 

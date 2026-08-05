@@ -169,21 +169,21 @@ export default function Team() {
                   return (
                     <div
                       key={member.id}
-                      onClick={() => setCurrentIndex(index)}
+                      onClick={() => selectMember(index)}
                       onMouseMove={(e) => {
                         if (!isCurrent) return;
                         const rect = e.currentTarget.getBoundingClientRect();
                         const x = e.clientX - rect.left;
                         const y = e.clientY - rect.top;
-                        const rx = (y / rect.height - 0.5) * -24; // Tilt X
-                        const ry = (x / rect.width - 0.5) * 24;  // Tilt Y
+                        const rx = (y / rect.height - 0.5) * -18; // Pure subtle tilt X
+                        const ry = (x / rect.width - 0.5) * 18;  // Pure subtle tilt Y
                         e.currentTarget.style.transform = `translate3d(${translateX}px, ${translateY}px, 0px) scale(${scale}) rotateX(${rx}deg) rotateY(${ry}deg)`;
                       }}
                       onMouseLeave={(e) => {
                         if (!isCurrent) return;
                         e.currentTarget.style.transform = `translate3d(${translateX}px, ${translateY}px, 0px) scale(${scale}) rotateX(0deg) rotateY(0deg)`;
                       }}
-                      className="absolute inset-0 bg-[#1A1A00] rounded-3xl overflow-hidden shadow-2xl border-2 border-[#FFFFCC]/40 transition-all duration-500 ease-out cursor-pointer group"
+                      className="absolute inset-0 bg-[#1A1A00] rounded-3xl overflow-hidden shadow-2xl border border-white/20 transition-all duration-500 ease-out cursor-pointer group"
                       style={{
                         zIndex,
                         transform: `translate3d(${translateX}px, ${translateY}px, 0px) scale(${scale})`,
@@ -191,26 +191,19 @@ export default function Team() {
                         transformStyle: 'preserve-3d',
                       }}
                     >
-                      {/* Scanning Top Glow Line */}
-                      <div className="h-[3px] w-full bg-black/30 relative overflow-hidden flex-shrink-0 z-20">
-                        <div className="absolute inset-0 bg-[#FFFFCC] animate-line-scan w-full h-full shadow-[0_0_15px_#FFFFCC]" />
-                      </div>
-
-                      {/* 3D Holographic Rainbow Shimmer Foil */}
+                      {/* Subtle Clean Holographic Glare Overlay (Lightswind PRO Style) */}
                       {isCurrent && (
                         <div 
-                          className="absolute inset-0 pointer-events-none z-30 opacity-50 group-hover:opacity-80 transition-opacity duration-500 rounded-3xl mix-blend-color-dodge"
+                          className="absolute inset-0 pointer-events-none z-30 opacity-25 group-hover:opacity-45 transition-opacity duration-300 rounded-3xl"
                           style={{
-                            background: 'linear-gradient(125deg, transparent 20%, rgba(255,255,204,0.7) 40%, rgba(255,187,0,0.9) 50%, rgba(255,255,204,0.7) 60%, transparent 80%)',
-                            backgroundSize: '200% 200%',
-                            animation: 'spinSlow 5s linear infinite'
+                            background: 'linear-gradient(135deg, rgba(255,255,204,0.4) 0%, transparent 50%, rgba(255,255,204,0.1) 100%)',
                           }}
                         />
                       )}
 
                       {/* Full Photo */}
                       {member.image_url ? (
-                        <img src={member.image_url} alt={member.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <img src={member.image_url} alt={member.name} className="w-full h-full object-cover transition-transform duration-500" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center bg-[#1A1A00] text-[#FFFFCC]">
                           <Users className="w-20 h-20" />
@@ -219,8 +212,8 @@ export default function Team() {
 
                       {/* Card Overlay Text */}
                       <div 
-                        className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/95 via-black/60 to-transparent text-left z-20"
-                        style={{ transform: isCurrent ? 'translateZ(35px)' : 'none' }}
+                        className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/90 via-black/50 to-transparent text-left z-20"
+                        style={{ transform: isCurrent ? 'translateZ(25px)' : 'none' }}
                       >
                         <span className="inline-block px-3 py-1 rounded-full bg-[#FFFFCC] text-[#1A1A00] font-sans text-[10px] font-black uppercase tracking-wider mb-2">
                           {member.role}

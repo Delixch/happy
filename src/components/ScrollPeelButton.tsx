@@ -23,7 +23,7 @@ export default function ScrollPeelButton() {
     if (isPushing) return;
     setIsPushing(true);
 
-    const duration = 1800; // 1.8 seconds for a slow, premium car-like scroll
+    const duration = 1000; // 1.0 second smooth fluid scroll
     const start = window.scrollY;
     const startTime = performance.now();
 
@@ -31,10 +31,8 @@ export default function ScrollPeelButton() {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
       
-      // Easing: easeInOutCubic (starts slow, accelerates, then decelerates slowly at the top like a car)
-      const ease = progress < 0.5 
-        ? 4 * progress * progress * progress 
-        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+      // Easing: easeOutCubic for smooth natural deceleration
+      const ease = 1 - Math.pow(1 - progress, 3);
 
       window.scrollTo(0, start * (1 - ease));
 
@@ -45,10 +43,10 @@ export default function ScrollPeelButton() {
 
     requestAnimationFrame(animateScroll);
 
-    // Reset animation state after it completes (850ms)
+    // Reset animation state after it completes
     setTimeout(() => {
       setIsPushing(false);
-    }, 850);
+    }, 600);
   };
 
   return (
@@ -60,31 +58,27 @@ export default function ScrollPeelButton() {
             transform: translateY(0) scale(1);
             opacity: 1;
           }
-          15% {
-            /* Pulling down/back to charge the push */
-            transform: translateY(30px) scale(0.95);
+          20% {
+            transform: translateY(12px) scale(0.95);
             opacity: 1;
           }
-          55% {
-            /* Thrusting all the way up out of the viewport and fading out */
-            transform: translateY(-400px) scale(1.1);
+          60% {
+            transform: translateY(-250px) scale(1.05);
             opacity: 0;
-            filter: drop-shadow(0 0 35px rgba(212,175,55,1));
+            filter: drop-shadow(0 0 20px rgba(255,255,204,0.8));
           }
           99% {
-            /* Still out of view and invisible */
-            transform: translateY(-400px);
+            transform: translateY(-250px);
             opacity: 0;
           }
           100% {
-            /* Return to home position while invisible and ready for next scroll */
             transform: translateY(0) scale(1);
             opacity: 1;
           }
         }
 
         .peel-active-push {
-          animation: peelVerticalPush 0.85s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+          animation: peelVerticalPush 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
       `}</style>
 
@@ -97,32 +91,32 @@ export default function ScrollPeelButton() {
         style={{ transition: 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)' }}
       >
         <div className={`relative ${isPushing ? 'peel-active-push' : 'group-hover:-translate-y-3 transition-transform duration-300'}`}>
-          {/* Custom SVG Bakery Peel with a long, elegant visible handle (Compact Size) */}
+          {/* Custom SVG Bakery Peel with Dark Theme Colors (#1A1A00 & #FFFFCC) */}
           <svg
             viewBox="0 0 100 200"
-            className="w-10 h-20 text-gold-400 drop-shadow-[0_4px_10px_rgba(0,0,0,0.6)] group-hover:text-gold-300 transition-colors"
+            className="w-9 h-16 drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] group-hover:scale-110 transition-transform"
           >
             {/* The Wooden Peel Paddle Head */}
             <path
               d="M 28 10 C 28 5, 72 5, 72 10 L 72 60 C 72 68, 54 68, 54 75 L 53 75 L 53 190 C 53 194, 47 194, 47 190 L 47 75 L 46 75 C 46 68, 28 68, 28 60 Z"
-              fill="currentColor"
-              stroke="#D4AF37"
-              strokeWidth="2.5"
+              fill="#1A1A00"
+              stroke="#FFFFCC"
+              strokeWidth="3"
               strokeLinejoin="round"
             />
             {/* Wood Texture Accent Lines on Peel Head */}
             <path
               d="M 38 20 L 38 52 M 50 15 L 50 55 M 62 20 L 62 52"
-              stroke="#B8860B"
-              strokeWidth="1.5"
+              stroke="#FFFFCC"
+              strokeWidth="2"
               strokeLinecap="round"
-              opacity="0.4"
+              opacity="0.6"
             />
           </svg>
         </div>
         
         {/* Helper text */}
-        <span className="text-[7px] font-sans font-bold text-gold-400/50 uppercase tracking-[0.25em] mt-1 group-hover:text-gold-400 transition-colors">
+        <span className="text-[8px] font-sans font-black text-[#1A1A00] uppercase tracking-[0.25em] mt-1 group-hover:scale-110 transition-transform">
           HOCH
         </span>
       </button>

@@ -76,16 +76,16 @@ export default function Unternehmen() {
           className="absolute inset-0 -top-10 bg-cover bg-center will-change-transform brightness-90"
           style={{ backgroundImage: "url('/uberuns.jpg')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#474150]/60 via-transparent to-[#FFBB00]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#474150]/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A00]/60 via-transparent to-[#FFFFCC]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A00]/80 via-transparent to-transparent" />
 
         <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-end pb-10">
           <div className="max-w-xl">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-[#474150] text-[#FFBB00] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
               Seit 2006 in Zürich
             </span>
             <h1 className="text-4xl md:text-5xl font-serif font-black text-white mb-4 leading-[1.15] drop-shadow-md">
-              Unsere <span className="text-[#FFBB00] [-webkit-text-stroke:1px_#474150]" style={{ paintOrder: 'stroke fill' }}>Geschichte</span>
+              Unsere <span className="text-[#FFFFCC] [-webkit-text-stroke:1px_#1A1A00]" style={{ paintOrder: 'stroke fill' }}>Geschichte</span>
             </h1>
           </div>
         </div>
@@ -98,17 +98,17 @@ export default function Unternehmen() {
             {/* Text - left */}
             <div className="lg:col-span-7 reveal">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-full bg-[#474150] flex items-center justify-center text-[#FFBB00] shadow-sm">
+                <div className="w-10 h-10 rounded-full bg-[#1A1A00] flex items-center justify-center text-[#FFFFCC] shadow-sm">
                   <Wheat className="w-5 h-5" />
                 </div>
-                <span className="text-[#474150] font-sans text-xs font-bold tracking-[0.3em] uppercase">Die Anfänge</span>
+                <span className="text-[#1A1A00] font-sans text-xs font-bold tracking-[0.3em] uppercase">Die Anfänge</span>
               </div>
 
               <div className="relative inline-block mb-8">
                 <h2 className="text-3xl md:text-5xl font-serif font-black text-[#231E2A] pb-3">
-                  Tradition trifft <span className="text-[#474150]">Leidenschaft</span>
+                  Tradition trifft <span className="text-[#1A1A00]">Leidenschaft</span>
                 </h2>
-                <span className="absolute bottom-0 left-0 w-full h-1.5 bg-[#474150] rounded-full" />
+                <span className="absolute bottom-0 left-0 w-full h-1.5 bg-[#1A1A00] rounded-full" />
               </div>
 
               <div className="space-y-6 text-[#231E2A] font-sans text-base md:text-lg leading-[1.8] font-medium">
@@ -168,33 +168,43 @@ export default function Unternehmen() {
             </div>
           </div>
 
-          {/* 5-Card Stat Grid - Perfect Large Round Circles with Unique Color Rotating Border Animations */}
+          {/* 5-Card Stat Grid - Round Circles with Meteor Impact Orbit Border Effect */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 items-center justify-center">
             {[
-              { icon: <Award className="w-5 h-5" />, value: '20', label: 'Jahre Erfahrung', bg: '#1A1A00', accent: '#FFFFCC', ring: 'conic-gradient(from 0deg, #FFFFCC, transparent 60%, #FFFFCC)' },
-              { icon: <Clock className="w-5 h-5" />, value: '2006', label: 'Gegründet', bg: '#232300', accent: '#FFFFCC', ring: 'conic-gradient(from 72deg, #FFFFCC, transparent 60%, #FFFFCC)' },
-              { icon: <MapPin className="w-5 h-5" />, value: 'Zürich', label: 'Hauptsitz', bg: '#2C2C00', accent: '#FFFFCC', ring: 'conic-gradient(from 144deg, #FFFFCC, transparent 60%, #FFFFCC)' },
-              { icon: <Wheat className="w-5 h-5" />, value: '24h', label: 'Geöffnet', bg: '#353500', accent: '#FFFFCC', ring: 'conic-gradient(from 216deg, #FFFFCC, transparent 60%, #FFFFCC)' },
-              { icon: <Award className="w-5 h-5" />, value: '20+', label: 'Jahre Tradition', bg: '#3D3D00', accent: '#FFFFCC', ring: 'conic-gradient(from 288deg, #FFFFCC, transparent 60%, #FFFFCC)' },
+              { icon: <Award className="w-5 h-5" />, value: '20', label: 'Jahre Erfahrung', bg: '#1A1A00', accent: '#FFFFCC', speed: '3s' },
+              { icon: <Clock className="w-5 h-5" />, value: '2006', label: 'Gegründet', bg: '#232300', accent: '#FFFFCC', speed: '2.5s' },
+              { icon: <MapPin className="w-5 h-5" />, value: 'Zürich', label: 'Hauptsitz', bg: '#2C2C00', accent: '#FFFFCC', speed: '3.2s' },
+              { icon: <Wheat className="w-5 h-5" />, value: '24h', label: 'Geöffnet', bg: '#353500', accent: '#FFFFCC', speed: '2.8s' },
+              { icon: <Award className="w-5 h-5" />, value: '20+', label: 'Jahre Tradition', bg: '#3D3D00', accent: '#FFFFCC', speed: '3.5s' },
             ].map((stat, i) => (
               <div
                 key={i}
-                className="reveal rounded-full aspect-square w-full max-w-[180px] sm:max-w-[190px] mx-auto p-4 text-center shadow-2xl border-2 border-white/15 hover:scale-110 hover:shadow-[0_15px_35px_rgba(0,0,0,0.3)] transition-all duration-300 flex flex-col items-center justify-center relative overflow-hidden group"
+                className="reveal rounded-full aspect-square w-full max-w-[180px] sm:max-w-[190px] mx-auto p-4 text-center shadow-2xl border-2 border-white/20 hover:scale-110 hover:shadow-[0_15px_35px_rgba(0,0,0,0.4)] transition-all duration-300 flex flex-col items-center justify-center relative group"
                 style={{ 
                   animationDelay: `${i * 100}ms`,
                   backgroundColor: stat.bg
                 }}
               >
-                {/* Rotating Color Ring Effect */}
+                {/* METEOR ORBIT EFFECT: Rotating Spark Head + Glowing Tail */}
                 <div className="absolute inset-0 rounded-full p-[2px] pointer-events-none overflow-hidden">
+                  {/* Rotating Conic Meteor Tail */}
                   <div 
                     className="w-full h-full rounded-full animate-spin-slow"
                     style={{ 
-                      background: stat.ring,
+                      animationDuration: stat.speed,
+                      background: 'conic-gradient(from 0deg, #FFFFCC 0%, rgba(255,187,0,0.8) 15%, transparent 40%, transparent 100%)',
                       mask: 'radial-gradient(circle, transparent 66%, black 67%)',
                       WebkitMask: 'radial-gradient(circle, transparent 66%, black 67%)'
                     }}
                   />
+                </div>
+
+                {/* Meteor Spark Head Highlight */}
+                <div 
+                  className="absolute inset-0 rounded-full pointer-events-none animate-spin-slow"
+                  style={{ animationDuration: stat.speed }}
+                >
+                  <div className="w-3 h-3 bg-white rounded-full shadow-[0_0_12px_#FFFFCC,0_0_20px_#FF8000] absolute -top-1 left-1/2 -translate-x-1/2 animate-pulse" />
                 </div>
 
                 <div 

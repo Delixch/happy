@@ -275,7 +275,15 @@
     100% { transform: rotate(360deg); }
   }
   .animate-spin-slow {
-    animation: spinSlow 8s linear infinite;
+    animation: spinSlow 4s linear infinite;
+  }
+
+  @keyframes meteorGlow {
+    0%, 100% { opacity: 0.4; filter: drop-shadow(0 0 4px #FFFFCC); }
+    50% { opacity: 1; filter: drop-shadow(0 0 12px #FFFFCC) drop-shadow(0 0 20px #FF8000); }
+  }
+  .animate-meteor-glow {
+    animation: meteorGlow 2s ease-in-out infinite;
   }
 
   @keyframes heroKenBurns {

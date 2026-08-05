@@ -7,8 +7,24 @@ import {
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [openHours, setOpenHours] = useState<number>(0);
   const location = useLocation();
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Live 24/7 Hours Counter since Jan 1, 2006
+  useEffect(() => {
+    const startDate = new Date('2006-01-01T00:00:00');
+    const updateCounter = () => {
+      const now = new Date();
+      const diffInMs = now.getTime() - startDate.getTime();
+      const totalHours = Math.floor(diffInMs / (1000 * 60 * 60));
+      setOpenHours(totalHours);
+    };
+
+    updateCounter();
+    const interval = setInterval(updateCounter, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -67,6 +83,24 @@ export default function Navigation() {
             </span>
           </div>
         </Link>
+
+        {/* MOBILE LIVE 24/7 COUNTER BADGE (OUTSIDE BRAND TAB - IN MIDDLE SPACE) */}
+        <div className="flex lg:hidden items-center my-auto ml-3 mr-auto z-20">
+          <div className="bg-[#0E0E00] border border-[#FFFFCC]/30 rounded-xl px-2.5 py-1 flex items-center gap-2 shadow-lg">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#06C167] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#06C167]" />
+            </span>
+            <div className="flex flex-col">
+              <span className="text-[10px] font-sans font-black text-[#FFFFCC] tracking-tight leading-none whitespace-nowrap">
+                {openHours > 0 ? openHours.toLocaleString('de-CH') : '180.000+'}h 24/7
+              </span>
+              <span className="text-[7px] font-sans font-bold text-white/70 tracking-tighter uppercase whitespace-nowrap">
+                SEIT JAN. 2006
+              </span>
+            </div>
+          </div>
+        </div>
 
         {/* DESKTOP PARALLELOGRAM TABS CONTAINER (Tight Compact Widths, Flush Left) */}
         <div className="hidden lg:flex items-stretch justify-start -ml-4">
@@ -185,6 +219,24 @@ export default function Navigation() {
           >
             <span>Kontakt</span>
           </Link>
+        </div>
+
+        {/* ── LIVE 24/7 NON-STOP OPEN HOURS COUNTER BADGE (Desktop Right Side) ── */}
+        <div className="hidden lg:flex items-center ml-auto pr-6">
+          <div className="bg-[#0E0E00] border border-[#FFFFCC]/25 rounded-2xl px-4 py-1.5 flex items-center gap-3 shadow-lg">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#06C167] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#06C167]" />
+            </span>
+            <div className="flex flex-col">
+              <span className="text-[11px] font-sans font-black text-[#FFFFCC] tracking-wider leading-none">
+                {openHours > 0 ? openHours.toLocaleString('de-CH') : '180.000+'} STUNDEN UNUNTERBROCHEN
+              </span>
+              <span className="text-[8px] font-sans font-bold text-white/60 uppercase tracking-widest mt-0.5">
+                SEIT JANUAR 2006 · 24/7 GEÖFFNET
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* MOBILE HAMBURGER BUTTON (Flush Right Mobile) */}

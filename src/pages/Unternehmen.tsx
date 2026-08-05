@@ -1,6 +1,38 @@
 import { useState, useEffect, useRef } from 'react';
 import { Award, Clock, MapPin, Wheat } from 'lucide-react';
 
+const FRAME_COUNT = 300;
+
+function FrameAnimationCard() {
+  const [currentFrame, setCurrentFrame] = useState(1);
+
+  useEffect(() => {
+    // Smooth auto-play at 30 FPS without scroll
+    const interval = setInterval(() => {
+      setCurrentFrame((prev) => (prev % FRAME_COUNT) + 1);
+    }, 1000 / 30);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const frameNum = String(currentFrame).padStart(3, '0');
+
+  return (
+    <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl bg-[#1A1A00] border-4 border-white">
+      <img
+        src={`/uberuns/ezgif-frame-${frameNum}.jpg`}
+        alt="Bäckerei Handwerk Tradition"
+        className="w-full h-full object-cover"
+      />
+      <div className="absolute bottom-0 left-0 right-0 p-4 bg-[#1A1A00]/80 backdrop-blur-sm text-center">
+        <p className="font-serif text-sm italic text-[#FFFFCC] font-bold">
+          ❝ Traditionelles Bäckerei Handwerk ❞
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function Unternehmen() {
   const [hover, setHover] = useState(false);
   const parallaxRef = useRef<HTMLDivElement>(null);
@@ -30,7 +62,6 @@ export default function Unternehmen() {
     const els = document.querySelectorAll('.reveal');
     els.forEach((el) => {
       observer.observe(el);
-      // Fallback: force visible if already in viewport or small screen
       el.classList.add('visible');
     });
     return () => observer.disconnect();
@@ -105,34 +136,9 @@ export default function Unternehmen() {
               </blockquote>
             </div>
 
-            {/* Image - right */}
+            {/* Auto-playing Frame Animation Card - right */}
             <div className="lg:col-span-5 reveal" style={{ animationDelay: '200ms' }}>
-              <div
-                className="relative group cursor-pointer"
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-                onTouchStart={() => setHover(true)}
-                onTouchEnd={() => setHover(false)}
-                onTouchCancel={() => setHover(false)}
-                onClick={() => setHover((v) => !v)}
-                role="button"
-                aria-label="Bild wechseln"
-              >
-                <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl bg-[#1A1A00] border-4 border-white p-4">
-                  <img
-                    src="/logo.png"
-                    alt="Happy Beck Bäckerei Logo"
-                    className={`w-full h-full object-contain p-8 transform-gpu transition-all duration-750 ${
-                      hover ? 'scale-105' : 'scale-100'
-                    }`}
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-[#1A1A00]/90 text-center backdrop-blur-sm">
-                    <p className="font-serif text-sm italic text-[#FFFFCC] font-bold">
-                      {hover ? '❝ Happy Beck Emblem ❞' : '❝ Unser Logo ❞'}
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <FrameAnimationCard />
             </div>
           </div>
         </div>

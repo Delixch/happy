@@ -87,7 +87,7 @@ export default function Home() {
     <section id="home">
       {/* Hero Container */}
       <div 
-        className="relative pt-14 md:pt-16 pb-12 bg-warm-yellow"
+        className="relative pt-14 md:pt-16 pb-4 bg-warm-yellow"
       >
         <div className="w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -229,8 +229,31 @@ export default function Home() {
           </div>
         </div>
 
+        {/* ── FULL WIDTH 24H SCROLLING MARQUEE BANNER (RIGHT UNDER HERO) ── */}
+        <div className="w-full bg-[#1A1A00] py-2.5 md:py-3.5 border-y-2 border-white/20 overflow-hidden shadow-2xl mt-4 md:-mt-8 mb-4 relative z-20">
+          <div className="animate-marquee flex items-center whitespace-nowrap">
+            {[1, 2, 3, 4].map((groupKey) => (
+              <div key={groupKey} className="flex items-center gap-8 px-4 flex-shrink-0">
+                <span className="flex items-center gap-3 text-[#FFFFCC] font-sans font-black text-sm md:text-base tracking-widest uppercase">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#FFFFCC] animate-ping" />
+                  🔥 24 STUNDEN AN 7 TAGEN FÜR SIE GEÖFFNET!
+                </span>
+                <span className="text-[#FFFFCC]/40 text-xl font-bold">•</span>
+                <span className="text-white font-sans font-bold text-sm md:text-base tracking-wider">
+                  🥐 Frische Gipfeli & Sandwiches – Tag & Nacht ofenfrisch!
+                </span>
+                <span className="text-[#FFFFCC]/40 text-xl font-bold">•</span>
+                <span className="text-[#FFFFCC] font-serif italic text-sm md:text-base font-bold">
+                  ✨ Wir freuen uns auf Ihren Besuch bei Happy Beck!
+                </span>
+                <span className="text-[#FFFFCC]/40 text-xl font-bold">•</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Features Section - Pulled Right Under Sliding Image */}
-        <div className="container mx-auto px-4 lg:px-8 pt-12 md:pt-16 pb-8">
+        <div className="container mx-auto px-4 lg:px-8 pt-6 md:pt-8 pb-8">
           {/* Section header */}
           <div className="text-center mb-10 reveal">
             <p

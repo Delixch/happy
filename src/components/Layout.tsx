@@ -3,6 +3,7 @@ import Footer from './Footer';
 import ScrollToTop from './ScrollToTop';
 import ScrollPeelButton from './ScrollPeelButton';
 import FreshJuiceModal from './FreshJuiceModal';
+import ChefMascotBug from './ChefMascotBug';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -13,6 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Footer />
       <ScrollPeelButton />
       <FreshJuiceModal />
+      <ChefMascotBug />
     </div>
   );
 }

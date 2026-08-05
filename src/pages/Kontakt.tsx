@@ -1,6 +1,12 @@
 import { useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Mail, MapPin, Clock, Instagram, Send } from 'lucide-react';
+import { Mail, MapPin, Clock, Instagram, Send, ChefHat, ShoppingBag } from 'lucide-react';
+
+const ORDER_STEPS = [
+  { icon: Send, label: 'Nachricht erhalten' },
+  { icon: ChefHat, label: 'Wird zubereitet' },
+  { icon: ShoppingBag, label: 'Bereit zur Abholung' },
+];
 import HeroVideo from '../components/HeroVideo';
 
 type Operator = '+' | '-' | 'x';
@@ -216,6 +222,31 @@ export default function Kontakt() {
                 <p className="text-white/90 font-sans text-base font-medium">
                   Ihre Nachricht wurde erfolgreich gesendet. Wir melden uns in Kürze bei Ihnen.
                 </p>
+
+                <div className="mt-10 pt-8 border-t border-white/10">
+                  <p className="text-white/50 font-sans text-xs uppercase tracking-wider font-bold mb-5">
+                    So geht's bei einer Vorbestellung weiter
+                  </p>
+                  <div className="flex items-start justify-center gap-2 sm:gap-4">
+                    {ORDER_STEPS.map((step, i) => (
+                      <div key={step.label} className="flex items-start">
+                        <div className="flex flex-col items-center gap-2 w-20">
+                          <div
+                            className={`w-10 h-10 rounded-full flex items-center justify-center border-2 flex-shrink-0 ${
+                              i === 0 ? 'bg-[#FFFFCC] border-[#FFFFCC] text-[#1A1A00]' : 'border-white/20 text-white/40'
+                            }`}
+                          >
+                            <step.icon className="w-4 h-4" />
+                          </div>
+                          <span className={`text-[10px] font-sans font-bold leading-tight ${i === 0 ? 'text-[#FFFFCC]' : 'text-white/40'}`}>
+                            {step.label}
+                          </span>
+                        </div>
+                        {i < ORDER_STEPS.length - 1 && <div className="w-6 sm:w-10 h-0.5 bg-white/10 mt-5" />}
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             ) : (
               <form onSubmit={onSubmit} className="bg-[#1A1A00] backdrop-blur-xl rounded-3xl p-8 md:p-10 shadow-2xl border border-white/20 space-y-6 relative overflow-hidden">

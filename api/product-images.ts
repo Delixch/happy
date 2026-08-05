@@ -19,9 +19,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  if (!CLOUD_NAME || !API_KEY || !API_SECRET || !FOLDER) {
-    console.error('Cloudinary product image env vars missing');
-    return res.status(500).json({ error: 'Server misconfigured' });
+  const missing = [
+    !CLOUD_NAME && 'VITE_CLOUDINARY_CLOUD_NAME',
+    !API_KEY && 'CLOUDINARY_API_KEY',
+    !API_SECRET && 'CLOUDINARY_API_SECRET',
+    !FOLDER && 'CLOUDINARY_PRODUCT_FOLDER',
+  ].filter(Boolean);
+
+  if (missing.length > 0) {
+    console.error('Cloudinary product image env vars missing:', missing.join(', '));
+    return res.status(500).json({ error: 'Server misconfigured', missing });
   }
 
   const auth = Buffer.from(`${API_KEY}:${API_SECRET}`).toString('base64');

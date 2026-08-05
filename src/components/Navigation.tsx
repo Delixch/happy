@@ -50,12 +50,12 @@ export default function Navigation() {
       {/* ── PARALLELOGRAM RIBBON NAV BAR (Full-Width, Flush, Skewed Ribbons) ── */}
       <nav
         ref={dropdownRef}
-        className="fixed top-0 left-0 right-0 z-50 w-full h-14 md:h-16 bg-[#231E2A] flex items-stretch border-b border-black/20"
+        className="fixed top-0 left-0 right-0 z-50 w-full h-14 md:h-16 bg-[#1A1A00] flex items-stretch"
       >
         {/* BRAND LOGO TAB (Flush Left) */}
         <Link
           to="/"
-          className="flex items-center gap-3 px-6 bg-[#17131D] text-white flex-shrink-0 z-20 hover:bg-[#110E16] transition-colors pr-8 relative"
+          className="flex items-center gap-3 px-6 bg-[#0E0E00] text-white flex-shrink-0 z-20 hover:bg-[#070700] transition-colors pr-8 relative"
           style={{ clipPath: 'polygon(0 0, 100% 0, 85% 100%, 0 100%)' }}
         >
           <img src="/logo.png" alt="Happy Beck" className="w-8 h-8 object-contain" />
@@ -75,7 +75,7 @@ export default function Navigation() {
           <Link
             to="/"
             className={`flex-1 flex items-center justify-center font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer relative ${
-              location.pathname === '/' ? 'bg-[#FFBB00] text-[#231E2A] z-10' : 'bg-[#2A2530] text-white hover:bg-[#3A3542]'
+              location.pathname === '/' ? 'bg-[#FFFFCC] text-[#1A1A00] z-10 font-black' : 'bg-[#1A1A00] text-[#FFFFCC] hover:bg-[#2A2A00]'
             }`}
             style={{ clipPath: 'polygon(12% 0, 100% 0, 88% 100%, 0 100%)' }}
           >
@@ -91,8 +91,8 @@ export default function Navigation() {
               onClick={() => setActiveDropdown(activeDropdown === 'uberUns' ? null : 'uberUns')}
               className={`w-full flex items-center justify-center gap-1.5 font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer ${
                 ['/unternehmen', '/team', '/jobs', '/medien'].includes(location.pathname) || activeDropdown === 'uberUns'
-                  ? 'bg-[#FFBB00] text-[#231E2A]'
-                  : 'bg-[#2A2530] text-white hover:bg-[#3A3542]'
+                  ? 'bg-[#FFFFCC] text-[#1A1A00] font-black'
+                  : 'bg-[#1A1A00] text-[#FFFFCC] hover:bg-[#2A2A00]'
               }`}
               style={{ clipPath: 'polygon(12% 0, 100% 0, 88% 100%, 0 100%)' }}
             >
@@ -103,7 +103,7 @@ export default function Navigation() {
             {activeDropdown === 'uberUns' && (
               <div
                 onMouseLeave={() => setActiveDropdown(null)}
-                className="absolute top-full left-0 mt-0 w-60 p-2 bg-[#2A2530] border border-[#FFBB00]/20 text-white shadow-2xl z-50 animate-scale-in"
+                className="absolute top-full left-0 mt-0 w-60 p-2 bg-[#1A1A00] border border-[#FFFFCC]/30 text-white shadow-2xl z-50 animate-scale-in"
                 style={{ clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0 100%)' }}
               >
                 <div className="space-y-1">
@@ -113,13 +113,13 @@ export default function Navigation() {
                       to={item.href}
                       onClick={() => setActiveDropdown(null)}
                       className={`block p-3 transition-all group/item ${
-                        location.pathname === item.href ? 'bg-[#FFBB00]/15' : 'bg-white/5 hover:bg-[#FFBB00]/15'
+                        location.pathname === item.href ? 'bg-[#FFFFCC]/20' : 'bg-white/5 hover:bg-[#FFFFCC]/20'
                       }`}
                     >
-                      <p className="text-xs font-sans font-extrabold text-[#FFBB00] uppercase tracking-wider">
+                      <p className="text-xs font-sans font-extrabold text-[#FFFFCC] uppercase tracking-wider">
                         {item.label}
                       </p>
-                      <p className="text-[10px] text-white/70 font-sans mt-0.5">
+                      <p className="text-[10px] text-white/80 font-sans mt-0.5">
                         {item.desc}
                       </p>
                     </Link>
@@ -138,8 +138,8 @@ export default function Navigation() {
               onClick={() => setActiveDropdown(activeDropdown === 'angebot' ? null : 'angebot')}
               className={`w-full flex items-center justify-center gap-1.5 font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer ${
                 ['/menu', '/aktuelles'].includes(location.pathname) || activeDropdown === 'angebot'
-                  ? 'bg-[#FFBB00] text-[#231E2A]'
-                  : 'bg-[#2A2530] text-white hover:bg-[#3A3542]'
+                  ? 'bg-[#FFFFCC] text-[#1A1A00] font-black'
+                  : 'bg-[#1A1A00] text-[#FFFFCC] hover:bg-[#2A2A00]'
               }`}
               style={{ clipPath: 'polygon(12% 0, 100% 0, 88% 100%, 0 100%)' }}
             >
@@ -150,7 +150,7 @@ export default function Navigation() {
             {activeDropdown === 'angebot' && (
               <div
                 onMouseLeave={() => setActiveDropdown(null)}
-                className="absolute top-full left-0 mt-0 w-64 p-2 bg-[#2A2530] border border-[#FFBB00]/20 text-white shadow-2xl z-50 animate-scale-in"
+                className="absolute top-full left-0 mt-0 w-64 p-2 bg-[#1A1A00] border border-[#FFFFCC]/30 text-white shadow-2xl z-50 animate-scale-in"
                 style={{ clipPath: 'polygon(0 0, 100% 0, 95% 100%, 0 100%)' }}
               >
                 <div className="space-y-1">
@@ -160,13 +160,13 @@ export default function Navigation() {
                       to={item.href}
                       onClick={() => setActiveDropdown(null)}
                       className={`block p-3 transition-all group/item ${
-                        location.pathname === item.href ? 'bg-[#FFBB00]/15' : 'bg-white/5 hover:bg-[#FFBB00]/15'
+                        location.pathname === item.href ? 'bg-[#FFFFCC]/20' : 'bg-white/5 hover:bg-[#FFFFCC]/20'
                       }`}
                     >
-                      <p className="text-xs font-sans font-extrabold text-[#FFBB00] uppercase tracking-wider">
+                      <p className="text-xs font-sans font-extrabold text-[#FFFFCC] uppercase tracking-wider">
                         {item.label}
                       </p>
-                      <p className="text-[10px] text-white/70 font-sans mt-0.5">
+                      <p className="text-[10px] text-white/80 font-sans mt-0.5">
                         {item.desc}
                       </p>
                     </Link>
@@ -179,8 +179,8 @@ export default function Navigation() {
           {/* TAB 4: KONTAKT */}
           <Link
             to="/kontakt"
-            className={`flex-1 flex items-center justify-center gap-2 font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer relative -ml-5 ${
-              location.pathname === '/kontakt' ? 'bg-[#FFBB00] text-[#231E2A]' : 'bg-[#2A2530] text-white hover:bg-[#3A3542]'
+            className={`flex-1 flex items-center justify-center font-sans font-extrabold text-xs md:text-sm uppercase tracking-wider transition-all cursor-pointer relative -ml-5 ${
+              location.pathname === '/kontakt' ? 'bg-[#FFFFCC] text-[#1A1A00] font-black' : 'bg-[#1A1A00] text-[#FFFFCC] hover:bg-[#2A2A00]'
             }`}
             style={{ clipPath: 'polygon(12% 0, 100% 0, 100% 100%, 0 100%)' }}
           >

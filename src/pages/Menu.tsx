@@ -7,41 +7,41 @@ const CATEGORY_META: Record<MenuCategory, { label: string; Icon: LucideIcon; int
     label: 'Frühstück',
     Icon: Coffee,
     intro: 'Starten Sie glücklich in den Tag – frisch & fein.',
-    bg: '#431407',
-    bg2: '#1F0900',
-    accent: '#FFBB00'
+    bg: '#1A1A00',
+    bg2: '#0D0D00',
+    accent: '#FFFFCC'
   },
   getraenke: {
     label: 'Getränke',
     Icon: CupSoda,
     intro: 'Heiss & kalt – erfrischend oder belebend.',
-    bg: '#7C2D12',
-    bg2: '#431407',
-    accent: '#FFBB00'
+    bg: '#232300',
+    bg2: '#121200',
+    accent: '#FFFFCC'
   },
   salziges: {
     label: 'Salziges',
     Icon: UtensilsCrossed,
     intro: 'Herzhafte Snacks und kleine Speisen – perfekt für zwischendurch.',
-    bg: '#9A3412',
-    bg2: '#7C2D12',
-    accent: '#FFBB00'
+    bg: '#2C2C00',
+    bg2: '#1A1A00',
+    accent: '#FFFFCC'
   },
   sandwich: {
     label: 'Sandwiches',
     Icon: SandwichIcon,
     intro: 'Herzhaft, frisch belegt – perfekt für unterwegs.',
-    bg: '#C2410C',
-    bg2: '#9A3412',
-    accent: '#FFBB00'
+    bg: '#353500',
+    bg2: '#232300',
+    accent: '#FFFFCC'
   },
   suess: {
     label: 'Süsses',
     Icon: IceCream,
     intro: 'Feine Pâtisserie – hausgemacht mit Liebe.',
-    bg: '#EA580C',
-    bg2: '#C2410C',
-    accent: '#FFBB00'
+    bg: '#3D3D00',
+    bg2: '#2C2C00',
+    accent: '#FFFFCC'
   },
 };
 
@@ -75,21 +75,21 @@ export default function MenuPage() {
   }, []);
 
   return (
-    <section id="menu" className="pt-14 md:pt-16 min-h-screen bg-warm-yellow pb-24">
+    <section id="menu" className="pt-14 md:pt-16 min-h-screen bg-[#FFFFCC] pb-24">
       {/* Hero */}
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center brightness-90" style={{ backgroundImage: "url('/menu-hero.jpg')" }} />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1E293B]/60 via-transparent to-[#FFBB00]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1E293B]/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A00]/60 via-transparent to-[#FFFFCC]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A00]/80 via-transparent to-transparent" />
 
         <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-end pb-10">
           <div className="max-w-xl">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-[#1E293B] text-[#FFBB00] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
-              Ofenfrisch & Hausgemacht
+            <span className="inline-block px-4 py-1.5 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
+              Frisch & Hausgemacht
             </span>
             <div className="relative inline-block block">
               <h1 className="text-4xl md:text-5xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md">
-                Unsere <span className="text-[#FFBB00] [-webkit-text-stroke:1px_#1E293B]" style={{ paintOrder: 'stroke fill' }}>Speisekarte</span>
+                Unsere <span className="text-[#FFFFCC] [-webkit-text-stroke:1px_#1A1A00]" style={{ paintOrder: 'stroke fill' }}>Speisekarte</span>
               </h1>
             </div>
           </div>
@@ -119,7 +119,7 @@ export default function MenuPage() {
                     <button
                       key={catId}
                       onClick={() => setActive(isActive ? null : catId)}
-                      className={`relative w-full px-5 py-4 rounded-2xl font-sans font-black text-sm uppercase tracking-wider flex items-center justify-between gap-3 cursor-pointer text-white overflow-hidden shadow-xl transition-all duration-300 ${isActive ? 'ring-2 ring-[#FFBB00] scale-[1.02]' : 'opacity-90 hover:opacity-100'}`}
+                      className={`relative w-full px-5 py-4 rounded-2xl font-sans font-black text-sm uppercase tracking-wider flex items-center justify-between gap-3 cursor-pointer text-white overflow-hidden shadow-xl transition-all duration-300 ${isActive ? 'ring-2 ring-[#FFFFCC] scale-[1.02]' : 'opacity-90 hover:opacity-100'}`}
                       style={{ background: `linear-gradient(135deg, ${m.bg} 0%, ${m.bg2} 100%)` }}
                     >
                       <m.Icon className="absolute -right-2 -bottom-3 w-16 h-16 opacity-10 pointer-events-none rotate-[-12deg]" />
@@ -141,8 +141,8 @@ export default function MenuPage() {
                 })}
               </div>
               <div className="text-left pt-2 max-w-sm">
-                <h2 className="text-2xl md:text-3xl font-serif font-black text-[#1E293B] mb-3">
-                  Unsere <span className="text-[#C2410C]">Bestseller</span>
+                <h2 className="text-2xl md:text-3xl font-serif font-black text-[#1A1A00] mb-3">
+                  Unsere <span className="text-[#2C2C00]">Bestseller</span>
                 </h2>
                 <p className="text-[#1E293B]/80 font-sans font-bold text-sm md:text-base leading-relaxed">
                   Hier finden Sie eine Auswahl unserer meistverkauften Produkte. Möchten Sie unser komplettes Sortiment entdecken, freuen wir uns, Sie persönlich bei uns in der Bäckerei begrüssen zu dürfen.

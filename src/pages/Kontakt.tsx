@@ -68,24 +68,24 @@ export default function Kontakt() {
   };
 
   return (
-    <section id="kontakt" className="pt-14 md:pt-16 min-h-screen bg-warm-yellow pb-24">
+    <section id="kontakt" className="pt-14 md:pt-16 min-h-screen bg-[#FFFFCC] pb-24">
       {/* Hero */}
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
         <HeroVideo
           src="https://res.cloudinary.com/dsdsb4lqw/video/upload/v1785405572/4_jc4bnc.mp4"
           poster="/default-hero.jpg"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1E293B]/60 via-transparent to-[#FFBB00]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1E293B]/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A00]/60 via-transparent to-[#FFFFCC]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A00]/80 via-transparent to-transparent" />
 
         <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-end pb-10">
           <div className="max-w-xl">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-[#1E293B] text-[#FFBB00] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
               Vorbestellung & Kontakt
             </span>
             <div className="relative inline-block block">
               <h1 className="text-3xl md:text-5xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md whitespace-nowrap">
-                Kontakt & <span className="text-[#FFBB00] [-webkit-text-stroke:1px_#1E293B]" style={{ paintOrder: 'stroke fill' }}>Bestellung</span>
+                Kontakt & <span className="text-[#FFFFCC] [-webkit-text-stroke:1px_#1A1A00]" style={{ paintOrder: 'stroke fill' }}>Bestellung</span>
               </h1>
             </div>
           </div>
@@ -95,28 +95,28 @@ export default function Kontakt() {
       <div className="container mx-auto px-4 lg:px-8 py-12 max-w-6xl">
         {/* Yellow Area Title & Intro Text */}
         <div className="mb-10 text-center max-w-3xl mx-auto">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-[#1E293B] text-[#FFBB00] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
             NACHRICHT & VORBESTELLUNG
           </span>
-          <h2 className="text-3xl md:text-5xl font-serif font-black text-[#1E293B] mb-3 leading-tight flex items-center justify-center gap-3">
+          <h2 className="text-3xl md:text-5xl font-serif font-black text-[#1A1A00] mb-3 leading-tight flex items-center justify-center gap-3">
             <span>Schreiben Sie uns oder bestellen Sie vor</span>
-            <div className="w-12 h-12 rounded-2xl bg-[#1E293B] text-[#FFBB00] flex items-center justify-center shadow-lg border border-white/20 inline-flex flex-shrink-0 animate-envelope-open">
+            <div className="w-12 h-12 rounded-2xl bg-[#1A1A00] text-[#FFFFCC] flex items-center justify-center shadow-lg border border-white/20 inline-flex flex-shrink-0 animate-envelope-open">
               <Mail className="w-6 h-6 stroke-[2.5]" />
             </div>
           </h2>
-          <p className="text-[#1E293B]/85 font-sans text-sm md:text-base leading-relaxed font-semibold">
+          <p className="text-[#1A1A00]/85 font-sans text-sm md:text-base leading-relaxed font-semibold">
             Haben Sie Fragen zu unseren Produkten, möchten Sie eine Vorbestellung für Events tätigen oder Feedback teilen? Füllen Sie einfach das Formular aus – wir melden uns umgehend bei Ihnen!
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Sidebar */}
-          <aside className="bg-[#1E293B]/85 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-[#FFBB00]/20 h-fit">
+          <aside className="bg-[#1A1A00] backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-white/20 h-fit">
             <div className="p-8">
-              <h3 className="font-serif text-xl font-black text-gold-gradient mb-6">Informationen</h3>
+              <h3 className="font-serif text-xl font-black text-[#FFFFCC] mb-6">Informationen</h3>
               <div className="space-y-6 font-sans text-sm">
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center font-bold shadow-md flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-[#FFFFCC] text-[#1A1A00] flex items-center justify-center font-bold shadow-md flex-shrink-0">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
@@ -126,7 +126,7 @@ export default function Kontakt() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center font-bold shadow-md flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-[#FFFFCC] text-[#1A1A00] flex items-center justify-center font-bold shadow-md flex-shrink-0">
                     <Clock className="w-5 h-5" />
                   </div>
                   <div>
@@ -136,12 +136,12 @@ export default function Kontakt() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center font-bold shadow-md flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-[#FFFFCC] text-[#1A1A00] flex items-center justify-center font-bold shadow-md flex-shrink-0">
                     <Mail className="w-5 h-5" />
                   </div>
                   <div>
                     <p className="text-white font-bold text-base">E-Mail</p>
-                    <a href="mailto:info@happybeck.ch" className="text-[#FFBB00] font-bold hover:underline">
+                    <a href="mailto:info@happybeck.ch" className="text-[#FFFFCC] font-bold hover:underline">
                       info@happybeck.ch
                     </a>
                   </div>
@@ -155,18 +155,18 @@ export default function Kontakt() {
                     href="https://www.instagram.com/happybeck.ch?igsh=eGdtbW1ud3p6ZDFx"
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-2.5 text-white/90 hover:text-[#FFBB00] font-medium transition-colors"
+                    className="flex items-center gap-2.5 text-white/90 hover:text-[#FFFFCC] font-medium transition-colors"
                   >
-                    <Instagram className="w-4 h-4 text-[#FFBB00]" />
+                    <Instagram className="w-4 h-4 text-[#FFFFCC]" />
                     <span>@happybeck.ch</span>
                   </a>
                   <a
                     href="https://www.instagram.com/happybeck_?igsh=MXM0eGN1enZydzl0cQ=="
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-2.5 text-white/90 hover:text-[#FFBB00] font-medium transition-colors"
+                    className="flex items-center gap-2.5 text-white/90 hover:text-[#FFFFCC] font-medium transition-colors"
                   >
-                    <Instagram className="w-4 h-4 text-[#FFBB00]" />
+                    <Instagram className="w-4 h-4 text-[#FFFFCC]" />
                     <span>@happybeck_</span>
                   </a>
                 </div>
@@ -205,55 +205,55 @@ export default function Kontakt() {
           {/* Form */}
           <div className="lg:col-span-2">
             {submitted ? (
-              <div className="bg-[#1E293B]/85 backdrop-blur-xl p-12 text-center rounded-3xl shadow-2xl border border-[#FFBB00]/20">
-                <div className="w-16 h-16 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center mx-auto mb-6 shadow-xl font-bold">
+              <div className="bg-[#1A1A00] backdrop-blur-xl p-12 text-center rounded-3xl shadow-2xl border border-white/20">
+                <div className="w-16 h-16 rounded-full bg-[#FFFFCC] text-[#1A1A00] flex items-center justify-center mx-auto mb-6 shadow-xl font-bold">
                   <Send className="w-8 h-8" />
                 </div>
-                <h3 className="text-3xl font-serif font-black text-gold-gradient mb-3">Vielen Dank!</h3>
+                <h3 className="text-3xl font-serif font-black text-[#FFFFCC] mb-3">Vielen Dank!</h3>
                 <p className="text-white/90 font-sans text-base font-medium">
                   Ihre Nachricht wurde erfolgreich gesendet. Wir melden uns in Kürze bei Ihnen.
                 </p>
               </div>
             ) : (
-              <form onSubmit={onSubmit} className="bg-[#1E293B]/85 backdrop-blur-xl rounded-3xl p-8 md:p-10 shadow-2xl border border-[#FFBB00]/20 space-y-6 relative overflow-hidden">
+              <form onSubmit={onSubmit} className="bg-[#1A1A00] backdrop-blur-xl rounded-3xl p-8 md:p-10 shadow-2xl border border-white/20 space-y-6 relative overflow-hidden">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
                     <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Firma</label>
-                    <input name="company" className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFBB00] transition-colors" type="text" placeholder="Firmenname" />
+                    <input name="company" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFFFCC] transition-colors" type="text" placeholder="Firmenname" />
                   </div>
                   <div>
                     <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Ansprechpartner</label>
-                    <input name="name" className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFBB00] transition-colors" type="text" placeholder="Ihr Name" />
+                    <input name="name" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFFFCC] transition-colors" type="text" placeholder="Ihr Name" />
                   </div>
                   <div>
                     <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">E-Mail *</label>
-                    <input name="email" className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFBB00] transition-colors" type="email" placeholder="name@example.com" required />
+                    <input name="email" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFFFCC] transition-colors" type="email" placeholder="name@example.com" required />
                   </div>
                   <div>
                     <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Telefon</label>
-                    <input name="phone" className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFBB00] transition-colors" type="tel" placeholder="Ihre Telefonnummer" />
+                    <input name="phone" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFFFCC] transition-colors" type="tel" placeholder="Ihre Telefonnummer" />
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Adresse / Ort</label>
-                    <input name="address" className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFBB00] transition-colors" type="text" placeholder="Strasse, PLZ Ort" />
+                    <input name="address" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFFFCC] transition-colors" type="text" placeholder="Strasse, PLZ Ort" />
                   </div>
                 </div>
 
                 <div>
                   <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Nachricht / Bestellung *</label>
-                  <textarea name="message" className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFBB00] transition-colors min-h-[130px] resize-y" rows={5} placeholder="Ihre Bestellung oder Nachricht..." required />
+                  <textarea name="message" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFFFCC] transition-colors min-h-[130px] resize-y" rows={5} placeholder="Ihre Bestellung oder Nachricht..." required />
                 </div>
 
                 {/* Security Question & Action Row */}
                 <div className="flex flex-wrap items-end gap-4 pt-2">
                   <div className="w-full sm:w-36">
                     <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Sicherheitsfrage</label>
-                    <input className="w-full px-4 py-3 bg-black/50 border border-white/10 rounded-2xl text-[#FFBB00] font-sans text-sm font-bold text-center" type="text" value={question.text} readOnly />
+                    <input className="w-full px-4 py-3 bg-black/60 border border-white/10 rounded-2xl text-[#FFFFCC] font-sans text-sm font-bold text-center" type="text" value={question.text} readOnly />
                   </div>
                   <div className="w-full sm:w-28">
                     <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Ergebnis *</label>
                     <input
-                      className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFBB00] transition-colors font-bold text-center"
+                      className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFFFCC] transition-colors font-bold text-center"
                       type="number"
                       value={userAnswer}
                       onChange={(e) => setUserAnswer(e.target.value)}
@@ -272,7 +272,7 @@ export default function Kontakt() {
                     <button
                       type="submit"
                       disabled={sending}
-                      className="flex-1 py-3 px-6 rounded-2xl bg-[#FFBB00] text-[#1E293B] font-sans font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl hover:scale-105 transition-all cursor-pointer whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+                      className="flex-1 py-3 px-6 rounded-2xl bg-[#FFFFCC] text-[#1A1A00] font-sans font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl hover:scale-105 transition-all cursor-pointer whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
                     >
                       <Send className="w-4 h-4 fill-current" />
                       {sending ? 'Wird gesendet…' : 'Senden'}
@@ -361,11 +361,11 @@ export default function Kontakt() {
           </div>
         </div>
 
-        <div className="bg-[#1E293B]/85 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-[#FFBB00]/20 hover:glow-gold transition-all duration-500">
-          <div className="h-2.5 w-full bg-[#FFBB00]" />
+        <div className="bg-[#1A1A00] backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-white/20">
+          <div className="h-2.5 w-full bg-[#FFFFCC]" />
           <div className="p-8 md:p-10">
-            <h3 className="font-serif text-2xl font-black text-gold-gradient mb-3 flex items-center gap-3">
-              <MapPin className="w-6 h-6 text-[#FFBB00]" /> Wegbeschreibung & Standort
+            <h3 className="font-serif text-2xl font-black text-[#FFFFCC] mb-3 flex items-center gap-3">
+              <MapPin className="w-6 h-6 text-[#FFFFCC]" /> Wegbeschreibung & Standort
             </h3>
             <p className="text-white/90 font-sans text-sm mb-6 leading-relaxed font-medium">
               Besuchen Sie uns an der Langstrasse 120 in 8004 Zürich. Wir sind 24 Stunden am Tag für Sie geöffnet!
@@ -391,7 +391,7 @@ export default function Kontakt() {
                 href="https://maps.google.com/?q=Langstrasse+120,+8004+Zürich" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="px-6 py-3 rounded-2xl bg-[#FFBB00] text-[#1E293B] font-sans font-black text-xs uppercase tracking-wider shadow-xl hover:scale-105 transition-all flex items-center gap-2"
+                className="px-6 py-3 rounded-2xl bg-[#FFFFCC] text-[#1A1A00] font-sans font-black text-xs uppercase tracking-wider shadow-xl hover:scale-105 transition-all flex items-center gap-2"
               >
                 Routenplaner öffnen
               </a>

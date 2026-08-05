@@ -3,8 +3,8 @@ import { Gift, Zap, PartyPopper, Eye, ChevronDown, Loader2 } from 'lucide-react'
 import { supabase, type DailySpecial, type Deal } from '../lib/supabase';
 import HeroVideo from '../components/HeroVideo';
 
-// Shared "kavun" (melon) gradient used across all cards on this page
-const CARD_GRADIENT = 'linear-gradient(135deg, #6B2E0F 0%, #3B1A08 100%)';
+// Shared dark olive gradient used across all cards on this page
+const CARD_GRADIENT = 'linear-gradient(135deg, #1A1A00 0%, #0D0D00 100%)';
 const CARD_BORDER = 'border border-white/15';
 
 // ── Confetti Component ──
@@ -125,8 +125,8 @@ function DailySpecialCard({ special }: { special: DailySpecial }) {
             <PartyPopper className="absolute -right-4 -bottom-6 w-32 h-32 opacity-10 pointer-events-none rotate-[-12deg]" />
             <div className="relative p-7 flex-1 flex flex-col justify-center">
               <div className="text-center">
-                <PartyPopper className="w-10 h-10 text-[#FFBB00] mx-auto mb-3" />
-                <span className="inline-block px-3.5 py-1 rounded-full bg-[#FFBB00] text-[#1E293B] font-sans text-[10px] font-black uppercase tracking-wider mb-3 shadow-md">
+                <PartyPopper className="w-10 h-10 text-[#FFFFCC] mx-auto mb-3" />
+                <span className="inline-block px-3.5 py-1 rounded-full bg-[#FFFFCC] text-[#1A1A00] font-sans text-[10px] font-black uppercase tracking-wider mb-3 shadow-md">
                   🎉 SPEZIAL ENTHÜLLT!
                 </span>
                 <h3 className="text-2xl font-serif font-black text-white drop-shadow-md mb-2">
@@ -137,7 +137,7 @@ function DailySpecialCard({ special }: { special: DailySpecial }) {
                 )}
 
                 {special.image_url && (
-                  <div className="w-28 h-28 rounded-2xl overflow-hidden mx-auto mb-4 border-2 border-[#FFBB00] shadow-xl">
+                  <div className="w-28 h-28 rounded-2xl overflow-hidden mx-auto mb-4 border-2 border-[#FFFFCC] shadow-xl">
                     <img src={special.image_url} alt={special.title} className="w-full h-full object-cover" />
                   </div>
                 )}
@@ -146,7 +146,7 @@ function DailySpecialCard({ special }: { special: DailySpecial }) {
                   {special.original_price && (
                     <span className="text-white/50 font-sans line-through text-sm font-medium">{special.original_price}</span>
                   )}
-                  <span className="text-2xl font-serif font-black text-[#FFBB00]">{special.special_price}</span>
+                  <span className="text-2xl font-serif font-black text-[#FFFFCC]">{special.special_price}</span>
                 </div>
 
                 {/* Gutschein Activation / Live Timer */}
@@ -154,14 +154,14 @@ function DailySpecialCard({ special }: { special: DailySpecial }) {
                   {!couponActive ? (
                     <button
                       onClick={handleActivate}
-                      className="w-full py-3 px-4 rounded-2xl bg-[#FFBB00] text-[#1E293B] font-sans font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl hover:scale-105 transition-all cursor-pointer"
+                      className="w-full py-3 px-4 rounded-2xl bg-[#FFFFCC] text-[#1A1A00] font-sans font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl hover:scale-105 transition-all cursor-pointer"
                     >
                       <Zap className="w-4 h-4 fill-current" />
                       Rabatt-Coupon aktivieren
                     </button>
                   ) : (
                     <div className="p-4 rounded-2xl border border-white/10 bg-black/30 text-center animate-scale-in">
-                      <p className="text-xs text-[#FFBB00] uppercase tracking-widest font-black mb-1 animate-pulse">
+                      <p className="text-xs text-[#FFFFCC] uppercase tracking-widest font-black mb-1 animate-pulse">
                         🔥 Gutschein aktiv!
                       </p>
                       <p className="text-3xl font-mono font-black text-white tracking-wider mb-1">
@@ -170,7 +170,7 @@ function DailySpecialCard({ special }: { special: DailySpecial }) {
                       <p className="text-[10px] text-white/80 font-medium">
                         📸 Screenshot machen & an der Kasse zeigen!
                       </p>
-                      <p className="text-xs text-[#FFBB00] font-mono mt-1 font-bold select-all" title="Klicken zum Auswählen">
+                      <p className="text-xs text-[#FFFFCC] font-mono mt-1 font-bold select-all" title="Klicken zum Auswählen">
                         Code: {todayCode}
                       </p>
                     </div>
@@ -194,7 +194,7 @@ function DealCard({ deal, index }: { deal: Deal; index: number }) {
 
   return (
     <div
-      className={`relative rounded-3xl overflow-hidden shadow-2xl ${CARD_BORDER} group hover:scale-[1.02] hover:glow-gold transition-all duration-500 cursor-pointer h-full flex flex-col`}
+      className={`relative rounded-3xl overflow-hidden shadow-2xl ${CARD_BORDER} group hover:scale-[1.02] transition-all duration-500 cursor-pointer h-full flex flex-col`}
       onClick={() => setExpanded(!expanded)}
       style={{ background: CARD_GRADIENT, animationDelay: `${index * 100}ms` }}
     >
@@ -209,12 +209,12 @@ function DealCard({ deal, index }: { deal: Deal; index: number }) {
           </div>
           <div className="flex items-center gap-2">
             {deal.is_new && (
-              <span className="px-3 py-1 bg-[#FFBB00] text-[#1E293B] text-[10px] font-sans font-black uppercase tracking-wider rounded-full shadow-sm">NEU</span>
+              <span className="px-3 py-1 bg-[#FFFFCC] text-[#1A1A00] text-[10px] font-sans font-black uppercase tracking-wider rounded-full shadow-sm">NEU</span>
             )}
             {deal.is_special && (
-              <span className="px-3 py-1 bg-[#FFBB00] text-[#1E293B] text-[10px] font-sans font-black uppercase tracking-wider rounded-full shadow-sm">SPECIAL</span>
+              <span className="px-3 py-1 bg-[#FFFFCC] text-[#1A1A00] text-[10px] font-sans font-black uppercase tracking-wider rounded-full shadow-sm">SPECIAL</span>
             )}
-            <div className="w-8 h-8 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center font-bold shadow-md">
+            <div className="w-8 h-8 rounded-full bg-[#FFFFCC] text-[#1A1A00] flex items-center justify-center font-bold shadow-md">
               <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`} />
             </div>
           </div>
@@ -223,7 +223,7 @@ function DealCard({ deal, index }: { deal: Deal; index: number }) {
         {deal.description && (
           <div className="bg-black/20 p-4 rounded-2xl mb-4 border border-white/10">
             <p className="text-xs md:text-sm text-white/90 font-sans flex items-start gap-2 whitespace-pre-line font-medium leading-relaxed">
-              <Gift className="w-5 h-5 text-[#FFBB00] flex-shrink-0 mt-0.5" />
+              <Gift className="w-5 h-5 text-[#FFFFCC] flex-shrink-0 mt-0.5" />
               <span>{deal.description}</span>
             </p>
           </div>
@@ -237,7 +237,7 @@ function DealCard({ deal, index }: { deal: Deal; index: number }) {
                   <p className="text-white font-sans text-sm font-bold flex-1">{item.name}</p>
                   <div className="text-right whitespace-nowrap">
                     {item.oldPrice && <p className="text-xs text-white/50 line-through font-sans font-medium">{item.oldPrice}</p>}
-                    <p className="text-base font-serif font-black text-[#FFBB00]">{item.price}</p>
+                    <p className="text-base font-serif font-black text-[#FFFFCC]">{item.price}</p>
                   </div>
                 </div>
                 {item.note && <p className="text-xs text-white/70 font-sans mt-1 font-medium">{item.note}</p>}
@@ -247,7 +247,7 @@ function DealCard({ deal, index }: { deal: Deal; index: number }) {
         </div>
 
         {!expanded && (
-          <p className="text-xs text-[#FFBB00] font-sans mt-3 text-center font-bold tracking-wider uppercase group-hover:scale-105 transition-all">
+          <p className="text-xs text-[#FFFFCC] font-sans mt-3 text-center font-bold tracking-wider uppercase group-hover:scale-105 transition-all">
             ▼ Details anzeigen
           </p>
         )}
@@ -346,17 +346,17 @@ export default function Aktuelles() {
           src="https://res.cloudinary.com/dsdsb4lqw/video/upload/v1785405038/3_d4eggy.mp4"
           poster="/default-hero.jpg"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1E293B]/60 via-transparent to-[#FFBB00]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1E293B]/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A00]/60 via-transparent to-[#FFFFCC]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A00]/80 via-transparent to-transparent" />
 
         <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-end pb-10 z-20">
           <div className="max-w-xl">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-[#1E293B] text-[#FFBB00] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
               Seit 20 Jahren Ihr Bäcker
             </span>
             <div className="relative inline-block block">
               <h1 className="text-4xl md:text-5xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md">
-                Aktuelles & <span className="text-[#FFBB00] [-webkit-text-stroke:1px_#1E293B]" style={{ paintOrder: 'stroke fill' }}>Deals</span>
+                Aktuelles & <span className="text-[#FFFFCC] [-webkit-text-stroke:1px_#1A1A00]" style={{ paintOrder: 'stroke fill' }}>Deals</span>
               </h1>
             </div>
           </div>
@@ -370,17 +370,17 @@ export default function Aktuelles() {
           {/* Left Column: Daily Special */}
           <div className="flex flex-col h-full animate-fade-in">
             <div className="text-center mb-4">
-              <span className="inline-block px-3 py-1 rounded-full bg-[#1E293B] text-[#FFBB00] font-sans text-[10px] font-black uppercase tracking-wider mb-2 shadow-sm">
+              <span className="inline-block px-3 py-1 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-[10px] font-black uppercase tracking-wider mb-2 shadow-sm">
                 JEDEN TAG NEU
               </span>
-              <h2 className="text-2xl font-serif font-black text-[#1E293B]">
+              <h2 className="text-2xl font-serif font-black text-[#1A1A00]">
                 Heute's Spezial
               </h2>
             </div>
             <div className="flex-1">
               {loadingSpecial ? (
                 <div className="p-12 text-center rounded-3xl animate-pulse h-full flex flex-col justify-center items-center shadow-2xl" style={{ background: CARD_GRADIENT }}>
-                  <div className="w-12 h-12 rounded-full bg-[#FFBB00]/20 mb-4" />
+                  <div className="w-12 h-12 rounded-full bg-[#FFFFCC]/20 mb-4" />
                   <div className="h-5 w-40 bg-white/10 rounded mb-3" />
                   <div className="h-4 w-28 bg-white/10 rounded" />
                 </div>
@@ -390,7 +390,7 @@ export default function Aktuelles() {
                 <div className={`relative rounded-3xl overflow-hidden text-center h-full flex flex-col justify-between items-center shadow-2xl ${CARD_BORDER}`} style={{ background: CARD_GRADIENT }}>
                   <Eye className="absolute -right-4 -bottom-6 w-32 h-32 opacity-10 pointer-events-none rotate-[-12deg]" />
                   <div className="relative p-10 flex flex-col items-center justify-center flex-1">
-                    <Eye className="w-12 h-12 text-[#FFBB00] mb-4" />
+                    <Eye className="w-12 h-12 text-[#FFFFCC] mb-4" />
                     <p className="text-white font-serif text-lg font-bold">Heute's Spezial wird bald bekannt gegeben...</p>
                     <p className="text-white/70 font-sans text-xs mt-2 font-medium">Schaue morgen wieder vorbei!</p>
                   </div>
@@ -403,31 +403,30 @@ export default function Aktuelles() {
           <div className="flex flex-col h-full animate-fade-in" style={{ animationDelay: '100ms' }}>
             <Confetti active={passConfetti} />
             <div className="text-center mb-4">
-              <span className="inline-block px-3 py-1 rounded-full bg-[#1E293B] text-[#FFBB00] font-sans text-[10px] font-black uppercase tracking-wider mb-2 shadow-sm">
+              <span className="inline-block px-3 py-1 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-[10px] font-black uppercase tracking-wider mb-2 shadow-sm">
                 TREUEPASS
               </span>
-              <h2 className="text-2xl font-serif font-black text-[#1E293B]">
+              <h2 className="text-2xl font-serif font-black text-[#1A1A00]">
                 Lunch-Pass
               </h2>
             </div>
             <div className="flex-1 flex flex-col">
               <div className={`rounded-3xl overflow-hidden shadow-2xl ${CARD_BORDER} h-full flex flex-col justify-between relative`} style={{ background: CARD_GRADIENT }}>
                 <div className="relative p-7 flex-1 flex flex-col justify-between">
-                  {/* Interactive Celebrations Overlays */}
-                  {celebrationType === 'kaffee' && (
-                    <div className="absolute inset-0 bg-[#1E293B] z-30 flex flex-col items-center justify-center p-6 text-center animate-scale-in">
-                      <div className="w-14 h-14 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center mb-4 shadow-xl">
+                     {celebrationType === 'kaffee' && (
+                    <div className="absolute inset-0 bg-[#1A1A00] z-30 flex flex-col items-center justify-center p-6 text-center animate-scale-in">
+                      <div className="w-14 h-14 rounded-full bg-[#FFFFCC] text-[#1A1A00] flex items-center justify-center mb-4 shadow-xl">
                         <span className="text-3xl">☕</span>
                       </div>
-                      <h3 className="text-2xl font-serif font-black text-gold-gradient mb-2">
+                      <h3 className="text-2xl font-serif font-black text-[#FFFFCC] mb-2">
                         5. Kaffee GRATIS!
                       </h3>
-                      <p className="text-[#FFE8B8] font-sans text-xs max-w-[220px] mb-6 font-medium">
+                      <p className="text-[#FFFFCC]/90 font-sans text-xs max-w-[220px] mb-6 font-medium">
                         Glückwunsch! Ihr gratis Kaffee wurde freigeschaltet.
                       </p>
                       <button 
                         onClick={() => setCelebrationType(null)}
-                        className="px-6 py-2.5 rounded-xl bg-[#FFBB00] text-[#1E293B] font-sans font-black text-xs uppercase tracking-wider shadow-lg hover:scale-105 transition-transform cursor-pointer"
+                        className="px-6 py-2.5 rounded-xl bg-[#FFFFCC] text-[#1A1A00] font-sans font-black text-xs uppercase tracking-wider shadow-lg hover:scale-105 transition-transform cursor-pointer"
                       >
                         Weiter stempeln
                       </button>
@@ -435,20 +434,20 @@ export default function Aktuelles() {
                   )}
 
                   {celebrationType === 'sandwich' && (
-                    <div className="absolute inset-0 bg-[#1E293B] z-30 flex flex-col items-center justify-center p-6 text-center animate-scale-in">
-                      <div className="w-14 h-14 rounded-full bg-[#FFBB00] text-[#1E293B] flex items-center justify-center mb-4 shadow-xl">
+                    <div className="absolute inset-0 bg-[#1A1A00] z-30 flex flex-col items-center justify-center p-6 text-center animate-scale-in">
+                      <div className="w-14 h-14 rounded-full bg-[#FFFFCC] text-[#1A1A00] flex items-center justify-center mb-4 shadow-xl">
                         <span className="text-3xl">🥪</span>
                       </div>
-                      <h3 className="text-2xl font-serif font-black text-gold-gradient mb-2">
+                      <h3 className="text-2xl font-serif font-black text-[#FFFFCC] mb-2">
                         Gratis SANDWICH!
                       </h3>
-                      <p className="text-[#FFE8B8] font-sans text-xs max-w-[220px] mb-6 font-medium">
+                      <p className="text-[#FFFFCC]/90 font-sans text-xs max-w-[220px] mb-6 font-medium">
                         Hauptgewinn! Geniessen Sie ein gratis Sandwich Ihrer Wahl.
                       </p>
                       <div className="flex gap-3">
                         <button 
                           onClick={() => setCelebrationType(null)}
-                          className="px-5 py-2.5 rounded-xl bg-[#FFBB00] text-[#1E293B] font-sans font-black text-xs uppercase tracking-wider shadow-lg hover:scale-105 transition-transform cursor-pointer"
+                          className="px-5 py-2.5 rounded-xl bg-[#FFFFCC] text-[#1A1A00] font-sans font-black text-xs uppercase tracking-wider shadow-lg hover:scale-105 transition-transform cursor-pointer"
                         >
                           Gutschein zeigen
                         </button>
@@ -463,14 +462,14 @@ export default function Aktuelles() {
                   )}
 
                   {celebrationType === 'kasse' && (
-                    <div className="absolute inset-0 bg-[#1E293B]/98 backdrop-blur-md z-30 flex flex-col items-center justify-center p-6 text-center animate-scale-in">
-                      <div className="text-[#FFBB00] font-serif font-black text-lg md:text-xl leading-snug tracking-wider animate-pulse uppercase px-2">
+                    <div className="absolute inset-0 bg-[#1A1A00]/98 backdrop-blur-md z-30 flex flex-col items-center justify-center p-6 text-center animate-scale-in">
+                      <div className="text-[#FFFFCC] font-serif font-black text-lg md:text-xl leading-snug tracking-wider animate-pulse uppercase px-2">
                         FRAGEN SIE <br />
                         AN DER KASSE <br />
                         NACH IHREM <br />
                         LUNCH-PASS!
                       </div>
-                      <div className="w-12 h-1 bg-[#FFBB00] my-4 rounded-full" />
+                      <div className="w-12 h-1 bg-[#FFFFCC] my-4 rounded-full" />
                       <p className="text-white/60 font-sans text-xs uppercase tracking-widest font-bold">
                         Happy Beck Zürich
                       </p>
@@ -480,7 +479,7 @@ export default function Aktuelles() {
                   <div className="text-center mb-5">
                     <p className="text-white/90 font-sans text-xs leading-relaxed font-medium">
                       Sammeln Sie Kaffee-Stempel: <br />
-                      5. Kaffee <span className="text-[#FFBB00] font-black">GRATIS</span> & 10. Kaffee bringt ein <span className="text-[#FFBB00] font-black">SANDWICH GRATIS</span>!
+                      5. Kaffee <span className="text-[#FFFFCC] font-black">GRATIS</span> & 10. Kaffee bringt ein <span className="text-[#FFFFCC] font-black">SANDWICH GRATIS</span>!
                     </p>
                   </div>
 
@@ -500,15 +499,15 @@ export default function Aktuelles() {
                                 onClick={() => handleStampClick(num)}
                                 className={`w-full aspect-square rounded-full flex flex-col items-center justify-center border-2 transition-all duration-300 cursor-pointer select-none relative overflow-hidden ${
                                   isStamped 
-                                    ? 'bg-[#FFBB00] border-white text-[#1E293B] font-black shadow-lg scale-105' 
+                                    ? 'bg-[#FFFFCC] border-white text-[#1A1A00] font-black shadow-lg scale-105' 
                                     : isReward 
-                                      ? 'bg-white/5 border-dashed border-[#FFBB00] text-[#FFBB00] hover:bg-white/10' 
+                                      ? 'bg-white/5 border-dashed border-[#FFFFCC] text-[#FFFFCC] hover:bg-white/10' 
                                       : 'bg-white/5 border-white/10 text-white/40 hover:bg-white/10'
                                 }`}
                               >
-                                <span className={`text-xs font-serif font-black ${isStamped ? 'text-[#1E293B]' : 'text-white'}`}>{num}</span>
+                                <span className={`text-xs font-serif font-black ${isStamped ? 'text-[#1A1A00]' : 'text-white'}`}>{num}</span>
                                 {isReward && !isStamped && (
-                                  <span className="text-[7px] font-sans font-black text-[#FFBB00] text-center leading-none mt-0.5 px-0.5">
+                                  <span className="text-[7px] font-sans font-black text-[#FFFFCC] text-center leading-none mt-0.5 px-0.5">
                                     {group.reward.text}
                                   </span>
                                 )}
@@ -528,22 +527,22 @@ export default function Aktuelles() {
                       </p>
                     )}
                     {stamps > 0 && stamps < 5 && (
-                      <p className="text-[#FFBB00] font-sans text-xs font-bold">
+                      <p className="text-[#FFFFCC] font-sans text-xs font-bold">
                         Noch {5 - stamps} Stempel bis zum Gratis-Kaffee! ☕
                       </p>
                     )}
                     {stamps === 5 && (
-                      <p className="text-[#FFBB00] font-sans text-xs font-black animate-bounce">
+                      <p className="text-[#FFFFCC] font-sans text-xs font-black animate-bounce">
                         🎉 Kaffee freigeschaltet!
                       </p>
                     )}
                     {stamps > 5 && stamps < 10 && (
-                      <p className="text-[#FFBB00] font-sans text-xs font-bold">
+                      <p className="text-[#FFFFCC] font-sans text-xs font-bold">
                         Noch {10 - stamps} Stempel bis zum Gratis-Sandwich! 🥪
                       </p>
                     )}
                     {stamps === 10 && (
-                      <p className="text-[#FFBB00] font-sans text-xs font-black animate-bounce">
+                      <p className="text-[#FFFFCC] font-sans text-xs font-black animate-bounce">
                         🎉 Sandwich freigeschaltet!
                       </p>
                     )}
@@ -558,18 +557,18 @@ export default function Aktuelles() {
       {/* ── DEALS ── */}
       <div className="container mx-auto px-4 lg:px-8 py-12">
         <div className="text-center mb-8 animate-fade-in">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-[#1E293B] text-[#FFBB00] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-3 shadow-md">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-3 shadow-md">
             EXKLUSIVE ANGEBOTE
           </span>
-          <h2 className="text-3xl font-serif font-black text-[#1E293B] mb-2">
+          <h2 className="text-3xl font-serif font-black text-[#1A1A00] mb-2">
             Jubiläums-Deals
           </h2>
-          <p className="text-[#1E293B]/80 font-sans text-sm font-bold">Tippe auf einen Deal für Details</p>
+          <p className="text-[#1A1A00]/80 font-sans text-sm font-bold">Tippe auf einen Deal für Details</p>
         </div>
 
         {loadingDeals ? (
           <div className="flex items-center justify-center py-12">
-            <Loader2 className="w-8 h-8 text-[#1E293B] animate-spin" />
+            <Loader2 className="w-8 h-8 text-[#1A1A00] animate-spin" />
           </div>
         ) : deals.length === 0 ? (
           <div className={`p-10 rounded-3xl text-center text-white font-sans max-w-md mx-auto shadow-2xl ${CARD_BORDER}`} style={{ background: CARD_GRADIENT }}>

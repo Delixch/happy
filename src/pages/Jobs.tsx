@@ -63,24 +63,24 @@ export default function Jobs() {
   }, []);
 
   return (
-    <section id="jobs" className="pt-14 md:pt-16 min-h-screen bg-warm-yellow pb-24">
+    <section id="jobs" className="pt-14 md:pt-16 min-h-screen bg-[#FFFFCC] pb-24">
       {/* Hero */}
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
         <HeroVideo
           src="https://res.cloudinary.com/dsdsb4lqw/video/upload/v1785404003/resmi_harketlendir_video_gibi_f3beop.mp4"
           poster="/default-hero.jpg"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1E293B]/60 via-transparent to-[#FFBB00]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1E293B]/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A00]/60 via-transparent to-[#FFFFCC]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A00]/80 via-transparent to-transparent" />
 
         <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-end pb-10">
           <div className="max-w-xl">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-[#1E293B] text-[#FFBB00] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
               Werden Sie Teil unseres Teams
             </span>
             <div className="relative inline-block block">
               <h1 className="text-4xl md:text-5xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md">
-                Offene <span className="text-[#FFBB00] [-webkit-text-stroke:1px_#1E293B]" style={{ paintOrder: 'stroke fill' }}>Stellen</span>
+                Offene <span className="text-[#FFFFCC] [-webkit-text-stroke:1px_#1A1A00]" style={{ paintOrder: 'stroke fill' }}>Stellen</span>
               </h1>
             </div>
           </div>
@@ -90,38 +90,38 @@ export default function Jobs() {
       <div className="container mx-auto px-4 lg:px-8 py-12 max-w-4xl">
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 text-[#1E293B] animate-spin" />
+            <Loader2 className="w-8 h-8 text-[#1A1A00] animate-spin" />
           </div>
         ) : (
           <div className="space-y-8">
             {jobs.map((job) => (
               <div
                 key={job.id}
-                className="bg-[#1E293B]/85 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-[#FFBB00]/20 relative transition-all duration-300 hover:scale-[1.01] hover:glow-gold"
+                className="bg-[#1A1A00] backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-white/20 relative transition-all duration-300 hover:scale-[1.01]"
               >
                 <div className="p-8 md:p-10">
                   <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
                     <div>
-                      <h2 className="text-2xl md:text-3xl font-serif font-black text-gold-gradient mb-3">
+                      <h2 className="text-2xl md:text-3xl font-serif font-black text-[#FFFFCC] mb-3">
                         {job.title}
                       </h2>
                       <div className="flex flex-wrap gap-3">
                         {job.location && (
-                          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/30 text-white/90 text-xs font-sans font-bold border border-white/10">
-                            <MapPin className="w-3.5 h-3.5 text-[#FFBB00]" /> {job.location}
+                          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/40 text-white/90 text-xs font-sans font-bold border border-white/10">
+                            <MapPin className="w-3.5 h-3.5 text-[#FFFFCC]" /> {job.location}
                           </span>
                         )}
-                        <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/30 text-white/90 text-xs font-sans font-bold border border-white/10">
-                          <Briefcase className="w-3.5 h-3.5 text-[#FFBB00]" /> {job.type}
+                        <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/40 text-white/90 text-xs font-sans font-bold border border-white/10">
+                          <Briefcase className="w-3.5 h-3.5 text-[#FFFFCC]" /> {job.type}
                         </span>
                         {job.shift && (
-                          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/30 text-white/90 text-xs font-sans font-bold border border-white/10">
-                            <Clock className="w-3.5 h-3.5 text-[#FFBB00]" /> {job.shift}
+                          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/40 text-white/90 text-xs font-sans font-bold border border-white/10">
+                            <Clock className="w-3.5 h-3.5 text-[#FFFFCC]" /> {job.shift}
                           </span>
                         )}
                       </div>
                     </div>
-                    <span className="px-4 py-1.5 bg-[#FFBB00] text-[#1E293B] text-xs font-sans font-black uppercase tracking-wider rounded-full shadow-md">
+                    <span className="px-4 py-1.5 bg-[#FFFFCC] text-[#1A1A00] text-xs font-sans font-black uppercase tracking-wider rounded-full shadow-md">
                       JETZT OFFEN
                     </span>
                   </div>
@@ -140,7 +140,7 @@ export default function Jobs() {
                       <ul className="space-y-2.5">
                         {job.requirements.map((req, index) => (
                           <li key={index} className="flex items-start gap-3 text-white/80 font-sans text-xs md:text-sm font-medium">
-                            <span className="w-2 h-2 rounded-full bg-[#FFBB00] mt-1.5 flex-shrink-0" />
+                            <span className="w-2 h-2 rounded-full bg-[#FFFFCC] mt-1.5 flex-shrink-0" />
                             <span>{req}</span>
                           </li>
                         ))}
@@ -150,7 +150,7 @@ export default function Jobs() {
 
                   <a
                     href={`mailto:info@happybeck.ch?subject=Bewerbung: ${job.title}`}
-                    className="px-6 py-3.5 rounded-2xl bg-[#FFBB00] text-[#1E293B] font-sans font-black text-xs uppercase tracking-wider inline-flex items-center gap-2 shadow-xl hover:scale-105 transition-all"
+                    className="px-6 py-3.5 rounded-2xl bg-[#FFFFCC] text-[#1A1A00] font-sans font-black text-xs uppercase tracking-wider inline-flex items-center gap-2 shadow-xl hover:scale-105 transition-all"
                   >
                     <Mail className="w-4 h-4 fill-current" />
                     Jetzt bewerben

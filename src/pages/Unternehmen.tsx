@@ -95,11 +95,11 @@ export default function Unternehmen() {
               </div>
 
               {/* Quote */}
-              <blockquote className="mt-8 p-6 rounded-2xl bg-[#474150] text-white shadow-xl border-l-4 border-[#FFBB00]">
+              <blockquote className="mt-8 p-6 rounded-2xl bg-[#1A1A00] text-white shadow-xl border-l-4 border-[#FFFFCC]">
                 <p className="font-serif italic text-lg leading-relaxed text-white">
                   „Nur die besten Zutaten und echtes Handwerk machen den Unterschied."
                 </p>
-                <cite className="block mt-3 text-[#FFBB00] font-sans text-xs font-bold tracking-wider not-italic uppercase">
+                <cite className="block mt-3 text-[#FFFFCC] font-sans text-xs font-bold tracking-wider not-italic uppercase">
                   — Familie Aydin, Gründer
                 </cite>
               </blockquote>
@@ -118,7 +118,7 @@ export default function Unternehmen() {
                 role="button"
                 aria-label="Bild wechseln"
               >
-                <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl bg-[#474150] border-4 border-white p-4">
+                <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl bg-[#1A1A00] border-4 border-white p-4">
                   <img
                     src="/logo.png"
                     alt="Happy Beck Bäckerei Logo"
@@ -126,8 +126,8 @@ export default function Unternehmen() {
                       hover ? 'scale-105' : 'scale-100'
                     }`}
                   />
-                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-[#474150]/90 text-center backdrop-blur-sm">
-                    <p className="font-serif text-sm italic text-[#FFBB00] font-bold">
+                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-[#1A1A00]/90 text-center backdrop-blur-sm">
+                    <p className="font-serif text-sm italic text-[#FFFFCC] font-bold">
                       {hover ? '❝ Happy Beck Emblem ❞' : '❝ Unser Logo ❞'}
                     </p>
                   </div>
@@ -139,25 +139,25 @@ export default function Unternehmen() {
       </div>
 
       {/* ─── STORY SECTION 2 & STATS HIGHLIGHTS ─── */}
-      <div className="relative py-16 md:py-20 bg-warm-yellow overflow-hidden border-t border-[#474150]/10">
+      <div className="relative py-16 md:py-20 bg-warm-yellow overflow-hidden border-t border-[#1A1A00]/10">
         <div className="container mx-auto px-4 lg:px-8 max-w-5xl relative z-10">
           <div className="mb-14 reveal">
             <div className="relative inline-block mb-6">
-              <h2 className="text-3xl md:text-5xl font-serif font-black text-[#231E2A] pb-3">
-                Von Zürich in die <span className="text-[#474150]">ganze Schweiz</span>
+              <h2 className="text-3xl md:text-5xl font-serif font-black text-[#1A1A00] pb-3">
+                Von Zürich in die <span className="text-[#2C2C00]">ganze Schweiz</span>
               </h2>
-              <span className="absolute bottom-0 left-0 w-full h-1.5 bg-[#474150] rounded-full" />
+              <span className="absolute bottom-0 left-0 w-full h-1.5 bg-[#1A1A00] rounded-full" />
             </div>
 
-            <div className="space-y-6 text-[#231E2A] font-sans text-base md:text-lg leading-[1.8] font-medium max-w-3xl">
+            <div className="space-y-6 text-[#1A1A00] font-sans text-base md:text-lg leading-[1.8] font-medium max-w-3xl">
               <p>
-                Die erste Happy-Filiale öffnete in Zürich an der <span className="text-[#474150] font-bold underline">Dienerstrasse</span> ihre
+                Die erste Happy-Filiale öffnete in Zürich an der <span className="text-[#1A1A00] font-bold underline">Dienerstrasse</span> ihre
                 Türen. Unter guter Regie blühte die Bäckerei richtig auf. Aydins Ruf verbreitete sich weit über
                 Zürich hinaus, und es wurden mehrere Filialen eröffnet.
               </p>
               <p>
                 Heute kommt man sowohl in Filialen im Raum Zürich als auch in der Gesamtschweiz in den Genuss
-                der breit gefächerten <span className="text-[#474150] font-bold">Happy-Produktpalette</span>.
+                der breit gefächerten <span className="text-[#1A1A00] font-bold">Happy-Produktpalette</span>.
               </p>
             </div>
           </div>
@@ -165,11 +165,11 @@ export default function Unternehmen() {
           {/* 5-Card Stat Grid - Perfect Large Round Circles with Unique Color Rotating Border Animations */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 items-center justify-center">
             {[
-              { icon: <Award className="w-5 h-5" />, value: '20', label: 'Jahre Erfahrung', bg: '#474150', accent: '#FFBB00', ring: 'conic-gradient(from 0deg, #FFBB00, transparent 60%, #FFBB00)' },
-              { icon: <Clock className="w-5 h-5" />, value: '2006', label: 'Gegründet', bg: '#3D2E28', accent: '#FFAE33', ring: 'conic-gradient(from 72deg, #FF4500, transparent 60%, #FF4500)' },
-              { icon: <MapPin className="w-5 h-5" />, value: 'Zürich', label: 'Hauptsitz', bg: '#372F47', accent: '#C8A2C8', ring: 'conic-gradient(from 144deg, #A855F7, transparent 60%, #A855F7)' },
-              { icon: <Wheat className="w-5 h-5" />, value: '24h', label: 'Geöffnet', bg: '#2A423D', accent: '#4DEECA', ring: 'conic-gradient(from 216deg, #00FFCC, transparent 60%, #00FFCC)' },
-              { icon: <Award className="w-5 h-5" />, value: '20+', label: 'Jahre Tradition', bg: '#4A2A2A', accent: '#FF8080', ring: 'conic-gradient(from 288deg, #FF2D55, transparent 60%, #FF2D55)' },
+              { icon: <Award className="w-5 h-5" />, value: '20', label: 'Jahre Erfahrung', bg: '#1A1A00', accent: '#FFFFCC', ring: 'conic-gradient(from 0deg, #FFFFCC, transparent 60%, #FFFFCC)' },
+              { icon: <Clock className="w-5 h-5" />, value: '2006', label: 'Gegründet', bg: '#232300', accent: '#FFFFCC', ring: 'conic-gradient(from 72deg, #FFFFCC, transparent 60%, #FFFFCC)' },
+              { icon: <MapPin className="w-5 h-5" />, value: 'Zürich', label: 'Hauptsitz', bg: '#2C2C00', accent: '#FFFFCC', ring: 'conic-gradient(from 144deg, #FFFFCC, transparent 60%, #FFFFCC)' },
+              { icon: <Wheat className="w-5 h-5" />, value: '24h', label: 'Geöffnet', bg: '#353500', accent: '#FFFFCC', ring: 'conic-gradient(from 216deg, #FFFFCC, transparent 60%, #FFFFCC)' },
+              { icon: <Award className="w-5 h-5" />, value: '20+', label: 'Jahre Tradition', bg: '#3D3D00', accent: '#FFFFCC', ring: 'conic-gradient(from 288deg, #FFFFCC, transparent 60%, #FFFFCC)' },
             ].map((stat, i) => (
               <div
                 key={i}
@@ -193,7 +193,7 @@ export default function Unternehmen() {
 
                 <div 
                   className="w-9 h-9 rounded-full flex items-center justify-center mb-2 font-bold shadow-md relative z-10"
-                  style={{ backgroundColor: stat.accent, color: '#231E2A' }}
+                  style={{ backgroundColor: stat.accent, color: '#1A1A00' }}
                 >
                   {stat.icon}
                 </div>
@@ -211,14 +211,14 @@ export default function Unternehmen() {
       </div>
 
       {/* ─── VALUES SECTION ─── */}
-      <div className="py-20 bg-warm-yellow border-t border-[#474150]/10 pb-24">
+      <div className="py-20 bg-warm-yellow border-t border-[#1A1A00]/10 pb-24">
         <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
           <div className="text-center mb-14 reveal">
             <div className="relative inline-block">
-              <h2 className="text-3xl md:text-5xl font-serif font-black text-[#231E2A] pb-3">
-                Was uns <span className="text-[#474150]">antreibt</span>
+              <h2 className="text-3xl md:text-5xl font-serif font-black text-[#1A1A00] pb-3">
+                Was uns <span className="text-[#2C2C00]">antreibt</span>
               </h2>
-              <span className="absolute bottom-0 left-0 w-full h-1.5 bg-[#474150] rounded-full" />
+              <span className="absolute bottom-0 left-0 w-full h-1.5 bg-[#1A1A00] rounded-full" />
             </div>
           </div>
 
@@ -228,24 +228,27 @@ export default function Unternehmen() {
                 num: '01',
                 title: 'Handwerkskunst',
                 text: 'Jedes Produkt wird mit der gleichen Sorgfalt und Hingabe hergestellt, wie es unsere Vorfahren vor Generationen getan haben.',
+                bg: '#1A1A00',
               },
               {
                 num: '02',
                 title: 'Frische & Qualität',
                 text: 'Nur die besten und genau geprüften Rohstoffe gelangen zur Verarbeitung — täglich frisch, ohne Kompromisse.',
+                bg: '#2C2C00',
               },
               {
                 num: '03',
                 title: 'Innovation',
                 text: 'Wir bewahren die Tradition und wagen gleichzeitig Neues. So entstehen Kreationen, die überraschen und begeistern.',
+                bg: '#3D3D00',
               },
             ].map((value, i) => (
               <div
                 key={i}
-                className="reveal bg-[#474150] p-8 md:p-10 rounded-3xl flex items-start gap-8 shadow-2xl border border-white/10 hover:scale-[1.02] transition-all duration-300"
-                style={{ animationDelay: `${i * 100}ms` }}
+                className="reveal p-8 md:p-10 rounded-3xl flex items-start gap-8 shadow-2xl border border-white/10 hover:scale-[1.02] transition-all duration-300"
+                style={{ animationDelay: `${i * 100}ms`, backgroundColor: value.bg }}
               >
-                <span className="text-4xl md:text-5xl font-serif font-black text-[#FFBB00] flex-shrink-0">
+                <span className="text-4xl md:text-5xl font-serif font-black text-[#FFFFCC] flex-shrink-0">
                   {value.num}
                 </span>
                 <div>

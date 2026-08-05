@@ -83,12 +83,12 @@ export default function FreshJuiceModal() {
       {/* Floating Action Button at Bottom Left */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 left-6 z-40 px-5 py-3.5 rounded-full bg-[#1E293B] text-[#FFBB00] font-sans font-black text-xs md:text-sm uppercase tracking-wider flex items-center gap-3 shadow-2xl border-2 border-[#FFBB00] hover:scale-105 transition-all cursor-pointer group"
+        className="fixed bottom-6 left-6 z-40 px-5 py-3.5 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans font-black text-xs md:text-sm uppercase tracking-wider flex items-center gap-3 shadow-2xl border-2 border-[#FFFFCC] hover:scale-105 transition-all cursor-pointer group"
       >
         <span className="text-xl animate-bounce">🍹</span>
         <span className="hidden sm:inline">Frische Säfte & Drinks</span>
         <span className="sm:hidden">Säfte 🍹</span>
-        <span className="px-2 py-0.5 rounded-full bg-[#FFBB00] text-[#1E293B] text-[10px] font-black uppercase">
+        <span className="px-2 py-0.5 rounded-full bg-[#FFFFCC] text-[#1A1A00] text-[10px] font-black uppercase">
           Neu
         </span>
       </button>
@@ -96,29 +96,29 @@ export default function FreshJuiceModal() {
       {/* Modal Popup Overlay */}
       {isOpen && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 md:p-8 animate-fade-in overflow-y-auto">
-          <div className="relative w-full max-w-5xl bg-[#1E293B] rounded-3xl p-6 md:p-10 shadow-2xl border-2 border-white/20 max-h-[90vh] overflow-y-auto">
+          <div className="relative w-full max-w-5xl bg-[#1A1A00] rounded-3xl p-6 md:p-10 shadow-2xl border-2 border-white/20 max-h-[90vh] overflow-y-auto">
             {/* Close Button */}
             <button
               onClick={() => setIsOpen(false)}
-              className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 text-white hover:bg-[#FFBB00] hover:text-[#1E293B] flex items-center justify-center transition-all cursor-pointer z-10"
+              className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 text-white hover:bg-[#FFFFCC] hover:text-[#1A1A00] flex items-center justify-center transition-all cursor-pointer z-10"
             >
               <X className="w-6 h-6" />
             </button>
 
             {/* Header */}
             <div className="text-center mb-8">
-              <span className="inline-block px-4 py-1.5 rounded-full bg-[#FFBB00] text-[#1E293B] font-sans text-xs font-black tracking-[0.2em] uppercase mb-3 shadow-md">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-[#FFFFCC] text-[#1A1A00] font-sans text-xs font-black tracking-[0.2em] uppercase mb-3 shadow-md">
                 100% HAUSGEMACHT & FRISCH
               </span>
               <h2 className="text-3xl md:text-5xl font-serif font-black text-white">
-                Frisch gemachte <span className="text-[#FFBB00] underline">Säfte & Drinks</span>
+                Frisch gemachte <span className="text-[#FFFFCC] underline">Säfte & Drinks</span>
               </h2>
             </div>
 
             {/* Content Layout: Left Moka Menu + Right 6 Cards */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               {/* Left Dark Column */}
-              <div className="lg:col-span-4 bg-[#2A2421] rounded-3xl p-6 border border-white/10 shadow-xl flex flex-col justify-between">
+              <div className="lg:col-span-4 bg-[#0D0D00] rounded-3xl p-6 border border-white/10 shadow-xl flex flex-col justify-between">
                 <div>
                   <span className="text-white/60 font-sans text-[10px] tracking-[0.25em] uppercase font-black block mb-1">
                     FRISCH GEMACHT
@@ -148,13 +148,13 @@ export default function FreshJuiceModal() {
                 {/* Price Options */}
                 <div className="mt-8 pt-4 border-t border-white/10">
                   <div className="grid grid-cols-2 gap-3 mb-4">
-                    <div className="bg-black/30 p-3 rounded-2xl border border-white/10 text-center">
+                    <div className="bg-black/40 p-3 rounded-2xl border border-white/10 text-center">
                       <p className="text-white/50 text-[10px] uppercase font-bold">3 DL</p>
-                      <p className="text-[#FFBB00] font-serif font-black text-lg">CHF 7.50</p>
+                      <p className="text-[#FFFFCC] font-serif font-black text-lg">CHF 7.50</p>
                     </div>
-                    <div className="bg-black/30 p-3 rounded-2xl border border-white/10 text-center">
+                    <div className="bg-black/40 p-3 rounded-2xl border border-white/10 text-center">
                       <p className="text-white/50 text-[10px] uppercase font-bold">5 DL</p>
-                      <p className="text-[#FFBB00] font-serif font-black text-lg">CHF 9.50</p>
+                      <p className="text-[#FFFFCC] font-serif font-black text-lg">CHF 9.50</p>
                     </div>
                   </div>
                   <p className="text-white/40 text-[10px] font-sans text-center italic">
@@ -202,7 +202,7 @@ export default function FreshJuiceModal() {
 
                     {/* Price Pill */}
                     <div>
-                      <span className="inline-block px-4 py-1.5 rounded-full bg-[#1E293B] text-white font-sans font-black text-xs shadow-md">
+                      <span className="inline-block px-4 py-1.5 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans font-black text-xs shadow-md">
                         {item.price}
                       </span>
                     </div>

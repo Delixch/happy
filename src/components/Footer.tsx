@@ -8,22 +8,8 @@ export default function Footer() {
   // Dynamic theme colors matching the current active page
   const getPageTheme = () => {
     switch (location.pathname) {
-      case '/menu':
-        return { bg: 'bg-[#1E293B]', border: 'border-[#FFBB00]', textAccent: 'text-[#FFBB00]', btnBg: 'bg-[#FFBB00]', btnText: 'text-[#1E293B]' };
-      case '/medien':
-        return { bg: 'bg-[#1E293B]', border: 'border-[#FFBB00]', textAccent: 'text-[#FFBB00]', btnBg: 'bg-[#FFBB00]', btnText: 'text-[#1E293B]' };
-      case '/team':
-        return { bg: 'bg-[#312E81]', border: 'border-[#38BDF8]', textAccent: 'text-[#38BDF8]', btnBg: 'bg-[#38BDF8]', btnText: 'text-[#312E81]' };
-      case '/unternehmen':
-        return { bg: 'bg-[#474150]', border: 'border-[#FFBB00]', textAccent: 'text-[#FFBB00]', btnBg: 'bg-[#FFBB00]', btnText: 'text-[#474150]' };
-      case '/aktuelles':
-        return { bg: 'bg-[#881337]', border: 'border-[#FDE047]', textAccent: 'text-[#FDE047]', btnBg: 'bg-[#FDE047]', btnText: 'text-[#881337]' };
-      case '/jobs':
-        return { bg: 'bg-[#78350F]', border: 'border-[#FFAE33]', textAccent: 'text-[#FFAE33]', btnBg: 'bg-[#FFAE33]', btnText: 'text-[#78350F]' };
-      case '/kontakt':
-        return { bg: 'bg-[#1E293B]', border: 'border-[#FFBB00]', textAccent: 'text-[#FFBB00]', btnBg: 'bg-[#FFBB00]', btnText: 'text-[#1E293B]' };
       default:
-        return { bg: 'bg-[#1E293B]', border: 'border-[#FFBB00]', textAccent: 'text-[#FFBB00]', btnBg: 'bg-[#FFBB00]', btnText: 'text-[#1E293B]' };
+        return { bg: 'bg-[#1A1A00]', border: 'border-[#FFFFCC]', textAccent: 'text-[#FFFFCC]', btnBg: 'bg-[#FFFFCC]', btnText: 'text-[#1A1A00]' };
     }
   };
 

@@ -131,25 +131,25 @@ const CATEGORY_META: Record<MediaType, { label: string; Icon: LucideIcon; intro:
     label: 'TV Berichte',
     Icon: Tv,
     intro: 'Reportagen und Videobeiträge über Happy Beck im Fernsehen.',
-    bg: '#7C2D12',
-    bg2: '#431407',
-    accent: '#FFBB00'
+    bg: '#1A1A00',
+    bg2: '#0D0D00',
+    accent: '#FFFFCC'
   },
   presse: {
     label: 'Presse',
     Icon: Newspaper,
     intro: 'Porträts und Artikel aus Zeitungen und Magazinen.',
-    bg: '#431407',
-    bg2: '#1F0900',
-    accent: '#FFBB00'
+    bg: '#2A2A00',
+    bg2: '#1A1A00',
+    accent: '#FFFFCC'
   },
   online: {
     label: 'Online News',
     Icon: Globe,
     intro: 'Beiträge und Berichte von Online-Magazinen und Portalen.',
-    bg: '#9A3412',
-    bg2: '#7C2D12',
-    accent: '#FFBB00'
+    bg: '#3A3A00',
+    bg2: '#2A2A00',
+    accent: '#FFFFCC'
   },
 };
 
@@ -217,24 +217,24 @@ export default function Medien() {
   }, []);
 
   return (
-    <section className="pt-14 md:pt-16 min-h-screen bg-warm-yellow pb-24">
+    <section className="pt-14 md:pt-16 min-h-screen bg-[#FFFFCC] pb-24">
       {/* Hero */}
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
         <HeroVideo
           src="https://res.cloudinary.com/dsdsb4lqw/video/upload/v1785404003/resmi_harketlendir_video_gibi_f3beop.mp4"
           poster="/default-hero.jpg"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1E293B]/60 via-transparent to-[#FFBB00]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1E293B]/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A00]/60 via-transparent to-[#FFFFCC]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A00]/80 via-transparent to-transparent" />
 
         <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-end pb-10">
           <div className="max-w-xl">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-[#1E293B] text-[#FFBB00] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
               Medien & Pressezentrum
             </span>
             <div className="relative inline-block block">
               <h1 className="text-2xl md:text-5xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md whitespace-nowrap">
-                Happy Beck in den <span className="text-[#FFBB00] [-webkit-text-stroke:1px_#1E293B]" style={{ paintOrder: 'stroke fill' }}>Medien</span>
+                Happy Beck in den <span className="text-[#FFFFCC] [-webkit-text-stroke:1px_#1A1A00]" style={{ paintOrder: 'stroke fill' }}>Medien</span>
               </h1>
             </div>
           </div>

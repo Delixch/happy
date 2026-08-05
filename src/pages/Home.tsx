@@ -2,9 +2,8 @@ import { Link } from 'react-router-dom';
 import { ChefHat, Heart, Award, Bike } from 'lucide-react';
 import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 
-// One dark-to-light shade per hero slide — the underline and all 3 cards
-// below it switch to this same color together as the slide changes.
-const PHILOSOPHY_PALETTE = ['#7C2D12', '#9A3412', '#C2410C', '#EA580C'];
+// Dark-to-light muted olive green palette going from dark (#1A1A00) to progressively lighter shades
+const PHILOSOPHY_PALETTE = ['#1A1A00', '#2C2C00', '#3D3D00', '#4E4E00'];
 
 export default function Home() {
   const slides = useMemo(
@@ -14,36 +13,36 @@ export default function Home() {
         title: 'Ein Häppchen Glück!',
         subtitle: 'Willkommen bei Happy Beck',
         text: 'Traditionelles Handwerk trifft moderne Innovation. Entdecken Sie unsere Leidenschaft für frisches Brot und feine Backwaren.',
-        bgColor: '#F5FFF4', // Soft Mint Cream
-        cardBg: '#474150',  // Deep Plum Charcoal
-        textColor: '#231E2A',
+        bgColor: '#FFFFCC', // Fresh Green / Soft Light Cream
+        cardBg: '#1A1A00',  // Muted Blue Green / Dark Olive
+        textColor: '#1A1A00',
       },
       {
         image: '/Home1.jpg',
         title: 'Frisch. Fein. Happy.',
         subtitle: 'Täglich ofenfrisch',
         text: 'Jeden Tag ofenfrisch – mit ausgewählten Zutaten und viel Liebe zum Detail.',
-        bgColor: '#FFF8F0', // Soft Warm Cream / Warm Bakery Gold
-        cardBg: '#3D2E28',  // Deep Espresso Moka
-        textColor: '#2D201A',
+        bgColor: '#FFFFCC',
+        cardBg: '#1A1A00',
+        textColor: '#1A1A00',
       },
       {
         image: '/home2.jpg',
         title: 'Süsses und Herzhaftes',
         subtitle: 'Für jeden Geschmack',
         text: 'Von Gipfeli bis Sandwich: Für jeden Geschmack das Richtige.',
-        bgColor: '#F8F6FE', // Soft Lavender Slate
-        cardBg: '#372F47',  // Deep Berry Violet
-        textColor: '#251D33',
+        bgColor: '#FFFFCC',
+        cardBg: '#1A1A00',
+        textColor: '#1A1A00',
       },
       {
         image: '/happylachen.jpg',
         title: 'Freude am Genuss',
         subtitle: 'Happy Beck Lachen',
         text: 'Mit bestem Handwerk und frischen Zutaten zaubern wir Ihnen jeden Tag ein Lächeln ins Gesicht.',
-        bgColor: '#EFFCF6', // Fresh Teal Mint
-        cardBg: '#2A423D',  // Deep Eucalyptus Teal
-        textColor: '#192C28',
+        bgColor: '#FFFFCC',
+        cardBg: '#1A1A00',
+        textColor: '#1A1A00',
       },
     ],
     []
@@ -96,17 +95,20 @@ export default function Home() {
             {/* LEFT COLUMN: Flush Left & Top Image Slider */}
             <div className="lg:col-span-6 w-full">
               <div className="relative w-full h-[400px] sm:h-[480px] lg:h-[580px] overflow-hidden shadow-2xl bg-white group rounded-br-3xl">
-                {/* Changing Image with Gentle Transparency */}
+                {/* Changing Image with Gentle Ken Burns Zoom */}
                 <img
                   key={slide}
                   src={slides[slide].image}
                   alt={slides[slide].title}
-                  className="w-full h-full object-cover brightness-105 animate-hero-ken-burns"
+                  className="w-full h-full object-cover animate-hero-ken-burns"
                   fetchPriority="high"
                 />
 
                 {/* Subtle Image Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                
+                {/* Smooth Right Edge Gradient Overlay Blending Image into Text Area */}
+                <div className="absolute inset-y-0 right-0 w-24 sm:w-36 lg:w-48 bg-gradient-to-r from-transparent via-[#FFFFCC]/40 to-[#FFFFCC] pointer-events-none z-10" />
 
                 {/* Image Counter Badge */}
                 <div 
@@ -188,16 +190,16 @@ export default function Home() {
               </div>
 
               {/* Uber Eats & Just Eat Delivery Banner */}
-              <div className="w-full max-w-[420px] bg-[#1E293B]/95 rounded-2xl px-4 py-3 shadow-lg border border-[#FFBB00]/15 flex flex-row items-center justify-between gap-3 mt-2">
+              <div className="w-full max-w-[420px] bg-[#1A1A00] rounded-2xl px-4 py-3 shadow-lg border border-white/15 flex flex-row items-center justify-between gap-3 mt-2">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-8 h-8 rounded-full bg-[#FFBB00]/10 flex items-center justify-center flex-shrink-0">
-                    <Bike className="w-4 h-4 text-[#FFBB00]" />
+                  <div className="w-8 h-8 rounded-full bg-[#FFFFCC]/10 flex items-center justify-center flex-shrink-0">
+                    <Bike className="w-4 h-4 text-[#FFFFCC]" />
                   </div>
                   <div className="min-w-0">
                     <p className="text-white font-sans font-semibold text-xs leading-snug truncate">
                       Lieferung direkt zu dir
                     </p>
-                    <p className="text-white/50 font-sans text-[10px] leading-tight truncate">
+                    <p className="text-white/70 font-sans text-[10px] leading-tight truncate">
                       Jetzt bestellen bei
                     </p>
                   </div>
@@ -353,13 +355,13 @@ function FeatureCard({
         <div className="relative z-10">
           <div className="flex items-center gap-4 mb-4">
             <div
-              className="flex-shrink-0 inline-flex items-center justify-center w-12 h-12 rounded-full border border-[#FFBB00]/40 text-[#FFBB00] group-hover:scale-110 group-hover:bg-[#FFBB00]/20 transition-all duration-300 bg-[#FFBB00]/10 shadow-[0_0_20px_rgba(255,187,0,0.15)]"
+              className="flex-shrink-0 inline-flex items-center justify-center w-12 h-12 rounded-full border border-[#FFFFCC]/40 text-[#FFFFCC] group-hover:scale-110 group-hover:bg-[#FFFFCC]/20 transition-all duration-300 bg-[#FFFFCC]/10 shadow-[0_0_20px_rgba(255,255,204,0.15)]"
             >
               {icon}
             </div>
-            <h3 className="text-xl md:text-2xl font-serif font-black text-[#FFBB00] tracking-wide transition-colors">{title}</h3>
+            <h3 className="text-xl md:text-2xl font-serif font-black text-[#FFFFCC] tracking-wide transition-colors">{title}</h3>
           </div>
-          <p className="text-white font-sans text-sm md:text-base font-medium leading-relaxed drop-shadow-sm">{text}</p>
+          <p className="text-white/95 font-sans text-sm md:text-base font-medium leading-relaxed drop-shadow-sm">{text}</p>
         </div>
       </div>
     </div>

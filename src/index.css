@@ -18,8 +18,8 @@
 
   body {
     font-family: 'Karla', system-ui, sans-serif;
-    background-color: #FFCC4D;
-    color: #231E2A;
+    background-color: #FFFFCC;
+    color: #1A1A00;
     overflow-x: hidden;
     touch-action: manipulation;
   }
@@ -198,11 +198,11 @@
   }
 
   @keyframes warmYellowShift {
-    0%, 100% { background-color: #FFCC4D; }
-    50% { background-color: #FFD966; }
+    0%, 100% { background-color: #FFFFCC; }
+    50% { background-color: #FFFFE6; }
   }
   .bg-warm-yellow {
-    animation: warmYellowShift 10s ease-in-out infinite;
+    background-color: #FFFFCC;
   }
 
   @keyframes stampReveal {

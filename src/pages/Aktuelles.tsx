@@ -554,37 +554,41 @@ export default function Aktuelles() {
             </div>
           </div>
         </div>
-      </div>
 
-      <ProductGallery />
+        {/* ── SECOND ROW: PRODUCT GALLERY | JUBILÄUMS-DEALS ── */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-stretch mt-8">
+          <div className="md:col-span-3">
+            <ProductGallery />
+          </div>
 
-      {/* ── DEALS ── */}
-      <div className="container mx-auto px-4 lg:px-8 py-12">
-        <div className="text-center mb-8 animate-fade-in">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-3 shadow-md">
-            EXKLUSIVE ANGEBOTE
-          </span>
-          <h2 className="text-3xl font-serif font-black text-[#1A1A00] mb-2">
-            Jubiläums-Deals
-          </h2>
-          <p className="text-[#1A1A00]/80 font-sans text-sm font-bold">Tippe auf einen Deal für Details</p>
+          <div className="md:col-span-2">
+            <div className="text-center mb-4">
+              <span className="inline-block px-3 py-1 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-[10px] font-black uppercase tracking-wider mb-2 shadow-sm">
+                EXKLUSIVE ANGEBOTE
+              </span>
+              <h2 className="text-2xl font-serif font-black text-[#1A1A00]">
+                Jubiläums-Deals
+              </h2>
+              <p className="text-[#1A1A00]/80 font-sans text-xs font-bold mt-1">Tippe auf einen Deal für Details</p>
+            </div>
+
+            {loadingDeals ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="w-8 h-8 text-[#1A1A00] animate-spin" />
+              </div>
+            ) : deals.length === 0 ? (
+              <div className={`p-10 rounded-3xl text-center text-white font-sans shadow-2xl ${CARD_BORDER}`} style={{ background: CARD_GRADIENT }}>
+                Zurzeit keine Jubiläums-Deals verfügbar.
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 gap-4">
+                {deals.map((deal, i) => (
+                  <DealCard key={deal.id} deal={deal} index={i} />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-
-        {loadingDeals ? (
-          <div className="flex items-center justify-center py-12">
-            <Loader2 className="w-8 h-8 text-[#1A1A00] animate-spin" />
-          </div>
-        ) : deals.length === 0 ? (
-          <div className={`p-10 rounded-3xl text-center text-white font-sans max-w-md mx-auto shadow-2xl ${CARD_BORDER}`} style={{ background: CARD_GRADIENT }}>
-            Zurzeit keine Jubiläums-Deals verfügbar.
-          </div>
-        ) : (
-          <div className={`grid gap-8 mb-16 items-stretch ${deals.length > 1 ? 'grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto' : 'grid-cols-1 max-w-[400px] mx-auto'}`}>
-            {deals.map((deal, i) => (
-              <DealCard key={deal.id} deal={deal} index={i} />
-            ))}
-          </div>
-        )}
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { Gift, Zap, PartyPopper, Eye, ChevronDown, Loader2 } from 'lucide-react'
 import { supabase, type DailySpecial, type Deal } from '../lib/supabase';
 import HeroVideo from '../components/HeroVideo';
 import TiltCard from '../components/TiltCard';
+import ProductGallery from '../components/ProductGallery';
 
 // Shared dark olive gradient used across all cards on this page
 const CARD_GRADIENT = 'linear-gradient(135deg, #1A1A00 0%, #0D0D00 100%)';
@@ -583,6 +584,8 @@ export default function Aktuelles() {
           </div>
         )}
       </div>
+
+      <ProductGallery />
     </div>
   );
 }

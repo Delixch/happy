@@ -33,10 +33,10 @@ export function AdminLogin() {
 
   return (
     <section className="min-h-screen flex items-center justify-center py-10 px-4">
-      <div className="glass-card p-10 w-full max-w-md">
+      <div className="admin-card p-10 w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-full border border-gold-400/30 flex items-center justify-center mx-auto mb-4">
-            <LayoutDashboard className="w-7 h-7 text-gold-400" />
+          <div className="w-16 h-16 rounded-full border border-[#FFFFCC]/30 flex items-center justify-center mx-auto mb-4">
+            <LayoutDashboard className="w-7 h-7 text-[#FFFFCC]" />
           </div>
           <h1 className="text-2xl font-serif font-bold text-white">Admin Panel</h1>
           <p className="text-white/40 font-sans text-sm mt-2">Happy Beck Verwaltung</p>
@@ -50,7 +50,7 @@ export function AdminLogin() {
               type="email"
               value={email}
               onChange={(e) => { setEmail(e.target.value); setError(null); }}
-              className="input-premium"
+              className="admin-input"
               placeholder="admin@happybeck.ch"
               autoFocus
             />
@@ -63,14 +63,14 @@ export function AdminLogin() {
               type="password"
               value={password}
               onChange={(e) => { setPassword(e.target.value); setError(null); }}
-              className="input-premium"
+              className="admin-input"
               placeholder="Admin-Passwort eingeben"
             />
           </div>
           {error && (
             <p className="text-sm text-red-400 font-sans">{error}</p>
           )}
-          <button type="submit" disabled={submitting} className="btn-gold w-full disabled:opacity-60">
+          <button type="submit" disabled={submitting} className="admin-btn w-full disabled:opacity-60">
             {submitting ? 'Anmelden…' : 'Anmelden'}
           </button>
         </form>
@@ -104,9 +104,9 @@ export function AdminLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen flex">
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex flex-col w-64 fixed top-0 left-0 bottom-0 bg-dark-800 border-r border-white/5">
+      <aside className="hidden lg:flex flex-col w-64 fixed top-0 left-0 bottom-0 bg-[#1A1A00] border-r border-white/5">
         <div className="p-6 border-b border-white/5">
-          <h2 className="text-lg font-serif font-bold text-gold-gradient">Admin Panel</h2>
+          <h2 className="text-lg font-serif font-bold text-[#FFFFCC]">Admin Panel</h2>
           <p className="text-white/30 font-sans text-xs mt-1">Happy Beck Verwaltung</p>
         </div>
         <nav className="flex-1 p-4 space-y-1">
@@ -116,7 +116,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
               to={item.path}
               className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-sans transition-all duration-200 ${
                 location.pathname === item.path
-                  ? 'bg-gold-400/10 text-gold-400 border border-gold-400/20'
+                  ? 'bg-[#FFFFCC]/10 text-[#FFFFCC] border border-[#FFFFCC]/20'
                   : 'text-white/50 hover:text-white hover:bg-white/5'
               }`}
             >
@@ -129,7 +129,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
         <div className="p-4 border-t border-white/5 space-y-1">
           <Link
             to="/"
-            className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-sans text-white/50 hover:text-gold-400 hover:bg-white/5 transition-all"
+            className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-sans text-white/50 hover:text-[#FFFFCC] hover:bg-white/5 transition-all"
           >
             <Home className="w-4 h-4" />
             <span>Zur Website</span>
@@ -145,9 +145,9 @@ export function AdminLayout({ children }: { children: ReactNode }) {
       </aside>
 
       {/* Mobile Header */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-30 bg-dark-800/95 backdrop-blur-xl border-b border-white/5 px-4 py-3 flex items-center justify-between">
-        <h2 className="text-sm font-serif font-bold text-gold-gradient">Admin Panel</h2>
-        <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-white/60 hover:text-gold-400 transition-colors">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-30 bg-[#1A1A00]/95 backdrop-blur-xl border-b border-white/5 px-4 py-3 flex items-center justify-between">
+        <h2 className="text-sm font-serif font-bold text-[#FFFFCC]">Admin Panel</h2>
+        <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-white/60 hover:text-[#FFFFCC] transition-colors">
           {sidebarOpen ? <X className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}
         </button>
       </div>
@@ -155,8 +155,8 @@ export function AdminLayout({ children }: { children: ReactNode }) {
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div className="lg:hidden fixed inset-0 z-20 pt-12">
-          <div className="absolute inset-0 bg-dark-700/90 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
-          <div className="relative bg-dark-800 border-r border-white/5 w-64 h-full p-4 space-y-1">
+          <div className="absolute inset-0 bg-[#1A1A00]/90 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
+          <div className="relative bg-[#1A1A00] border-r border-white/5 w-64 h-full p-4 space-y-1">
             {navItems.map((item) => (
               <Link
                 key={item.path}
@@ -164,7 +164,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
                 onClick={() => setSidebarOpen(false)}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-sans transition-all ${
                   location.pathname === item.path
-                    ? 'bg-gold-400/10 text-gold-400'
+                    ? 'bg-[#FFFFCC]/10 text-[#FFFFCC]'
                     : 'text-white/50 hover:text-white'
                 }`}
               >
@@ -175,7 +175,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
             <Link
               to="/"
               onClick={() => setSidebarOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-sans text-white/50 hover:text-gold-400 mt-4"
+              className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-sans text-white/50 hover:text-[#FFFFCC] mt-4"
             >
               <Home className="w-4 h-4" />
               <span>Zur Website</span>
@@ -192,7 +192,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
       )}
 
       {/* Main Content */}
-      <main className="flex-1 lg:ml-64 pt-14 lg:pt-0">
+      <main className="flex-1 lg:ml-64 pt-14 lg:pt-0 min-h-screen bg-[#1A1A00]">
         <div className="p-6 lg:p-10 max-w-5xl">
           {children}
         </div>

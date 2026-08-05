@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { forwardRef, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Sandwich, Check, Sparkles, ArrowRight, CalendarDays, Clock, Smartphone, RotateCcw } from 'lucide-react';
@@ -127,23 +127,17 @@ function OptionGrid({
   );
 }
 
-function Layer({
-  layoutId,
-  height,
-  radius,
-  bg,
-  border,
-  children,
-}: {
+const Layer = forwardRef<HTMLDivElement, {
   layoutId: string;
   height: string;
   radius?: string;
   bg: string;
   border?: string;
   children?: React.ReactNode;
-}) {
+}>(function Layer({ layoutId, height, radius, bg, border, children }, ref) {
   return (
     <motion.div
+      ref={ref}
       layout
       layoutId={layoutId}
       initial={{ opacity: 0, y: -16, scale: 0.8 }}
@@ -156,7 +150,7 @@ function Layer({
       {children}
     </motion.div>
   );
-}
+});
 
 function SandwichVisual({
   bread,

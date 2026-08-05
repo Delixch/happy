@@ -159,6 +159,77 @@
     box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
   }
 
+  /* Admin panel — brand-matched (black-olive + cream), separate from the legacy gold/brown classes above */
+  .admin-card {
+    background: rgba(26, 26, 0, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 204, 0.15);
+    border-radius: 1rem;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+  }
+
+  .admin-card-light {
+    background: rgba(255, 255, 204, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 204, 0.15);
+    border-radius: 1rem;
+  }
+
+  .admin-btn {
+    background: linear-gradient(135deg, #FFFFCC 0%, #E0E0A0 100%);
+    color: #1A1A00;
+    font-weight: 700;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .admin-btn:hover {
+    background: linear-gradient(135deg, #FFFFF7 0%, #FFFFCC 100%);
+    box-shadow: 0 0 30px rgba(255, 255, 204, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .admin-btn-outline {
+    background: transparent;
+    color: #FFFFCC;
+    font-weight: 700;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    border: 1.5px solid #FFFFCC;
+    transition: all 0.3s ease;
+  }
+
+  .admin-btn-outline:hover {
+    background: rgba(255, 255, 204, 0.1);
+    box-shadow: 0 0 20px rgba(255, 255, 204, 0.15);
+    transform: translateY(-1px);
+  }
+
+  .admin-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(13, 13, 0, 0.8);
+    border: 1px solid rgba(255, 255, 204, 0.15);
+    border-radius: 0.5rem;
+    color: #FFFFE0;
+    font-family: 'Karla', sans-serif;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+
+  .admin-input::placeholder {
+    color: rgba(255, 255, 204, 0.35);
+  }
+
+  .admin-input:focus {
+    border-color: #FFFFCC;
+    box-shadow: 0 0 0 3px rgba(255, 255, 204, 0.15);
+  }
+
   /* Animated underline for links */
   .link-underline {
     position: relative;

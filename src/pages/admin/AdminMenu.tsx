@@ -53,7 +53,7 @@ export default function AdminMenu() {
           <h1 className="text-2xl font-serif font-bold text-white">Menü verwalten</h1>
           <p className="text-white/40 font-sans text-sm mt-1">{items.length} Artikel insgesamt</p>
         </div>
-        <button onClick={startNew} className="btn-gold flex items-center gap-2 text-sm">
+        <button onClick={startNew} className="admin-btn flex items-center gap-2 text-sm">
           <Plus className="w-4 h-4" /> Neuer Artikel
         </button>
       </div>
@@ -68,8 +68,8 @@ export default function AdminMenu() {
             onClick={() => { setActiveTab(cat.id); cancel(); }}
             className={`px-4 py-2 rounded-lg text-sm font-sans transition-all ${
               activeTab === cat.id
-                ? 'bg-gold-400 text-dark-700 font-semibold'
-                : 'bg-dark-400 text-white/50 border border-white/10 hover:text-white/80'
+                ? 'bg-[#FFFFCC] text-[#1A1A00] font-semibold'
+                : 'bg-[#2C2C00] text-white/50 border border-white/10 hover:text-white/80'
             }`}
           >
             {cat.label} ({items.filter((i) => i.category === cat.id).length})
@@ -79,8 +79,8 @@ export default function AdminMenu() {
 
       {/* New Item Form */}
       {isNew && (
-        <div className="glass-card p-6 mb-6">
-          <h3 className="text-sm font-sans font-semibold text-gold-400 uppercase tracking-wider mb-4">Neuer Artikel</h3>
+        <div className="admin-card p-6 mb-6">
+          <h3 className="text-sm font-sans font-semibold text-[#FFFFCC] uppercase tracking-wider mb-4">Neuer Artikel</h3>
           <ItemForm form={form} setForm={setForm} saving={saving} onSave={save} onCancel={cancel} />
         </div>
       )}
@@ -88,10 +88,10 @@ export default function AdminMenu() {
       {/* Items List - 3 Column Live Gradient Preview Cards */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-8 h-8 text-gold-400 animate-spin" />
+          <Loader2 className="w-8 h-8 text-[#FFFFCC] animate-spin" />
         </div>
       ) : filtered.length === 0 && !isNew ? (
-        <div className="glass-card p-12 text-center">
+        <div className="admin-card p-12 text-center">
           <p className="text-white/40 font-sans">Keine Artikel in dieser Kategorie.</p>
         </div>
       ) : (
@@ -111,7 +111,7 @@ export default function AdminMenu() {
             return (
               <div key={item.id} className="relative group">
                 {editing === item.id ? (
-                  <div className="glass-card p-6 col-span-full">
+                  <div className="admin-card p-6 col-span-full">
                     <ItemForm form={form} setForm={setForm} saving={saving} onSave={save} onCancel={cancel} />
                   </div>
                 ) : (
@@ -183,25 +183,25 @@ function ItemForm({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-xs font-sans text-white/50 uppercase tracking-wider mb-1">Name *</label>
-          <input className="input-premium" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Artikelname" />
+          <input className="admin-input" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Artikelname" />
         </div>
         <div>
           <label className="block text-xs font-sans text-white/50 uppercase tracking-wider mb-1">Preis *</label>
-          <input className="input-premium" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} placeholder="z.B. 4.90 CHF" />
+          <input className="admin-input" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} placeholder="z.B. 4.90 CHF" />
         </div>
         <div className="md:col-span-2">
           <label className="block text-xs font-sans text-white/50 uppercase tracking-wider mb-1">Beschreibung</label>
-          <input className="input-premium" value={form.description || ''} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Kurzbeschreibung" />
+          <input className="admin-input" value={form.description || ''} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Kurzbeschreibung" />
         </div>
         <div>
           <label className="block text-xs font-sans text-white/50 uppercase tracking-wider mb-1">Kategorie</label>
-          <select className="input-premium" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value as MenuCategory })}>
+          <select className="admin-input" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value as MenuCategory })}>
             {CATEGORIES.map((c) => <option key={c.id} value={c.id}>{c.label}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-xs font-sans text-white/50 uppercase tracking-wider mb-1">Reihenfolge</label>
-          <input className="input-premium" type="number" value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: parseInt(e.target.value) || 0 })} />
+          <input className="admin-input" type="number" value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: parseInt(e.target.value) || 0 })} />
         </div>
       </div>
       <div>
@@ -209,11 +209,11 @@ function ItemForm({
         <ImageUpload value={form.image_url} onChange={(url) => setForm({ ...form, image_url: url })} />
       </div>
       <div className="flex items-center gap-3 pt-2">
-        <button onClick={onSave} disabled={saving || !form.name || !form.price} className="btn-gold flex items-center gap-2 text-sm disabled:opacity-50">
+        <button onClick={onSave} disabled={saving || !form.name || !form.price} className="admin-btn flex items-center gap-2 text-sm disabled:opacity-50">
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
           Speichern
         </button>
-        <button onClick={onCancel} className="btn-gold-outline flex items-center gap-2 text-sm">
+        <button onClick={onCancel} className="admin-btn-outline flex items-center gap-2 text-sm">
           <X className="w-4 h-4" /> Abbrechen
         </button>
       </div>

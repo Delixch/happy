@@ -48,7 +48,7 @@ export default function ImageUpload({ value, onChange, className = '' }: ImageUp
       {value ? (
         <div className="relative group rounded-xl overflow-hidden border border-white/10">
           <img src={value} alt="Vorschau" className="w-full h-40 object-cover" />
-          <div className="absolute inset-0 bg-dark-700/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+          <div className="absolute inset-0 bg-[#1A1A00]/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
             <button
               type="button"
               onClick={() => fileRef.current?.click()}
@@ -70,7 +70,7 @@ export default function ImageUpload({ value, onChange, className = '' }: ImageUp
           type="button"
           onClick={() => fileRef.current?.click()}
           disabled={uploading}
-          className="w-full h-32 border-2 border-dashed border-white/10 hover:border-gold-400/30 rounded-xl flex flex-col items-center justify-center gap-2 text-white/30 hover:text-gold-400/60 transition-all"
+          className="w-full h-32 border-2 border-dashed border-white/10 hover:border-[#FFFFCC]/30 rounded-xl flex flex-col items-center justify-center gap-2 text-white/30 hover:text-[#FFFFCC]/60 transition-all"
         >
           {uploading ? (
             <>

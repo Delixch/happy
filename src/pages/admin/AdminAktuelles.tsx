@@ -40,7 +40,7 @@ export default function AdminAktuelles() {
             Heute's Spezial — jeden Tag ein neues Angebot
           </p>
         </div>
-        <button onClick={startNew} className="btn-gold flex items-center gap-2 text-sm">
+        <button onClick={startNew} className="admin-btn flex items-center gap-2 text-sm">
           <Plus className="w-4 h-4" /> Neues Angebot
         </button>
       </div>
@@ -48,20 +48,20 @@ export default function AdminAktuelles() {
       {error && <ErrorBanner message={error} onDismiss={() => setError(null)} />}
 
       {isNew && (
-        <div className="glass-card p-6 mb-6">
-          <h3 className="text-sm font-sans font-semibold text-gold-400 uppercase tracking-wider mb-4">Neues Tagesangebot</h3>
+        <div className="admin-card p-6 mb-6">
+          <h3 className="text-sm font-sans font-semibold text-[#FFFFCC] uppercase tracking-wider mb-4">Neues Tagesangebot</h3>
           <SpecialForm form={form} setForm={setForm} saving={saving} onSave={save} onCancel={cancel} />
         </div>
       )}
 
       {loading ? (
-        <div className="flex items-center justify-center py-20"><Loader2 className="w-6 h-6 text-gold-400 animate-spin" /></div>
+        <div className="flex items-center justify-center py-20"><Loader2 className="w-6 h-6 text-[#FFFFCC] animate-spin" /></div>
       ) : specials.length === 0 && !isNew ? (
-        <div className="glass-card p-12 text-center"><p className="text-white/30 font-sans">Noch keine Tagesangebote.</p></div>
+        <div className="admin-card p-12 text-center"><p className="text-white/30 font-sans">Noch keine Tagesangebote.</p></div>
       ) : (
         <div className="space-y-3">
           {specials.map((s) => (
-            <div key={s.id} className={`glass-card overflow-hidden ${!s.is_active ? 'opacity-50' : ''}`}>
+            <div key={s.id} className={`admin-card overflow-hidden ${!s.is_active ? 'opacity-50' : ''}`}>
               {editing === s.id ? (
                 <div className="p-6"><SpecialForm form={form} setForm={setForm} saving={saving} onSave={save} onCancel={cancel} /></div>
               ) : (
@@ -81,11 +81,11 @@ export default function AdminAktuelles() {
                         <Calendar className="w-3 h-3" /> {s.valid_date}
                       </span>
                       {s.original_price && <span className="text-white/20 line-through font-sans text-xs">{s.original_price}</span>}
-                      <span className="text-gold-400 font-serif font-bold text-sm">{s.special_price}</span>
+                      <span className="text-[#FFFFCC] font-serif font-bold text-sm">{s.special_price}</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-1">
-                    <button onClick={() => startEdit(s)} className="p-2 text-white/30 hover:text-gold-400 transition-colors"><Pencil className="w-4 h-4" /></button>
+                    <button onClick={() => startEdit(s)} className="p-2 text-white/30 hover:text-[#FFFFCC] transition-colors"><Pencil className="w-4 h-4" /></button>
                     <button onClick={() => remove(s.id)} className="p-2 text-white/30 hover:text-red-400 transition-colors"><Trash2 className="w-4 h-4" /></button>
                   </div>
                 </div>
@@ -107,27 +107,27 @@ function SpecialForm({ form, setForm, saving, onSave, onCancel }: {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="md:col-span-2">
           <label className="block text-xs font-sans text-white/50 uppercase tracking-wider mb-1">Titel *</label>
-          <input className="input-premium" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="z.B. Mystery Gipfeli Box" />
+          <input className="admin-input" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="z.B. Mystery Gipfeli Box" />
         </div>
         <div className="md:col-span-2">
           <label className="block text-xs font-sans text-white/50 uppercase tracking-wider mb-1">Beschreibung</label>
-          <textarea className="input-premium min-h-[60px] resize-y" value={form.description || ''} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Kurze Beschreibung" />
+          <textarea className="admin-input min-h-[60px] resize-y" value={form.description || ''} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Kurze Beschreibung" />
         </div>
         <div>
           <label className="block text-xs font-sans text-white/50 uppercase tracking-wider mb-1">Originalpreis</label>
-          <input className="input-premium" value={form.original_price || ''} onChange={(e) => setForm({ ...form, original_price: e.target.value })} placeholder="z.B. 9.50 CHF" />
+          <input className="admin-input" value={form.original_price || ''} onChange={(e) => setForm({ ...form, original_price: e.target.value })} placeholder="z.B. 9.50 CHF" />
         </div>
         <div>
           <label className="block text-xs font-sans text-white/50 uppercase tracking-wider mb-1">Spezialpreis *</label>
-          <input className="input-premium" value={form.special_price} onChange={(e) => setForm({ ...form, special_price: e.target.value })} placeholder="z.B. 5.90 CHF" />
+          <input className="admin-input" value={form.special_price} onChange={(e) => setForm({ ...form, special_price: e.target.value })} placeholder="z.B. 5.90 CHF" />
         </div>
         <div>
           <label className="block text-xs font-sans text-white/50 uppercase tracking-wider mb-1">Gültig am *</label>
-          <input className="input-premium" type="date" value={form.valid_date} onChange={(e) => setForm({ ...form, valid_date: e.target.value })} />
+          <input className="admin-input" type="date" value={form.valid_date} onChange={(e) => setForm({ ...form, valid_date: e.target.value })} />
         </div>
         <div>
           <label className="block text-xs font-sans text-white/50 uppercase tracking-wider mb-1">Status</label>
-          <select className="input-premium" value={form.is_active ? 'true' : 'false'} onChange={(e) => setForm({ ...form, is_active: e.target.value === 'true' })}>
+          <select className="admin-input" value={form.is_active ? 'true' : 'false'} onChange={(e) => setForm({ ...form, is_active: e.target.value === 'true' })}>
             <option value="true">Aktiv</option>
             <option value="false">Inaktiv</option>
           </select>
@@ -138,10 +138,10 @@ function SpecialForm({ form, setForm, saving, onSave, onCancel }: {
         <ImageUpload value={form.image_url} onChange={(url) => setForm({ ...form, image_url: url })} />
       </div>
       <div className="flex items-center gap-3 pt-2">
-        <button onClick={onSave} disabled={saving || !form.title || !form.special_price} className="btn-gold flex items-center gap-2 text-sm disabled:opacity-50">
+        <button onClick={onSave} disabled={saving || !form.title || !form.special_price} className="admin-btn flex items-center gap-2 text-sm disabled:opacity-50">
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} Speichern
         </button>
-        <button onClick={onCancel} className="btn-gold-outline flex items-center gap-2 text-sm"><X className="w-4 h-4" /> Abbrechen</button>
+        <button onClick={onCancel} className="admin-btn-outline flex items-center gap-2 text-sm"><X className="w-4 h-4" /> Abbrechen</button>
       </div>
     </div>
   );

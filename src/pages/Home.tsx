@@ -233,7 +233,7 @@ export default function Home() {
         </div>
 
         {/* ── FULL WIDTH 24H SCROLLING MARQUEE BANNER (RIGHT UNDER HERO) ── */}
-        <div className="w-full bg-[#1A1A00] py-2.5 md:py-3.5 border-y-2 border-white/20 overflow-hidden shadow-2xl mt-4 md:-mt-8 mb-4 relative z-20">
+        <div className="w-full bg-[#1A1A00] py-2.5 md:py-3.5 border-y-2 border-white/20 overflow-hidden shadow-2xl mt-8 md:-mt-2 mb-4 relative z-20">
           <div className="animate-marquee flex items-center whitespace-nowrap">
             {[1, 2, 3, 4].map((groupKey) => (
               <div key={groupKey} className="flex items-center gap-8 px-4 flex-shrink-0">

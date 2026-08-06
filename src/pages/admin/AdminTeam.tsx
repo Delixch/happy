@@ -111,11 +111,11 @@ function MemberForm({ form, setForm, saving, onSave, onCancel }: {
         <label className="block text-xs font-sans text-white/50 uppercase tracking-wider mb-1">Foto</label>
         <ImageUpload value={form.image_url} onChange={(url) => setForm({ ...form, image_url: url })} />
       </div>
-      <div className="flex items-center gap-3 pt-2">
-        <button onClick={onSave} disabled={saving || !form.name || !form.role} className="admin-btn flex items-center gap-2 text-sm disabled:opacity-50">
+      <div className="flex items-center gap-3 pt-2 flex-wrap">
+        <button onClick={onSave} disabled={saving || !form.name || !form.role} className="admin-btn flex items-center gap-2 text-sm px-5 py-2.5 disabled:opacity-50">
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} Speichern
         </button>
-        <button onClick={onCancel} className="admin-btn-outline flex items-center gap-2 text-sm"><X className="w-4 h-4" /> Abbrechen</button>
+        <button onClick={onCancel} className="admin-btn-outline flex items-center gap-2 text-sm px-5 py-2.5 whitespace-nowrap"><X className="w-4 h-4" /> Abbrechen</button>
       </div>
     </div>
   );

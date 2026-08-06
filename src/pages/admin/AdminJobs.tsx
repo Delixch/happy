@@ -172,11 +172,11 @@ function JobForm({ form, setForm, saving, onSave, onCancel, reqInput, setReqInpu
         </div>
       </div>
 
-      <div className="flex items-center gap-3 pt-2">
-        <button onClick={onSave} disabled={saving || !form.title} className="admin-btn flex items-center gap-2 text-sm disabled:opacity-50">
+      <div className="flex items-center gap-3 pt-2 flex-wrap">
+        <button onClick={onSave} disabled={saving || !form.title} className="admin-btn flex items-center gap-2 text-sm px-5 py-2.5 disabled:opacity-50">
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} Speichern
         </button>
-        <button onClick={onCancel} className="admin-btn-outline flex items-center gap-2 text-sm"><X className="w-4 h-4" /> Abbrechen</button>
+        <button onClick={onCancel} className="admin-btn-outline flex items-center gap-2 text-sm px-5 py-2.5 whitespace-nowrap"><X className="w-4 h-4" /> Abbrechen</button>
       </div>
     </div>
   );

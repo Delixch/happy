@@ -63,7 +63,7 @@ const CATEGORY_META: Record<MenuCategory, { label: string; Icon: LucideIcon; int
   },
 };
 
-const CATEGORIES: MenuCategory[] = ['fruehstueck', 'getraenke', 'salziges', 'sandwich', 'suess', 'pizza', 'gerichte'];
+const CATEGORIES: MenuCategory[] = ['fruehstueck', 'gerichte', 'pizza', 'sandwich', 'salziges', 'suess', 'getraenke'];
 
 type DietFilter = 'all' | 'vegan' | 'vegetarisch';
 

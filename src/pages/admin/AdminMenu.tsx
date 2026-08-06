@@ -7,12 +7,12 @@ import { Plus, Pencil, Trash2, Save, X, Loader2 } from 'lucide-react';
 
 const CATEGORIES: { id: MenuCategory; label: string }[] = [
   { id: 'fruehstueck', label: 'Frühstück' },
-  { id: 'salziges', label: 'Salziges' },
+  { id: 'gerichte', label: 'Hauptgerichte' },
+  { id: 'pizza', label: 'Pizza' },
   { id: 'sandwich', label: 'Sandwiches' },
+  { id: 'salziges', label: 'Salziges' },
   { id: 'suess', label: 'Süsses' },
   { id: 'getraenke', label: 'Getränke' },
-  { id: 'pizza', label: 'Pizza' },
-  { id: 'gerichte', label: 'Hauptgerichte' },
 ];
 
 type MenuForm = Omit<MenuItem, 'id' | 'created_at'>;

@@ -65,12 +65,11 @@ const CATEGORY_META: Record<MenuCategory, { label: string; Icon: LucideIcon; int
 
 const CATEGORIES: MenuCategory[] = ['fruehstueck', 'gerichte', 'pizza', 'sandwich', 'salziges', 'suess', 'getraenke'];
 
-type DietFilter = 'all' | 'vegan' | 'vegetarisch';
+type DietFilter = 'all' | 'vegetarisch';
 
 const DIET_FILTERS: { id: DietFilter; label: string }[] = [
   { id: 'all', label: 'Alles' },
   { id: 'vegetarisch', label: 'Vegetarisch' },
-  { id: 'vegan', label: 'Vegan' },
 ];
 
 export default function MenuPage() {
@@ -292,11 +291,7 @@ function CategoryContent({
   const meta = CATEGORY_META[catId];
   const filtered = items
     .filter((i) => i.category === catId)
-    .filter((i) => {
-      if (dietFilter === 'vegan') return i.is_vegan;
-      if (dietFilter === 'vegetarisch') return i.is_vegetarian;
-      return true;
-    });
+    .filter((i) => (dietFilter === 'vegetarisch' ? i.is_vegetarian : true));
 
   return (
     <div>
@@ -320,7 +315,7 @@ function CategoryContent({
           <Sparkles className="w-12 h-12 mx-auto mb-4 opacity-80" style={{ color: meta.accent }} />
           {dietFilter === 'all'
             ? 'In dieser Kategorie wurden noch keine Speisen veröffentlicht.'
-            : `Keine ${dietFilter === 'vegan' ? 'veganen' : 'vegetarischen'} Speisen in dieser Kategorie.`}
+            : 'Keine vegetarischen Speisen in dieser Kategorie.'}
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -343,12 +338,7 @@ function CategoryContent({
                     <h3 className="text-xl font-serif font-black text-gold-gradient leading-snug line-clamp-2 flex-1">
                       {item.name}
                     </h3>
-                    {item.is_vegan && (
-                      <span className="flex items-center gap-1 text-[10px] font-sans font-black text-white bg-green-600 px-2 py-1 rounded-full flex-shrink-0">
-                        <Leaf className="w-3 h-3" /> VEGAN
-                      </span>
-                    )}
-                    {!item.is_vegan && item.is_vegetarian && (
+                    {item.is_vegetarian && (
                       <span className="flex items-center gap-1 text-[10px] font-sans font-black text-white bg-green-500/80 px-2 py-1 rounded-full flex-shrink-0">
                         <Leaf className="w-3 h-3" /> VEGI
                       </span>

@@ -130,8 +130,7 @@ export default function AdminMenu() {
                           <h3 className={`text-base font-bold font-sans ${theme.titleColor} leading-tight line-clamp-1`}>
                             {item.name}
                           </h3>
-                          {item.is_vegan && <span className="text-[10px] font-black text-white bg-green-600 px-1.5 py-0.5 rounded-full flex-shrink-0">VEGAN</span>}
-                          {!item.is_vegan && item.is_vegetarian && <span className="text-[10px] font-black text-white bg-green-500/80 px-1.5 py-0.5 rounded-full flex-shrink-0">VEGI</span>}
+                          {item.is_vegetarian && <span className="text-[10px] font-black text-white bg-green-500/80 px-1.5 py-0.5 rounded-full flex-shrink-0">VEGI</span>}
                         </div>
                         {item.description && (
                           <p className="text-xs text-[#52443C] font-sans leading-relaxed line-clamp-2 pr-1">
@@ -216,15 +215,6 @@ function ItemForm({
         <ImageUpload value={form.image_url} onChange={(url) => setForm({ ...form, image_url: url })} />
       </div>
       <div className="flex items-center gap-6">
-        <label className="flex items-center gap-2 text-sm font-sans text-white/70 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={form.is_vegan}
-            onChange={(e) => setForm({ ...form, is_vegan: e.target.checked, is_vegetarian: e.target.checked ? true : form.is_vegetarian })}
-            className="w-4 h-4 accent-[#FFFFCC]"
-          />
-          Vegan
-        </label>
         <label className="flex items-center gap-2 text-sm font-sans text-white/70 cursor-pointer">
           <input
             type="checkbox"

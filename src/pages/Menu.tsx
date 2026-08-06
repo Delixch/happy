@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Coffee, UtensilsCrossed, Sandwich as SandwichIcon, IceCream, CupSoda, Loader2, Sparkles, ChevronDown, type LucideIcon } from 'lucide-react';
+import { Coffee, UtensilsCrossed, Sandwich as SandwichIcon, IceCream, CupSoda, Loader2, Sparkles, ChevronDown, Leaf, Pizza as PizzaIcon, Utensils, type LucideIcon } from 'lucide-react';
 import { supabase, type MenuItem, type MenuCategory } from '../lib/supabase';
 import MarqueeTicker from '../components/MarqueeTicker';
 import TiltCard from '../components/TiltCard';
@@ -45,14 +45,39 @@ const CATEGORY_META: Record<MenuCategory, { label: string; Icon: LucideIcon; int
     bg2: '#2C2C00',
     accent: '#FFFFCC'
   },
+  pizza: {
+    label: 'Pizza',
+    Icon: PizzaIcon,
+    intro: 'Frisch aus dem Ofen – klassisch bis kreativ.',
+    bg: '#454500',
+    bg2: '#353500',
+    accent: '#FFFFCC'
+  },
+  gerichte: {
+    label: 'Hauptgerichte',
+    Icon: Utensils,
+    intro: 'Herzhafte Teller – für den grossen Hunger.',
+    bg: '#4E4E00',
+    bg2: '#3D3D00',
+    accent: '#FFFFCC'
+  },
 };
 
-const CATEGORIES: MenuCategory[] = ['fruehstueck', 'getraenke', 'salziges', 'sandwich', 'suess'];
+const CATEGORIES: MenuCategory[] = ['fruehstueck', 'getraenke', 'salziges', 'sandwich', 'suess', 'pizza', 'gerichte'];
+
+type DietFilter = 'all' | 'vegan' | 'vegetarisch';
+
+const DIET_FILTERS: { id: DietFilter; label: string }[] = [
+  { id: 'all', label: 'Alles' },
+  { id: 'vegetarisch', label: 'Vegetarisch' },
+  { id: 'vegan', label: 'Vegan' },
+];
 
 export default function MenuPage() {
   const [items, setItems] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [active, setActive] = useState<MenuCategory | null>(null);
+  const [dietFilter, setDietFilter] = useState<DietFilter>('all');
   const mobileCatRefs = useRef<Partial<Record<MenuCategory, HTMLDivElement | null>>>({});
 
   const selectMobileCategory = (catId: MenuCategory, isActive: boolean) => {
@@ -109,6 +134,25 @@ export default function MenuPage() {
       <div className="container mx-auto px-4 lg:px-8 py-12 max-w-7xl">
         <div className="max-w-6xl mx-auto">
 
+          {/* ── DIET FILTER ── */}
+          <div className="flex items-center justify-center gap-2 mb-8 flex-wrap">
+            {DIET_FILTERS.map((f) => {
+              const isActive = dietFilter === f.id;
+              return (
+                <button
+                  key={f.id}
+                  onClick={() => setDietFilter(f.id)}
+                  className={`px-4 py-2 rounded-full font-sans font-black text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer ${
+                    isActive ? 'bg-[#1A1A00] text-[#FFFFCC] shadow-md scale-105' : 'bg-[#1A1A00]/5 text-[#1A1A00]/60 hover:bg-[#1A1A00]/10'
+                  }`}
+                >
+                  {f.id !== 'all' && <Leaf className="w-3.5 h-3.5" />}
+                  {f.label}
+                </button>
+              );
+            })}
+          </div>
+
           {/* ── DESKTOP: video | menu | title in one row, shared content panel below ── */}
           <div className="hidden lg:block">
             <div className="mb-10 flex flex-row items-stretch justify-center gap-10">
@@ -162,7 +206,7 @@ export default function MenuPage() {
 
             {active && (
               <div className="rounded-3xl p-6 md:p-8" style={{ backgroundColor: CATEGORY_META[active].bg2 }}>
-                <CategoryContent catId={active} items={items} loading={loading} />
+                <CategoryContent catId={active} items={items} loading={loading} dietFilter={dietFilter} />
               </div>
             )}
           </div>
@@ -219,7 +263,7 @@ export default function MenuPage() {
                     </button>
                     <div className={`transition-all duration-300 ${isActive ? 'max-h-[6000px] opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
                       <div className="p-4" style={{ backgroundColor: m.bg2 }}>
-                        <CategoryContent catId={catId} items={items} loading={loading} />
+                        <CategoryContent catId={catId} items={items} loading={loading} dietFilter={dietFilter} />
                       </div>
                     </div>
                   </div>
@@ -238,13 +282,21 @@ function CategoryContent({
   catId,
   items,
   loading,
+  dietFilter,
 }: {
   catId: MenuCategory;
   items: MenuItem[];
   loading: boolean;
+  dietFilter: DietFilter;
 }) {
   const meta = CATEGORY_META[catId];
-  const filtered = items.filter((i) => i.category === catId);
+  const filtered = items
+    .filter((i) => i.category === catId)
+    .filter((i) => {
+      if (dietFilter === 'vegan') return i.is_vegan;
+      if (dietFilter === 'vegetarisch') return i.is_vegetarian;
+      return true;
+    });
 
   return (
     <div>
@@ -266,7 +318,9 @@ function CategoryContent({
           style={{ backgroundColor: `${meta.bg}D9` }}
         >
           <Sparkles className="w-12 h-12 mx-auto mb-4 opacity-80" style={{ color: meta.accent }} />
-          In dieser Kategorie wurden noch keine Speisen veröffentlicht.
+          {dietFilter === 'all'
+            ? 'In dieser Kategorie wurden noch keine Speisen veröffentlicht.'
+            : `Keine ${dietFilter === 'vegan' ? 'veganen' : 'vegetarischen'} Speisen in dieser Kategorie.`}
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -286,9 +340,19 @@ function CategoryContent({
                     >
                       {idx + 1}
                     </span>
-                    <h3 className="text-xl font-serif font-black text-gold-gradient leading-snug line-clamp-2">
+                    <h3 className="text-xl font-serif font-black text-gold-gradient leading-snug line-clamp-2 flex-1">
                       {item.name}
                     </h3>
+                    {item.is_vegan && (
+                      <span className="flex items-center gap-1 text-[10px] font-sans font-black text-white bg-green-600 px-2 py-1 rounded-full flex-shrink-0">
+                        <Leaf className="w-3 h-3" /> VEGAN
+                      </span>
+                    )}
+                    {!item.is_vegan && item.is_vegetarian && (
+                      <span className="flex items-center gap-1 text-[10px] font-sans font-black text-white bg-green-500/80 px-2 py-1 rounded-full flex-shrink-0">
+                        <Leaf className="w-3 h-3" /> VEGI
+                      </span>
+                    )}
                   </div>
 
                   {/* Description */}

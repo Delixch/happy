@@ -11,6 +11,8 @@ const CATEGORIES: { id: MenuCategory; label: string }[] = [
   { id: 'sandwich', label: 'Sandwiches' },
   { id: 'suess', label: 'Süsses' },
   { id: 'getraenke', label: 'Getränke' },
+  { id: 'pizza', label: 'Pizza' },
+  { id: 'gerichte', label: 'Hauptgerichte' },
 ];
 
 type MenuForm = Omit<MenuItem, 'id' | 'created_at'>;
@@ -22,6 +24,8 @@ const emptyItem: MenuForm = {
   price: '',
   image_url: null,
   sort_order: 0,
+  is_vegan: false,
+  is_vegetarian: false,
 };
 
 export default function AdminMenu() {
@@ -37,6 +41,7 @@ export default function AdminMenu() {
     toForm: (item) => ({
       category: item.category, name: item.name, description: item.description,
       price: item.price, image_url: item.image_url, sort_order: item.sort_order,
+      is_vegan: item.is_vegan, is_vegetarian: item.is_vegetarian,
     }),
     isValid: (f) => !!f.name && !!f.price,
     confirmDeleteMessage: 'Diesen Artikel wirklich löschen?',
@@ -125,6 +130,8 @@ export default function AdminMenu() {
                           <h3 className={`text-base font-bold font-sans ${theme.titleColor} leading-tight line-clamp-1`}>
                             {item.name}
                           </h3>
+                          {item.is_vegan && <span className="text-[10px] font-black text-white bg-green-600 px-1.5 py-0.5 rounded-full flex-shrink-0">VEGAN</span>}
+                          {!item.is_vegan && item.is_vegetarian && <span className="text-[10px] font-black text-white bg-green-500/80 px-1.5 py-0.5 rounded-full flex-shrink-0">VEGI</span>}
                         </div>
                         {item.description && (
                           <p className="text-xs text-[#52443C] font-sans leading-relaxed line-clamp-2 pr-1">
@@ -207,6 +214,26 @@ function ItemForm({
       <div>
         <label className="block text-xs font-sans text-white/50 uppercase tracking-wider mb-1">Bild</label>
         <ImageUpload value={form.image_url} onChange={(url) => setForm({ ...form, image_url: url })} />
+      </div>
+      <div className="flex items-center gap-6">
+        <label className="flex items-center gap-2 text-sm font-sans text-white/70 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={form.is_vegan}
+            onChange={(e) => setForm({ ...form, is_vegan: e.target.checked, is_vegetarian: e.target.checked ? true : form.is_vegetarian })}
+            className="w-4 h-4 accent-[#FFFFCC]"
+          />
+          Vegan
+        </label>
+        <label className="flex items-center gap-2 text-sm font-sans text-white/70 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={form.is_vegetarian}
+            onChange={(e) => setForm({ ...form, is_vegetarian: e.target.checked })}
+            className="w-4 h-4 accent-[#FFFFCC]"
+          />
+          Vegetarisch
+        </label>
       </div>
       <div className="flex items-center gap-3 pt-2">
         <button onClick={onSave} disabled={saving || !form.name || !form.price} className="admin-btn flex items-center gap-2 text-sm disabled:opacity-50">

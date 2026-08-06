@@ -3,6 +3,12 @@ import { Loader2, Camera } from 'lucide-react';
 
 type ProductImage = { url: string; width: number; height: number };
 
+// Local dev fallback: drop images into src/assets/gallery-preview/ to preview
+// the slideshow without the Cloudinary API (which only runs on Vercel).
+const LOCAL_PREVIEW_IMAGES = Object.values(
+  import.meta.glob('../assets/gallery-preview/*.{jpg,jpeg,png,webp}', { eager: true, query: '?url', import: 'default' })
+) as string[];
+
 export default function ProductGallery() {
   const [images, setImages] = useState<ProductImage[]>([]);
   const [loading, setLoading] = useState(true);
@@ -11,10 +17,19 @@ export default function ProductGallery() {
     fetch('/api/product-images')
       .then((res) => res.json())
       .then((data) => {
-        if (data.images) setImages(data.images);
+        if (data.images && data.images.length > 0) {
+          setImages(data.images);
+        } else if (LOCAL_PREVIEW_IMAGES.length > 0) {
+          setImages(LOCAL_PREVIEW_IMAGES.map((url) => ({ url, width: 0, height: 0 })));
+        }
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        if (LOCAL_PREVIEW_IMAGES.length > 0) {
+          setImages(LOCAL_PREVIEW_IMAGES.map((url) => ({ url, width: 0, height: 0 })));
+        }
+        setLoading(false);
+      });
   }, []);
 
   if (!loading && images.length === 0) return null;

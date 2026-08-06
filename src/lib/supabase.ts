@@ -7,7 +7,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // ── Types ──────────────────────────────────────────────
 
-export type MenuCategory = 'fruehstueck' | 'salziges' | 'sandwich' | 'suess' | 'getraenke';
+export type MenuCategory = 'fruehstueck' | 'salziges' | 'sandwich' | 'suess' | 'getraenke' | 'pizza' | 'gerichte';
 
 export interface MenuItem {
   id: string;
@@ -18,6 +18,8 @@ export interface MenuItem {
   image_url: string | null;
   sort_order: number;
   created_at: string;
+  is_vegan: boolean;
+  is_vegetarian: boolean;
 }
 
 export interface TeamMember {

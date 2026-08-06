@@ -7,4 +7,6 @@ npm-debug.log*
 yarn-error.log*
 **/.vite
 HappyGemini.txt
+src/assets/gallery-preview/*
+!src/assets/gallery-preview/README.txt
 

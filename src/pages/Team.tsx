@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import { Users, Loader2 } from 'lucide-react';
 import { supabase, type TeamMember } from '../lib/supabase';
 import HeroVideo from '../components/HeroVideo';
+import { Reveal } from '../components/motion/Reveal';
 
 export default function Team() {
   const [members, setMembers] = useState<TeamMember[]>([]);
@@ -89,12 +90,12 @@ export default function Team() {
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 py-10 max-w-6xl">
-        <div className="text-[#1A1A00] text-center mb-8">
+        <Reveal className="text-[#1A1A00] text-center mb-8">
           <p className="font-sans max-w-2xl mx-auto leading-relaxed font-semibold text-base md:text-lg">
             Hinter jedem Gipfeli und jedem frischen Brot stehen engagierte Menschen,
             die mit Herz und Handwerk arbeiten. Lernen Sie unser Team kennen.
           </p>
-        </div>
+        </Reveal>
 
         {loading ? (
           <div className="flex items-center justify-center py-20">
@@ -218,7 +219,7 @@ export default function Team() {
             </div>
 
             {/* RIGHT COLUMN: Lightswind PRO Holographic Control Deck Panel */}
-            <div className="lg:col-span-6 bg-white/60 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border-2 border-[#1A1A00]/20 shadow-2xl flex flex-col justify-between min-h-[440px]">
+            <Reveal className="lg:col-span-6 bg-white/60 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border-2 border-[#1A1A00]/20 shadow-2xl flex flex-col justify-between min-h-[440px]">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-[10px] font-sans font-black uppercase tracking-[0.25em] text-[#1A1A00]/70">
@@ -296,7 +297,7 @@ export default function Team() {
                 </div>
               </div>
 
-            </div>
+            </Reveal>
 
           </div>
         )}

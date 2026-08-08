@@ -1,5 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Award, Clock, MapPin, Wheat } from 'lucide-react';
+import Parallax from '../components/motion/Parallax';
+import { Reveal, RevealGroup, RevealItem } from '../components/motion/Reveal';
 
 const FRAME_COUNT = 300;
 
@@ -34,47 +36,16 @@ function FrameAnimationCard() {
 }
 
 export default function Unternehmen() {
-  const parallaxRef = useRef<HTMLDivElement>(null);
-
-  // Parallax effect on hero
-  useEffect(() => {
-    const onScroll = () => {
-      if (parallaxRef.current) {
-        const scrollY = window.scrollY;
-        parallaxRef.current.style.transform = `translateY(${scrollY * 0.3}px)`;
-      }
-    };
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  // Reveal animation
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-      },
-      { threshold: 0.01 }
-    );
-    const els = document.querySelectorAll('.reveal');
-    els.forEach((el) => {
-      observer.observe(el);
-      el.classList.add('visible');
-    });
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section id="unternehmen" className="min-h-screen bg-warm-yellow pt-14 md:pt-16">
       {/* ─── HERO ─── */}
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
-        <div
-          ref={parallaxRef}
-          className="absolute inset-0 -top-10 bg-cover bg-center will-change-transform brightness-90"
-          style={{ backgroundImage: "url('/uberuns.jpg')" }}
-        />
+        <Parallax className="absolute inset-0" distance={14}>
+          <div
+            className="w-full h-full bg-cover bg-center brightness-90"
+            style={{ backgroundImage: "url('/uberuns.jpg')" }}
+          />
+        </Parallax>
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A00]/60 via-transparent to-[#FFFFCC]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A00]/80 via-transparent to-transparent" />
 
@@ -93,9 +64,9 @@ export default function Unternehmen() {
       {/* ─── STORY SECTION 1 ─── */}
       <div className="relative py-16 md:py-20 bg-warm-yellow overflow-hidden">
         <div className="container mx-auto px-4 lg:px-8 max-w-6xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <RevealGroup className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center" stagger={0.15}>
             {/* Text - left */}
-            <div className="lg:col-span-7 reveal">
+            <RevealItem className="lg:col-span-7">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-full bg-[#1A1A00] flex items-center justify-center text-[#FFFFCC] shadow-sm">
                   <Wheat className="w-5 h-5" />
@@ -133,20 +104,20 @@ export default function Unternehmen() {
                   — Familie Aydin, Gründer
                 </cite>
               </blockquote>
-            </div>
+            </RevealItem>
 
             {/* Auto-playing Frame Animation Card - right */}
-            <div className="lg:col-span-5 reveal" style={{ animationDelay: '200ms' }}>
+            <RevealItem className="lg:col-span-5">
               <FrameAnimationCard />
-            </div>
-          </div>
+            </RevealItem>
+          </RevealGroup>
         </div>
       </div>
 
       {/* ─── STORY SECTION 2 & STATS HIGHLIGHTS ─── */}
       <div className="relative py-16 md:py-20 bg-warm-yellow overflow-hidden border-t border-[#1A1A00]/10">
         <div className="container mx-auto px-4 lg:px-8 max-w-5xl relative z-10">
-          <div className="mb-14 reveal">
+          <Reveal className="mb-14">
             <div className="relative inline-block mb-6">
               <h2 className="text-3xl md:text-5xl font-serif font-black text-[#1A1A00] pb-3">
                 Von Zürich in die <span className="text-[#2C2C00]">ganze Schweiz</span>
@@ -165,10 +136,10 @@ export default function Unternehmen() {
                 der breit gefächerten <span className="text-[#1A1A00] font-bold">Happy-Produktpalette</span>.
               </p>
             </div>
-          </div>
+          </Reveal>
 
           {/* 5-Card Stat Grid - Round Circles with Meteor Impact Orbit Border Effect */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 items-center justify-center">
+          <RevealGroup className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 items-center justify-center" stagger={0.08}>
             {[
               { icon: <Award className="w-5 h-5" />, value: '20', label: 'Jahre Erfahrung', bg: '#1A1A00', accent: '#FFFFCC', speed: '3s' },
               { icon: <Clock className="w-5 h-5" />, value: '2006', label: 'Gegründet', bg: '#232300', accent: '#FFFFCC', speed: '2.5s' },
@@ -176,13 +147,10 @@ export default function Unternehmen() {
               { icon: <Wheat className="w-5 h-5" />, value: '24h', label: 'Geöffnet', bg: '#353500', accent: '#FFFFCC', speed: '2.8s' },
               { icon: <Award className="w-5 h-5" />, value: '20+', label: 'Jahre Tradition', bg: '#3D3D00', accent: '#FFFFCC', speed: '3.5s' },
             ].map((stat, i) => (
+              <RevealItem key={i}>
               <div
-                key={i}
-                className="reveal rounded-full aspect-square w-full max-w-[180px] sm:max-w-[190px] mx-auto p-4 text-center shadow-2xl border-2 border-white/20 hover:scale-110 hover:shadow-[0_15px_35px_rgba(0,0,0,0.4)] transition-all duration-300 flex flex-col items-center justify-center relative group"
-                style={{ 
-                  animationDelay: `${i * 100}ms`,
-                  backgroundColor: stat.bg
-                }}
+                className="rounded-full aspect-square w-full max-w-[180px] sm:max-w-[190px] mx-auto p-4 text-center shadow-2xl border-2 border-white/20 hover:scale-110 hover:shadow-[0_15px_35px_rgba(0,0,0,0.4)] transition-all duration-300 flex flex-col items-center justify-center relative group"
+                style={{ backgroundColor: stat.bg }}
               >
                 {/* METEOR ORBIT EFFECT: Rotating Spark Head + Glowing Tail */}
                 <div className="absolute inset-0 rounded-full p-[2px] pointer-events-none overflow-hidden">
@@ -220,24 +188,25 @@ export default function Unternehmen() {
                   {stat.label}
                 </p>
               </div>
+              </RevealItem>
             ))}
-          </div>
+          </RevealGroup>
         </div>
       </div>
 
       {/* ─── VALUES SECTION ─── */}
       <div className="py-20 bg-warm-yellow border-t border-[#1A1A00]/10 pb-24">
         <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
-          <div className="text-center mb-14 reveal">
+          <Reveal className="text-center mb-14">
             <div className="relative inline-block">
               <h2 className="text-3xl md:text-5xl font-serif font-black text-[#1A1A00] pb-3">
                 Was uns <span className="text-[#2C2C00]">antreibt</span>
               </h2>
               <span className="absolute bottom-0 left-0 w-full h-1.5 bg-[#1A1A00] rounded-full" />
             </div>
-          </div>
+          </Reveal>
 
-          <div className="space-y-6">
+          <RevealGroup className="space-y-6" stagger={0.12}>
             {[
               {
                 num: '01',
@@ -258,10 +227,10 @@ export default function Unternehmen() {
                 bg: '#3D3D00',
               },
             ].map((value, i) => (
+              <RevealItem key={i}>
               <div
-                key={i}
-                className="reveal p-8 md:p-10 rounded-3xl flex items-start gap-8 shadow-2xl border border-white/10 hover:scale-[1.02] transition-all duration-300"
-                style={{ animationDelay: `${i * 100}ms`, backgroundColor: value.bg }}
+                className="p-8 md:p-10 rounded-3xl flex items-start gap-8 shadow-2xl border border-white/10 hover:scale-[1.02] transition-all duration-300"
+                style={{ backgroundColor: value.bg }}
               >
                 <span className="text-4xl md:text-5xl font-serif font-black text-[#FFFFCC] flex-shrink-0">
                   {value.num}
@@ -271,8 +240,9 @@ export default function Unternehmen() {
                   <p className="text-white/90 font-sans text-sm md:text-base leading-relaxed">{value.text}</p>
                 </div>
               </div>
+              </RevealItem>
             ))}
-          </div>
+          </RevealGroup>
         </div>
       </div>
     </section>

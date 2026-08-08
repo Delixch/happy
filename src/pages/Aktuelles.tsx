@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Gift, Zap, PartyPopper, Eye, ChevronDown, Loader2 } from 'lucide-react';
 import { supabase, type DailySpecial, type Deal } from '../lib/supabase';
 import HeroVideo from '../components/HeroVideo';
+import { RevealGroup, RevealItem } from '../components/motion/Reveal';
 import TiltCard from '../components/TiltCard';
 import ProductGallery from '../components/ProductGallery';
 
@@ -367,10 +368,10 @@ export default function Aktuelles() {
 
       {/* ── INTERACTIVE AREA (2-COLUMN LAYOUT: SPECIAL, LUNCH PASS) ── */}
       <div className="container mx-auto px-4 lg:px-8 py-10 max-w-5xl">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-stretch">
+        <RevealGroup className="grid grid-cols-1 md:grid-cols-5 gap-8 items-stretch" stagger={0.14}>
 
           {/* Left Column: Daily Special — deliberately wider, the story card */}
-          <div className="flex flex-col h-full animate-fade-in md:col-span-3">
+          <RevealItem className="flex flex-col h-full md:col-span-3">
             <div className="text-center mb-4">
               <span className="inline-block px-3 py-1 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-[10px] font-black uppercase tracking-wider mb-2 shadow-sm">
                 JEDEN TAG NEU
@@ -399,10 +400,10 @@ export default function Aktuelles() {
                 </div>
               )}
             </div>
-          </div>
+          </RevealItem>
 
           {/* Right Column: Lunch-Pass — narrower, compact action widget */}
-          <div className="flex flex-col h-full animate-fade-in md:col-span-2" style={{ animationDelay: '100ms' }}>
+          <RevealItem className="flex flex-col h-full md:col-span-2">
             <Confetti active={passConfetti} />
             <div className="text-center mb-4">
               <span className="inline-block px-3 py-1 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-[10px] font-black uppercase tracking-wider mb-2 shadow-sm">
@@ -552,16 +553,16 @@ export default function Aktuelles() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </RevealItem>
+        </RevealGroup>
 
         {/* ── SECOND ROW: PRODUCT GALLERY | JUBILÄUMS-DEALS ── */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-stretch mt-8">
-          <div className="md:col-span-3">
+        <RevealGroup className="grid grid-cols-1 md:grid-cols-5 gap-8 items-stretch mt-8" stagger={0.14}>
+          <RevealItem className="md:col-span-3">
             <ProductGallery />
-          </div>
+          </RevealItem>
 
-          <div className="md:col-span-2">
+          <RevealItem className="md:col-span-2">
             <div className="text-center mb-4">
               <span className="inline-block px-3 py-1 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-[10px] font-black uppercase tracking-wider mb-2 shadow-sm">
                 EXKLUSIVE ANGEBOTE
@@ -587,8 +588,8 @@ export default function Aktuelles() {
                 ))}
               </div>
             )}
-          </div>
-        </div>
+          </RevealItem>
+        </RevealGroup>
       </div>
     </div>
   );

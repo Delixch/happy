@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Play, ExternalLink, Tv, Newspaper, Globe, Loader2, type LucideIcon } from 'lucide-react';
 import { supabase, type MediaItem } from '../lib/supabase';
 import HeroVideo from '../components/HeroVideo';
+import { Reveal, RevealGroup, RevealItem } from '../components/motion/Reveal';
 
 type MediaType = 'tv' | 'presse' | 'online';
 type FilterType = MediaType | 'all';
@@ -214,14 +215,14 @@ export default function Medien() {
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 py-12 max-w-3xl">
-        <div className="text-center mb-10">
+        <Reveal className="text-center mb-10">
           <h2 className="text-2xl md:text-3xl font-serif font-black text-[#1A1A00] mb-3">
             Happy Beck <span className="text-[#2C2C00]">in der Presse</span>
           </h2>
           <p className="text-[#1E293B]/80 font-sans font-bold text-sm md:text-base leading-relaxed max-w-xl mx-auto">
             TV-Reportagen, Zeitungsartikel und Online-Beiträge — eine Auswahl der Stationen unserer Geschichte an der Langstrasse.
           </p>
-        </div>
+        </Reveal>
 
         {/* Filter chips */}
         <div className="flex items-center justify-center gap-2 mb-12 flex-wrap">
@@ -252,7 +253,7 @@ export default function Medien() {
             In dieser Kategorie wurden noch keine Medienbeiträge veröffentlicht.
           </div>
         ) : (
-          <div>
+          <RevealGroup key={filter} stagger={0.08}>
             {filtered.map((item, idx) => {
               const meta = CATEGORY_META[item.type];
               const isTv = item.type === 'tv';
@@ -260,7 +261,8 @@ export default function Medien() {
               const isLast = idx === filtered.length - 1;
 
               return (
-                <div key={item.id} className={`relative pl-16 ${isLast ? '' : 'pb-8'}`}>
+                <RevealItem key={item.id}>
+                <div className={`relative pl-16 ${isLast ? '' : 'pb-8'}`}>
                   {!isLast && (
                     <div className="absolute left-5 top-11 bottom-0 w-0.5 bg-[#1A1A00]/10" />
                   )}
@@ -321,9 +323,10 @@ export default function Medien() {
                     )}
                   </div>
                 </div>
+                </RevealItem>
               );
             })}
-          </div>
+          </RevealGroup>
         )}
       </div>
 

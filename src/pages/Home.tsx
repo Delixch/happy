@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 import { ChefHat, Heart, Award, Bike } from 'lucide-react';
 import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
-import { useRevealAnimation } from '../hooks/useRevealAnimation';
 import MarqueeTicker from '../components/MarqueeTicker';
+import Parallax from '../components/motion/Parallax';
+import { Reveal, RevealGroup, RevealItem } from '../components/motion/Reveal';
 
 // Dark-to-light muted olive green palette going from dark (#1A1A00) to progressively lighter shades
 const PHILOSOPHY_PALETTE = ['#1A1A00', '#2C2C00', '#3D3D00', '#4E4E00'];
@@ -96,8 +97,6 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [next]);
 
-  useRevealAnimation();
-
   return (
     <section id="home">
       {/* Hero Container */}
@@ -110,14 +109,17 @@ export default function Home() {
             {/* LEFT COLUMN: Flush Left & Top Image Slider */}
             <div className="lg:col-span-6 w-full">
               <div className="relative w-full h-[400px] sm:h-[480px] lg:h-[580px] overflow-hidden shadow-2xl bg-white group rounded-br-3xl">
-                {/* Changing Image with Gentle Ken Burns Zoom */}
-                <img
-                  key={slide}
-                  src={slides[slide].image}
-                  alt={slides[slide].title}
-                  className="w-full h-full object-cover animate-hero-ken-burns"
-                  fetchPriority="high"
-                />
+                {/* Changing Image with Gentle Ken Burns Zoom, drifting on scroll */}
+                <Parallax className="absolute inset-0" distance={10}>
+                  <img
+                    key={slide}
+                    src={slides[slide].image}
+                    alt={slides[slide].title}
+                    className="w-full h-full object-cover animate-hero-ken-burns"
+                    // @ts-expect-error React 18 types lack the lowercase DOM attribute
+                    fetchpriority="high"
+                  />
+                </Parallax>
 
                 {/* Subtle Image Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
@@ -255,7 +257,7 @@ export default function Home() {
         {/* Features Section - Pulled Right Under Sliding Image */}
         <div className="container mx-auto px-4 lg:px-8 pt-6 md:pt-8 pb-8">
           {/* Section header */}
-          <div className="text-center mb-10 reveal">
+          <Reveal className="text-center mb-10">
             <p
               className="font-sans text-xs tracking-[0.3em] uppercase mb-2 font-bold transition-colors duration-700"
               style={{ color: PHILOSOPHY_PALETTE[slide] }}
@@ -277,9 +279,9 @@ export default function Home() {
                 }}
               />
             </div>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch relative">
+          <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch relative" stagger={0.12}>
 
             {/* FIRST CARD WITH CHEF MASCOT ON TOP */}
             <div className="relative pt-16 md:pt-0">
@@ -297,7 +299,6 @@ export default function Home() {
                 icon={<ChefHat className="w-5.5 h-5.5" />}
                 title="Handwerk"
                 text="Traditionelle Backkunst, entwickelt über Jahrzehnte voller Erfahrung und Leidenschaft. Unsere Rezepte und handwerklichen Techniken wurden von Generation zu Generation weitergegeben und bis heute bewahrt."
-                delay={0}
                 bgColor={PHILOSOPHY_PALETTE[slide]}
               />
             </div>
@@ -320,17 +321,15 @@ export default function Home() {
               icon={<Heart className="w-5.5 h-5.5" />}
               title="Qualität"
               text="Wir verwenden nur die besten, sorgfältig ausgewählten Zutaten, um täglich frische Backwaren von höchster Qualität herzustellen. Qualität und Leidenschaft sind die Basis für den Genuss."
-              delay={150}
               bgColor={PHILOSOPHY_PALETTE[slide]}
             />
             <FeatureCard
               icon={<Award className="w-5.5 h-5.5" />}
               title="Innovation"
               text="Wir verbinden kreative Innovation mit unserer traditionellen Backkunst. So entstehen einzigartige Produkte, die modern und zugleich authentisch sind."
-              delay={300}
               bgColor={PHILOSOPHY_PALETTE[slide]}
             />
-          </div>
+          </RevealGroup>
         </div>
       </div>
 
@@ -342,13 +341,11 @@ function FeatureCard({
   icon,
   title,
   text,
-  delay,
   bgColor,
 }: {
   icon: React.ReactNode;
   title: string;
   text: string;
-  delay: number;
   bgColor?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -381,46 +378,48 @@ function FeatureCard({
   };
 
   return (
-    <div
-      ref={ref}
-      onMouseEnter={handleMouseEnter}
-      onMouseMove={handleMove}
-      onMouseLeave={reset}
-      className="reveal h-full"
-      style={{ animationDelay: `${delay}ms`, perspective: '1000px' }}
-    >
+    <RevealItem className="h-full">
       <div
-        style={{
-          transform,
-          backgroundColor: `${bgColor || '#474150'}A8`,
-          boxShadow: '0 12px 35px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.25)',
-        }}
-        className="relative text-left p-6 rounded-2xl backdrop-blur-2xl transition-all duration-700 ease-in-out will-change-transform hover:-translate-y-1 hover:glow-gold group border border-white/25 h-full flex flex-col justify-start overflow-hidden"
+        ref={ref}
+        onMouseEnter={handleMouseEnter}
+        onMouseMove={handleMove}
+        onMouseLeave={reset}
+        className="h-full"
+        style={{ perspective: '1000px' }}
       >
-        {/* Glass sheen */}
-        <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/15 via-transparent to-transparent" />
-
-        {/* Spotlight */}
         <div
-          className="pointer-events-none absolute inset-0 rounded-2xl"
           style={{
-            background: `radial-gradient(400px circle at ${bgPos}, rgba(255,255,255,0.18), transparent 40%)`,
+            transform,
+            backgroundColor: `${bgColor || '#474150'}A8`,
+            boxShadow: '0 12px 35px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.25)',
           }}
-        />
+          className="relative text-left p-6 rounded-2xl backdrop-blur-2xl transition-all duration-700 ease-in-out will-change-transform hover:-translate-y-1 hover:glow-gold group border border-white/25 h-full flex flex-col justify-start overflow-hidden"
+        >
+          {/* Glass sheen */}
+          <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/15 via-transparent to-transparent" />
 
-        <div className="relative z-10">
-          <div className="flex items-center gap-4 mb-4">
-            <div
-              className="flex-shrink-0 inline-flex items-center justify-center w-12 h-12 rounded-full border border-[#FFFFCC]/40 text-[#FFFFCC] group-hover:scale-110 group-hover:bg-[#FFFFCC]/20 transition-all duration-300 bg-[#FFFFCC]/10 shadow-[0_0_20px_rgba(255,255,204,0.15)]"
-            >
-              {icon}
+          {/* Spotlight */}
+          <div
+            className="pointer-events-none absolute inset-0 rounded-2xl"
+            style={{
+              background: `radial-gradient(400px circle at ${bgPos}, rgba(255,255,255,0.18), transparent 40%)`,
+            }}
+          />
+
+          <div className="relative z-10">
+            <div className="flex items-center gap-4 mb-4">
+              <div
+                className="flex-shrink-0 inline-flex items-center justify-center w-12 h-12 rounded-full border border-[#FFFFCC]/40 text-[#FFFFCC] group-hover:scale-110 group-hover:bg-[#FFFFCC]/20 transition-all duration-300 bg-[#FFFFCC]/10 shadow-[0_0_20px_rgba(255,255,204,0.15)]"
+              >
+                {icon}
+              </div>
+              <h3 className="text-xl md:text-2xl font-serif font-black text-[#FFFFCC] tracking-wide transition-colors">{title}</h3>
             </div>
-            <h3 className="text-xl md:text-2xl font-serif font-black text-[#FFFFCC] tracking-wide transition-colors">{title}</h3>
+            <p className="text-white/95 font-sans text-sm md:text-base font-medium leading-relaxed drop-shadow-sm">{text}</p>
           </div>
-          <p className="text-white/95 font-sans text-sm md:text-base font-medium leading-relaxed drop-shadow-sm">{text}</p>
         </div>
       </div>
-    </div>
+    </RevealItem>
   );
 }
 

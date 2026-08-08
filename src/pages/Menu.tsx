@@ -3,6 +3,8 @@ import { Coffee, UtensilsCrossed, Sandwich as SandwichIcon, IceCream, CupSoda, L
 import { supabase, type MenuItem, type MenuCategory } from '../lib/supabase';
 import MarqueeTicker from '../components/MarqueeTicker';
 import TiltCard from '../components/TiltCard';
+import Parallax from '../components/motion/Parallax';
+import { RevealGroup, RevealItem } from '../components/motion/Reveal';
 
 const CATEGORY_META: Record<MenuCategory, { label: string; Icon: LucideIcon; intro: string; bg: string; bg2: string; accent: string }> = {
   fruehstueck: {
@@ -104,7 +106,9 @@ export default function MenuPage() {
     <section id="menu" className="pt-14 md:pt-16 min-h-screen bg-[#FFFFCC] pb-24">
       {/* Hero */}
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center brightness-90" style={{ backgroundImage: "url('/menu-hero.jpg')" }} />
+        <Parallax className="absolute inset-0" distance={14}>
+          <div className="w-full h-full bg-cover bg-center brightness-90" style={{ backgroundImage: "url('/menu-hero.jpg')" }} />
+        </Parallax>
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A00]/60 via-transparent to-[#FFFFCC]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A00]/80 via-transparent to-transparent" />
 
@@ -163,14 +167,14 @@ export default function MenuPage() {
                 playsInline
                 className="w-80 h-auto rounded-3xl object-cover shadow-2xl border-2 border-[#FFBB00]/30 flex-shrink-0"
               />
-              <div className="flex flex-col gap-3 w-full max-w-sm pt-2">
+              <RevealGroup className="flex flex-col gap-3 w-full max-w-sm pt-2" stagger={0.07}>
                 {CATEGORIES.map((catId) => {
                   const m = CATEGORY_META[catId];
                   const count = items.filter((i) => i.category === catId).length;
                   const isActive = active === catId;
                   return (
+                    <RevealItem key={catId}>
                     <button
-                      key={catId}
                       onClick={() => setActive(isActive ? null : catId)}
                       className={`relative w-full px-5 py-4 rounded-2xl font-sans font-black text-sm uppercase tracking-wider flex items-center justify-between gap-3 cursor-pointer text-white overflow-hidden shadow-xl transition-all duration-300 ${isActive ? 'ring-2 ring-[#FFFFCC] scale-[1.02]' : 'opacity-90 hover:opacity-100'}`}
                       style={{ background: `linear-gradient(135deg, ${m.bg} 0%, ${m.bg2} 100%)` }}
@@ -190,9 +194,10 @@ export default function MenuPage() {
                       </span>
                       <ChevronDown className="relative z-10 w-5 h-5 transition-transform duration-300" style={{ transform: isActive ? 'rotate(180deg)' : 'none' }} />
                     </button>
+                    </RevealItem>
                   );
                 })}
-              </div>
+              </RevealGroup>
               <div className="text-left pt-2 max-w-sm">
                 <h2 className="text-2xl md:text-3xl font-serif font-black text-[#1A1A00] mb-3">
                   Unsere <span className="text-[#2C2C00]">Bestseller</span>
@@ -262,7 +267,14 @@ export default function MenuPage() {
                     </button>
                     <div className={`transition-all duration-300 ${isActive ? 'max-h-[6000px] opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
                       <div className="p-4" style={{ backgroundColor: m.bg2 }}>
-                        <CategoryContent catId={catId} items={items} loading={loading} dietFilter={dietFilter} />
+                        {/* Remount on toggle so the card stagger replays each time it opens */}
+                        <CategoryContent
+                          key={isActive ? 'open' : 'closed'}
+                          catId={catId}
+                          items={items}
+                          loading={loading}
+                          dietFilter={dietFilter}
+                        />
                       </div>
                     </div>
                   </div>
@@ -318,10 +330,14 @@ function CategoryContent({
             : 'Keine vegetarischen Speisen in dieser Kategorie.'}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <RevealGroup
+          key={`${catId}-${dietFilter}`}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          stagger={0.07}
+        >
           {filtered.map((item, idx) => (
+            <RevealItem key={item.id} className="h-full">
             <TiltCard
-              key={item.id}
               className="rounded-3xl p-6 border border-[#FFBB00]/20 backdrop-blur-xl hover:shadow-2xl hover:glow-gold flex justify-between gap-4 overflow-hidden min-h-[220px] shadow-xl flex-col justify-between"
               style={{ backgroundColor: `${meta.bg}D9` }}
             >
@@ -378,8 +394,9 @@ function CategoryContent({
                 </span>
               </div>
             </TiltCard>
+            </RevealItem>
           ))}
-        </div>
+        </RevealGroup>
       )}
     </div>
   );

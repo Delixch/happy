@@ -115,7 +115,7 @@ export default function MenuPage() {
         <div className="relative container mx-auto px-4 lg:px-8 h-full flex items-end pb-10">
           <div className="max-w-xl">
             <span className="inline-block px-4 py-1.5 rounded-full bg-[#1A1A00] text-[#FFFFCC] font-sans text-xs font-bold tracking-[0.2em] uppercase mb-4 shadow-md">
-              Frisch & Hausgemacht
+              Frühstück · Sandwiches · Gipfeli in Zürich
             </span>
             <div className="relative inline-block block">
               <h1 className="text-4xl md:text-5xl font-serif font-black text-white pb-3 leading-[1.15] drop-shadow-md">
@@ -203,7 +203,7 @@ export default function MenuPage() {
                   Unsere <span className="text-[#2C2C00]">Bestseller</span>
                 </h2>
                 <p className="text-[#1E293B]/80 font-sans font-bold text-sm md:text-base leading-relaxed">
-                  Hier finden Sie eine Auswahl unserer meistverkauften Produkte. Möchten Sie unser komplettes Sortiment entdecken, freuen wir uns, Sie persönlich bei uns in der Bäckerei begrüssen zu dürfen.
+                  Hier finden Sie eine Auswahl unserer meistverkauften Produkte – vom Frühstück über frisch belegte Sandwiches bis zur hausgemachten Pâtisserie. Möchten Sie unser komplettes Sortiment entdecken, freuen wir uns, Sie persönlich in unserer Bäckerei an der Langstrasse in Zürich begrüssen zu dürfen.
                 </p>
               </div>
             </div>
@@ -230,7 +230,7 @@ export default function MenuPage() {
                 Unsere <span className="text-[#C2410C]">Bestseller</span>
               </h2>
               <p className="text-[#1E293B]/80 font-sans font-bold text-sm leading-relaxed">
-                Hier finden Sie eine Auswahl unserer meistverkauften Produkte. Möchten Sie unser komplettes Sortiment entdecken, freuen wir uns, Sie persönlich bei uns in der Bäckerei begrüssen zu dürfen.
+                Hier finden Sie eine Auswahl unserer meistverkauften Produkte – vom Frühstück über frisch belegte Sandwiches bis zur hausgemachten Pâtisserie. Möchten Sie unser komplettes Sortiment entdecken, freuen wir uns, Sie persönlich in unserer Bäckerei an der Langstrasse in Zürich begrüssen zu dürfen.
               </p>
             </div>
 

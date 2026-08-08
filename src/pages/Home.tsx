@@ -168,8 +168,13 @@ export default function Home() {
               >
                 {slides[slide].subtitle}
               </span>
+              {/* The visible headline rotates with the slider, so the page keeps a
+                  single stable H1 for search engines instead of a changing one. */}
+              <h1 className="sr-only">
+                Bäckerei in Zürich – Happy Beck an der Langstrasse, 24 Stunden geöffnet
+              </h1>
               <div className="relative mb-6">
-                <h1 
+                <p
                   className="text-2xl md:text-[68px] font-serif font-black leading-[1.15] transition-colors duration-700 inline-block pb-4 whitespace-nowrap md:whitespace-normal"
                   style={{ color: slides[slide].textColor }}
                 >
@@ -181,7 +186,7 @@ export default function Home() {
                       width: '100%'
                     }}
                   />
-                </h1>
+                </p>
               </div>
               <p 
                 className="text-base md:text-xl font-sans font-normal mb-8 max-w-xl leading-relaxed transition-colors duration-700 opacity-90"

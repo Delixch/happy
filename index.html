@@ -4,12 +4,76 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Happy Beck — Ein Häppchen Glück | Bäckerei Zürich</title>
-    <meta name="description" content="Happy Beck – Ihre traditionelle Bäckerei in Zürich. Frisches Brot, feine Backwaren und herzhafte Snacks. Seit 2006 ein Häppchen Glück." />
-    <meta property="og:title" content="Happy Beck — Ein Häppchen Glück" />
-    <meta property="og:description" content="Traditionelle Bäckerei in Zürich mit Leidenschaft für Qualität und Innovation." />
+    <title>Bäckerei Zürich – 24h frisch | Happy Beck Langstrasse</title>
+    <meta name="description" content="Happy Beck an der Langstrasse 120 in Zürich: Bäckerei mit frischen Sandwiches, Frühstück und Gipfeli – 24 Stunden an 7 Tagen geöffnet. Seit 2006." />
+    <link rel="canonical" href="https://happybeck.ch/" />
+    <meta property="og:site_name" content="Happy Beck" />
+    <meta property="og:locale" content="de_CH" />
+    <meta property="og:title" content="Bäckerei Zürich – 24h frisch | Happy Beck Langstrasse" />
+    <meta property="og:description" content="Frische Sandwiches, Frühstück und Gipfeli an der Langstrasse 120 in Zürich – rund um die Uhr geöffnet." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/logo.png" />
+    <meta property="og:url" content="https://happybeck.ch/" />
+    <meta property="og:image" content="https://happybeck.ch/Home.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Bakery",
+        "@id": "https://happybeck.ch/#bakery",
+        "name": "Happy Beck",
+        "alternateName": "Bäckerei Happy Beck",
+        "slogan": "Ein Häppchen Glück",
+        "description": "Bäckerei an der Langstrasse in Zürich mit frischen Sandwiches, Frühstück, Gipfeli und hausgemachter Pâtisserie. 24 Stunden an 7 Tagen geöffnet.",
+        "url": "https://happybeck.ch/",
+        "logo": "https://happybeck.ch/logo.png",
+        "image": "https://happybeck.ch/Home.jpg",
+        "email": "info@happybeck.ch",
+        "foundingDate": "2006",
+        "priceRange": "$",
+        "currenciesAccepted": "CHF",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Langstrasse 120",
+          "postalCode": "8004",
+          "addressLocality": "Zürich",
+          "addressRegion": "ZH",
+          "addressCountry": "CH"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 47.379477,
+          "longitude": 8.5257913
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday"
+            ],
+            "opens": "00:00",
+            "closes": "23:59"
+          }
+        ],
+        "servesCuisine": ["Bäckerei", "Frühstück", "Sandwiches", "Pâtisserie"],
+        "hasMenu": "https://happybeck.ch/menu",
+        "areaServed": {
+          "@type": "City",
+          "name": "Zürich"
+        },
+        "sameAs": [
+          "https://www.instagram.com/happybeck.ch",
+          "https://www.instagram.com/happybeck_",
+          "https://www.just-eat.ch/speisekarte/happybeck-langstrasse",
+          "https://www.ubereats.com/ch-de/store/happybeck/1cMo9d_uXNufL0FRptsfcA"
+        ]
+      }
+    </script>
     <link rel="preload" as="image" href="/Home.jpg" fetchpriority="high" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,33 +90,17 @@
       />
     </noscript>
     <style>
+      /* Brand background so the moment before React paints matches the site
+         instead of flashing a dark screen. */
       html, body {
-        background-color: #0F0D0C;
+        background-color: #FFFFCC;
         margin: 0;
         padding: 0;
       }
     </style>
   </head>
   <body>
-    <div id="root">
-      <!-- Inline Preloader to achieve near-instant initial paint -->
-      <div style="position: fixed; inset: 0; z-index: 9999; background-color: #0F0D0C; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Fraunces', serif; user-select: none;">
-        <!-- Glowing circular logo frame -->
-        <div style="position: relative; margin-bottom: 24px;">
-          <div style="width: 96px; height: 96px; border-radius: 50%; border: 1px solid rgba(212, 175, 55, 0.3); background-color: #131110; display: flex; align-items: center; justify-content: center; padding: 10px; box-shadow: 0 0 30px rgba(212, 175, 55, 0.25);">
-            <img src="/logo.png" alt="" style="width: 100%; height: 100%; object-fit: contain;" />
-          </div>
-        </div>
-        <!-- Brand Text -->
-        <div style="text-align: center; color: #FFE066; font-size: 24px; font-weight: bold; letter-spacing: 0.05em;">
-          Happy <span style="color: #D4AF37;">Beck</span>
-        </div>
-        <div style="width: 64px; height: 1px; background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.5), transparent); margin: 12px auto;"></div>
-        <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.3em; color: rgba(212, 175, 55, 0.7); font-family: 'Karla', sans-serif;">
-          Ein Häppchen Glück
-        </div>
-      </div>
-    </div>
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -2,9 +2,9 @@ import { useEffect, useState, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Outlet, useLocation } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import Layout from './components/Layout';
-import LoadingScreen from './components/LoadingScreen';
 import CookieConsent from './components/CookieConsent';
 import TransitionCurtain from './components/TransitionCurtain';
+import SeoManager from './components/SeoManager';
 
 // Lazy load public pages
 import Home from './pages/Home';
@@ -129,7 +129,7 @@ function App() {
 
   return (
     <Router>
-      <LoadingScreen />
+      <SeoManager />
       <CookieConsent />
       <Suspense fallback={
         <div className="min-h-[60vh] bg-dark-900 flex items-center justify-center">

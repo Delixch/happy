@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ChefHat, Heart, Award, Bike } from 'lucide-react';
+import { Coffee, Sandwich as SandwichIcon, IceCream, Bike } from 'lucide-react';
 import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 import MarqueeTicker from '../components/MarqueeTicker';
 import RatingBadges from '../components/RatingBadges';
@@ -271,14 +271,14 @@ export default function Home() {
               className="font-sans text-xs tracking-[0.3em] uppercase mb-2 font-bold transition-colors duration-700"
               style={{ color: PHILOSOPHY_PALETTE[slide] }}
             >
-              Unsere Philosophie
+              Aus unserer Backstube
             </p>
             <div className="relative inline-block">
-              <h2 
+              <h2
                 className="text-3xl md:text-5xl font-serif font-black transition-colors duration-700 pb-3"
                 style={{ color: slides[slide].textColor }}
               >
-                Was uns <span style={{ color: PHILOSOPHY_PALETTE[slide] }}>auszeichnet</span>
+                Ein kleiner <span style={{ color: PHILOSOPHY_PALETTE[slide] }}>Vorgeschmack</span>
               </h2>
               <span
                 className="absolute bottom-0 left-0 h-1.5 rounded-full transition-colors duration-700"
@@ -305,9 +305,10 @@ export default function Home() {
                 />
               </div>
               <FeatureCard
-                icon={<ChefHat className="w-5.5 h-5.5" />}
-                title="Handwerk"
-                text="Traditionelle Backkunst, entwickelt über Jahrzehnte voller Erfahrung und Leidenschaft. Unsere Rezepte und handwerklichen Techniken wurden von Generation zu Generation weitergegeben und bis heute bewahrt."
+                icon={<Coffee className="w-5.5 h-5.5" />}
+                title="Frühstück"
+                text="Gipfeli, Zopf und ein Kaffee dazu. So fängt der Tag an, wie er soll."
+                image="/menu-breakfast.jpg"
                 bgColor={PHILOSOPHY_PALETTE[slide]}
               />
             </div>
@@ -327,15 +328,17 @@ export default function Home() {
             </div>
 
             <FeatureCard
-              icon={<Heart className="w-5.5 h-5.5" />}
-              title="Qualität"
-              text="Wir verwenden nur die besten, sorgfältig ausgewählten Zutaten, um täglich frische Backwaren von höchster Qualität herzustellen. Qualität und Leidenschaft sind die Basis für den Genuss."
+              icon={<SandwichIcon className="w-5.5 h-5.5" />}
+              title="Sandwiches"
+              text="Frisch belegt, während du wartest. Dein Brot, deine Zutaten, deine Sauce."
+              image="/menu-sandwich.jpg"
               bgColor={PHILOSOPHY_PALETTE[slide]}
             />
             <FeatureCard
-              icon={<Award className="w-5.5 h-5.5" />}
-              title="Innovation"
-              text="Wir verbinden kreative Innovation mit unserer traditionellen Backkunst. So entstehen einzigartige Produkte, die modern und zugleich authentisch sind."
+              icon={<IceCream className="w-5.5 h-5.5" />}
+              title="Süsses"
+              text="Hausgemachte Pâtisserie, jeden Tag neu aus unserer Backstube."
+              image="/menu-sweets.jpg"
               bgColor={PHILOSOPHY_PALETTE[slide]}
             />
           </RevealGroup>
@@ -350,11 +353,13 @@ function FeatureCard({
   icon,
   title,
   text,
+  image,
   bgColor,
 }: {
   icon: React.ReactNode;
   title: string;
   text: string;
+  image: string;
   bgColor?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -396,14 +401,26 @@ function FeatureCard({
         className="h-full"
         style={{ perspective: '1000px' }}
       >
-        <div
+        <Link
+          to="/menu"
           style={{
             transform,
             backgroundColor: `${bgColor || '#474150'}A8`,
             boxShadow: '0 12px 35px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.25)',
           }}
-          className="relative text-left p-6 rounded-2xl backdrop-blur-2xl transition-all duration-700 ease-in-out will-change-transform hover:-translate-y-1 hover:glow-gold group border border-white/25 h-full flex flex-col justify-start overflow-hidden"
+          className="relative text-left rounded-2xl backdrop-blur-2xl transition-all duration-700 ease-in-out will-change-transform hover:-translate-y-1 hover:glow-gold group border border-white/25 h-full flex flex-col overflow-hidden"
         >
+          {/* Product photo */}
+          <div className="relative h-44 md:h-52 overflow-hidden flex-shrink-0">
+            <img
+              src={image}
+              alt={title}
+              loading="lazy"
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+          </div>
+
           {/* Glass sheen */}
           <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/15 via-transparent to-transparent" />
 
@@ -415,7 +432,7 @@ function FeatureCard({
             }}
           />
 
-          <div className="relative z-10">
+          <div className="relative z-10 p-6 flex flex-col flex-1">
             <div className="flex items-center gap-4 mb-4">
               <div
                 className="flex-shrink-0 inline-flex items-center justify-center w-12 h-12 rounded-full border border-[#FFFFCC]/40 text-[#FFFFCC] group-hover:scale-110 group-hover:bg-[#FFFFCC]/20 transition-all duration-300 bg-[#FFFFCC]/10 shadow-[0_0_20px_rgba(255,255,204,0.15)]"
@@ -425,8 +442,13 @@ function FeatureCard({
               <h3 className="text-xl md:text-2xl font-serif font-black text-[#FFFFCC] tracking-wide transition-colors">{title}</h3>
             </div>
             <p className="text-white/95 font-sans text-sm md:text-base font-medium leading-relaxed drop-shadow-sm">{text}</p>
+
+            <span className="mt-5 pt-4 border-t border-white/15 flex items-center gap-2 text-[#FFFFCC] font-sans font-black text-xs uppercase tracking-wider">
+              Zur Speisekarte
+              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </span>
           </div>
-        </div>
+        </Link>
       </div>
     </RevealItem>
   );

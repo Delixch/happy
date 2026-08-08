@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ChefHat, Heart, Award, Bike } from 'lucide-react';
 import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 import MarqueeTicker from '../components/MarqueeTicker';
+import RatingBadges from '../components/RatingBadges';
 import Parallax from '../components/motion/Parallax';
 import { Reveal, RevealGroup, RevealItem } from '../components/motion/Reveal';
 
@@ -213,6 +214,9 @@ export default function Home() {
                   Kontakt
                 </Link>
               </div>
+
+              {/* Platform ratings, right where the ordering decision happens */}
+              <RatingBadges className="mb-4" />
 
               {/* Uber Eats & Just Eat Delivery Banner */}
               <div className="w-full max-w-[420px] bg-[#1A1A00] rounded-2xl px-4 py-3 shadow-lg border border-white/15 flex flex-row items-center justify-between gap-3 mt-2">

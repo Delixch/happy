@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   X, ChevronDown, ChevronRight, Check, Instagram, Phone, Lock,
 } from 'lucide-react';
+import { PHONE_TEL } from '../lib/contact';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -271,10 +272,14 @@ export default function Navigation() {
         onClick={() => setIsOpen(false)}
       />
 
-      {/* MOBILE LUXURY CATEGORIZED DRAWER MENU */}
+      {/* MOBILE LUXURY CATEGORIZED DRAWER MENU
+          The clipping wrapper matters: when closed the drawer is parked 48px to
+          the right, which pushed it past the viewport and gave the whole page a
+          horizontal scrollbar. Clipping here keeps the slide-in distance. */}
+      <div className="fixed inset-0 z-50 overflow-hidden pointer-events-none lg:hidden">
       <div
-        className={`fixed top-4 right-4 bottom-4 z-50 w-[310px] rounded-3xl bg-[#1A1A00] backdrop-blur-2xl border-2 border-[#FFFFCC]/30 shadow-2xl lg:hidden transition-all duration-500 ease-out transform ${
-          isOpen ? 'translate-x-0 opacity-100' : 'translate-x-12 opacity-0 pointer-events-none'
+        className={`absolute top-4 right-4 bottom-4 w-[310px] rounded-3xl bg-[#1A1A00] backdrop-blur-2xl border-2 border-[#FFFFCC]/30 shadow-2xl transition-all duration-500 ease-out transform ${
+          isOpen ? 'translate-x-0 opacity-100 pointer-events-auto' : 'translate-x-12 opacity-0 pointer-events-none'
         }`}
       >
         <div className="h-full flex flex-col justify-between p-6">
@@ -397,12 +402,13 @@ export default function Navigation() {
               <a href="https://instagram.com/happybeck.ch" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFFFCC] transition-colors">
                 <Instagram className="w-4 h-4" />
               </a>
-              <a href="tel:+41440000000" className="hover:text-[#FFFFCC] transition-colors">
+              <a href={`tel:${PHONE_TEL}`} className="hover:text-[#FFFFCC] transition-colors">
                 <Phone className="w-4 h-4" />
               </a>
             </div>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

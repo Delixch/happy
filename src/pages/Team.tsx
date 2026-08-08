@@ -107,12 +107,15 @@ export default function Team() {
           </div>
         ) : (
           /* ── 2-COLUMN LIGHTSWIND PRO HOLOGRAPHIC DECK LAYOUT ── */
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center my-6">
-            
-            {/* LEFT COLUMN: 3D Holographic Stacked Deck (Preserves Mobile mt-0 Intact, Shifts Higher Up Only on Desktop) */}
-            <div 
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mt-12 lg:mt-16 mb-6">
+
+            {/* LEFT COLUMN: 3D Holographic Stacked Deck.
+                The member list on the right is long, so on desktop the card
+                sticks to the viewport — otherwise picking the eighth name
+                updates a card that scrolled off the top ages ago. */}
+            <div
               ref={deckRef}
-              className="lg:col-span-6 relative h-[380px] sm:h-[430px] flex items-center justify-center select-none mt-0 lg:-mt-[420px] scroll-mt-24"
+              className="lg:col-span-6 relative h-[380px] sm:h-[430px] flex items-center justify-center select-none mt-0 lg:sticky lg:top-24 scroll-mt-24"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}

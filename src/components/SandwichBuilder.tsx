@@ -1,10 +1,8 @@
 import { forwardRef, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Sandwich, Check, Sparkles, ArrowRight, CalendarDays, Clock, Smartphone, RotateCcw } from 'lucide-react';
-
-const TWINT_PHONE_DISPLAY = '043 243 97 80';
-const TWINT_PHONE_TEL = '+41432439780';
+import { Sandwich, Check, Sparkles, ArrowRight, CalendarDays, Clock, Smartphone, RotateCcw, Shuffle } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_TEL } from '../lib/contact';
 
 function todayIso() {
   return new Date().toISOString().slice(0, 10);
@@ -56,6 +54,67 @@ const SAUCES: Option[] = [
 ];
 
 const DEFAULT_BREAD_ID = 'ciabatta';
+
+type Preset = {
+  id: string;
+  name: string;
+  tagline: string;
+  emoji: string;
+  breadId: string;
+  proteinIds: string[];
+  cheeseIds: string[];
+  veggieIds: string[];
+  sauceIds: string[];
+};
+
+/** Ready-made combinations for anyone who would rather not start from a blank roll. */
+const PRESETS: Preset[] = [
+  {
+    id: 'klassiker',
+    name: 'Der Klassiker',
+    tagline: 'Geht immer, enttäuscht nie',
+    emoji: '🥪',
+    breadId: 'ciabatta',
+    proteinIds: ['poulet'],
+    cheeseIds: ['cheddar'],
+    veggieIds: ['tomaten', 'rucola'],
+    sauceIds: ['aioli'],
+  },
+  {
+    id: 'scharf',
+    name: 'Der Scharfe',
+    tagline: 'Für alle, die es würzig mögen',
+    emoji: '🌶️',
+    breadId: 'weizen',
+    proteinIds: ['salami'],
+    cheeseIds: ['gouda'],
+    veggieIds: ['peperoni', 'zwiebeln'],
+    sauceIds: ['chilimayo'],
+  },
+  {
+    id: 'gruen',
+    name: 'Ganz in Grün',
+    tagline: 'Vegetarisch und richtig sättigend',
+    emoji: '🌿',
+    breadId: 'vollkorn',
+    proteinIds: ['falafel'],
+    cheeseIds: ['mozzarella'],
+    veggieIds: ['gurken', 'tomaten', 'rucola'],
+    sauceIds: ['joghurt'],
+  },
+];
+
+function randomFrom<T>(list: T[]): T {
+  return list[Math.floor(Math.random() * list.length)];
+}
+
+function randomSome(list: Option[], min: number, max: number): string[] {
+  const count = min + Math.floor(Math.random() * (max - min + 1));
+  return [...list]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, count)
+    .map((o) => o.id);
+}
 
 function formatChf(value: number) {
   return `CHF ${value.toFixed(2)}`;
@@ -234,10 +293,8 @@ export default function SandwichBuilder() {
   const total = useMemo(
     () =>
       bread.price +
-      proteins.reduce((sum, p) => sum + p.price, 0) +
-      cheeses.reduce((sum, c) => sum + c.price, 0) +
-      veggies.reduce((sum, v) => sum + v.price, 0),
-    [bread, proteins, cheeses, veggies]
+      [...proteins, ...cheeses, ...veggies, ...sauces].reduce((sum, o) => sum + o.price, 0),
+    [bread, proteins, cheeses, veggies, sauces]
   );
 
   const makeToggler = (setter: React.Dispatch<React.SetStateAction<string[]>>) => (id: string) => {
@@ -258,7 +315,38 @@ export default function SandwichBuilder() {
     setPickupTime('');
   };
 
-  const canOrder = pickupDate !== '' && pickupTime !== '';
+  const applyPreset = (preset: Preset) => {
+    setBreadId(preset.breadId);
+    setProteinIds(preset.proteinIds);
+    setCheeseIds(preset.cheeseIds);
+    setVeggieIds(preset.veggieIds);
+    setSauceIds(preset.sauceIds);
+  };
+
+  const surpriseMe = () => {
+    setBreadId(randomFrom(BREADS).id);
+    setProteinIds(randomSome(PROTEINS, 1, 2));
+    setCheeseIds(randomSome(CHEESES, 0, 1));
+    setVeggieIds(randomSome(VEGGIES, 2, 4));
+    setSauceIds(randomSome(SAUCES, 1, 1));
+  };
+
+  const activePresetId = PRESETS.find(
+    (p) =>
+      p.breadId === breadId &&
+      p.proteinIds.length === proteinIds.length &&
+      p.proteinIds.every((id) => proteinIds.includes(id)) &&
+      p.cheeseIds.length === cheeseIds.length &&
+      p.cheeseIds.every((id) => cheeseIds.includes(id)) &&
+      p.veggieIds.length === veggieIds.length &&
+      p.veggieIds.every((id) => veggieIds.includes(id)) &&
+      p.sauceIds.length === sauceIds.length &&
+      p.sauceIds.every((id) => sauceIds.includes(id))
+  )?.id;
+
+  // A roll on its own is not an order — ask for at least one filling.
+  const hasFilling = proteins.length + cheeses.length + veggies.length > 0;
+  const canOrder = hasFilling && pickupDate !== '' && pickupTime !== '';
 
   const orderNow = () => {
     if (!canOrder) return;
@@ -274,7 +362,7 @@ export default function SandwichBuilder() {
       `Abholung: ${formatDateDe(pickupDate)} um ${pickupTime} Uhr`,
       '',
       `Geschätzter Preis: ${formatChf(total)}`,
-      `Zahlung: per TWINT an ${TWINT_PHONE_DISPLAY} (wird vor Abholung überwiesen)`,
+      `Zahlung: per TWINT an ${PHONE_DISPLAY} (wird vor Abholung überwiesen)`,
     ];
     navigate('/kontakt', { state: { prefillMessage: lines.join('\n') } });
   };
@@ -307,6 +395,44 @@ export default function SandwichBuilder() {
             >
               <RotateCcw className="w-3.5 h-3.5" />
               Von vorne beginnen
+            </button>
+          </div>
+
+          {/* Shortcut for anyone who does not want to decide seven times */}
+          <div className="mb-8">
+            <p className="font-sans font-bold text-[11px] text-white/60 uppercase tracking-wider mb-3">
+              Keine Lust zu tüfteln? Nimm eine unserer Lieblingskombis
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {PRESETS.map((preset) => {
+                const isActive = activePresetId === preset.id;
+                return (
+                  <button
+                    key={preset.id}
+                    type="button"
+                    onClick={() => applyPreset(preset)}
+                    className={`text-left px-4 py-3.5 rounded-2xl border transition-all duration-200 cursor-pointer ${
+                      isActive
+                        ? 'bg-[#FFFFCC] border-[#FFFFCC] text-[#1A1A00] shadow-xl'
+                        : 'bg-white/5 border-white/10 text-white hover:bg-white/10 hover:border-white/25'
+                    }`}
+                  >
+                    <div className="text-xl mb-1">{preset.emoji}</div>
+                    <div className="font-sans font-black text-sm leading-tight">{preset.name}</div>
+                    <div className={`font-sans text-[11px] mt-0.5 ${isActive ? 'text-[#1A1A00]/70' : 'text-white/50'}`}>
+                      {preset.tagline}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+            <button
+              type="button"
+              onClick={surpriseMe}
+              className="mt-3 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[#FFFFCC]/30 text-[#FFFFCC] font-sans font-bold text-xs uppercase tracking-wider hover:bg-[#FFFFCC]/10 transition-all cursor-pointer"
+            >
+              <Shuffle className="w-3.5 h-3.5" />
+              Überrasch mich
             </button>
           </div>
 
@@ -359,7 +485,7 @@ export default function SandwichBuilder() {
             <Smartphone className="w-5 h-5 text-[#FFFFCC] flex-shrink-0 mt-0.5" />
             <p className="text-white/80 font-sans text-xs md:text-sm leading-relaxed">
               Vorbestellungen zahlst du aktuell bequem per <strong className="text-[#FFFFCC]">TWINT</strong> im Voraus –
-              schick den Betrag einfach an <a href={`tel:${TWINT_PHONE_TEL}`} className="text-[#FFFFCC] underline underline-offset-2">{TWINT_PHONE_DISPLAY}</a>, sobald du bestellt hast.
+              schick den Betrag einfach an <a href={`tel:${PHONE_TEL}`} className="text-[#FFFFCC] underline underline-offset-2">{PHONE_DISPLAY}</a>, sobald du bestellt hast.
               Dein Sandwich wartet frisch und fertig auf dich, wenn du eintrudelst.
             </p>
           </div>
@@ -430,7 +556,9 @@ export default function SandwichBuilder() {
           <p className="text-center text-white/40 font-sans text-[11px] mt-3">
             {canOrder
               ? 'Du landest im Bestellformular – deine Auswahl ist schon drin.'
-              : 'Bitte wähle noch Abholtag und Uhrzeit aus.'}
+              : !hasFilling
+                ? 'Leg noch etwas auf dein Brot, dann kann es losgehen.'
+                : 'Fehlt nur noch: wann du es abholen möchtest.'}
           </p>
         </div>
       </div>

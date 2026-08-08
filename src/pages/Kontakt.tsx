@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Mail, MapPin, Clock, Instagram, Send, ChefHat, ShoppingBag } from 'lucide-react';
+import { Mail, MapPin, Clock, Instagram, Send, ChefHat, ShoppingBag, Phone } from 'lucide-react';
+import { PHONE_DISPLAY, PHONE_TEL } from '../lib/contact';
 
 const ORDER_STEPS = [
   { icon: Send, label: 'Nachricht erhalten' },
@@ -141,6 +142,18 @@ export default function Kontakt() {
                   <div>
                     <p className="text-white font-bold text-base">Öffnungszeiten</p>
                     <p className="text-white/80 font-medium">24 Stunden geöffnet</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-full bg-[#FFFFCC] text-[#1A1A00] flex items-center justify-center font-bold shadow-md flex-shrink-0">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-white font-bold text-base">Telefon</p>
+                    <a href={`tel:${PHONE_TEL}`} className="text-[#FFFFCC] font-bold hover:underline">
+                      {PHONE_DISPLAY}
+                    </a>
                   </div>
                 </div>
 

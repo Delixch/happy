@@ -53,6 +53,19 @@ export default function Footer() {
             <p className="text-white/60 text-sm leading-[1.8] font-sans max-w-xs">
               Ein Häppchen Glück — traditionelle Bäckerei mit Leidenschaft für Qualität und Innovation.
             </p>
+
+            {/* Legal sits under the brand rather than in a strip of its own */}
+            <p className="text-white/35 text-[13px] font-sans flex flex-wrap items-center gap-x-3 gap-y-1 mt-8">
+              <span>&copy; {currentYear} Happy Beck Zürich</span>
+              <span className="text-white/15">·</span>
+              <Link to="/datenschutz" className="hover:text-white/70 transition-colors">
+                Datenschutz
+              </Link>
+              <span className="text-white/15">·</span>
+              <Link to="/admin" className="hover:text-white/70 transition-colors">
+                Login
+              </Link>
+            </p>
           </div>
 
           {/* Contact */}
@@ -87,32 +100,16 @@ export default function Footer() {
                   <ContactRow icon={<Instagram className="w-4 h-4" />}>{account.handle}</ContactRow>
                 </a>
               ))}
+
+              <button
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="flex items-center gap-2 mt-8 text-[11px] font-sans font-bold tracking-[0.2em] text-[#FFFFCC]/70 uppercase border border-[#FFFFCC]/25 hover:border-[#FFFFCC]/60 hover:text-[#FFFFCC] px-4 py-2.5 rounded-full transition-colors cursor-pointer"
+              >
+                Nach oben
+                <ArrowUp className="w-3.5 h-3.5" />
+              </button>
             </div>
           </div>
-        </div>
-
-        {/* Bottom bar */}
-        <div className="w-full h-px bg-white/10 mt-16 mb-8" />
-        <div className="flex flex-col md:flex-row items-center justify-between gap-5">
-          <p className="text-white/45 text-[13px] font-sans flex items-center gap-3">
-            <span>&copy; {currentYear} Happy Beck Zürich</span>
-            <span className="text-white/20">·</span>
-            <Link to="/datenschutz" className="hover:text-white/80 transition-colors">
-              Datenschutz
-            </Link>
-            <span className="text-white/20">·</span>
-            <Link to="/admin" className="hover:text-white/80 transition-colors">
-              Login
-            </Link>
-          </p>
-
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="flex items-center gap-2 text-[11px] font-sans font-bold tracking-[0.2em] text-[#FFFFCC]/70 uppercase border border-[#FFFFCC]/25 hover:border-[#FFFFCC]/60 hover:text-[#FFFFCC] px-4 py-2.5 rounded-full transition-colors cursor-pointer"
-          >
-            Nach oben
-            <ArrowUp className="w-3.5 h-3.5" />
-          </button>
         </div>
       </div>
     </footer>

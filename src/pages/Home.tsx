@@ -305,10 +305,12 @@ export default function Home() {
                 />
               </div>
               <FeatureCard
-                icon={<Coffee className="w-5.5 h-5.5" />}
+                icon={<Coffee className="w-5 h-5" strokeWidth={1.5} />}
                 title="Frühstück"
                 text="Gipfeli, Zopf und ein Kaffee dazu. So fängt der Tag an, wie er soll."
                 image="/menu-breakfast.jpg"
+                href="/menu"
+                cta="Zur Speisekarte"
                 bgColor={PHILOSOPHY_PALETTE[slide]}
               />
             </div>
@@ -328,17 +330,21 @@ export default function Home() {
             </div>
 
             <FeatureCard
-              icon={<SandwichIcon className="w-5.5 h-5.5" />}
+              icon={<SandwichIcon className="w-5 h-5" strokeWidth={1.5} />}
               title="Sandwiches"
               text="Frisch belegt, während du wartest. Dein Brot, deine Zutaten, deine Sauce."
               image="/menu-sandwich.jpg"
+              href="/sandwich-bauen"
+              cta="Selber zusammenstellen"
               bgColor={PHILOSOPHY_PALETTE[slide]}
             />
             <FeatureCard
-              icon={<IceCream className="w-5.5 h-5.5" />}
+              icon={<IceCream className="w-5 h-5" strokeWidth={1.5} />}
               title="Süsses"
               text="Hausgemachte Pâtisserie, jeden Tag neu aus unserer Backstube."
               image="/menu-sweets.jpg"
+              href="/aktuelles"
+              cta="Heute's Spezial"
               bgColor={PHILOSOPHY_PALETTE[slide]}
             />
           </RevealGroup>
@@ -354,12 +360,16 @@ function FeatureCard({
   title,
   text,
   image,
+  href,
+  cta,
   bgColor,
 }: {
   icon: React.ReactNode;
   title: string;
   text: string;
   image: string;
+  href: string;
+  cta: string;
   bgColor?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -402,13 +412,13 @@ function FeatureCard({
         style={{ perspective: '1000px' }}
       >
         <Link
-          to="/menu"
+          to={href}
           style={{
             transform,
             backgroundColor: `${bgColor || '#474150'}A8`,
-            boxShadow: '0 12px 35px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.25)',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.18)',
           }}
-          className="relative text-left rounded-2xl backdrop-blur-2xl transition-all duration-700 ease-in-out will-change-transform hover:-translate-y-1 hover:glow-gold group border border-white/25 h-full flex flex-col overflow-hidden"
+          className="relative text-left rounded-2xl backdrop-blur-2xl transition-all duration-700 ease-in-out will-change-transform hover:-translate-y-1 group border border-white/12 h-full flex flex-col overflow-hidden"
         >
           {/* Product photo */}
           <div className="relative h-44 md:h-52 overflow-hidden flex-shrink-0">
@@ -433,18 +443,16 @@ function FeatureCard({
           />
 
           <div className="relative z-10 p-6 flex flex-col flex-1">
-            <div className="flex items-center gap-4 mb-4">
-              <div
-                className="flex-shrink-0 inline-flex items-center justify-center w-12 h-12 rounded-full border border-[#FFFFCC]/40 text-[#FFFFCC] group-hover:scale-110 group-hover:bg-[#FFFFCC]/20 transition-all duration-300 bg-[#FFFFCC]/10 shadow-[0_0_20px_rgba(255,255,204,0.15)]"
-              >
+            <div className="flex items-center gap-3 mb-3">
+              <span className="flex-shrink-0 text-[#FFFFCC]/80 group-hover:text-[#FFFFCC] transition-colors">
                 {icon}
-              </div>
-              <h3 className="text-xl md:text-2xl font-serif font-black text-[#FFFFCC] tracking-wide transition-colors">{title}</h3>
+              </span>
+              <h3 className="text-xl md:text-[22px] font-serif font-bold text-[#FFFFCC]">{title}</h3>
             </div>
-            <p className="text-white/95 font-sans text-sm md:text-base font-medium leading-relaxed drop-shadow-sm">{text}</p>
+            <p className="text-white/70 font-sans text-sm font-normal leading-[1.7]">{text}</p>
 
-            <span className="mt-5 pt-4 border-t border-white/15 flex items-center gap-2 text-[#FFFFCC] font-sans font-black text-xs uppercase tracking-wider">
-              Zur Speisekarte
+            <span className="mt-auto pt-5 flex items-center gap-2 text-[#FFFFCC]/75 group-hover:text-[#FFFFCC] font-sans font-medium text-[11px] uppercase tracking-[0.18em] transition-colors">
+              {cta}
               <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </span>
           </div>

@@ -10,6 +10,9 @@
 export interface RatingSource {
   id: string;
   label: string;
+  /** Numeric form, used to fill the star row. */
+  value: number;
+  /** Swiss German display form, with a comma. */
   score: string;
   count: number;
   url: string;
@@ -20,6 +23,7 @@ export const RATINGS: RatingSource[] = [
   {
     id: 'google',
     label: 'Google',
+    value: 4.3,
     score: '4,3',
     count: 391,
     url: 'https://www.google.com/maps/search/?api=1&query=Happy+Beck+Langstrasse+120+8004+Z%C3%BCrich',
@@ -28,6 +32,7 @@ export const RATINGS: RatingSource[] = [
   {
     id: 'ubereats',
     label: 'Uber Eats',
+    value: 4.7,
     score: '4,7',
     count: 25,
     url: 'https://www.ubereats.com/ch-de/store/happybeck/1cMo9d_uXNufL0FRptsfcA',
@@ -36,6 +41,7 @@ export const RATINGS: RatingSource[] = [
   {
     id: 'justeat',
     label: 'Just Eat',
+    value: 4.4,
     score: '4,4',
     count: 21,
     url: 'https://www.just-eat.ch/speisekarte/happybeck-langstrasse',

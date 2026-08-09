@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Coffee, Sandwich as SandwichIcon, IceCream, Bike } from 'lucide-react';
+import { Coffee, Sandwich as SandwichIcon, IceCream } from 'lucide-react';
 import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 import MarqueeTicker from '../components/MarqueeTicker';
-import RatingBadges from '../components/RatingBadges';
+import OrderCard from '../components/OrderCard';
 import Parallax from '../components/motion/Parallax';
 import { Reveal, RevealGroup, RevealItem } from '../components/motion/Reveal';
 
@@ -216,44 +216,8 @@ export default function Home() {
                 </Link>
               </div>
 
-              {/* Platform ratings, right where the ordering decision happens */}
-              <RatingBadges className="mb-4" />
-
-              {/* Uber Eats & Just Eat Delivery Banner */}
-              <div className="w-full max-w-[420px] bg-[#1A1A00] rounded-2xl px-4 py-3 shadow-lg border border-white/15 flex flex-row items-center justify-between gap-3 mt-2">
-                <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-8 h-8 rounded-full bg-[#FFFFCC]/10 flex items-center justify-center flex-shrink-0">
-                    <Bike className="w-4 h-4 text-[#FFFFCC]" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-white font-sans font-semibold text-xs leading-snug truncate">
-                      Lieferung direkt zu dir
-                    </p>
-                    <p className="text-white/70 font-sans text-[10px] leading-tight truncate">
-                      Jetzt bestellen bei
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 flex-shrink-0">
-                  <a
-                    href="https://www.ubereats.com/ch-de/store/happybeck/1cMo9d_uXNufL0FRptsfcA?diningMode=DELIVERY&surfaceName="
-                    target="_blank"
-                    rel="noreferrer"
-                    className="px-3 py-1.5 rounded-full bg-[#06C167]/90 hover:bg-[#06C167] text-white font-sans font-semibold text-[11px] tracking-wide transition-colors cursor-pointer whitespace-nowrap"
-                  >
-                    Uber Eats
-                  </a>
-                  <a
-                    href="https://www.just-eat.ch/speisekarte/happybeck-langstrasse"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="px-3 py-1.5 rounded-full bg-[#FF8000]/90 hover:bg-[#FF8000] text-white font-sans font-semibold text-[11px] tracking-wide transition-colors cursor-pointer whitespace-nowrap"
-                  >
-                    Just Eat
-                  </a>
-                </div>
-              </div>
+              {/* Proof and ordering in one card, right where the decision happens */}
+              <OrderCard className="mt-2" />
             </div>
 
           </div>

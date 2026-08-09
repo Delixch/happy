@@ -8,18 +8,34 @@ const INSTAGRAM = [
 ];
 
 /** Quiet, wide-tracked label. The footer sits under the page, so it whispers. */
-function ColumnHeading({ children }: { children: React.ReactNode }) {
+function ColumnHeading({ children, onLight = false }: { children: React.ReactNode; onLight?: boolean }) {
   return (
-    <h3 className="font-sans text-[#FFFFCC]/70 text-[11px] font-bold uppercase tracking-[0.28em] mb-6">
+    <h3
+      className={`font-sans text-[11px] font-bold uppercase tracking-[0.28em] mb-6 ${
+        onLight ? 'text-[#1A1A00]' : 'text-[#FFFFCC]/70'
+      }`}
+    >
       {children}
     </h3>
   );
 }
 
-function ContactRow({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) {
+function ContactRow({
+  icon,
+  children,
+  onLight = false,
+}: {
+  icon: React.ReactNode;
+  children: React.ReactNode;
+  onLight?: boolean;
+}) {
   return (
     <span className="flex items-center gap-3">
-      <span className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-[#FFFFCC]/80 flex-shrink-0">
+      <span
+        className={`w-8 h-8 rounded-full border flex items-center justify-center flex-shrink-0 ${
+          onLight ? 'border-[#1A1A00]/25 text-[#1A1A00]' : 'border-white/15 text-[#FFFFCC]/80'
+        }`}
+      >
         {icon}
       </span>
       {children}
@@ -68,20 +84,27 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Contact */}
-          <div>
-            <ColumnHeading>Kontakt</ColumnHeading>
-            <div className="space-y-4 text-[15px] font-sans text-white/65">
-              <a href={`tel:${PHONE_TEL}`} className="block hover:text-white transition-colors">
-                <ContactRow icon={<Phone className="w-4 h-4" />}>{PHONE_DISPLAY}</ContactRow>
+          {/* Contact — a lit panel cut out of the dark footer, so the details
+              people actually need for a visit read first. */}
+          <div className="bg-[#FFFFCC] rounded-2xl px-6 py-7 -my-1">
+            <ColumnHeading onLight>Kontakt</ColumnHeading>
+            <div className="space-y-4 text-[15px] font-sans font-medium text-[#1A1A00]">
+              <a href={`tel:${PHONE_TEL}`} className="block hover:text-[#1A1A00] transition-colors">
+                <ContactRow icon={<Phone className="w-4 h-4" />} onLight>
+                  {PHONE_DISPLAY}
+                </ContactRow>
               </a>
-              <a href={`mailto:${EMAIL}`} className="block hover:text-white transition-colors">
-                <ContactRow icon={<Mail className="w-4 h-4" />}>{EMAIL}</ContactRow>
+              <a href={`mailto:${EMAIL}`} className="block hover:text-[#1A1A00] transition-colors">
+                <ContactRow icon={<Mail className="w-4 h-4" />} onLight>
+                  {EMAIL}
+                </ContactRow>
               </a>
-              <ContactRow icon={<MapPin className="w-4 h-4" />}>
+              <ContactRow icon={<MapPin className="w-4 h-4" />} onLight>
                 {ADDRESS_STREET}, {ADDRESS_CITY}
               </ContactRow>
-              <ContactRow icon={<Clock className="w-4 h-4" />}>24 Stunden geöffnet</ContactRow>
+              <ContactRow icon={<Clock className="w-4 h-4" />} onLight>
+                24 Stunden geöffnet
+              </ContactRow>
             </div>
           </div>
 

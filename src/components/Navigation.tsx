@@ -88,17 +88,20 @@ export default function Navigation() {
 
         {/* MOBILE LIVE 24/7 COUNTER BADGE (OUTSIDE BRAND TAB - IN MIDDLE SPACE) */}
         <div className="flex lg:hidden items-center my-auto ml-3 mr-auto z-20">
-          <div className="bg-[#0E0E00] border border-[#FFFFCC]/30 rounded-xl px-2.5 py-1 flex items-center gap-2 shadow-lg">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#06C167] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#06C167]" />
+          <div className="bg-white/[0.04] border border-[#FFFFCC]/15 rounded-full pl-2.5 pr-3 py-1.5 flex items-center gap-2">
+            <span className="relative flex h-1.5 w-1.5 flex-shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#06C167] opacity-50" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#06C167]" />
             </span>
-            <div className="flex flex-col">
-              <span className="text-[10px] font-sans font-black text-[#FFFFCC] tracking-tight leading-none whitespace-nowrap">
-                {openHours > 0 ? openHours.toLocaleString('de-CH') : '180.000+'}h 24/7
+            <div className="flex flex-col leading-none">
+              <span className="text-[10px] font-sans leading-none whitespace-nowrap">
+                <span className="text-[#FFFFCC] font-semibold tabular-nums">
+                  {openHours > 0 ? openHours.toLocaleString('de-CH') : "180'000+"}
+                </span>
+                <span className="text-white/45 font-normal"> h</span>
               </span>
-              <span className="text-[7px] font-sans font-bold text-white/70 tracking-tighter uppercase whitespace-nowrap">
-                SEIT JAN. 2006
+              <span className="text-[7px] font-sans font-medium text-white/30 uppercase tracking-[0.15em] whitespace-nowrap mt-1">
+                Seit 2006
               </span>
             </div>
           </div>
@@ -232,17 +235,20 @@ export default function Navigation() {
 
         {/* ── LIVE 24/7 NON-STOP OPEN HOURS COUNTER BADGE (Desktop Right Side) ── */}
         <div className="hidden lg:flex items-center ml-auto pr-6">
-          <div className="bg-[#0E0E00] border border-[#FFFFCC]/25 rounded-2xl px-4 py-1.5 flex items-center gap-3 shadow-lg">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#06C167] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#06C167]" />
+          <div className="bg-white/[0.04] border border-[#FFFFCC]/15 rounded-full pl-3.5 pr-4 py-2 flex items-center gap-2.5">
+            <span className="relative flex h-1.5 w-1.5 flex-shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#06C167] opacity-50" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#06C167]" />
             </span>
-            <div className="flex flex-col">
-              <span className="text-[11px] font-sans font-black text-[#FFFFCC] tracking-wider leading-none">
-                {openHours > 0 ? openHours.toLocaleString('de-CH') : '180.000+'} STUNDEN UNUNTERBROCHEN
+            <div className="flex flex-col leading-none">
+              <span className="text-[11px] font-sans leading-none">
+                <span className="text-[#FFFFCC] font-semibold tabular-nums">
+                  {openHours > 0 ? openHours.toLocaleString('de-CH') : "180'000+"}
+                </span>
+                <span className="text-white/45 font-normal"> Stunden ununterbrochen</span>
               </span>
-              <span className="text-[8px] font-sans font-bold text-white/60 uppercase tracking-widest mt-0.5">
-                SEIT JANUAR 2006 · 24/7 GEÖFFNET
+              <span className="text-[8px] font-sans font-medium text-white/30 uppercase tracking-[0.2em] mt-1.5">
+                Seit Januar 2006
               </span>
             </div>
           </div>

@@ -33,9 +33,21 @@ function Stars({ value, className = 'w-3.5 h-3.5' }: { value: number; className?
  */
 export default function OrderCard({ className = '' }: { className?: string }) {
   return (
-    <div
-      className={`w-full max-w-[440px] rounded-2xl bg-[#1A1A00] border border-white/12 overflow-hidden ${className}`}
-    >
+    <div className={`relative w-full max-w-[440px] rounded-2xl p-px overflow-hidden ${className}`}>
+      {/* A single highlight travelling the border, reusing the conic-gradient
+          trick already in index.css. Slow and faint on purpose — this sits in a
+          hero that is busy enough. */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[240%] w-[240%] -translate-x-1/2 -translate-y-1/2 animate-spin-slow motion-reduce:hidden"
+        style={{
+          animationDuration: '7s',
+          background:
+            'conic-gradient(from 0deg, transparent 0%, rgba(255,255,204,0.45) 6%, transparent 18%, transparent 100%)',
+        }}
+      />
+
+      <div className="relative rounded-2xl bg-[#1A1A00] border border-white/10 overflow-hidden">
       {/* Trust line */}
       <a
         href={google.url}
@@ -86,6 +98,7 @@ export default function OrderCard({ className = '' }: { className?: string }) {
             </a>
           ))}
         </span>
+      </div>
       </div>
     </div>
   );

@@ -196,20 +196,22 @@ export default function Home() {
               >
                 {slides[slide].text}
               </p>
-              <div className="flex flex-wrap gap-4 mb-6">
-                <Link 
-                  to="/menu" 
-                  className="px-8 py-3.5 rounded-2xl text-white font-sans font-extrabold text-sm tracking-wider uppercase shadow-xl hover:scale-105 transition-all duration-300"
+              {/* Same max width as the order card below, so the row of buttons
+                  and the card share a right edge. */}
+              <div className="flex flex-wrap gap-4 mb-6 w-full max-w-[440px]">
+                <Link
+                  to="/menu"
+                  className="flex-1 px-6 py-3.5 rounded-2xl text-center whitespace-nowrap text-white font-sans font-extrabold text-sm tracking-wider uppercase shadow-xl hover:scale-105 transition-all duration-300"
                   style={{ backgroundColor: slides[slide].cardBg }}
                 >
                   Unsere Speisekarte
                 </Link>
-                <Link 
-                  to="/kontakt" 
-                  className="px-11 py-3.5 rounded-2xl border-2 font-sans font-extrabold text-sm tracking-wider uppercase shadow-sm transition-all duration-300 hover:scale-105"
-                  style={{ 
-                    borderColor: slides[slide].cardBg, 
-                    color: slides[slide].cardBg 
+                <Link
+                  to="/kontakt"
+                  className="flex-1 px-6 py-3.5 rounded-2xl border-2 text-center whitespace-nowrap font-sans font-extrabold text-sm tracking-wider uppercase shadow-sm transition-all duration-300 hover:scale-105"
+                  style={{
+                    borderColor: slides[slide].cardBg,
+                    color: slides[slide].cardBg
                   }}
                 >
                   Kontakt

@@ -50,9 +50,10 @@ export default function Footer() {
     <footer className="relative bg-[#1A1A00] text-white border-t border-[#FFFFCC]/25">
       <div className="container mx-auto px-4 lg:px-8 py-20 max-w-7xl">
         {/* No nav column here — the header already carries the full menu. */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-14">
+        {/* Three equal columns, so the contact panel sits in the actual middle. */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-14">
           {/* Brand */}
-          <div className="lg:col-span-2">
+          <div>
             <Link to="/" className="inline-flex items-center gap-3 mb-5 group">
               <div className="w-12 h-12 rounded-full overflow-hidden border border-[#FFFFCC]/40 bg-white p-0.5 group-hover:scale-105 transition-transform">
                 <img src="/logo.png" alt="Happy Beck" className="w-full h-full object-contain" />

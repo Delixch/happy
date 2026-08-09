@@ -6,8 +6,9 @@ import RatingBadges from '../components/RatingBadges';
 import Parallax from '../components/motion/Parallax';
 import { Reveal, RevealGroup, RevealItem } from '../components/motion/Reveal';
 
-// Dark-to-light muted olive green palette going from dark (#1A1A00) to progressively lighter shades
-const PHILOSOPHY_PALETTE = ['#1A1A00', '#2C2C00', '#3D3D00', '#4E4E00'];
+// One step lighter per slide, starting at the darkest olive. The steps are
+// wide enough (0x15 apart) to read once the cards blend over the cream page.
+const PHILOSOPHY_PALETTE = ['#1A1A00', '#2F2F00', '#444400', '#595900'];
 
 export default function Home() {
   const slides = useMemo(
@@ -415,7 +416,7 @@ function FeatureCard({
           to={href}
           style={{
             transform,
-            backgroundColor: `${bgColor || '#474150'}A8`,
+            backgroundColor: `${bgColor || '#474150'}E6`,
             boxShadow: '0 10px 30px rgba(0,0,0,0.18)',
           }}
           className="relative text-left rounded-2xl backdrop-blur-2xl transition-all duration-700 ease-in-out will-change-transform hover:-translate-y-1 group border border-white/12 h-full flex flex-col overflow-hidden"

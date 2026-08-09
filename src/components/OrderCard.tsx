@@ -77,7 +77,7 @@ export default function OrderCard({ className = '' }: { className?: string }) {
         <span className="text-[#1A1A00] font-sans font-bold text-[13px] leading-none tabular-nums">
           {google.score}
         </span>
-        <span className="text-[#1A1A00]/55 font-sans text-[12px] leading-none group-hover:text-[#1A1A00]/80 transition-colors">
+        <span className="text-[#1A1A00] font-sans font-medium text-[12px] leading-none">
           {google.count} Bewertungen auf Google
         </span>
       </a>
@@ -92,7 +92,7 @@ export default function OrderCard({ className = '' }: { className?: string }) {
             <span className="block text-[#1A1A00] font-sans font-semibold text-[13px] leading-snug truncate">
               Lieferung direkt zu dir
             </span>
-            <span className="block text-[#1A1A00]/55 font-sans text-[11px] leading-tight truncate">
+            <span className="block text-[#1A1A00]/75 font-sans text-[11px] leading-tight truncate">
               Jetzt bestellen bei
             </span>
           </span>

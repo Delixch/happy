@@ -144,20 +144,31 @@ export default function Unternehmen() {
               { icon: <MapPin className="w-5 h-5" />, value: 'Zürich', label: 'Hauptsitz', bg: '#2C2C00', accent: '#FFFFCC', speed: '3.2s' },
               { icon: <Wheat className="w-5 h-5" />, value: '24h', label: 'Geöffnet', bg: '#353500', accent: '#FFFFCC', speed: '2.8s' },
               { icon: <Award className="w-5 h-5" />, value: '20+', label: 'Jahre Tradition', bg: '#3D3D00', accent: '#FFFFCC', speed: '3.5s' },
-            ].map((stat, i) => (
+            ].map((stat, i) => {
+              // Every other circle is left open, so the row is not five solid
+              // discs in a line.
+              const outline = i % 2 === 1;
+
+              return (
               <RevealItem key={i}>
               <div
-                className="rounded-full aspect-square w-full max-w-[180px] sm:max-w-[190px] mx-auto p-4 text-center shadow-2xl border-2 border-white/20 hover:scale-110 hover:shadow-[0_15px_35px_rgba(0,0,0,0.4)] transition-all duration-300 flex flex-col items-center justify-center relative group"
-                style={{ backgroundColor: stat.bg }}
+                className={`rounded-full aspect-square w-full max-w-[180px] sm:max-w-[190px] mx-auto p-4 text-center border-2 hover:scale-110 transition-all duration-300 flex flex-col items-center justify-center relative group ${
+                  outline
+                    ? 'border-[#1A1A00]/25 hover:border-[#1A1A00]/45'
+                    : 'border-white/20 shadow-2xl hover:shadow-[0_15px_35px_rgba(0,0,0,0.4)]'
+                }`}
+                style={{ backgroundColor: outline ? undefined : stat.bg }}
               >
                 {/* METEOR ORBIT EFFECT: Rotating Spark Head + Glowing Tail */}
                 <div className="absolute inset-0 rounded-full p-[2px] pointer-events-none overflow-hidden">
                   {/* Rotating Conic Meteor Tail */}
-                  <div 
+                  <div
                     className="w-full h-full rounded-full animate-spin-slow"
-                    style={{ 
+                    style={{
                       animationDuration: stat.speed,
-                      background: 'conic-gradient(from 0deg, #FFFFCC 0%, rgba(255,187,0,0.8) 15%, transparent 40%, transparent 100%)',
+                      background: outline
+                        ? 'conic-gradient(from 0deg, #1A1A00 0%, rgba(26,26,0,0.55) 15%, transparent 40%, transparent 100%)'
+                        : 'conic-gradient(from 0deg, #FFFFCC 0%, rgba(255,187,0,0.8) 15%, transparent 40%, transparent 100%)',
                       mask: 'radial-gradient(circle, transparent 66%, black 67%)',
                       WebkitMask: 'radial-gradient(circle, transparent 66%, black 67%)'
                     }}
@@ -165,29 +176,45 @@ export default function Unternehmen() {
                 </div>
 
                 {/* Meteor Spark Head Highlight */}
-                <div 
+                <div
                   className="absolute inset-0 rounded-full pointer-events-none animate-spin-slow"
                   style={{ animationDuration: stat.speed }}
                 >
-                  <div className="w-3 h-3 bg-white rounded-full shadow-[0_0_12px_#FFFFCC,0_0_20px_#FF8000] absolute -top-1 left-1/2 -translate-x-1/2 animate-pulse" />
+                  <div
+                    className={`w-3 h-3 rounded-full absolute -top-1 left-1/2 -translate-x-1/2 animate-pulse ${
+                      outline
+                        ? 'bg-[#1A1A00] shadow-[0_0_10px_rgba(26,26,0,0.5)]'
+                        : 'bg-white shadow-[0_0_12px_#FFFFCC,0_0_20px_#FF8000]'
+                    }`}
+                  />
                 </div>
 
-                <div 
+                <div
                   className="w-9 h-9 rounded-full flex items-center justify-center mb-2 font-bold shadow-md relative z-10"
-                  style={{ backgroundColor: stat.accent, color: '#1A1A00' }}
+                  style={{
+                    backgroundColor: outline ? '#1A1A00' : stat.accent,
+                    color: outline ? stat.accent : '#1A1A00',
+                  }}
                 >
                   {stat.icon}
                 </div>
-                <p className="text-xl sm:text-2xl font-serif font-black text-white mb-0.5 relative z-10">{stat.value}</p>
-                <p 
+                <p
+                  className={`text-xl sm:text-2xl font-serif font-black mb-0.5 relative z-10 ${
+                    outline ? 'text-[#1A1A00]' : 'text-white'
+                  }`}
+                >
+                  {stat.value}
+                </p>
+                <p
                   className="font-sans text-[10px] sm:text-[11px] uppercase font-extrabold tracking-wider leading-tight px-2 relative z-10"
-                  style={{ color: stat.accent }}
+                  style={{ color: outline ? '#1A1A00' : stat.accent }}
                 >
                   {stat.label}
                 </p>
               </div>
               </RevealItem>
-            ))}
+              );
+            })}
           </RevealGroup>
         </div>
       </div>

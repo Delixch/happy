@@ -160,7 +160,7 @@ export default function MenuPage() {
           <div className="hidden lg:block">
             <div className="mb-10 flex flex-row items-stretch justify-center gap-10">
               <video
-                src="https://res.cloudinary.com/dsdsb4lqw/video/upload/v1785332690/HAPPY_OMLETT_VIDEO_xgh4nn.mov"
+                src="https://res.cloudinary.com/dsdsb4lqw/video/upload/f_auto,q_auto/v1785332690/HAPPY_OMLETT_VIDEO_xgh4nn.mp4"
                 autoPlay
                 loop
                 muted
@@ -218,7 +218,7 @@ export default function MenuPage() {
           {/* ── MOBILE/TABLET: video, title, then accordion — content opens directly under the tapped category ── */}
           <div className="lg:hidden">
             <video
-              src="https://res.cloudinary.com/dsdsb4lqw/video/upload/v1785332690/HAPPY_OMLETT_VIDEO_xgh4nn.mov"
+              src="https://res.cloudinary.com/dsdsb4lqw/video/upload/f_auto,q_auto/v1785332690/HAPPY_OMLETT_VIDEO_xgh4nn.mp4"
               autoPlay
               loop
               muted

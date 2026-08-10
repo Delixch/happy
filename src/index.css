@@ -496,3 +496,23 @@ html[data-theme='nacht'] img[style*='multiply'] {
   mix-blend-mode: normal !important;
   filter: drop-shadow(0 0 12px rgba(240, 237, 214, 0.22)) !important;
 }
+
+/* 3D flip for the review cards. Tailwind emits the unprefixed properties only,
+   and Safari still needs the -webkit ones. */
+.flip-scene { perspective: 1400px; }
+.flip-inner {
+  position: relative;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.flip-inner.is-flipped { transform: rotateY(180deg); }
+.flip-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flip-face-back { transform: rotateY(180deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-inner { transition: none; }
+}

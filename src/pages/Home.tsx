@@ -3,6 +3,7 @@ import { Coffee, Sandwich as SandwichIcon, IceCream } from 'lucide-react';
 import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 import MarqueeTicker from '../components/MarqueeTicker';
 import OrderCard from '../components/OrderCard';
+import ReviewQuotes from '../components/ReviewQuotes';
 import Parallax from '../components/motion/Parallax';
 import { Reveal, RevealGroup, RevealItem } from '../components/motion/Reveal';
 
@@ -316,6 +317,8 @@ export default function Home() {
             />
           </RevealGroup>
         </div>
+
+        <ReviewQuotes />
       </div>
 
     </section>

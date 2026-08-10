@@ -1,29 +1,26 @@
-import { useState, useEffect } from 'react';
 import { Award, Clock, MapPin, Wheat } from 'lucide-react';
 import Parallax from '../components/motion/Parallax';
 import { Reveal, RevealGroup, RevealItem } from '../components/motion/Reveal';
 
-const FRAME_COUNT = 300;
+const HANDWERK_VIDEO = 'https://res.cloudinary.com/dsdsb4lqw/video/upload/v1786349917/22_rmzwgy.mp4';
 
+/**
+ * This used to flip through 300 JPEGs on a 30fps interval — 9.8 MB of frames,
+ * 300 requests, and decoding on the main thread against React. The same clip as
+ * a video is a fraction of that and plays on the compositor.
+ */
 function FrameAnimationCard() {
-  const [currentFrame, setCurrentFrame] = useState(1);
-
-  useEffect(() => {
-    // Smooth auto-play at 30 FPS without scroll
-    const interval = setInterval(() => {
-      setCurrentFrame((prev) => (prev % FRAME_COUNT) + 1);
-    }, 1000 / 30);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const frameNum = String(currentFrame).padStart(3, '0');
-
   return (
     <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl bg-[#1A1A00] border-4 border-white">
-      <img
-        src={`/uberuns/ezgif-frame-${frameNum}.jpg`}
-        alt="Bäckerei Handwerk Tradition"
+      <video
+        src={HANDWERK_VIDEO}
+        poster="/uberuns-poster.jpg"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        aria-label="Bäckerei Handwerk Tradition"
         className="w-full h-full object-cover"
       />
       <div className="absolute bottom-0 left-0 right-0 p-4 bg-[#1A1A00]/80 backdrop-blur-sm text-center">

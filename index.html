@@ -18,12 +18,12 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Bakery",
+        "@type": ["Bakery", "Restaurant"],
         "@id": "https://happybeck.ch/#bakery",
         "name": "Happy Beck",
         "alternateName": "Bäckerei Happy Beck",
         "slogan": "Ein Häppchen Glück",
-        "description": "Bäckerei an der Langstrasse in Zürich mit frischen Sandwiches, Frühstück, Gipfeli und hausgemachter Pâtisserie. 24 Stunden an 7 Tagen geöffnet.",
+        "description": "Bäckerei und Restaurant an der Langstrasse in Zürich: frische Sandwiches, Frühstück, Pizza, warme Gerichte und hausgemachte Pâtisserie. Bestellen an der Theke, essen vor Ort. 24 Stunden an 7 Tagen geöffnet.",
         "url": "https://happybeck.ch/",
         "logo": "https://happybeck.ch/logo.png",
         "image": "https://happybeck.ch/Home.jpg",
@@ -61,8 +61,26 @@
             "closes": "23:59"
           }
         ],
-        "servesCuisine": ["Bäckerei", "Frühstück", "Sandwiches", "Pâtisserie"],
+        "servesCuisine": ["Bäckerei", "Frühstück", "Sandwiches", "Pizza", "Warme Küche", "Pâtisserie"],
         "hasMenu": "https://happybeck.ch/menu",
+        "acceptsReservations": "False",
+        "amenityFeature": [
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Sitzplätze im Innern",
+            "value": true
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Gartensitzplätze",
+            "value": true
+          },
+          {
+            "@type": "LocationFeatureSpecification",
+            "name": "Selbstbedienung an der Theke",
+            "value": true
+          }
+        ],
         "areaServed": {
           "@type": "City",
           "name": "Zürich"

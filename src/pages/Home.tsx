@@ -305,6 +305,7 @@ export default function Home() {
               href="/sandwich-bauen"
               cta="Selber zusammenstellen"
               bgColor={PHILOSOPHY_PALETTE[slide]}
+              outline
             />
             <FeatureCard
               icon={<IceCream className="w-5 h-5" strokeWidth={1.5} />}
@@ -333,6 +334,7 @@ function FeatureCard({
   href,
   cta,
   bgColor,
+  outline = false,
 }: {
   icon: React.ReactNode;
   title: string;
@@ -341,7 +343,24 @@ function FeatureCard({
   href: string;
   cta: string;
   bgColor?: string;
+  /** Transparent body with a tinted outline, so the row is not three identical blocks. */
+  outline?: boolean;
 }) {
+  const tint = bgColor || '#474150';
+  const ink = outline
+    ? {
+        icon: 'text-[#1A1A00]',
+        title: 'text-[#1A1A00]',
+        body: 'text-[#1A1A00]',
+        cta: 'text-[#1A1A00]',
+      }
+    : {
+        icon: 'text-[#FFFFCC]/80 group-hover:text-[#FFFFCC]',
+        title: 'text-[#FFFFCC]',
+        body: 'text-white/70',
+        cta: 'text-[#FFFFCC]/75 group-hover:text-[#FFFFCC]',
+      };
+
   const ref = useRef<HTMLDivElement>(null);
   const rectRef = useRef<DOMRect | null>(null);
   const [transform, setTransform] = useState('');
@@ -385,10 +404,15 @@ function FeatureCard({
           to={href}
           style={{
             transform,
-            backgroundColor: `${bgColor || '#474150'}E6`,
-            boxShadow: '0 10px 30px rgba(0,0,0,0.18)',
+            // Outline cards drop the fill and carry the slide tint in the
+            // border instead, so the colour still steps with each slide.
+            backgroundColor: outline ? undefined : `${tint}E6`,
+            borderColor: outline ? `${tint}66` : 'rgba(255,255,255,0.12)',
+            boxShadow: outline ? undefined : '0 10px 30px rgba(0,0,0,0.18)',
           }}
-          className="relative text-left rounded-2xl backdrop-blur-2xl transition-all duration-700 ease-in-out will-change-transform hover:-translate-y-1 group border border-white/12 h-full flex flex-col overflow-hidden"
+          className={`relative text-left rounded-2xl transition-all duration-700 ease-in-out will-change-transform hover:-translate-y-1 group border h-full flex flex-col overflow-hidden ${
+            outline ? '' : 'backdrop-blur-2xl'
+          }`}
         >
           {/* Product photo */}
           <div className="relative h-44 md:h-52 overflow-hidden flex-shrink-0">
@@ -401,27 +425,31 @@ function FeatureCard({
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
           </div>
 
-          {/* Glass sheen */}
-          <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/15 via-transparent to-transparent" />
+          {/* Glass sheen — only reads on a filled card */}
+          {!outline && (
+            <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/15 via-transparent to-transparent" />
+          )}
 
-          {/* Spotlight */}
+          {/* Follows the pointer */}
           <div
             className="pointer-events-none absolute inset-0 rounded-2xl"
             style={{
-              background: `radial-gradient(400px circle at ${bgPos}, rgba(255,255,255,0.18), transparent 40%)`,
+              background: outline
+                ? `radial-gradient(400px circle at ${bgPos}, ${tint}14, transparent 45%)`
+                : `radial-gradient(400px circle at ${bgPos}, rgba(255,255,255,0.18), transparent 40%)`,
             }}
           />
 
           <div className="relative z-10 p-6 flex flex-col flex-1">
             <div className="flex items-center gap-3 mb-3">
-              <span className="flex-shrink-0 text-[#FFFFCC]/80 group-hover:text-[#FFFFCC] transition-colors">
-                {icon}
-              </span>
-              <h3 className="text-xl md:text-[22px] font-serif font-bold text-[#FFFFCC]">{title}</h3>
+              <span className={`flex-shrink-0 transition-colors ${ink.icon}`}>{icon}</span>
+              <h3 className={`text-xl md:text-[22px] font-serif font-bold ${ink.title}`}>{title}</h3>
             </div>
-            <p className="text-white/70 font-sans text-sm font-normal leading-[1.7]">{text}</p>
+            <p className={`font-sans text-sm font-normal leading-[1.7] ${ink.body}`}>{text}</p>
 
-            <span className="mt-auto pt-5 flex items-center gap-2 text-[#FFFFCC]/75 group-hover:text-[#FFFFCC] font-sans font-medium text-[11px] uppercase tracking-[0.18em] transition-colors">
+            <span
+              className={`mt-auto pt-5 flex items-center gap-2 font-sans font-medium text-[11px] uppercase tracking-[0.18em] transition-colors ${ink.cta}`}
+            >
               {cta}
               <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </span>

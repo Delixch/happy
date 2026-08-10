@@ -2,7 +2,8 @@ import { Award, Clock, MapPin, Wheat } from 'lucide-react';
 import Parallax from '../components/motion/Parallax';
 import { Reveal, RevealGroup, RevealItem } from '../components/motion/Reveal';
 
-const HANDWERK_VIDEO = 'https://res.cloudinary.com/dsdsb4lqw/video/upload/v1786349917/22_rmzwgy.mp4';
+const HANDWERK_VIDEO =
+  'https://res.cloudinary.com/dsdsb4lqw/video/upload/f_auto,q_auto/v1786349917/22_rmzwgy.mp4';
 
 /**
  * This used to flip through 300 JPEGs on a 30fps interval — 9.8 MB of frames,

@@ -194,7 +194,7 @@ export default function Medien() {
       {/* Hero */}
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
         <HeroVideo
-          src="https://res.cloudinary.com/dsdsb4lqw/video/upload/v1785404003/resmi_harketlendir_video_gibi_f3beop.mp4"
+          src="https://res.cloudinary.com/dsdsb4lqw/video/upload/f_auto,q_auto/v1785404003/resmi_harketlendir_video_gibi_f3beop.mp4"
           poster="/default-hero.jpg"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A00]/60 via-transparent to-[#FFFFCC]" />

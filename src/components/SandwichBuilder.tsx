@@ -4,6 +4,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Sandwich, Check, Sparkles, ArrowRight, CalendarDays, Clock, Smartphone, RotateCcw, Shuffle } from 'lucide-react';
 import { PHONE_DISPLAY, PHONE_TEL } from '../lib/contact';
 
+const BACKDROP_VIDEO =
+  'https://res.cloudinary.com/dsdsb4lqw/video/upload/f_auto,q_auto/v1786350535/23_h4vc6v.mp4';
+
 function todayIso() {
   return new Date().toISOString().slice(0, 10);
 }
@@ -492,7 +495,25 @@ export default function SandwichBuilder() {
         </div>
 
         {/* Live Summary */}
-        <div className="lg:sticky lg:top-24 h-fit rounded-3xl p-6 md:p-8 bg-[#2C2C00] shadow-2xl border border-[#FFFFCC]/20">
+        <div className="relative lg:sticky lg:top-24 h-fit rounded-3xl p-6 md:p-8 bg-[#2C2C00] shadow-2xl border border-[#FFFFCC]/20 overflow-hidden">
+          {/* Sandwiches being made, kept faint so nothing here gets harder to
+              read. The scrim above it holds the contrast steady whatever the
+              footage is doing underneath. */}
+          <video
+            src={BACKDROP_VIDEO}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            aria-hidden="true"
+            tabIndex={-1}
+            className="pointer-events-none absolute inset-0 w-full h-full object-cover opacity-60 motion-reduce:hidden"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#2C2C00]/35 via-[#2C2C00]/55 to-[#2C2C00]/75" />
+
+          {/* Everything below is positioned so it paints above the backdrop */}
+          <div className="relative">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-11 h-11 rounded-full bg-[#FFFFCC] text-[#1A1A00] flex items-center justify-center shadow-md flex-shrink-0">
               <Sandwich className="w-5 h-5" />
@@ -560,6 +581,7 @@ export default function SandwichBuilder() {
                 ? 'Leg noch etwas auf dein Brot, dann kann es losgehen.'
                 : 'Fehlt nur noch: wann du es abholen möchtest.'}
           </p>
+          </div>
         </div>
       </div>
     </div>

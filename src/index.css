@@ -477,13 +477,18 @@ html[data-theme='nacht'] [class*='border-[#1A1A00]'] {
 
 /* Panels that are frosted white on the cream page need an olive surface at
    night — plain white translucency turns into washed grey on a dark page. */
-.panel-light { background-color: rgba(255, 255, 255, 0.6); }
-.panel-item { background-color: rgba(255, 255, 255, 0.7); }
-.panel-inset { background-color: rgba(255, 255, 255, 0.4); }
+/* Cream and olive only — white is not in the palette. Every other panel on the
+   site is dark olive on the cream page, so this one matches rather than being
+   the single pale exception. Rows lift off it with a cream wash. */
+.panel-light { background-color: #1A1A00; }
+.panel-item { background-color: rgba(255, 255, 204, 0.07); }
+.panel-item:hover { background-color: rgba(255, 255, 204, 0.14); }
+.panel-inset { background-color: rgba(255, 255, 204, 0.05); }
 
 html[data-theme='nacht'] .panel-light { background-color: #23230C; }
-html[data-theme='nacht'] .panel-item { background-color: #2E2E10; }
-html[data-theme='nacht'] .panel-inset { background-color: rgba(240, 237, 214, 0.06); }
+html[data-theme='nacht'] .panel-item { background-color: rgba(240, 237, 214, 0.07); }
+html[data-theme='nacht'] .panel-item:hover { background-color: rgba(240, 237, 214, 0.14); }
+html[data-theme='nacht'] .panel-inset { background-color: rgba(240, 237, 214, 0.05); }
 
 /* The mascot cut-outs blend with multiply, which is right on the cream page
    and turns them black on a dark one. Inline styles need overriding here. */

@@ -106,22 +106,23 @@ export default function Team() {
             <p className="text-white font-sans text-lg font-medium">Team wird bald vorgestellt.</p>
           </div>
         ) : (
-          /* ── 2-COLUMN LIGHTSWIND PRO HOLOGRAPHIC DECK LAYOUT ── */
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mt-12 lg:mt-16 mb-6">
+          /* Two stacked cards: who you are looking at, then everyone else.
+             The first sticks so picking a name near the bottom of the list
+             still updates something you can see. */
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-start mt-16 lg:mt-20 mb-6">
 
-            {/* LEFT COLUMN: 3D Holographic Stacked Deck.
-                The member list on the right is long, so on desktop the card
-                sticks to the viewport — otherwise picking the eighth name
-                updates a card that scrolled off the top ages ago. */}
+            {/* CARD 1 — photo beside the person's details */}
+            <Reveal className="panel-light rounded-3xl p-6 border border-[#FFFFCC]/15 shadow-2xl lg:sticky lg:top-20 z-10">
+            <div className="flex flex-col sm:flex-row gap-5 sm:gap-6">
             <div
               ref={deckRef}
-              className="lg:col-span-6 relative h-[380px] sm:h-[430px] flex items-center justify-center select-none mt-0 lg:sticky lg:top-24 scroll-mt-24"
+              className="relative w-[150px] h-[195px] sm:w-[170px] sm:h-[220px] flex-shrink-0 mx-auto sm:mx-0 select-none scroll-mt-24"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
             >
               {/* Stacked Cards */}
-              <div className="relative w-[280px] sm:w-[330px] h-[370px] sm:h-[430px] flex items-center justify-center perspective-[1200px]">
+              <div className="relative w-full h-full flex items-center justify-center perspective-[1200px]">
                 {members.map((member, index) => {
                   const isCurrent = index === currentIndex;
                   const offset = (index - currentIndex + totalMembers) % totalMembers;
@@ -141,22 +142,22 @@ export default function Team() {
                     opacity = 1;
                   } else if (offset === 1) {
                     // 1st card behind
-                    translateX = -28;
-                    translateY = -24;
+                    translateX = -12;
+                    translateY = -11;
                     scale = 0.94;
-                    opacity = 0.85;
+                    opacity = 0.75;
                   } else if (offset === 2) {
                     // 2nd card behind
-                    translateX = -52;
-                    translateY = -46;
+                    translateX = -22;
+                    translateY = -20;
                     scale = 0.88;
-                    opacity = 0.65;
+                    opacity = 0.5;
                   } else {
                     // Remaining cards deeper behind
-                    translateX = -70;
-                    translateY = -65;
+                    translateX = -30;
+                    translateY = -28;
                     scale = 0.82;
-                    opacity = 0.35;
+                    opacity = 0.25;
                   }
 
                   return (
@@ -176,7 +177,7 @@ export default function Team() {
                         if (!isCurrent) return;
                         e.currentTarget.style.transform = `translate3d(${translateX}px, ${translateY}px, 0px) scale(${scale}) rotateX(0deg) rotateY(0deg)`;
                       }}
-                      className="absolute inset-0 bg-[#1A1A00] rounded-3xl overflow-hidden shadow-2xl border border-white/20 transition-all duration-500 ease-out cursor-pointer group"
+                      className="absolute inset-0 bg-[#1A1A00] rounded-3xl overflow-hidden shadow-2xl border border-[#FFFFCC]/20 transition-all duration-500 ease-out cursor-pointer group"
                       style={{
                         zIndex,
                         transform: `translate3d(${translateX}px, ${translateY}px, 0px) scale(${scale})`,
@@ -203,62 +204,45 @@ export default function Team() {
                         </div>
                       )}
 
-                      {/* Card Overlay Text */}
-                      <div 
-                        className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/90 via-black/50 to-transparent text-left z-20"
-                        style={{ transform: isCurrent ? 'translateZ(25px)' : 'none' }}
-                      >
-                        <span className="inline-block px-3 py-1 rounded-full bg-[#FFFFCC] text-[#1A1A00] font-sans text-[10px] font-black uppercase tracking-wider mb-2">
-                          {member.role}
-                        </span>
-                        <h3 className="text-2xl sm:text-3xl font-serif font-black text-white leading-tight drop-shadow-md">
-                          {member.name}
-                        </h3>
-                      </div>
                     </div>
                   );
                 })}
               </div>
             </div>
 
-            {/* RIGHT COLUMN: Lightswind PRO Holographic Control Deck Panel */}
-            <Reveal className="lg:col-span-6 panel-light backdrop-blur-xl rounded-3xl p-6 sm:p-8 border-2 border-[#1A1A00]/20 shadow-2xl flex flex-col justify-between min-h-[440px]">
-              <div>
+              {/* Details for the selected person */}
+              <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-[10px] font-sans font-black uppercase tracking-[0.25em] text-[#1A1A00]/70">
-                    HAPPY BECK TEAM DECK
+                  <span className="text-[10px] font-sans font-bold uppercase tracking-[0.25em] text-[#FFFFCC]/60">
+                    Happy Beck Team Deck
                   </span>
-                  <span className="text-[11px] font-sans font-extrabold text-[#1A1A00] bg-[#FFFFCC] px-3 py-1 rounded-full border border-[#1A1A00]/15">
+                  <span className="text-[11px] font-sans font-bold text-[#1A1A00] bg-[#FFFFCC] px-3 py-1 rounded-full tabular-nums">
                     {currentIndex + 1} / {totalMembers}
                   </span>
                 </div>
 
-                <h2 className="text-3xl sm:text-4xl font-serif font-black text-[#1A1A00] mb-2 leading-tight">
-                  Unsere Mitarbeiter
+                <h2 className="text-2xl sm:text-3xl font-serif font-black text-[#FFFFCC] mb-3 leading-tight">
+                  {members[currentIndex]?.name}
                 </h2>
 
-                <div className="flex items-center gap-2 mb-6">
-                  <span className="px-3 py-1 rounded-lg bg-[#1A1A00] text-[#FFFFCC] font-sans font-black text-[11px] uppercase tracking-wider">
-                    {members[currentIndex]?.role || 'Team Member'}
-                  </span>
-                  <span className="text-xs font-sans text-[#1A1A00]/70 font-semibold">
-                    Happy Beck Expert
+                <div className="mb-4">
+                  <span className="inline-block px-3 py-1 rounded-lg bg-[#FFFFCC] text-[#1A1A00] font-sans font-bold text-[11px] uppercase tracking-wider">
+                    {members[currentIndex]?.role || 'Team'}
                   </span>
                 </div>
 
-                <h3 className="text-2xl font-serif font-black text-[#1A1A00] mb-3">
-                  {members[currentIndex]?.name}
-                </h3>
-
-                <p className="text-[#1A1A00]/80 font-sans text-sm sm:text-base leading-relaxed font-medium mb-6">
+                <p className="text-white/70 font-sans text-sm leading-[1.75]">
                   {members[currentIndex]?.description || 'Keine Beschreibung vorhanden.'}
                 </p>
               </div>
+            </div>
+            </Reveal>
 
-              {/* Interactive Layer Selection Deck Buttons (Lightswind PRO Style) */}
-              <div className="space-y-2.5 pt-4 border-t border-[#1A1A00]/15">
-                <p className="text-[10px] font-sans font-black uppercase tracking-widest text-[#1A1A00]/60 mb-1">
-                  Klick zum Auswählen des Team-Mitglieds:
+            {/* CARD 2 — everyone else */}
+            <Reveal className="panel-light rounded-3xl p-6 border border-[#FFFFCC]/15 shadow-2xl">
+              <div className="space-y-1.5">
+                <p className="text-[10px] font-sans font-bold uppercase tracking-widest text-[#FFFFCC]/50 mb-3">
+                  Team auswählen
                 </p>
 
                 {members.map((member, idx) => {
@@ -267,33 +251,33 @@ export default function Team() {
                     <button
                       key={member.id}
                       onClick={() => selectMember(idx)}
-                      className={`w-full px-4 py-3 rounded-2xl font-sans font-bold text-xs uppercase tracking-wider flex items-center justify-between transition-all duration-300 cursor-pointer ${
+                      className={`w-full px-3 py-2 rounded-xl font-sans font-bold text-[11px] uppercase tracking-wider flex items-center justify-between gap-3 transition-all duration-300 cursor-pointer ${
                         isActive
-                          ? 'bg-[#1A1A00] text-[#FFFFCC] shadow-lg translate-x-2'
-                          : 'panel-item text-[#1A1A00] hover:brightness-105 hover:translate-x-1 border border-[#1A1A00]/10'
+                          ? 'bg-[#FFFFCC] text-[#1A1A00] shadow-lg translate-x-1.5'
+                          : 'panel-item text-[#FFFFCC]/75 hover:text-[#FFFFCC] hover:translate-x-1 border border-[#FFFFCC]/10'
                       }`}
                     >
-                      <span className="font-extrabold flex items-center gap-2">
-                        <span className={`w-2 h-2 rounded-full ${isActive ? 'bg-[#FFFFCC] animate-ping' : 'bg-[#1A1A00]/30'}`} />
-                        {member.name}
+                      <span className="flex items-center gap-2 min-w-0">
+                        <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${isActive ? 'bg-[#1A1A00]' : 'bg-[#FFFFCC]/35'}`} />
+                        <span className="truncate">{member.name}</span>
                       </span>
-                      <span className="text-[10px] opacity-75 font-mono">
-                        {member.role} →
+                      <span className="text-[9px] opacity-70 font-sans tracking-normal normal-case flex-shrink-0">
+                        {member.role}
                       </span>
                     </button>
                   );
                 })}
                 {/* Join Us CTA Box Inside Right Panel (Matching Exact Styling & Alignment) */}
-                <div className="mt-6 pt-6 border-t border-[#1A1A00]/15 text-center panel-inset rounded-2xl p-5 border border-[#1A1A00]/10">
-                  <h4 className="text-lg font-serif font-black text-[#1A1A00] mb-1">
+                <div className="mt-6 text-center panel-inset rounded-2xl p-5 border border-[#FFFFCC]/10">
+                  <h4 className="text-lg font-serif font-black text-[#FFFFCC] mb-1">
                     Werden Sie Teil unseres Teams
                   </h4>
-                  <p className="text-[#1A1A00]/80 font-sans text-xs mb-4 font-semibold">
+                  <p className="text-white/60 font-sans text-xs mb-4">
                     Wir suchen immer motivierte Menschen, die unsere Leidenschaft teilen.
                   </p>
                   <a
                     href="/jobs"
-                    className="w-full py-3 px-6 rounded-2xl bg-[#1A1A00] text-[#FFFFCC] font-sans font-black text-xs uppercase tracking-wider shadow-lg hover:scale-[1.02] hover:bg-[#2A2A00] transition-all duration-300 inline-block text-center cursor-pointer"
+                    className="w-full py-3 px-6 rounded-2xl bg-[#FFFFCC] text-[#1A1A00] font-sans font-black text-xs uppercase tracking-wider shadow-lg hover:scale-[1.02] transition-all duration-300 inline-block text-center cursor-pointer"
                   >
                     Offene Stellen ansehen →
                   </a>

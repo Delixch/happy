@@ -315,7 +315,7 @@ export default function Team() {
                     <div
                       key={member.id}
                       ref={(el) => { rowRefs.current[member.id] = el; }}
-                      className="scroll-mt-20"
+                      className="scroll-mt-[68px]"
                     >
                       <button
                         onClick={() => selectMember(idx)}
@@ -342,9 +342,14 @@ export default function Team() {
                           <motion.div
                             className="lg:hidden overflow-hidden"
                             initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                            animate={{
+                              height: 'auto',
+                              opacity: 1,
+                              transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+                            }}
+                            // Collapse instantly: an animated close would shift
+                            // the row we are scrolling to while it is in flight.
+                            exit={{ height: 0, opacity: 0, transition: { duration: 0 } }}
                           >
                             <div className="pt-2.5">
                               <MemberDetails member={member} />

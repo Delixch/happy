@@ -222,7 +222,7 @@ export default function Team() {
             </div>
 
             {/* RIGHT COLUMN: Lightswind PRO Holographic Control Deck Panel */}
-            <Reveal className="lg:col-span-6 bg-white/60 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border-2 border-[#1A1A00]/20 shadow-2xl flex flex-col justify-between min-h-[440px]">
+            <Reveal className="lg:col-span-6 panel-light backdrop-blur-xl rounded-3xl p-6 sm:p-8 border-2 border-[#1A1A00]/20 shadow-2xl flex flex-col justify-between min-h-[440px]">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-[10px] font-sans font-black uppercase tracking-[0.25em] text-[#1A1A00]/70">
@@ -270,7 +270,7 @@ export default function Team() {
                       className={`w-full px-4 py-3 rounded-2xl font-sans font-bold text-xs uppercase tracking-wider flex items-center justify-between transition-all duration-300 cursor-pointer ${
                         isActive
                           ? 'bg-[#1A1A00] text-[#FFFFCC] shadow-lg translate-x-2'
-                          : 'bg-white/70 text-[#1A1A00] hover:bg-white hover:translate-x-1 border border-[#1A1A00]/10'
+                          : 'panel-item text-[#1A1A00] hover:brightness-105 hover:translate-x-1 border border-[#1A1A00]/10'
                       }`}
                     >
                       <span className="font-extrabold flex items-center gap-2">
@@ -284,7 +284,7 @@ export default function Team() {
                   );
                 })}
                 {/* Join Us CTA Box Inside Right Panel (Matching Exact Styling & Alignment) */}
-                <div className="mt-6 pt-6 border-t border-[#1A1A00]/15 text-center bg-white/40 rounded-2xl p-5 border border-[#1A1A00]/10">
+                <div className="mt-6 pt-6 border-t border-[#1A1A00]/15 text-center panel-inset rounded-2xl p-5 border border-[#1A1A00]/10">
                   <h4 className="text-lg font-serif font-black text-[#1A1A00] mb-1">
                     Werden Sie Teil unseres Teams
                   </h4>

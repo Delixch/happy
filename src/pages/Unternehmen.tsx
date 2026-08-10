@@ -249,24 +249,49 @@ export default function Unternehmen() {
                 num: '03',
                 title: 'Innovation',
                 text: 'Wir bewahren die Tradition und wagen gleichzeitig Neues. So entstehen Kreationen, die überraschen und begeistern.',
-                bg: '#3D3D00',
+                // Takes the tone the middle card gave up when it went open
+                bg: '#2C2C00',
               },
-            ].map((value, i) => (
+            ].map((value, i) => {
+              const outline = i === 1;
+
+              return (
               <RevealItem key={i}>
               <div
-                className="p-8 md:p-10 rounded-3xl flex items-start gap-8 shadow-2xl border border-white/10 hover:scale-[1.02] transition-all duration-300"
-                style={{ backgroundColor: value.bg }}
+                className={`p-8 md:p-10 rounded-3xl flex items-start gap-8 border hover:scale-[1.02] transition-all duration-300 ${
+                  outline
+                    ? 'border-[#1A1A00]/30 hover:border-[#1A1A00]/50'
+                    : 'border-white/10 shadow-2xl'
+                }`}
+                style={{ backgroundColor: outline ? undefined : value.bg }}
               >
-                <span className="text-4xl md:text-5xl font-serif font-black text-[#FFFFCC] flex-shrink-0">
+                <span
+                  className={`text-4xl md:text-5xl font-serif font-black flex-shrink-0 ${
+                    outline ? 'text-[#1A1A00]' : 'text-[#FFFFCC]'
+                  }`}
+                >
                   {value.num}
                 </span>
                 <div>
-                  <h3 className="text-xl md:text-2xl font-serif font-black text-white mb-3">{value.title}</h3>
-                  <p className="text-white/90 font-sans text-sm md:text-base leading-relaxed">{value.text}</p>
+                  <h3
+                    className={`text-xl md:text-2xl font-serif font-black mb-3 ${
+                      outline ? 'text-[#1A1A00]' : 'text-white'
+                    }`}
+                  >
+                    {value.title}
+                  </h3>
+                  <p
+                    className={`font-sans text-sm md:text-base leading-relaxed ${
+                      outline ? 'text-[#1A1A00]' : 'text-white/90'
+                    }`}
+                  >
+                    {value.text}
+                  </p>
                 </div>
               </div>
               </RevealItem>
-            ))}
+              );
+            })}
           </RevealGroup>
         </div>
       </div>

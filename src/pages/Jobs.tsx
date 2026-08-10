@@ -104,53 +104,89 @@ export default function Jobs() {
           </div>
         ) : (
           <div className="space-y-8">
-            {jobs.map((job) => (
+            {jobs.map((job, i) => {
+              const outline = i === 1;
+              const chip = outline
+                ? 'bg-[#1A1A00]/[0.06] text-[#1A1A00] border-[#1A1A00]/20'
+                : 'bg-black/40 text-white/90 border-white/10';
+              const chipIcon = outline ? 'text-[#1A1A00]' : 'text-[#FFFFCC]';
+
+              return (
               <TiltCard
                 key={job.id}
-                className="bg-[#1A1A00] backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-white/20"
+                className={`rounded-3xl overflow-hidden border ${
+                  outline
+                    ? 'border-[#1A1A00]/30'
+                    : 'bg-[#1A1A00] backdrop-blur-xl shadow-2xl border-white/20'
+                }`}
               >
                 <div className="p-8 md:p-10">
                   <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
                     <div>
-                      <h2 className="text-2xl md:text-3xl font-serif font-black text-[#FFFFCC] mb-3">
+                      <h2
+                        className={`text-2xl md:text-3xl font-serif font-black mb-3 ${
+                          outline ? 'text-[#1A1A00]' : 'text-[#FFFFCC]'
+                        }`}
+                      >
                         {job.title}
                       </h2>
                       <div className="flex flex-wrap gap-3">
                         {job.location && (
-                          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/40 text-white/90 text-xs font-sans font-bold border border-white/10">
-                            <MapPin className="w-3.5 h-3.5 text-[#FFFFCC]" /> {job.location}
+                          <span className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-bold border ${chip}`}>
+                            <MapPin className={`w-3.5 h-3.5 ${chipIcon}`} /> {job.location}
                           </span>
                         )}
-                        <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/40 text-white/90 text-xs font-sans font-bold border border-white/10">
-                          <Briefcase className="w-3.5 h-3.5 text-[#FFFFCC]" /> {job.type}
+                        <span className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-bold border ${chip}`}>
+                          <Briefcase className={`w-3.5 h-3.5 ${chipIcon}`} /> {job.type}
                         </span>
                         {job.shift && (
-                          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/40 text-white/90 text-xs font-sans font-bold border border-white/10">
-                            <Clock className="w-3.5 h-3.5 text-[#FFFFCC]" /> {job.shift}
+                          <span className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-bold border ${chip}`}>
+                            <Clock className={`w-3.5 h-3.5 ${chipIcon}`} /> {job.shift}
                           </span>
                         )}
                       </div>
                     </div>
-                    <span className="px-4 py-1.5 bg-[#FFFFCC] text-[#1A1A00] text-xs font-sans font-black uppercase tracking-wider rounded-full shadow-md">
+                    <span
+                      className={`px-4 py-1.5 text-xs font-sans font-black uppercase tracking-wider rounded-full shadow-md ${
+                        outline ? 'bg-[#1A1A00] text-[#FFFFCC]' : 'bg-[#FFFFCC] text-[#1A1A00]'
+                      }`}
+                    >
                       JETZT OFFEN
                     </span>
                   </div>
 
-                  <div className="w-full h-0.5 bg-white/10 my-6" />
+                  <div className={`w-full h-0.5 my-6 ${outline ? 'bg-[#1A1A00]/15' : 'bg-white/10'}`} />
 
-                  <p className="text-white/90 font-sans text-sm md:text-base leading-relaxed mb-6 font-medium">
+                  <p
+                    className={`font-sans text-sm md:text-base leading-relaxed mb-6 font-medium ${
+                      outline ? 'text-[#1A1A00]' : 'text-white/90'
+                    }`}
+                  >
                     {job.description}
                   </p>
 
                   {job.requirements && job.requirements.length > 0 && (
                     <div className="mb-8">
-                      <h3 className="text-lg font-serif font-black text-white mb-3">
+                      <h3
+                        className={`text-lg font-serif font-black mb-3 ${
+                          outline ? 'text-[#1A1A00]' : 'text-white'
+                        }`}
+                      >
                         Anforderungen
                       </h3>
                       <ul className="space-y-2.5">
                         {job.requirements.map((req, index) => (
-                          <li key={index} className="flex items-start gap-3 text-white/80 font-sans text-xs md:text-sm font-medium">
-                            <span className="w-2 h-2 rounded-full bg-[#FFFFCC] mt-1.5 flex-shrink-0" />
+                          <li
+                            key={index}
+                            className={`flex items-start gap-3 font-sans text-xs md:text-sm font-medium ${
+                              outline ? 'text-[#1A1A00]' : 'text-white/80'
+                            }`}
+                          >
+                            <span
+                              className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${
+                                outline ? 'bg-[#1A1A00]' : 'bg-[#FFFFCC]'
+                              }`}
+                            />
                             <span>{req}</span>
                           </li>
                         ))}
@@ -160,14 +196,17 @@ export default function Jobs() {
 
                   <a
                     href={`mailto:info@happybeck.ch?subject=Bewerbung: ${job.title}`}
-                    className="px-6 py-3.5 rounded-2xl bg-[#FFFFCC] text-[#1A1A00] font-sans font-black text-xs uppercase tracking-wider inline-flex items-center gap-2 shadow-xl hover:scale-105 transition-all"
+                    className={`px-6 py-3.5 rounded-2xl font-sans font-black text-xs uppercase tracking-wider inline-flex items-center gap-2 shadow-xl hover:scale-105 transition-all ${
+                      outline ? 'bg-[#1A1A00] text-[#FFFFCC]' : 'bg-[#FFFFCC] text-[#1A1A00]'
+                    }`}
                   >
                     <Mail className="w-4 h-4 fill-current" />
                     Jetzt bewerben
                   </a>
                 </div>
               </TiltCard>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

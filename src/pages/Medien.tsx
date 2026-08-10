@@ -3,6 +3,7 @@ import { Play, ExternalLink, Tv, Newspaper, Globe, Loader2, type LucideIcon } fr
 import { supabase, type MediaItem } from '../lib/supabase';
 import HeroVideo from '../components/HeroVideo';
 import { Reveal, RevealGroup, RevealItem } from '../components/motion/Reveal';
+import ScrollCrawl, { ScrollCrawlStage } from '../components/motion/ScrollCrawl';
 
 type MediaType = 'tv' | 'presse' | 'online';
 type FilterType = MediaType | 'all';
@@ -253,6 +254,7 @@ export default function Medien() {
             In dieser Kategorie wurden noch keine Medienbeiträge veröffentlicht.
           </div>
         ) : (
+          <ScrollCrawlStage>
           <RevealGroup key={filter} stagger={0.08}>
             {filtered.map((item, idx) => {
               const meta = CATEGORY_META[item.type];
@@ -269,7 +271,7 @@ export default function Medien() {
 
               return (
                 <RevealItem key={item.id}>
-                <div className={`relative pl-16 ${isLast ? '' : 'pb-8'}`}>
+                <ScrollCrawl className={`relative pl-16 ${isLast ? '' : 'pb-8'}`}>
                   {!isLast && (
                     <div className="absolute left-5 top-11 bottom-0 w-0.5 bg-[#1A1A00]/10" />
                   )}
@@ -354,11 +356,12 @@ export default function Medien() {
                       </div>
                     )}
                   </div>
-                </div>
+                </ScrollCrawl>
                 </RevealItem>
               );
             })}
           </RevealGroup>
+          </ScrollCrawlStage>
         )}
       </div>
 

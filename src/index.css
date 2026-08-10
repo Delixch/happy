@@ -484,3 +484,10 @@ html[data-theme='nacht'] [class*='border-[#1A1A00]'] {
 html[data-theme='nacht'] .panel-light { background-color: #23230C; }
 html[data-theme='nacht'] .panel-item { background-color: #2E2E10; }
 html[data-theme='nacht'] .panel-inset { background-color: rgba(240, 237, 214, 0.06); }
+
+/* The mascot cut-outs blend with multiply, which is right on the cream page
+   and turns them black on a dark one. Inline styles need overriding here. */
+html[data-theme='nacht'] img[style*='multiply'] {
+  mix-blend-mode: normal !important;
+  filter: drop-shadow(0 0 12px rgba(240, 237, 214, 0.22)) !important;
+}

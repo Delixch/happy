@@ -1,8 +1,56 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Users, Loader2 } from 'lucide-react';
 import { supabase, type TeamMember } from '../lib/supabase';
 import HeroVideo from '../components/HeroVideo';
 import { Reveal } from '../components/motion/Reveal';
+
+/** Photo, role and description for one person. Used inline on mobile. */
+function MemberDetails({ member }: { member: TeamMember }) {
+  return (
+    <div className="flex gap-4 rounded-2xl panel-inset border border-[#FFFFCC]/10 p-4">
+      {/* Drops in like a blind being let down */}
+      <motion.div
+        initial={{ clipPath: 'inset(0 0 100% 0)' }}
+        animate={{ clipPath: 'inset(0 0 0% 0)' }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+        className="w-[110px] h-[145px] flex-shrink-0 rounded-xl overflow-hidden border border-[#FFFFCC]/20 bg-[#1A1A00] shadow-lg"
+      >
+        <motion.div
+          initial={{ y: -18 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+          className="w-full h-full"
+        >
+          {member.image_url ? (
+            <img src={member.image_url} alt={member.name} loading="lazy" className="w-full h-full object-cover" />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-[#FFFFCC]/60">
+              <Users className="w-8 h-8" />
+            </div>
+          )}
+        </motion.div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, x: 12 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
+        className="min-w-0 flex-1"
+      >
+        <p className="font-serif font-black text-[#FFFFCC] text-lg leading-tight mb-2 normal-case tracking-normal">
+          {member.name}
+        </p>
+        <span className="inline-block px-2.5 py-1 rounded-lg bg-[#FFFFCC] text-[#1A1A00] font-sans font-bold text-[9px] uppercase tracking-wider mb-3">
+          {member.role}
+        </span>
+        <p className="text-white/70 font-sans text-xs leading-[1.7] font-normal normal-case tracking-normal">
+          {member.description || 'Keine Beschreibung vorhanden.'}
+        </p>
+      </motion.div>
+    </div>
+  );
+}
 
 export default function Team() {
   const [members, setMembers] = useState<TeamMember[]>([]);
@@ -11,11 +59,21 @@ export default function Team() {
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const deckRef = useRef<HTMLDivElement>(null);
+  const rowRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
+  /** On mobile the details open inline under the row, so tapping the same name
+      again closes it, and opening brings that row to the top of the screen —
+      otherwise the panel unfolds below the fold. */
   const selectMember = (idx: number) => {
-    setCurrentIndex(idx);
-    if (window.innerWidth < 1024 && deckRef.current) {
-      deckRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const isMobile = window.innerWidth < 1024;
+    const closing = isMobile && currentIndex === idx;
+    setCurrentIndex(closing ? -1 : idx);
+
+    if (isMobile && !closing) {
+      const id = members[idx]?.id;
+      requestAnimationFrame(() => {
+        rowRefs.current[id]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
     }
   };
 
@@ -31,6 +89,11 @@ export default function Team() {
   }, []);
 
   const totalMembers = members.length;
+
+  // currentIndex goes to -1 when a mobile row is collapsed; the desktop card
+  // always needs somebody to show.
+  const activeIndex = currentIndex >= 0 ? currentIndex : 0;
+  const activeMember = members[activeIndex];
 
   const paginate = useCallback(
     (newDirection: number) => {
@@ -111,8 +174,9 @@ export default function Team() {
              still updates something you can see. */
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-start mt-16 lg:mt-20 mb-6">
 
-            {/* CARD 1 — photo beside the person's details */}
-            <Reveal className="panel-light rounded-3xl p-6 border border-[#FFFFCC]/15 shadow-2xl lg:sticky lg:top-20 z-10">
+            {/* CARD 1 — photo beside the person's details. Desktop only: on
+                mobile the same details open inline under the tapped name. */}
+            <Reveal className="hidden lg:block panel-light rounded-3xl p-6 border border-[#FFFFCC]/15 shadow-2xl lg:sticky lg:top-20 z-10">
             <div className="flex flex-col sm:flex-row gap-5 sm:gap-6">
             <div
               ref={deckRef}
@@ -124,8 +188,8 @@ export default function Team() {
               {/* Stacked Cards */}
               <div className="relative w-full h-full flex items-center justify-center perspective-[1200px]">
                 {members.map((member, index) => {
-                  const isCurrent = index === currentIndex;
-                  const offset = (index - currentIndex + totalMembers) % totalMembers;
+                  const isCurrent = index === activeIndex;
+                  const offset = (index - activeIndex + totalMembers) % totalMembers;
                   
                   // Stack offsets for non-active cards behind
                   let translateX = 0;
@@ -217,22 +281,22 @@ export default function Team() {
                     Happy Beck Team Deck
                   </span>
                   <span className="text-[11px] font-sans font-bold text-[#1A1A00] bg-[#FFFFCC] px-3 py-1 rounded-full tabular-nums">
-                    {currentIndex + 1} / {totalMembers}
+                    {activeIndex + 1} / {totalMembers}
                   </span>
                 </div>
 
                 <h2 className="text-2xl sm:text-3xl font-serif font-black text-[#FFFFCC] mb-3 leading-tight">
-                  {members[currentIndex]?.name}
+                  {activeMember?.name}
                 </h2>
 
                 <div className="mb-4">
                   <span className="inline-block px-3 py-1 rounded-lg bg-[#FFFFCC] text-[#1A1A00] font-sans font-bold text-[11px] uppercase tracking-wider">
-                    {members[currentIndex]?.role || 'Team'}
+                    {activeMember?.role || 'Team'}
                   </span>
                 </div>
 
                 <p className="text-white/70 font-sans text-sm leading-[1.75]">
-                  {members[currentIndex]?.description || 'Keine Beschreibung vorhanden.'}
+                  {activeMember?.description || 'Keine Beschreibung vorhanden.'}
                 </p>
               </div>
             </div>
@@ -248,23 +312,47 @@ export default function Team() {
                 {members.map((member, idx) => {
                   const isActive = idx === currentIndex;
                   return (
-                    <button
+                    <div
                       key={member.id}
-                      onClick={() => selectMember(idx)}
-                      className={`w-full px-3 py-2 rounded-xl font-sans font-bold text-[11px] uppercase tracking-wider flex items-center justify-between gap-3 transition-all duration-300 cursor-pointer ${
-                        isActive
-                          ? 'bg-[#FFFFCC] text-[#1A1A00] shadow-lg translate-x-1.5'
-                          : 'panel-item text-[#FFFFCC]/75 hover:text-[#FFFFCC] hover:translate-x-1 border border-[#FFFFCC]/10'
-                      }`}
+                      ref={(el) => { rowRefs.current[member.id] = el; }}
+                      className="scroll-mt-20"
                     >
-                      <span className="flex items-center gap-2 min-w-0">
-                        <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${isActive ? 'bg-[#1A1A00]' : 'bg-[#FFFFCC]/35'}`} />
-                        <span className="truncate">{member.name}</span>
-                      </span>
-                      <span className="text-[9px] opacity-70 font-sans tracking-normal normal-case flex-shrink-0">
-                        {member.role}
-                      </span>
-                    </button>
+                      <button
+                        onClick={() => selectMember(idx)}
+                        aria-expanded={isActive}
+                        className={`w-full px-3 py-2 rounded-xl font-sans font-bold text-[11px] uppercase tracking-wider flex items-center justify-between gap-3 transition-all duration-300 cursor-pointer ${
+                          isActive
+                            ? 'bg-[#FFFFCC] text-[#1A1A00] shadow-lg lg:translate-x-1.5'
+                            : 'panel-item text-[#FFFFCC]/75 hover:text-[#FFFFCC] lg:hover:translate-x-1 border border-[#FFFFCC]/10'
+                        }`}
+                      >
+                        <span className="flex items-center gap-2 min-w-0">
+                          <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${isActive ? 'bg-[#1A1A00]' : 'bg-[#FFFFCC]/35'}`} />
+                          <span className="truncate">{member.name}</span>
+                        </span>
+                        <span className="text-[9px] opacity-70 font-sans tracking-normal normal-case flex-shrink-0">
+                          {member.role}
+                        </span>
+                      </button>
+
+                      {/* Mobile: the details open right here, so nobody has to
+                          scroll back up to see who they just tapped. */}
+                      <AnimatePresence initial={false}>
+                        {isActive && (
+                          <motion.div
+                            className="lg:hidden overflow-hidden"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                          >
+                            <div className="pt-2.5">
+                              <MemberDetails member={member} />
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   );
                 })}
                 {/* Join Us CTA Box Inside Right Panel (Matching Exact Styling & Alignment) */}

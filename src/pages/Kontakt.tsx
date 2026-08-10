@@ -358,9 +358,9 @@ export default function Kontakt() {
       <div className="container mx-auto px-4 lg:px-8 pb-12 max-w-6xl relative pt-6">
         
         {/* Animated Driving Delivery Van on the Gold Line */}
-        <div className="absolute top-[-2px] left-[16px] right-[16px] lg:left-[32px] lg:right-[32px] h-[24px] pointer-events-none overflow-hidden z-30">
+        <div className="absolute top-[-10px] left-[16px] right-[16px] lg:left-[32px] lg:right-[32px] h-[36px] pointer-events-none overflow-hidden z-30">
           <div className="animate-car-drive absolute bottom-0">
-            <svg className="animate-car-bounce" width="46" height="24" viewBox="0 0 48 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg className="animate-car-bounce" width="72" height="36" viewBox="0 0 48 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               {/* Main Cargo Box */}
               <path d="M4 6C4 5.4 4.4 5 5 5H28C28.6 5 29 5.4 29 6V18H4V6Z" fill="#1E293B"/>
               {/* Cabin */}
@@ -369,8 +369,20 @@ export default function Kontakt() {
               <path d="M30.5 10.5H33.8L37.8 13.8H30.5V10.5Z" fill="#FFBB00" opacity="0.9"/>
               {/* Back Door Line */}
               <line x1="8" y1="5" x2="8" y2="18" stroke="#FFBB00" strokeWidth="0.8"/>
-              {/* Small Logo on Cargo (Bread outline) */}
-              <path d="M13 11C14 9.5 16 9.5 17 11M17 11C18 9.5 20 9.5 21 11M17 11V14" stroke="#FFBB00" strokeWidth="1.2" strokeLinecap="round"/>
+              {/* Brand mark on the cargo — HB, since the full name will not
+                  read at this size */}
+              <text
+                x="18.5"
+                y="14.6"
+                textAnchor="middle"
+                fill="#FFBB00"
+                fontFamily="Fraunces, Georgia, serif"
+                fontSize="9"
+                fontWeight="900"
+                letterSpacing="0.3"
+              >
+                HB
+              </text>
               {/* Tail Light */}
               <rect x="4" y="8" width="1" height="3.5" fill="#EF5350"/>
               {/* Headlight */}

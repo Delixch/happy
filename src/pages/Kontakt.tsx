@@ -3,6 +3,12 @@ import { useLocation } from 'react-router-dom';
 import { Mail, MapPin, Clock, Instagram, Send, ChefHat, ShoppingBag, Phone } from 'lucide-react';
 import { PHONE_DISPLAY, PHONE_TEL } from '../lib/contact';
 
+// The form sits open on the cream page rather than in a dark slab, so its
+// fields are outlined in olive instead of filled black.
+const LABEL = 'block text-xs font-sans font-black text-[#1A1A00] uppercase tracking-wider mb-2';
+const FIELD =
+  'w-full px-4 py-3 bg-transparent border border-[#1A1A00]/60 rounded-2xl text-[#1A1A00] placeholder:text-[#1A1A00]/65 font-sans text-sm outline-none focus:border-[#1A1A00] transition-colors';
+
 const ORDER_STEPS = [
   { icon: Send, label: 'Nachricht erhalten' },
   { icon: ChefHat, label: 'Wird zubereitet' },
@@ -169,28 +175,29 @@ export default function Kontakt() {
                   </div>
                 </div>
 
-                <div className="w-full h-0.5 bg-white/10 my-4" />
-
-                <p className="text-white font-bold text-base mb-2">Instagram</p>
+                {/* A lit panel cut out of the dark sidebar, like the one in the footer */}
+                <div className="mt-6 rounded-2xl bg-[#FFFFCC] p-5 -mx-1">
+                <p className="text-[#1A1A00] font-bold text-base mb-3">Instagram</p>
                 <div className="space-y-3">
                   <a
                     href="https://www.instagram.com/happybeck.ch?igsh=eGdtbW1ud3p6ZDFx"
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-2.5 text-white/90 hover:text-[#FFFFCC] font-medium transition-colors"
+                    className="flex items-center gap-2.5 text-[#1A1A00] hover:opacity-70 font-medium transition-opacity"
                   >
-                    <Instagram className="w-4 h-4 text-[#FFFFCC]" />
+                    <Instagram className="w-4 h-4 text-[#1A1A00]" />
                     <span>@happybeck.ch</span>
                   </a>
                   <a
                     href="https://www.instagram.com/happybeck_?igsh=MXM0eGN1enZydzl0cQ=="
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-2.5 text-white/90 hover:text-[#FFFFCC] font-medium transition-colors"
+                    className="flex items-center gap-2.5 text-[#1A1A00] hover:opacity-70 font-medium transition-opacity"
                   >
-                    <Instagram className="w-4 h-4 text-[#FFFFCC]" />
+                    <Instagram className="w-4 h-4 text-[#1A1A00]" />
                     <span>@happybeck_</span>
                   </a>
+                </div>
                 </div>
 
                 <div className="w-full h-0.5 bg-white/10 my-4" />
@@ -262,45 +269,45 @@ export default function Kontakt() {
                 </div>
               </div>
             ) : (
-              <form onSubmit={onSubmit} className="bg-[#1A1A00] backdrop-blur-xl rounded-3xl p-8 md:p-10 shadow-2xl border border-white/20 space-y-6 relative overflow-hidden">
+              <form onSubmit={onSubmit} className="rounded-3xl p-8 md:p-10 border border-[#1A1A00]/30 space-y-6 relative overflow-hidden">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Firma</label>
-                    <input name="company" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFFFCC] transition-colors" type="text" placeholder="Firmenname" />
+                    <label className={LABEL}>Firma</label>
+                    <input name="company" className={FIELD} type="text" placeholder="Firmenname" />
                   </div>
                   <div>
-                    <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Ansprechpartner</label>
-                    <input name="name" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFFFCC] transition-colors" type="text" placeholder="Ihr Name" />
+                    <label className={LABEL}>Ansprechpartner</label>
+                    <input name="name" className={FIELD} type="text" placeholder="Ihr Name" />
                   </div>
                   <div>
-                    <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">E-Mail *</label>
-                    <input name="email" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFFFCC] transition-colors" type="email" placeholder="name@example.com" required />
+                    <label className={LABEL}>E-Mail *</label>
+                    <input name="email" className={FIELD} type="email" placeholder="name@example.com" required />
                   </div>
                   <div>
-                    <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Telefon</label>
-                    <input name="phone" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFFFCC] transition-colors" type="tel" placeholder="Ihre Telefonnummer" />
+                    <label className={LABEL}>Telefon</label>
+                    <input name="phone" className={FIELD} type="tel" placeholder="Ihre Telefonnummer" />
                   </div>
                   <div className="md:col-span-2">
-                    <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Adresse / Ort</label>
-                    <input name="address" className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFFFCC] transition-colors" type="text" placeholder="Strasse, PLZ Ort" />
+                    <label className={LABEL}>Adresse / Ort</label>
+                    <input name="address" className={FIELD} type="text" placeholder="Strasse, PLZ Ort" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Nachricht / Bestellung *</label>
-                  <textarea name="message" defaultValue={prefillMessage} className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFFFCC] transition-colors min-h-[130px] resize-y" rows={5} placeholder="Ihre Bestellung oder Nachricht..." required />
+                  <label className={LABEL}>Nachricht / Bestellung *</label>
+                  <textarea name="message" defaultValue={prefillMessage} className={`${FIELD} min-h-[130px] resize-y`} rows={5} placeholder="Ihre Bestellung oder Nachricht..." required />
                 </div>
 
                 {/* Security Question & Action Row */}
                 <div className="flex flex-wrap items-end gap-4 pt-2">
                   <div className="w-full sm:w-36">
-                    <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Sicherheitsfrage</label>
-                    <input className="w-full px-4 py-3 bg-black/60 border border-white/10 rounded-2xl text-[#FFFFCC] font-sans text-sm font-bold text-center" type="text" value={question.text} readOnly />
+                    <label className={LABEL}>Sicherheitsfrage</label>
+                    <input className="w-full px-4 py-3 bg-[#1A1A00] border border-[#1A1A00] rounded-2xl text-[#FFFFCC] font-sans text-sm font-bold text-center" type="text" value={question.text} readOnly />
                   </div>
                   <div className="w-full sm:w-28">
-                    <label className="block text-xs font-sans font-black text-white/80 uppercase tracking-wider mb-2">Ergebnis *</label>
+                    <label className={LABEL}>Ergebnis *</label>
                     <input
-                      className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-[#FFFFCC] transition-colors font-bold text-center"
+                      className={`${FIELD} font-bold text-center`}
                       type="number"
                       value={userAnswer}
                       onChange={(e) => setUserAnswer(e.target.value)}
@@ -312,14 +319,14 @@ export default function Kontakt() {
                     <button
                       type="button"
                       onClick={() => { setQuestion(generateQuestion()); setUserAnswer(''); }}
-                      className="py-3 px-5 rounded-2xl border border-white/20 text-white font-sans font-bold text-xs uppercase hover:bg-white/10 transition-colors whitespace-nowrap cursor-pointer"
+                      className="py-3 px-5 rounded-2xl border border-[#1A1A00]/30 text-[#1A1A00] font-sans font-bold text-xs uppercase hover:bg-[#1A1A00]/[0.06] transition-colors whitespace-nowrap cursor-pointer"
                     >
                       Neu laden
                     </button>
                     <button
                       type="submit"
                       disabled={sending}
-                      className="flex-1 py-3 px-6 rounded-2xl bg-[#FFFFCC] text-[#1A1A00] font-sans font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl hover:scale-105 transition-all cursor-pointer whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+                      className="flex-1 py-3 px-6 rounded-2xl bg-[#1A1A00] text-[#FFFFCC] font-sans font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl hover:scale-105 transition-all cursor-pointer whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
                     >
                       <Send className="w-4 h-4 fill-current" />
                       {sending ? 'Wird gesendet…' : 'Senden'}

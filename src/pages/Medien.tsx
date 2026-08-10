@@ -260,6 +260,13 @@ export default function Medien() {
               const hostname = !isTv ? getHostname(item.url) : null;
               const isLast = idx === filtered.length - 1;
 
+              // Alternate filled and outlined down the timeline so it does not
+              // read as one long wall of identical blocks.
+              const outline = idx % 2 === 1;
+              // Only the newest entry pulses. Twelve blinking dots would be noise;
+              // one means something.
+              const isNewest = idx === 0;
+
               return (
                 <RevealItem key={item.id}>
                 <div className={`relative pl-16 ${isLast ? '' : 'pb-8'}`}>
@@ -270,27 +277,50 @@ export default function Medien() {
                     className="absolute left-0 top-0 w-10 h-10 rounded-full flex items-center justify-center shadow-md border-2 border-[#FFFFCC] z-10"
                     style={{ backgroundColor: '#1A1A00' }}
                   >
-                    <meta.Icon className="w-4 h-4" style={{ color: meta.accent }} />
+                    {isNewest && (
+                      <span className="absolute inset-0 rounded-full border-2 border-[#1A1A00] animate-ping opacity-60 motion-reduce:hidden" />
+                    )}
+                    <meta.Icon className="relative w-4 h-4" style={{ color: meta.accent }} />
                   </div>
 
                   <div
                     onClick={isTv ? () => setActiveVideoUrl(item.url) : undefined}
-                    className={`rounded-2xl p-5 bg-[#1A1A00] shadow-lg border border-white/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl flex gap-4 ${isTv ? 'cursor-pointer' : ''}`}
+                    className={`rounded-2xl p-5 border transition-all duration-300 hover:-translate-y-1 flex gap-4 ${
+                      outline
+                        ? 'border-[#1A1A00]/30 hover:border-[#1A1A00]/55'
+                        : 'bg-[#1A1A00] border-white/10 shadow-lg hover:shadow-xl'
+                    } ${isTv ? 'cursor-pointer' : ''}`}
                   >
                     <div className="flex-1 min-w-0">
-                      <span className="text-[10px] font-sans font-black uppercase tracking-widest text-[#FFFFCC]/60">
+                      <span
+                        className={`text-[10px] font-sans font-black uppercase tracking-widest ${
+                          outline ? 'text-[#1A1A00]/70' : 'text-[#FFFFCC]/60'
+                        }`}
+                      >
                         {meta.label}
                       </span>
-                      <h3 className="text-base md:text-lg font-serif font-black text-[#FFFFCC] leading-snug mt-1 mb-2 line-clamp-2">
+                      <h3
+                        className={`text-base md:text-lg font-serif font-black leading-snug mt-1 mb-2 line-clamp-2 ${
+                          outline ? 'text-[#1A1A00]' : 'text-[#FFFFCC]'
+                        }`}
+                      >
                         {item.title}
                       </h3>
                       {item.description && (
-                        <p className="text-xs md:text-sm text-white/75 font-sans leading-relaxed line-clamp-2 mb-3">
+                        <p
+                          className={`text-xs md:text-sm font-sans leading-relaxed line-clamp-2 mb-3 ${
+                            outline ? 'text-[#1A1A00]' : 'text-white/75'
+                          }`}
+                        >
                           {item.description}
                         </p>
                       )}
                       {isTv ? (
-                        <span className="inline-flex items-center gap-1.5 text-[#FFFFCC] font-sans font-black text-xs uppercase tracking-wider">
+                        <span
+                          className={`inline-flex items-center gap-1.5 font-sans font-black text-xs uppercase tracking-wider ${
+                            outline ? 'text-[#1A1A00]' : 'text-[#FFFFCC]'
+                          }`}
+                        >
                           <Play className="w-3 h-3 fill-current" /> Ansehen
                         </span>
                       ) : (
@@ -299,7 +329,9 @@ export default function Medien() {
                             href={item.url}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 text-[#FFFFCC] font-sans font-black text-xs uppercase tracking-wider hover:underline"
+                            className={`inline-flex items-center gap-1.5 font-sans font-black text-xs uppercase tracking-wider hover:underline ${
+                              outline ? 'text-[#1A1A00]' : 'text-[#FFFFCC]'
+                            }`}
                           >
                             {hostname || 'Öffnen'} <ExternalLink className="w-3 h-3" />
                           </a>

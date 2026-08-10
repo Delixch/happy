@@ -365,3 +365,91 @@
     animation: marquee 25s linear infinite;
   }
 }
+
+
+/* ─────────────────────────────────────────────────────────────
+   NIGHT THEME
+   The palette lives in the markup as literal hex utilities, but the
+   utility name already encodes the role: bg-[#1A1A00] is always a
+   surface, text-[#1A1A00] is always ink on a light background. That
+   lets the theme swap happen here instead of editing ~590 call sites.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  --night-page: #12120A;
+  --night-surface: #23230C;
+  --night-surface-2: #2E2E10;
+  --night-ink: #F0EDD6;
+  --night-line: rgba(240, 237, 214, 0.14);
+}
+
+html[data-theme='nacht'] {
+  background-color: var(--night-page);
+}
+
+html[data-theme='nacht'] body {
+  background-color: var(--night-page);
+  color: var(--night-ink);
+}
+
+/* Page backgrounds: cream and warm yellow both become the night page */
+html[data-theme='nacht'] .bg-\[\#FFFFCC\],
+html[data-theme='nacht'] .bg-warm-yellow,
+html[data-theme='nacht'] .bg-\[\#FFBB00\] {
+  background-color: var(--night-page);
+}
+
+/* Card and panel surfaces sit just above the page */
+html[data-theme='nacht'] .bg-\[\#1A1A00\] {
+  background-color: var(--night-surface);
+}
+html[data-theme='nacht'] .bg-\[\#2C2C00\],
+html[data-theme='nacht'] .bg-\[\#0E0E00\] {
+  background-color: var(--night-surface-2);
+}
+
+/* Ink: what was dark text on a light page becomes light text */
+html[data-theme='nacht'] .text-\[\#1A1A00\],
+html[data-theme='nacht'] .text-\[\#231E2A\],
+html[data-theme='nacht'] .text-\[\#1E293B\],
+html[data-theme='nacht'] .text-\[\#2C2C00\] {
+  color: var(--night-ink);
+}
+
+/* Text that already sat on a dark surface only warms slightly */
+html[data-theme='nacht'] .text-\[\#FFFFCC\] {
+  color: var(--night-ink);
+}
+
+/* Hairlines and outlines */
+html[data-theme='nacht'] .border-\[\#1A1A00\],
+html[data-theme='nacht'] .border-\[\#FFFFCC\] {
+  border-color: var(--night-line);
+}
+
+/* Gradient stops that faded page-coloured overlays over imagery */
+html[data-theme='nacht'] .to-\[\#FFFFCC\] {
+  --tw-gradient-to: var(--night-page) var(--tw-gradient-to-position);
+}
+html[data-theme='nacht'] .from-\[\#FFFFCC\] {
+  --tw-gradient-from: var(--night-page) var(--tw-gradient-from-position);
+}
+
+/* Imagery is calmer at night rather than glaring off a dark page */
+html[data-theme='nacht'] img,
+html[data-theme='nacht'] video {
+  filter: brightness(0.86) saturate(0.95);
+}
+
+html[data-theme='nacht'] .theme-keep-image img,
+html[data-theme='nacht'] img.theme-keep-image {
+  filter: none;
+}
+
+/* Inline-styled outlines that cannot be reached by a utility class */
+:root {
+  --c-outline: #1A1A00;
+}
+html[data-theme='nacht'] {
+  --c-outline: rgba(240, 237, 214, 0.28);
+}

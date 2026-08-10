@@ -99,6 +99,22 @@
         padding: 0;
       }
     </style>
+    <script>
+      // Set the theme before first paint so a night visitor never sees the
+      // light page flash first. Mirrors resolveTheme() in src/lib/theme.ts.
+      (function () {
+        try {
+          var stored = sessionStorage.getItem('happybeck_theme');
+          var hour = new Date().getHours();
+          var theme = stored === 'tag' || stored === 'nacht'
+            ? stored
+            : (hour >= 21 || hour < 5) ? 'nacht' : 'tag';
+          if (theme === 'nacht') {
+            document.documentElement.setAttribute('data-theme', 'nacht');
+          }
+        } catch (e) { /* clock still decides once React mounts */ }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

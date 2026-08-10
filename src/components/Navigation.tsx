@@ -4,6 +4,7 @@ import {
   X, ChevronDown, ChevronRight, Check, Instagram, Phone, Lock,
 } from 'lucide-react';
 import { PHONE_TEL } from '../lib/contact';
+import ThemeToggle from './ThemeToggle';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -234,7 +235,8 @@ export default function Navigation() {
         </div>
 
         {/* ── LIVE 24/7 NON-STOP OPEN HOURS COUNTER BADGE (Desktop Right Side) ── */}
-        <div className="hidden lg:flex items-center ml-auto pr-6">
+        <div className="hidden lg:flex items-center gap-3 ml-auto pr-6">
+          <ThemeToggle />
           <div className="bg-white/[0.04] border border-[#FFFFCC]/15 rounded-full pl-3.5 pr-4 py-2 flex items-center gap-2.5">
             <span className="relative flex h-1.5 w-1.5 flex-shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#06C167] opacity-50" />
@@ -255,7 +257,8 @@ export default function Navigation() {
         </div>
 
         {/* MOBILE HAMBURGER BUTTON (Flush Right Mobile) */}
-        <div className="flex lg:hidden items-center justify-end px-4 ml-auto">
+        <div className="flex lg:hidden items-center justify-end gap-2 px-4 ml-auto">
+          <ThemeToggle />
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="w-10 h-10 bg-[#FFFFCC] flex items-center justify-center text-[#1A1A00] cursor-pointer rounded-xl shadow-md"

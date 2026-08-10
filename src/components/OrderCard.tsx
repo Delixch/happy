@@ -4,7 +4,8 @@ import { RATINGS } from '../lib/reviews';
 const google = RATINGS.find((r) => r.id === 'google')!;
 const delivery = RATINGS.filter((r) => r.id !== 'google');
 
-const OLIVE = '#1A1A00';
+/** Flips with the theme — see --c-outline in index.css. */
+const OUTLINE = 'var(--c-outline)';
 
 /**
  * Confines a background to the 1px padding ring, leaving the content box
@@ -55,7 +56,7 @@ export default function OrderCard({ className = '' }: { className?: string }) {
         className="pointer-events-none absolute inset-0 rounded-2xl overflow-hidden"
         style={RING_MASK}
       >
-        <span className="absolute inset-0" style={{ backgroundColor: OLIVE }} />
+        <span className="absolute inset-0" style={{ backgroundColor: OUTLINE }} />
         <span
           className="absolute left-1/2 top-1/2 h-[240%] w-[240%] -translate-x-1/2 -translate-y-1/2 animate-spin-slow motion-reduce:hidden"
           style={{

@@ -453,3 +453,24 @@ html[data-theme='nacht'] img.theme-keep-image {
 html[data-theme='nacht'] {
   --c-outline: rgba(240, 237, 214, 0.28);
 }
+
+/* Ink token for colours that reach the DOM through inline style */
+:root {
+  --c-ink: #1A1A00;
+}
+html[data-theme='nacht'] {
+  --c-ink: #F0EDD6;
+}
+
+/* Opacity variants are separate class names, so match on substring.
+   The alpha is lost, which is the right trade against unreadable text. */
+html[data-theme='nacht'] [class*='text-[#1A1A00]'],
+html[data-theme='nacht'] [class*='text-[#231E2A]'],
+html[data-theme='nacht'] [class*='text-[#1E293B]'],
+html[data-theme='nacht'] [class*='text-[#2C2C00]'] {
+  color: var(--c-ink);
+}
+
+html[data-theme='nacht'] [class*='border-[#1A1A00]'] {
+  border-color: rgba(240, 237, 214, 0.25);
+}

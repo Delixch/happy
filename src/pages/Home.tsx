@@ -20,7 +20,7 @@ export default function Home() {
         text: 'Traditionelles Handwerk trifft moderne Innovation. Entdecken Sie unsere Leidenschaft für frisches Brot und feine Backwaren.',
         bgColor: '#FFFFCC', // Fresh Green / Soft Light Cream
         cardBg: '#1A1A00',  // Muted Blue Green / Dark Olive
-        textColor: '#1A1A00',
+        textColor: 'var(--c-ink)',
       },
       {
         image: '/Home1.jpg',
@@ -29,7 +29,7 @@ export default function Home() {
         text: 'Jeden Tag ofenfrisch – mit ausgewählten Zutaten und viel Liebe zum Detail.',
         bgColor: '#FFFFCC',
         cardBg: '#1A1A00',
-        textColor: '#1A1A00',
+        textColor: 'var(--c-ink)',
       },
       {
         image: '/home2.jpg',
@@ -38,7 +38,7 @@ export default function Home() {
         text: 'Von Gipfeli bis Sandwich: Für jeden Geschmack das Richtige.',
         bgColor: '#FFFFCC',
         cardBg: '#1A1A00',
-        textColor: '#1A1A00',
+        textColor: 'var(--c-ink)',
       },
       {
         image: '/happylachen.jpg',
@@ -47,7 +47,7 @@ export default function Home() {
         text: 'Mit bestem Handwerk und frischen Zutaten zaubern wir Ihnen jeden Tag ein Lächeln ins Gesicht.',
         bgColor: '#FFFFCC',
         cardBg: '#1A1A00',
-        textColor: '#1A1A00',
+        textColor: 'var(--c-ink)',
       },
     ],
     []
@@ -210,8 +210,8 @@ export default function Home() {
                   to="/kontakt"
                   className="flex-1 px-6 py-3.5 rounded-2xl border-2 text-center whitespace-nowrap font-sans font-extrabold text-sm tracking-wider uppercase shadow-sm transition-all duration-300 hover:scale-105"
                   style={{
-                    borderColor: slides[slide].cardBg,
-                    color: slides[slide].cardBg
+                    borderColor: slides[slide].textColor,
+                    color: slides[slide].textColor
                   }}
                 >
                   Kontakt

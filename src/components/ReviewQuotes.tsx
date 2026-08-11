@@ -84,6 +84,10 @@ function FlipCard({ front, back, variant }: { front: Quote; back: Quote; variant
   const reduced = useReducedMotion();
   const [flipped, setFlipped] = useState(false);
 
+  // The back wears the opposite skin, so turning a card reads as a second card
+  // rather than the same one with the text swapped out.
+  const backVariant: Variant = variant === 'solid' ? 'outline' : 'solid';
+
   return (
     <div
       className="flip-scene h-full min-h-[350px] sm:min-h-[330px] cursor-pointer"
@@ -102,14 +106,18 @@ function FlipCard({ front, back, variant }: { front: Quote; back: Quote; variant
     >
       {reduced ? (
         <div className="relative h-full">
-          <Face quote={flipped ? back : front} hint variant={variant} />
+          <Face
+            quote={flipped ? back : front}
+            hint
+            variant={flipped ? backVariant : variant}
+          />
         </div>
       ) : (
         <div className={`flip-inner h-full ${flipped ? 'is-flipped' : ''}`}>
           {/* The rotation and backface-visibility have to sit on the same
               element, or the back shows through mirrored. */}
           <Face quote={front} hint variant={variant} className="flip-face" />
-          <Face quote={back} variant={variant} className="flip-face flip-face-back" />
+          <Face quote={back} variant={backVariant} className="flip-face flip-face-back" />
         </div>
       )}
     </div>

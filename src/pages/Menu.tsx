@@ -4,6 +4,7 @@ import { supabase, type MenuItem, type MenuCategory } from '../lib/supabase';
 import MarqueeTicker from '../components/MarqueeTicker';
 import TiltCard from '../components/TiltCard';
 import Parallax from '../components/motion/Parallax';
+import { MENU_HERO } from '../lib/images';
 import { RevealGroup, RevealItem } from '../components/motion/Reveal';
 
 const CATEGORY_META: Record<MenuCategory, { label: string; Icon: LucideIcon; intro: string; bg: string; bg2: string; accent: string }> = {
@@ -107,7 +108,7 @@ export default function MenuPage() {
       {/* Hero */}
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
         <Parallax className="absolute inset-0" distance={14}>
-          <div className="w-full h-full bg-cover bg-center brightness-90" style={{ backgroundImage: "url('/menu-hero.jpg')" }} />
+          <div className="w-full h-full bg-cover bg-center brightness-90" style={{ backgroundImage: `url(${MENU_HERO})` }} />
         </Parallax>
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A00]/60 via-transparent to-[#FFFFCC]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A00]/80 via-transparent to-transparent" />

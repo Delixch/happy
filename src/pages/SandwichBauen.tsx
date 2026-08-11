@@ -1,4 +1,5 @@
 import HeroVideo from '../components/HeroVideo';
+import { HERO_VIDEO_POSTER } from '../lib/images';
 import SandwichBuilder from '../components/SandwichBuilder';
 
 export default function SandwichBauen() {
@@ -8,7 +9,7 @@ export default function SandwichBauen() {
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
         <HeroVideo
           src="https://res.cloudinary.com/dsdsb4lqw/video/upload/f_auto,q_auto/v1785332690/HAPPY_OMLETT_VIDEO_xgh4nn.mp4"
-          poster="/default-hero.jpg"
+          poster={HERO_VIDEO_POSTER}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A00]/60 via-transparent to-[#FFFFCC]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A00]/80 via-transparent to-transparent" />

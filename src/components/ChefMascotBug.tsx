@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CHEF_MASCOT } from '../lib/images';
 
 export default function ChefMascotBug() {
   const [showBubble, setShowBubble] = useState(false);
@@ -16,7 +17,7 @@ export default function ChefMascotBug() {
       )}
       <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#FFFFCC] border-2 border-[#1A1A00] shadow-xl overflow-hidden animate-float flex items-center justify-center">
         <img
-          src="/b2.png"
+          src={CHEF_MASCOT}
           alt="Happy Beck Chefkoch"
           className="w-9 h-9 sm:w-11 sm:h-11 object-contain"
           style={{ mixBlendMode: 'multiply' }}

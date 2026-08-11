@@ -6,7 +6,7 @@ import OrderCard from '../components/OrderCard';
 import ReviewQuotes from '../components/ReviewQuotes';
 import Parallax from '../components/motion/Parallax';
 import { Reveal, RevealGroup, RevealItem } from '../components/motion/Reveal';
-import { heroImage, cardImage, HERO_FIRST_SLIDE } from '../lib/images';
+import { heroImage, cardImage, HERO_FIRST_SLIDE, CHEF_MASCOT } from '../lib/images';
 
 // One step lighter per slide, starting at the darkest olive. The steps are
 // wide enough (0x15 apart) to read once the cards blend over the cream page.
@@ -308,7 +308,7 @@ export default function Home() {
               <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-32 h-32 z-30 pointer-events-none
                              md:fixed md:hidden">
                 <img
-                  src="/b2.png"
+                  src={CHEF_MASCOT}
                   alt="Happy Beck Chefkoch"
                   className="w-full h-full object-contain"
                   style={{ mixBlendMode: 'multiply', filter: 'drop-shadow(0 6px 16px rgba(0,0,0,0.4))' }}
@@ -328,7 +328,7 @@ export default function Home() {
             {/* Desktop-only chef: near left edge of 3rd card — tracks mouse */}
             <div ref={chefRef} className="hidden md:block absolute -top-20 left-[calc(66.66%-16px)] w-36 h-36 z-30 pointer-events-none">
               <img
-                src="/b2.png"
+                src={CHEF_MASCOT}
                 alt="Happy Beck Chefkoch"
                 className="w-full h-full object-contain transition-transform duration-150 ease-out"
                 style={{

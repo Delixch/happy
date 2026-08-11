@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Gift, Zap, PartyPopper, Eye, ChevronDown, Loader2 } from 'lucide-react';
 import { supabase, type DailySpecial, type Deal } from '../lib/supabase';
 import HeroVideo from '../components/HeroVideo';
+import { HERO_VIDEO_POSTER } from '../lib/images';
 import { RevealGroup, RevealItem } from '../components/motion/Reveal';
 import TiltCard from '../components/TiltCard';
 import ProductGallery from '../components/ProductGallery';
@@ -347,7 +348,7 @@ export default function Aktuelles() {
       <div className="relative h-[35vh] min-h-[260px] overflow-hidden">
         <HeroVideo
           src="https://res.cloudinary.com/dsdsb4lqw/video/upload/f_auto,q_auto/v1785405038/3_d4eggy.mp4"
-          poster="/default-hero.jpg"
+          poster={HERO_VIDEO_POSTER}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A00]/60 via-transparent to-[#FFFFCC]" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A00]/80 via-transparent to-transparent" />

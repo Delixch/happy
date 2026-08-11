@@ -1,5 +1,6 @@
 import { Award, Clock, MapPin, Wheat } from 'lucide-react';
 import Parallax from '../components/motion/Parallax';
+import { UBERUNS_HERO, HANDWERK_POSTER } from '../lib/images';
 import { Reveal, RevealGroup, RevealItem } from '../components/motion/Reveal';
 
 const HANDWERK_VIDEO =
@@ -15,7 +16,7 @@ function FrameAnimationCard() {
     <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl bg-[#1A1A00] border-4 border-white">
       <video
         src={HANDWERK_VIDEO}
-        poster="/uberuns-poster.jpg"
+        poster={HANDWERK_POSTER}
         autoPlay
         loop
         muted
@@ -41,7 +42,7 @@ export default function Unternehmen() {
         <Parallax className="absolute inset-0" distance={14}>
           <div
             className="w-full h-full bg-cover bg-center brightness-90"
-            style={{ backgroundImage: "url('/uberuns.jpg')" }}
+            style={{ backgroundImage: `url(${UBERUNS_HERO})` }}
           />
         </Parallax>
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A00]/60 via-transparent to-[#FFFFCC]" />

@@ -107,10 +107,10 @@ export default function OrderCard({ className = '' }: { className?: string }) {
               target="_blank"
               rel="noreferrer"
               style={{ backgroundColor: r.color }}
-              className="pl-3 pr-2.5 py-1.5 rounded-full text-white font-sans font-semibold text-[11px] leading-none inline-flex items-center gap-2 hover:brightness-110 transition-all whitespace-nowrap"
+              className="pl-3 pr-2.5 py-1.5 rounded-full text-[#1A1A00] font-sans font-semibold text-[11px] leading-none inline-flex items-center gap-2 hover:brightness-110 transition-all whitespace-nowrap"
             >
               {r.label}
-              <span className="inline-flex items-center gap-0.5 bg-black/25 rounded-full px-1.5 py-1 tabular-nums">
+              <span className="inline-flex items-center gap-0.5 bg-[#1A1A00]/10 rounded-full px-1.5 py-1 tabular-nums">
                 <Star className="w-2.5 h-2.5 fill-current" strokeWidth={0} />
                 {r.score}
               </span>

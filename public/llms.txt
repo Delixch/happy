@@ -1,0 +1,18 @@
+# Happy Beck
+
+Happy Beck is a bakery and restaurant located at Langstrasse 120 in Zürich, Switzerland. It has been open 24 hours a day, 7 days a week, since 2006.
+
+## Information
+
+- **Website:** https://happybeck.ch/
+- **Address:** Langstrasse 120, 8004 Zürich, Switzerland
+- **Phone:** +41432439780
+- **Email:** info@happybeck.ch
+- **Opening Hours:** 24/7 (Open 24 hours)
+
+## Offerings
+
+- Fresh Sandwiches
+- Breakfast
+- Pizza and hot dishes
+- Homemade pastry (Pâtisserie)

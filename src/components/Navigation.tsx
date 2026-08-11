@@ -101,7 +101,7 @@ export default function Navigation() {
                 </span>
                 <span className="text-white/45 font-normal"> h</span>
               </span>
-              <span className="text-[7px] font-sans font-medium text-white/30 uppercase tracking-[0.15em] whitespace-nowrap mt-1">
+              <span className="text-[7px] font-sans font-medium text-white/60 uppercase tracking-[0.15em] whitespace-nowrap mt-1">
                 Seit 2006
               </span>
             </div>
@@ -306,6 +306,7 @@ export default function Navigation() {
             <button
               onClick={() => setIsOpen(false)}
               className="text-white/60 hover:text-[#FFFFCC] p-2 rounded-xl border border-white/10 bg-white/5 transition-colors"
+              aria-label="Menü schliessen"
             >
               <X className="w-5 h-5" />
             </button>
@@ -408,10 +409,20 @@ export default function Navigation() {
               <span>Admin Panel Login</span>
             </Link>
             <div className="flex items-center gap-4 text-white/40">
-              <a href="https://instagram.com/happybeck.ch" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFFFCC] transition-colors">
+              <a
+                href="https://instagram.com/happybeck.ch"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#FFFFCC] transition-colors"
+                aria-label="Instagram"
+              >
                 <Instagram className="w-4 h-4" />
               </a>
-              <a href={`tel:${PHONE_TEL}`} className="hover:text-[#FFFFCC] transition-colors">
+              <a
+                href={`tel:${PHONE_TEL}`}
+                className="hover:text-[#FFFFCC] transition-colors"
+                aria-label="Telefon"
+              >
                 <Phone className="w-4 h-4" />
               </a>
             </div>

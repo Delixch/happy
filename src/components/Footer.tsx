@@ -72,14 +72,14 @@ export default function Footer() {
             </p>
 
             {/* Legal sits under the brand rather than in a strip of its own */}
-            <p className="text-white/35 text-[13px] font-sans flex flex-wrap items-center gap-x-3 gap-y-1 mt-8">
+            <p className="text-white/60 text-[13px] font-sans flex flex-wrap items-center gap-x-3 gap-y-1 mt-8">
               <span>&copy; {currentYear} Happy Beck Zürich</span>
-              <span className="text-white/15">·</span>
-              <Link to="/datenschutz" className="hover:text-white/70 transition-colors">
+              <span className="text-white/30">·</span>
+              <Link to="/datenschutz" className="text-white/60 hover:text-[#FFFFCC] transition-colors">
                 Datenschutz
               </Link>
-              <span className="text-white/15">·</span>
-              <Link to="/admin" className="hover:text-white/70 transition-colors">
+              <span className="text-white/30">·</span>
+              <Link to="/admin" className="text-white/60 hover:text-[#FFFFCC] transition-colors">
                 Login
               </Link>
             </p>

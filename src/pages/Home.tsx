@@ -6,7 +6,15 @@ import OrderCard from '../components/OrderCard';
 import ReviewQuotes from '../components/ReviewQuotes';
 import Parallax from '../components/motion/Parallax';
 import { Reveal, RevealGroup, RevealItem } from '../components/motion/Reveal';
-import { heroImage, cardImage, HERO_FIRST_SLIDE, CHEF_MASCOT } from '../lib/images';
+import {
+  heroImage,
+  heroSrcSet,
+  cardImage,
+  cardSrcSet,
+  HERO_SIZES,
+  CARD_SIZES,
+  CHEF_MASCOT,
+} from '../lib/images';
 
 // One step lighter per slide, starting at the darkest olive. The steps are
 // wide enough (0x15 apart) to read once the cards blend over the cream page.
@@ -17,7 +25,7 @@ export default function Home() {
   const slides = useMemo(
     () => [
       {
-        image: HERO_FIRST_SLIDE,
+        imageId: 'v1786450952/Home_wgi4dv.jpg',
         title: 'Ein Häppchen Glück!',
         subtitle: 'Willkommen bei Happy Beck',
         text: 'Traditionelles Handwerk trifft moderne Innovation. Entdecken Sie unsere Leidenschaft für frisches Brot und feine Backwaren.',
@@ -26,7 +34,7 @@ export default function Home() {
         textColor: 'var(--c-ink)',
       },
       {
-        image: heroImage('v1786450825/Home1_x39wkw.jpg'),
+        imageId: 'v1786450825/Home1_x39wkw.jpg',
         title: 'Frisch. Fein. Happy.',
         subtitle: 'Täglich ofenfrisch',
         text: 'Jeden Tag ofenfrisch – mit ausgewählten Zutaten und viel Liebe zum Detail.',
@@ -35,7 +43,7 @@ export default function Home() {
         textColor: 'var(--c-ink)',
       },
       {
-        image: heroImage('v1786450783/home2_dd1byg.jpg'),
+        imageId: 'v1786450783/home2_dd1byg.jpg',
         title: 'Süsses und Herzhaftes',
         subtitle: 'Für jeden Geschmack',
         text: 'Von Gipfeli bis Sandwich: Für jeden Geschmack das Richtige.',
@@ -44,7 +52,7 @@ export default function Home() {
         textColor: 'var(--c-ink)',
       },
       {
-        image: heroImage('v1786450733/happylachen_vvwcau.jpg'),
+        imageId: 'v1786450733/happylachen_vvwcau.jpg',
         title: 'Freude am Genuss',
         subtitle: 'Happy Beck Lachen',
         text: 'Mit bestem Handwerk und frischen Zutaten zaubern wir Ihnen jeden Tag ein Lächeln ins Gesicht.',
@@ -127,11 +135,11 @@ export default function Home() {
   // most visitors never reach, on a page that is already mostly photographs.
   useEffect(() => {
     const warm = () => {
-      const nextImage = slides[(slide + 1) % slides.length]?.image;
-      if (!nextImage) return;
+      const nextId = slides[(slide + 1) % slides.length]?.imageId;
+      if (!nextId) return;
       const img = new Image();
       img.fetchPriority = 'low';
-      img.src = nextImage;
+      img.src = heroImage(nextId);
     };
 
     if (document.readyState === 'complete') {
@@ -158,7 +166,9 @@ export default function Home() {
                 <Parallax className="absolute inset-0" distance={10}>
                   <img
                     key={slide}
-                    src={slides[slide].image}
+                    src={heroImage(slides[slide].imageId)}
+                    srcSet={heroSrcSet(slides[slide].imageId)}
+                    sizes={HERO_SIZES}
                     alt={slides[slide].title}
                     className="w-full h-full object-cover animate-hero-ken-burns"
                     // @ts-expect-error React 18 types lack the lowercase DOM attribute
@@ -318,7 +328,7 @@ export default function Home() {
                 icon={<Coffee className="w-5 h-5" strokeWidth={1.5} />}
                 title="Frühstück"
                 text="Gipfeli, Zopf und ein Kaffee dazu. So fängt der Tag an, wie er soll."
-                image={cardImage('v1786450916/menu-breakfast_mdniux.jpg')}
+                imageId="v1786450916/menu-breakfast_mdniux.jpg"
                 href="/menu"
                 cta="Zur Speisekarte"
                 bgColor={PHILOSOPHY_PALETTE[slide]}
@@ -343,7 +353,7 @@ export default function Home() {
               icon={<SandwichIcon className="w-5 h-5" strokeWidth={1.5} />}
               title="Sandwiches"
               text="Frisch belegt, während du wartest. Dein Brot, deine Zutaten, deine Sauce."
-              image={cardImage('v1786450638/menu-sandwich_kbm6xf.jpg')}
+              imageId="v1786450638/menu-sandwich_kbm6xf.jpg"
               href="/sandwich-bauen"
               cta="Selber zusammenstellen"
               bgColor={PHILOSOPHY_PALETTE[slide]}
@@ -353,7 +363,7 @@ export default function Home() {
               icon={<IceCream className="w-5 h-5" strokeWidth={1.5} />}
               title="Süsses"
               text="Hausgemachte Pâtisserie, jeden Tag neu aus unserer Backstube."
-              image={cardImage('v1786450878/menu-sweets_ivu7np.png')}
+              imageId="v1786450878/menu-sweets_ivu7np.png"
               href="/aktuelles"
               cta="Heute's Spezial"
               bgColor={PHILOSOPHY_PALETTE[slide]}
@@ -372,7 +382,7 @@ function FeatureCard({
   icon,
   title,
   text,
-  image,
+  imageId,
   href,
   cta,
   bgColor,
@@ -381,7 +391,8 @@ function FeatureCard({
   icon: React.ReactNode;
   title: string;
   text: string;
-  image: string;
+  /** Cloudinary id, so the card can offer the browser a choice of widths. */
+  imageId: string;
   href: string;
   cta: string;
   bgColor?: string;
@@ -459,7 +470,9 @@ function FeatureCard({
           {/* Product photo */}
           <div className="relative h-44 md:h-52 overflow-hidden flex-shrink-0">
             <img
-              src={image}
+              src={cardImage(imageId)}
+              srcSet={cardSrcSet(imageId)}
+              sizes={CARD_SIZES}
               alt={title}
               loading="lazy"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"

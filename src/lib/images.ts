@@ -13,8 +13,25 @@ export const heroImage = (id: string) => `${CDN}/f_auto,q_auto,w_1400/${id}`;
 /** Anything sitting in a card or a grid cell. */
 export const cardImage = (id: string) => `${CDN}/f_auto,q_auto,w_800/${id}`;
 
-/** Small decorative art — the mascot renders at 144px at most. */
-export const spotImage = (id: string) => `${CDN}/f_auto,q_auto,w_400/${id}`;
+const srcSet = (id: string, widths: number[]) =>
+  widths.map((w) => `${CDN}/f_auto,q_auto,w_${w}/${id} ${w}w`).join(', ');
+
+/**
+ * Without these, a 412px phone downloads the 1400px file — 164KB wasted on the
+ * hero alone. The browser picks a width from the set using `sizes`.
+ */
+export const heroSrcSet = (id: string) => srcSet(id, [500, 700, 1000, 1400]);
+export const cardSrcSet = (id: string) => srcSet(id, [400, 600, 800]);
+
+/** Hero fills half the width on desktop and the whole width below that. */
+export const HERO_SIZES = '(min-width: 1024px) 50vw, 100vw';
+
+/** Teaser cards are a third of the container on desktop, full width on phones. */
+export const CARD_SIZES = '(min-width: 768px) 33vw, 100vw';
+
+/** Small decorative art. The mascot renders at 144px at its largest, so 300
+ *  still covers a retina screen. */
+export const spotImage = (id: string) => `${CDN}/f_auto,q_auto,w_300/${id}`;
 
 /** Poster frame behind every HeroVideo, so it is worth naming once. */
 export const HERO_VIDEO_POSTER = heroImage('v1786451340/default-hero_e5p9gh.jpg');
@@ -27,7 +44,9 @@ export const HANDWERK_POSTER = cardImage('v1786451421/uberuns-poster_cdiulw.jpg'
 export const CHEF_MASCOT = spotImage('v1786451474/b2_nqkluw.png');
 
 /**
- * Preloaded in index.html. That href must stay byte-identical to this, or the
- * browser fetches one URL and the page then asks for another.
+ * The first slide is preloaded in index.html, with the same widths and sizes
+ * as heroSrcSet and HERO_SIZES below. If those change, that markup has to
+ * change with them, or the browser preloads one file and the page asks for
+ * another.
  */
-export const HERO_FIRST_SLIDE = heroImage('v1786450952/Home_wgi4dv.jpg');
+export const FIRST_SLIDE_ID = 'v1786450952/Home_wgi4dv.jpg';

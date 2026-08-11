@@ -55,6 +55,7 @@ export default function Home() {
   );
 
   const [slide, setSlide] = useState(0);
+  const [autoplay, setAutoplay] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
@@ -94,11 +95,49 @@ export default function Home() {
   const next = useCallback(() => changeSlide((slide + 1) % slides.length), [slide, slides.length, changeSlide]);
   const prev = useCallback(() => changeSlide((slide - 1 + slides.length) % slides.length), [slide, slides.length, changeSlide]);
 
-  // Auto-play
+  /**
+   * Hold the carousel until the page has settled. Swapping the hero mid-load
+   * kicks off a fresh image request, and the browser counts that late paint as
+   * a new Largest Contentful Paint — 6.9s on desktop against 1.4s first paint,
+   * purely because the slide turned at six seconds.
+   */
   useEffect(() => {
+    const start = () => setAutoplay(true);
+    const timer = window.setTimeout(start, 12000);
+    window.addEventListener('scroll', start, { once: true, passive: true });
+    window.addEventListener('pointerdown', start, { once: true });
+
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener('scroll', start);
+      window.removeEventListener('pointerdown', start);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!autoplay) return;
     const timer = setInterval(next, 6000);
     return () => clearInterval(timer);
-  }, [next]);
+  }, [autoplay, next]);
+
+  // Fetch the other slides quietly once the page is loaded, so the first turn
+  // is instant instead of waiting on the network.
+  useEffect(() => {
+    const warm = () => {
+      slides.slice(1).forEach((s) => {
+        const img = new Image();
+        img.fetchPriority = 'low';
+        img.src = s.image;
+      });
+    };
+
+    if (document.readyState === 'complete') {
+      warm();
+      return;
+    }
+    window.addEventListener('load', warm, { once: true });
+    return () => window.removeEventListener('load', warm);
+  }, [slides]);
 
   return (
     <section id="home">

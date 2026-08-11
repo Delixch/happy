@@ -120,15 +120,16 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [autoplay, next]);
 
-  // Fetch the other slides quietly once the page is loaded, so the first turn
-  // is instant instead of waiting on the network.
+  // Fetch the next slide quietly once the page is loaded, so the first turn is
+  // instant. Only the next one — warming all three cost about 900KB for images
+  // most visitors never reach, on a page that is already mostly photographs.
   useEffect(() => {
     const warm = () => {
-      slides.slice(1).forEach((s) => {
-        const img = new Image();
-        img.fetchPriority = 'low';
-        img.src = s.image;
-      });
+      const nextImage = slides[(slide + 1) % slides.length]?.image;
+      if (!nextImage) return;
+      const img = new Image();
+      img.fetchPriority = 'low';
+      img.src = nextImage;
     };
 
     if (document.readyState === 'complete') {
@@ -137,7 +138,7 @@ export default function Home() {
     }
     window.addEventListener('load', warm, { once: true });
     return () => window.removeEventListener('load', warm);
-  }, [slides]);
+  }, [slides, slide]);
 
   return (
     <section id="home">

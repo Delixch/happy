@@ -1,4 +1,4 @@
-import { useEffect, useState, lazy, Suspense } from 'react';
+import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Outlet, useLocation } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import Layout from './components/Layout';
@@ -52,6 +52,7 @@ function AnimatedRoutes() {
   const reduceMotion = useReducedMotion();
   const [displayLocation, setDisplayLocation] = useState(location);
   const [covering, setCovering] = useState(false);
+  const firstRender = useRef(true);
 
   const stale = location.pathname !== displayLocation.pathname;
 
@@ -63,6 +64,7 @@ function AnimatedRoutes() {
     setDisplayLocation(location);
     window.scrollTo({ top: 0, behavior: 'auto' });
     setCovering(false);
+    firstRender.current = false;
   };
 
   return (
@@ -70,7 +72,17 @@ function AnimatedRoutes() {
       <TransitionCurtain active={covering} onCovered={handleCovered} reduced={!!reduceMotion} />
       <motion.div
         key={displayLocation.pathname}
-        initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
+        // No fade on the very first paint. The page already waits on the
+        // JavaScript to boot; following that with a half-second fade from
+        // nothing just extends the blank screen. Route changes still get it,
+        // where it covers the swap.
+        initial={
+          firstRender.current
+            ? false
+            : reduceMotion
+              ? { opacity: 0 }
+              : { opacity: 0, y: 24 }
+        }
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
       >

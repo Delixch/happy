@@ -83,12 +83,16 @@ export default function CookieConsent() {
 
       {/* Embedded CSS for slide-up entry */}
       <style>{`
+        /* Transform and opacity only. Animating filter cannot run on the
+           compositor, so every frame repainted on the main thread and
+           Lighthouse flagged it as non-composited. */
         @keyframes slideUp {
-          0% { transform: translateY(30px); opacity: 0; filter: blur(3px); }
-          100% { transform: translateY(0); opacity: 1; filter: blur(0px); }
+          0% { transform: translateY(30px); opacity: 0; }
+          100% { transform: translateY(0); opacity: 1; }
         }
         .animate-slide-up {
-          animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          will-change: transform, opacity;
         }
       `}</style>
     </div>

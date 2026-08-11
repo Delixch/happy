@@ -6,18 +6,22 @@ import CookieConsent from './components/CookieConsent';
 import TransitionCurtain from './components/TransitionCurtain';
 import SeoManager from './components/SeoManager';
 
-// Lazy load public pages
+// Home is what most people land on, so it ships in the first bundle. The rest
+// load on demand — otherwise opening the homepage also downloads the menu, the
+// team deck, the contact form and the sandwich builder. The route curtain is
+// already covering the swap, so the fetch happens behind it.
 import Home from './pages/Home';
-import Unternehmen from './pages/Unternehmen';
-import Jobs from './pages/Jobs';
-import Aktuelles from './pages/Aktuelles';
-import Medien from './pages/Medien';
-import Kontakt from './pages/Kontakt';
-import Team from './pages/Team';
-import MenuPage from './pages/Menu';
-import SandwichBauen from './pages/SandwichBauen';
-import Datenschutz from './pages/Datenschutz';
-import NotFound from './pages/NotFound';
+
+const Unternehmen = lazy(() => import('./pages/Unternehmen'));
+const Jobs = lazy(() => import('./pages/Jobs'));
+const Aktuelles = lazy(() => import('./pages/Aktuelles'));
+const Medien = lazy(() => import('./pages/Medien'));
+const Kontakt = lazy(() => import('./pages/Kontakt'));
+const Team = lazy(() => import('./pages/Team'));
+const MenuPage = lazy(() => import('./pages/Menu'));
+const SandwichBauen = lazy(() => import('./pages/SandwichBauen'));
+const Datenschutz = lazy(() => import('./pages/Datenschutz'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Lazy load admin pages
 const AdminLayout = lazy(() => import('./pages/admin/AdminLayout').then(m => ({ default: m.AdminLayout })));
@@ -70,6 +74,9 @@ function AnimatedRoutes() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
       >
+        {/* Inside the curtain, not around it: a lazy route suspending must not
+            unmount the curtain that is covering the swap. */}
+        <Suspense fallback={<div className="min-h-[60vh]" />}>
         <Routes location={displayLocation}>
           {/* Public Website Layout */}
           <Route element={<PublicLayout />}>
@@ -96,6 +103,7 @@ function AnimatedRoutes() {
           <Route path="/admin/deals" element={<AdminLayout><AdminDeals /></AdminLayout>} />
           <Route path="/admin/instagram" element={<AdminLayout><AdminInstagram /></AdminLayout>} />
         </Routes>
+        </Suspense>
       </motion.div>
     </>
   );
@@ -131,13 +139,7 @@ function App() {
     <Router>
       <SeoManager />
       <CookieConsent />
-      <Suspense fallback={
-        <div className="min-h-[60vh] bg-dark-900 flex items-center justify-center">
-          <div className="w-8 h-8 rounded-full border-2 border-gold-400/20 border-t-gold-400 animate-spin" />
-        </div>
-      }>
-        <AnimatedRoutes />
-      </Suspense>
+      <AnimatedRoutes />
     </Router>
   );
 }

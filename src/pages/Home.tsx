@@ -6,16 +6,18 @@ import OrderCard from '../components/OrderCard';
 import ReviewQuotes from '../components/ReviewQuotes';
 import Parallax from '../components/motion/Parallax';
 import { Reveal, RevealGroup, RevealItem } from '../components/motion/Reveal';
+import { heroImage, cardImage, HERO_FIRST_SLIDE } from '../lib/images';
 
 // One step lighter per slide, starting at the darkest olive. The steps are
 // wide enough (0x15 apart) to read once the cards blend over the cream page.
 const PHILOSOPHY_PALETTE = ['#1A1A00', '#2F2F00', '#444400', '#595900'];
 
+
 export default function Home() {
   const slides = useMemo(
     () => [
       {
-        image: '/Home.jpg',
+        image: HERO_FIRST_SLIDE,
         title: 'Ein Häppchen Glück!',
         subtitle: 'Willkommen bei Happy Beck',
         text: 'Traditionelles Handwerk trifft moderne Innovation. Entdecken Sie unsere Leidenschaft für frisches Brot und feine Backwaren.',
@@ -24,7 +26,7 @@ export default function Home() {
         textColor: 'var(--c-ink)',
       },
       {
-        image: '/Home1.jpg',
+        image: heroImage('v1786450825/Home1_x39wkw.jpg'),
         title: 'Frisch. Fein. Happy.',
         subtitle: 'Täglich ofenfrisch',
         text: 'Jeden Tag ofenfrisch – mit ausgewählten Zutaten und viel Liebe zum Detail.',
@@ -33,7 +35,7 @@ export default function Home() {
         textColor: 'var(--c-ink)',
       },
       {
-        image: '/home2.jpg',
+        image: heroImage('v1786450783/home2_dd1byg.jpg'),
         title: 'Süsses und Herzhaftes',
         subtitle: 'Für jeden Geschmack',
         text: 'Von Gipfeli bis Sandwich: Für jeden Geschmack das Richtige.',
@@ -42,7 +44,7 @@ export default function Home() {
         textColor: 'var(--c-ink)',
       },
       {
-        image: '/happylachen.jpg',
+        image: heroImage('v1786450733/happylachen_vvwcau.jpg'),
         title: 'Freude am Genuss',
         subtitle: 'Happy Beck Lachen',
         text: 'Mit bestem Handwerk und frischen Zutaten zaubern wir Ihnen jeden Tag ein Lächeln ins Gesicht.',
@@ -316,7 +318,7 @@ export default function Home() {
                 icon={<Coffee className="w-5 h-5" strokeWidth={1.5} />}
                 title="Frühstück"
                 text="Gipfeli, Zopf und ein Kaffee dazu. So fängt der Tag an, wie er soll."
-                image="/menu-breakfast.jpg"
+                image={cardImage('v1786450916/menu-breakfast_mdniux.jpg')}
                 href="/menu"
                 cta="Zur Speisekarte"
                 bgColor={PHILOSOPHY_PALETTE[slide]}
@@ -341,7 +343,7 @@ export default function Home() {
               icon={<SandwichIcon className="w-5 h-5" strokeWidth={1.5} />}
               title="Sandwiches"
               text="Frisch belegt, während du wartest. Dein Brot, deine Zutaten, deine Sauce."
-              image="/menu-sandwich.jpg"
+              image={cardImage('v1786450638/menu-sandwich_kbm6xf.jpg')}
               href="/sandwich-bauen"
               cta="Selber zusammenstellen"
               bgColor={PHILOSOPHY_PALETTE[slide]}
@@ -351,7 +353,7 @@ export default function Home() {
               icon={<IceCream className="w-5 h-5" strokeWidth={1.5} />}
               title="Süsses"
               text="Hausgemachte Pâtisserie, jeden Tag neu aus unserer Backstube."
-              image="/menu-sweets.jpg"
+              image={cardImage('v1786450878/menu-sweets_ivu7np.png')}
               href="/aktuelles"
               cta="Heute's Spezial"
               bgColor={PHILOSOPHY_PALETTE[slide]}
